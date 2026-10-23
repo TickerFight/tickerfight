@@ -4,6 +4,8 @@ Il codice dei backtest pubblicati su [TickerFight](https://ticker-fight.blogspot
 
 ## Gli articoli
 
+Lo stato di ogni articolo (pubblicato sul blog o in revisione) è nel [piano editoriale](piano-editoriale/).
+
 - [Il look-ahead bias in 10 righe di codice: quanto vale l'illusione?](il-look-ahead-bias-in-10-righe-di-codice-quanto-vale-l-illusione/)
 - [Quanto è fortunata la tua strategia? Il Golden Cross alla prova del caso](quanto-e-fortunata-la-tua-strategia-il-golden-cross-alla-prova-del-caso/)
 - [Overfitting in pratica: ottimizzare su dieci anni, provare sui cinque dopo](overfitting-in-pratica-ottimizzare-su-dieci-anni-provare-sui-cinque-dopo/)

@@ -2,7 +2,7 @@
 
 **Domanda:** la regola della media mobile 50/200 sull'S&P 500 batte il caso, oppure il suo risultato è compatibile con la fortuna?
 
-L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Quanto è fortunata la tua strategia? Il Golden Cross alla prova del caso](https://ticker-fight.blogspot.com/2026/10/quanto-e-fortunata-la-tua-strategia-il.html).
 
 ## Cosa c'è in questa cartella
 

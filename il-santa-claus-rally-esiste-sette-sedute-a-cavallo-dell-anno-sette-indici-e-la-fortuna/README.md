@@ -2,7 +2,7 @@
 
 **Domanda:** le ultime cinque sedute di dicembre e le prime due di gennaio rendono davvero più di sette sedute qualunque, o è fortuna?
 
-L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
 
 ## Il disegno
 

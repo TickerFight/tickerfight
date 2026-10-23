@@ -2,7 +2,7 @@
 
 **Domanda:** in dieci anni di S&P 500, il risultato della regola 50/200 è distinguibile da quello di una «scimmia» che compra e vende a caso, ma con la stessa dieta della regola (stessi giorni investiti, stesso numero di ordini, stesse durate di permanenza)? Il confronto è con 10.000 scimmie e si vede in un grafico a cono, anche in 3D.
 
-L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Il cono della fortuna: la regola 50/200 sull'S&P 500 contro diecimila scimmie](https://ticker-fight.blogspot.com/2026/10/il-cono-della-fortuna-la-regola-50200.html).
 
 ## Il disegno
 

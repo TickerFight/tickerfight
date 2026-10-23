@@ -2,7 +2,7 @@
 
 **Domanda:** quanto pesano davvero i costi per operazione, facendoli variare da 0 a 0,5% del valore scambiato? Pesano in proporzione ai cambi di posizione? Cambiano la classifica delle regole? Quanto costa ribilanciare un portafoglio? E che cosa succede a chi cambia posizione a caso e spesso?
 
-L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
 
 ## Il disegno
 

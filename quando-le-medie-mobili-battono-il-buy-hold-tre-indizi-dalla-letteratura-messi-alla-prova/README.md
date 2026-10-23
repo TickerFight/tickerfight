@@ -2,7 +2,7 @@
 
 **Domanda:** nell'articolo sui 50 titoli la regola 50/200 ha battuto il buy & hold solo in 11 casi su 50. Si può prevedere quali? Tre caratteristiche del titolo, misurate prima del primo ordine e scelte dalla letteratura, vengono messe alla prova su 50 titoli già visti (sviluppo) e su 150 titoli nuovi (validazione).
 
-L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Quando le medie mobili battono il buy & hold? Tre indizi dalla letteratura messi alla prova](https://ticker-fight.blogspot.com/2026/10/quando-le-medie-mobili-battono-il-buy.html).
 
 ## Il disegno
 

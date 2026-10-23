@@ -2,7 +2,7 @@
 
 **Domanda:** su 50 titoli dell'S&P 500 scelti a sorte, la regola a medie mobili 50/200, con 500 euro per titolo, una commissione fissa di 1 euro a ordine e il 26% di imposta sulle plusvalenze, ha fatto guadagnare più del semplice buy & hold negli ultimi cinque anni? Il risultato è una classifica titolo per titolo.
 
-L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [50 titoli dell'S&P 500, medie mobili contro buy & hold: la classifica](https://ticker-fight.blogspot.com/2026/10/50-titoli-dells-500-medie-mobili-contro.html).
 
 ## Cosa c'è in questa cartella
 

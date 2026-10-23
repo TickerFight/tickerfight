@@ -2,7 +2,7 @@
 
 **Domanda:** se scelgo la migliore coppia di medie mobili su dieci anni e la uso nei cinque successivi, quanto crolla il rendimento? E cosa succede quando provo più coppie?
 
-L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
 
 ## Il disegno
 

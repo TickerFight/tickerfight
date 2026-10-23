@@ -2,7 +2,7 @@
 
 **Domanda:** la regola a medie mobili 50/200, applicata ad Apple con 500 euro, una commissione fissa di 1 euro a ordine e il 26% di imposta sulle plusvalenze, ha fatto guadagnare più del semplice buy & hold negli ultimi cinque anni? E se si fosse cominciato un altro giorno?
 
-L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [500 euro su Apple con le medie mobili: cinque anni di operazioni, commissioni e tasse](https://ticker-fight.blogspot.com/2026/10/500-euro-su-apple-con-le-medie-mobili.html).
 
 ## Cosa c'è in questa cartella
 

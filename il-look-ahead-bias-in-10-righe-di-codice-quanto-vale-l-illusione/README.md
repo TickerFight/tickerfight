@@ -2,7 +2,7 @@
 
 **Domanda:** se calcolo il segnale con la chiusura di oggi e lo applico al rendimento di oggi, quanto vale l'illusione? E come mi accorgo di averlo fatto?
 
-L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
 
 ## Il disegno
 

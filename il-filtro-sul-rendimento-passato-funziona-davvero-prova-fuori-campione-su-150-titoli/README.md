@@ -2,7 +2,7 @@
 
 **Domanda:** il filtro trovato (regola 50/200 solo sui titoli con rendimento passato basso, buy & hold sugli altri) funziona anche fuori campione, cioè in un periodo precedente e su titoli mai usati prima?
 
-L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Il filtro sul rendimento passato funziona davvero? Prova fuori campione su 150 titoli](https://ticker-fight.blogspot.com/2026/10/il-filtro-sul-rendimento-passato.html).
 
 ## Il disegno
 
