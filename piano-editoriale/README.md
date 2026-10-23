@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-6 pubblicati, 8 in revisione. La tabella si aggiorna da sola ogni tre ore leggendo il blog.
+6 pubblicati, 8 in revisione. La tabella si aggiorna da sola due volte al giorno leggendo il blog.
 
 | Articolo | Stato | Uscito il | Codice |
 |---|---|---|---|
