@@ -1,19 +1,19 @@
-# 50 titoli dell'S&P 500, medie mobili contro buy & hold: la classifica
+# 500 euro su Apple con le medie mobili: cinque anni di operazioni, commissioni e tasse
 
-**Domanda:** su 50 titoli dell'S&P 500 scelti a sorte, la regola a medie mobili 50/200, con 500 euro per titolo, una commissione fissa di 1 euro a ordine e il 26% di imposta sulle plusvalenze, ha fatto guadagnare più del semplice buy & hold negli ultimi cinque anni? Il risultato è una classifica titolo per titolo.
+**Domanda:** la regola a medie mobili 50/200, applicata ad Apple con 500 euro, una commissione fissa di 1 euro a ordine e il 26% di imposta sulle plusvalenze, ha fatto guadagnare più del semplice buy & hold negli ultimi cinque anni? E se si fosse cominciato un altro giorno?
 
 L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://ticker-fight.blogspot.com).
 
 ## Cosa c'è in questa cartella
 
 ```
-bonus-sp500-50-titoli-medie-mobili/
+500-euro-su-apple-con-le-medie-mobili-cinque-anni-di-operazioni-commissioni-e-tasse/
 ├── requirements.txt   librerie Python, versioni fissate
 └── flusso/
-    ├── 01_scarica_dati.py     sorteggia i 50 titoli, scarica prezzi e cambio euro/dollaro da Yahoo Finance
-    ├── 02_backtest_e_test.py  simulazione su ogni titolo, classifica, portafoglio, controlli
-    ├── 03_grafici.py          i tre grafici
-    ├── config.py              parametri, regola di scelta dei titoli e ipotesi, scritti prima dei risultati
+    ├── 01_scarica_dati.py     scarica Apple e il cambio euro/dollaro da Yahoo Finance
+    ├── 02_backtest_e_test.py  simulazione principale, controllo e finestre mobili
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              tutti i parametri e l'ipotesi, scritta prima dei risultati
     ├── simulazione.py         motore: segnale, ordini, commissioni, cambio, tassa e minusvalenze
     └── verifica_motore.py     19 controlli su dati inventati (conti a mano e formula indipendente)
 ```
@@ -21,7 +21,7 @@ bonus-sp500-50-titoli-medie-mobili/
 ## Come si rifà
 
 ```bash
-cd bonus-sp500-50-titoli-medie-mobili
+cd 500-euro-su-apple-con-le-medie-mobili-cinque-anni-di-operazioni-commissioni-e-tasse
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

@@ -14,7 +14,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Cosa c'è in questa cartella
 
 ```
-bonus-filtro-rendimento-passato-medie-mobili/
+il-filtro-sul-rendimento-passato-funziona-davvero-prova-fuori-campione-su-150-titoli/
 ├── requirements.txt   librerie Python, versioni fissate
 └── flusso/
     ├── 01_scarica_dati.py     scarica cambio e 150 titoli mai usati, fino a ottobre 2021
@@ -28,7 +28,7 @@ bonus-filtro-rendimento-passato-medie-mobili/
 ## Come si rifà
 
 ```bash
-cd bonus-filtro-rendimento-passato-medie-mobili
+cd il-filtro-sul-rendimento-passato-funziona-davvero-prova-fuori-campione-su-150-titoli
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

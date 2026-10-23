@@ -17,7 +17,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Cosa c'è in questa cartella
 
 ```
-201-pac-contro-lump-sum/
+pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza/
 ├── requirements.txt   librerie Python, versioni fissate
 └── flusso/
     ├── 01_scarica_dati.py     scarica S&P 500, DAX, FTSE 100, Nikkei 225
@@ -31,7 +31,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Come si rifà
 
 ```bash
-cd 201-pac-contro-lump-sum
+cd pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

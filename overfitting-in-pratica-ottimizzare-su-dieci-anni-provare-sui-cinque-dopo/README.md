@@ -15,7 +15,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Cosa c'è in questa cartella
 
 ```
-041-overfitting-in-pratica/
+overfitting-in-pratica-ottimizzare-su-dieci-anni-provare-sui-cinque-dopo/
 ├── requirements.txt   librerie Python, versioni fissate
 └── flusso/
     ├── 01_scarica_dati.py     scarica l'S&P 500 dal 1927
@@ -30,7 +30,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Come si rifà
 
 ```bash
-cd 041-overfitting-in-pratica
+cd overfitting-in-pratica-ottimizzare-su-dieci-anni-provare-sui-cinque-dopo
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

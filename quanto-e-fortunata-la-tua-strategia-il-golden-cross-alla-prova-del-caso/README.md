@@ -7,7 +7,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Cosa c'è in questa cartella
 
 ```
-021-quanto-e-fortunata-la-strategia/
+quanto-e-fortunata-la-tua-strategia-il-golden-cross-alla-prova-del-caso/
 ├── requirements.txt   librerie Python necessarie
 └── flusso/
     ├── 01_scarica_dati.py     scarica ^GSPC da Yahoo Finance e salva i metadati
@@ -19,7 +19,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Come si rifà
 
 ```bash
-cd 021-quanto-e-fortunata-la-strategia
+cd quanto-e-fortunata-la-tua-strategia-il-golden-cross-alla-prova-del-caso
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

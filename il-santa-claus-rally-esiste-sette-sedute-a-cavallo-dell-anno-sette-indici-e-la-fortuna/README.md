@@ -15,7 +15,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Cosa c'è in questa cartella
 
 ```
-163-il-santa-claus-rally/
+il-santa-claus-rally-esiste-sette-sedute-a-cavallo-dell-anno-sette-indici-e-la-fortuna/
 ├── requirements.txt   librerie Python, versioni fissate
 └── flusso/
     ├── 01_scarica_dati.py     scarica sette indici azionari
@@ -30,7 +30,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Come si rifà
 
 ```bash
-cd 163-il-santa-claus-rally
+cd il-santa-claus-rally-esiste-sette-sedute-a-cavallo-dell-anno-sette-indici-e-la-fortuna
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

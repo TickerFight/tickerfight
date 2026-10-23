@@ -15,7 +15,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Cosa c'è in questa cartella
 
 ```
-171-halloween-indicator-in-europa/
+vendi-a-maggio-e-vai-via-otto-indici-europei-la-fortuna-e-il-buy-hold/
 ├── requirements.txt   librerie Python, versioni fissate
 └── flusso/
     ├── 01_scarica_dati.py     scarica otto indici europei
@@ -29,7 +29,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Come si rifà
 
 ```bash
-cd 171-halloween-indicator-in-europa
+cd vendi-a-maggio-e-vai-via-otto-indici-europei-la-fortuna-e-il-buy-hold
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

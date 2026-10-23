@@ -15,7 +15,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Cosa c'è in questa cartella
 
 ```
-519-una-volta-o-ogni-mese/
+chi-ha-piu-fortuna-chi-compra-una-volta-o-chi-compra-ogni-mese/
 ├── requirements.txt   librerie Python, versioni fissate
 └── flusso/
     ├── 01_scarica_dati.py     scarica S&P 500, DAX, FTSE 100, Nikkei 225
@@ -29,7 +29,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Come si rifà
 
 ```bash
-cd 519-una-volta-o-ogni-mese
+cd chi-ha-piu-fortuna-chi-compra-una-volta-o-chi-compra-ogni-mese
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

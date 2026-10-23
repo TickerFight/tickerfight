@@ -4,20 +4,20 @@ Il codice dei backtest pubblicati su [TickerFight](https://ticker-fight.blogspot
 
 ## Gli articoli
 
-- [Il look-ahead bias in 10 righe di codice: quanto vale l'illusione?](004-il-look-ahead-bias-in-10-righe-di-codice/)
-- [Quanto è fortunata la tua strategia? Il Golden Cross alla prova del caso](021-quanto-e-fortunata-la-strategia/)
-- [Overfitting in pratica: ottimizzare su dieci anni, provare sui cinque dopo](041-overfitting-in-pratica/)
-- [Sharpe, Sortino o Calmar: quale metrica ti inganna meno?](061-sharpe-sortino-calmar/)
-- [Quanto costa davvero ogni operazione? Da 0 a 0,5% su quasi un secolo di S&P 500](101-il-costo-nascosto/)
-- [Il Santa Claus rally esiste? Sette sedute a cavallo dell'anno, sette indici e la fortuna](163-il-santa-claus-rally/)
-- [«Vendi a maggio e vai via»: otto indici europei, la fortuna e il buy & hold](171-halloween-indicator-in-europa/)
-- [PAC contro lump sum: conta più la lunghezza delle rate o il decennio di partenza?](201-pac-contro-lump-sum/)
-- [Chi ha più fortuna: chi compra una volta o chi compra ogni mese?](519-una-volta-o-ogni-mese/)
-- [500 euro su Apple con le medie mobili: cinque anni di operazioni, commissioni e tasse](bonus-apple-medie-mobili-500-euro/)
-- [Il cono della fortuna: la regola 50/200 sull'S&P 500 contro diecimila scimmie](bonus-cono-della-fortuna-sp500/)
-- [Il filtro sul rendimento passato funziona davvero? Prova fuori campione su 150 titoli](bonus-filtro-rendimento-passato-medie-mobili/)
-- [Quando le medie mobili battono il buy & hold? Tre indizi dalla letteratura messi alla prova](bonus-quando-le-medie-mobili-battono-il-buy-and-hold/)
-- [50 titoli dell'S&P 500, medie mobili contro buy & hold: la classifica](bonus-sp500-50-titoli-medie-mobili/)
+- [Il look-ahead bias in 10 righe di codice: quanto vale l'illusione?](il-look-ahead-bias-in-10-righe-di-codice-quanto-vale-l-illusione/)
+- [Quanto è fortunata la tua strategia? Il Golden Cross alla prova del caso](quanto-e-fortunata-la-tua-strategia-il-golden-cross-alla-prova-del-caso/)
+- [Overfitting in pratica: ottimizzare su dieci anni, provare sui cinque dopo](overfitting-in-pratica-ottimizzare-su-dieci-anni-provare-sui-cinque-dopo/)
+- [Sharpe, Sortino o Calmar: quale metrica ti inganna meno?](sharpe-sortino-o-calmar-quale-metrica-ti-inganna-meno/)
+- [Quanto costa davvero ogni operazione? Da 0 a 0,5% su quasi un secolo di S&P 500](quanto-costa-davvero-ogni-operazione-da-0-a-0-5-su-quasi-un-secolo-di-sp-500/)
+- [Il Santa Claus rally esiste? Sette sedute a cavallo dell'anno, sette indici e la fortuna](il-santa-claus-rally-esiste-sette-sedute-a-cavallo-dell-anno-sette-indici-e-la-fortuna/)
+- [«Vendi a maggio e vai via»: otto indici europei, la fortuna e il buy & hold](vendi-a-maggio-e-vai-via-otto-indici-europei-la-fortuna-e-il-buy-hold/)
+- [PAC contro lump sum: conta più la lunghezza delle rate o il decennio di partenza?](pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza/)
+- [Chi ha più fortuna: chi compra una volta o chi compra ogni mese?](chi-ha-piu-fortuna-chi-compra-una-volta-o-chi-compra-ogni-mese/)
+- [500 euro su Apple con le medie mobili: cinque anni di operazioni, commissioni e tasse](500-euro-su-apple-con-le-medie-mobili-cinque-anni-di-operazioni-commissioni-e-tasse/)
+- [Il cono della fortuna: la regola 50/200 sull'S&P 500 contro diecimila scimmie](il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie/)
+- [Il filtro sul rendimento passato funziona davvero? Prova fuori campione su 150 titoli](il-filtro-sul-rendimento-passato-funziona-davvero-prova-fuori-campione-su-150-titoli/)
+- [Quando le medie mobili battono il buy & hold? Tre indizi dalla letteratura messi alla prova](quando-le-medie-mobili-battono-il-buy-hold-tre-indizi-dalla-letteratura-messi-alla-prova/)
+- [50 titoli dell'S&P 500, medie mobili contro buy & hold: la classifica](50-titoli-dell-sp-500-medie-mobili-contro-buy-hold-la-classifica/)
 
 ## Come si usa
 

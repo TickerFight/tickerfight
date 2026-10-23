@@ -15,7 +15,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Cosa c'è in questa cartella
 
 ```
-bonus-quando-le-medie-mobili-battono-il-buy-and-hold/
+quando-le-medie-mobili-battono-il-buy-hold-tre-indizi-dalla-letteratura-messi-alla-prova/
 ├── requirements.txt   librerie Python, versioni fissate
 └── flusso/
     ├── 01_scarica_dati.py     scarica i 150 titoli di validazione da Yahoo Finance
@@ -29,7 +29,7 @@ bonus-quando-le-medie-mobili-battono-il-buy-and-hold/
 ## Come si rifà
 
 ```bash
-cd bonus-quando-le-medie-mobili-battono-il-buy-and-hold
+cd quando-le-medie-mobili-battono-il-buy-hold-tre-indizi-dalla-letteratura-messi-alla-prova
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

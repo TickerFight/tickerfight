@@ -14,7 +14,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Cosa c'è in questa cartella
 
 ```
-061-sharpe-sortino-calmar/
+sharpe-sortino-o-calmar-quale-metrica-ti-inganna-meno/
 ├── requirements.txt   librerie Python, versioni fissate
 └── flusso/
     ├── 01_scarica_dati.py     scarica l'S&P 500 dal 1927
@@ -29,7 +29,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Come si rifà
 
 ```bash
-cd 061-sharpe-sortino-calmar
+cd sharpe-sortino-o-calmar-quale-metrica-ti-inganna-meno
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

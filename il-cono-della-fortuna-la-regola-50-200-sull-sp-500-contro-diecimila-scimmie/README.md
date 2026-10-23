@@ -13,7 +13,7 @@ L'articolo completo, con risultati e grafici, è sul blog [TickerFight](https://
 ## Cosa c'è in questa cartella
 
 ```
-bonus-cono-della-fortuna-sp500/
+il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie/
 ├── requirements.txt   librerie Python, versioni fissate
 └── flusso/
     ├── 01_scarica_dati.py     scarica S&P 500 e cambio euro-dollaro
@@ -27,7 +27,7 @@ bonus-cono-della-fortuna-sp500/
 ## Come si rifà
 
 ```bash
-cd bonus-cono-della-fortuna-sp500
+cd il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt
