@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-6 pubblicati, 8 in revisione. La tabella si aggiorna da sola due volte al giorno leggendo il blog.
+6 pubblicati, 9 in revisione. La tabella si aggiorna da sola due volte al giorno leggendo il blog.
 
 | Articolo | Stato | Uscito il | Codice |
 |---|---|---|---|
@@ -19,4 +19,5 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | Il Santa Claus rally esiste? Sette sedute a cavallo dell'anno, sette indici e la fortuna | In revisione | — | [codice](../il-santa-claus-rally-esiste-sette-sedute-a-cavallo-dell-anno-sette-indici-e-la-fortuna/) |
 | «Vendi a maggio e vai via»: otto indici europei, la fortuna e il buy & hold | In revisione | — | [codice](../vendi-a-maggio-e-vai-via-otto-indici-europei-la-fortuna-e-il-buy-hold/) |
 | PAC contro lump sum: conta più la lunghezza delle rate o il decennio di partenza? | In revisione | — | [codice](../pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza/) |
+| Portafogli di titoli casuali contro l'indice: quanto conta scegliere i titoli? | In revisione | — | [codice](../portafogli-di-titoli-casuali-contro-l-indice-quanto-conta-scegliere-i-titoli/) |
 | Chi ha più fortuna: chi compra una volta o chi compra ogni mese? | In revisione | — | [codice](../chi-ha-piu-fortuna-chi-compra-una-volta-o-chi-compra-ogni-mese/) |

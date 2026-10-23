@@ -14,6 +14,7 @@ Lo stato di ogni articolo (pubblicato sul blog o in revisione) è nel [piano edi
 - [Il Santa Claus rally esiste? Sette sedute a cavallo dell'anno, sette indici e la fortuna](il-santa-claus-rally-esiste-sette-sedute-a-cavallo-dell-anno-sette-indici-e-la-fortuna/)
 - [«Vendi a maggio e vai via»: otto indici europei, la fortuna e il buy & hold](vendi-a-maggio-e-vai-via-otto-indici-europei-la-fortuna-e-il-buy-hold/)
 - [PAC contro lump sum: conta più la lunghezza delle rate o il decennio di partenza?](pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza/)
+- [Portafogli di titoli casuali contro l'indice: quanto conta scegliere i titoli?](portafogli-di-titoli-casuali-contro-l-indice-quanto-conta-scegliere-i-titoli/)
 - [Chi ha più fortuna: chi compra una volta o chi compra ogni mese?](chi-ha-piu-fortuna-chi-compra-una-volta-o-chi-compra-ogni-mese/)
 - [500 euro su Apple con le medie mobili: cinque anni di operazioni, commissioni e tasse](500-euro-su-apple-con-le-medie-mobili-cinque-anni-di-operazioni-commissioni-e-tasse/)
 - [Il cono della fortuna: la regola 50/200 sull'S&P 500 contro diecimila scimmie](il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie/)
