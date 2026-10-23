@@ -30,7 +30,7 @@ overfitting-in-pratica-ottimizzare-su-dieci-anni-provare-sui-cinque-dopo/
 ## Come si rifà
 
 ```bash
-cd overfitting-in-pratica-ottimizzare-su-dieci-anni-provare-sui-cinque-dopo
+cd articoli/overfitting-in-pratica-ottimizzare-su-dieci-anni-provare-sui-cinque-dopo
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

@@ -30,7 +30,7 @@ quanto-costa-davvero-ogni-operazione-da-0-a-0-5-su-quasi-un-secolo-di-sp-500/
 ## Come si rifà
 
 ```bash
-cd quanto-costa-davvero-ogni-operazione-da-0-a-0-5-su-quasi-un-secolo-di-sp-500
+cd articoli/quanto-costa-davvero-ogni-operazione-da-0-a-0-5-su-quasi-un-secolo-di-sp-500
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

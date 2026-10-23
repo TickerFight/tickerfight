@@ -29,7 +29,7 @@ chi-ha-piu-fortuna-chi-compra-una-volta-o-chi-compra-ogni-mese/
 ## Come si rifà
 
 ```bash
-cd chi-ha-piu-fortuna-chi-compra-una-volta-o-chi-compra-ogni-mese
+cd articoli/chi-ha-piu-fortuna-chi-compra-una-volta-o-chi-compra-ogni-mese
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

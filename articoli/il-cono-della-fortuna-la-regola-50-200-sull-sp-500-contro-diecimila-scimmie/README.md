@@ -27,7 +27,7 @@ il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie/
 ## Come si rifà
 
 ```bash
-cd il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie
+cd articoli/il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

@@ -21,7 +21,7 @@ L'articolo completo, con risultati e grafici, è sul blog: [500 euro su Apple co
 ## Come si rifà
 
 ```bash
-cd 500-euro-su-apple-con-le-medie-mobili-cinque-anni-di-operazioni-commissioni-e-tasse
+cd articoli/500-euro-su-apple-con-le-medie-mobili-cinque-anni-di-operazioni-commissioni-e-tasse
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

@@ -31,7 +31,7 @@ pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza/
 ## Come si rifà
 
 ```bash
-cd pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza
+cd articoli/pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

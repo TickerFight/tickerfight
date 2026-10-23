@@ -29,7 +29,7 @@ vendi-a-maggio-e-vai-via-otto-indici-europei-la-fortuna-e-il-buy-hold/
 ## Come si rifà
 
 ```bash
-cd vendi-a-maggio-e-vai-via-otto-indici-europei-la-fortuna-e-il-buy-hold
+cd articoli/vendi-a-maggio-e-vai-via-otto-indici-europei-la-fortuna-e-il-buy-hold
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

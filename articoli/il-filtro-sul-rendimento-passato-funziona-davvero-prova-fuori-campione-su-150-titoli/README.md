@@ -28,7 +28,7 @@ il-filtro-sul-rendimento-passato-funziona-davvero-prova-fuori-campione-su-150-ti
 ## Come si rifà
 
 ```bash
-cd il-filtro-sul-rendimento-passato-funziona-davvero-prova-fuori-campione-su-150-titoli
+cd articoli/il-filtro-sul-rendimento-passato-funziona-davvero-prova-fuori-campione-su-150-titoli
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

@@ -29,7 +29,7 @@ quando-le-medie-mobili-battono-il-buy-hold-tre-indizi-dalla-letteratura-messi-al
 ## Come si rifà
 
 ```bash
-cd quando-le-medie-mobili-battono-il-buy-hold-tre-indizi-dalla-letteratura-messi-alla-prova
+cd articoli/quando-le-medie-mobili-battono-il-buy-hold-tre-indizi-dalla-letteratura-messi-alla-prova
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

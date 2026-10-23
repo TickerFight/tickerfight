@@ -19,7 +19,7 @@ quanto-e-fortunata-la-tua-strategia-il-golden-cross-alla-prova-del-caso/
 ## Come si rifà
 
 ```bash
-cd quanto-e-fortunata-la-tua-strategia-il-golden-cross-alla-prova-del-caso
+cd articoli/quanto-e-fortunata-la-tua-strategia-il-golden-cross-alla-prova-del-caso
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

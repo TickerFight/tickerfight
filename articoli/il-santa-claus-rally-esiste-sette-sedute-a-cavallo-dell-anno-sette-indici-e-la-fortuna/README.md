@@ -30,7 +30,7 @@ il-santa-claus-rally-esiste-sette-sedute-a-cavallo-dell-anno-sette-indici-e-la-f
 ## Come si rifà
 
 ```bash
-cd il-santa-claus-rally-esiste-sette-sedute-a-cavallo-dell-anno-sette-indici-e-la-fortuna
+cd articoli/il-santa-claus-rally-esiste-sette-sedute-a-cavallo-dell-anno-sette-indici-e-la-fortuna
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

@@ -29,7 +29,7 @@ sharpe-sortino-o-calmar-quale-metrica-ti-inganna-meno/
 ## Come si rifà
 
 ```bash
-cd sharpe-sortino-o-calmar-quale-metrica-ti-inganna-meno
+cd articoli/sharpe-sortino-o-calmar-quale-metrica-ti-inganna-meno
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

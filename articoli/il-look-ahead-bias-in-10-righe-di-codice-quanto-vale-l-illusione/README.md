@@ -29,7 +29,7 @@ il-look-ahead-bias-in-10-righe-di-codice-quanto-vale-l-illusione/
 ## Come si rifà
 
 ```bash
-cd il-look-ahead-bias-in-10-righe-di-codice-quanto-vale-l-illusione
+cd articoli/il-look-ahead-bias-in-10-righe-di-codice-quanto-vale-l-illusione
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

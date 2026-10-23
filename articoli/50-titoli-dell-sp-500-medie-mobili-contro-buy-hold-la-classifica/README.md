@@ -21,7 +21,7 @@ L'articolo completo, con risultati e grafici, è sul blog: [50 titoli dell'S&P 5
 ## Come si rifà
 
 ```bash
-cd 50-titoli-dell-sp-500-medie-mobili-contro-buy-hold-la-classifica
+cd articoli/50-titoli-dell-sp-500-medie-mobili-contro-buy-hold-la-classifica
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt

@@ -29,7 +29,7 @@ portafogli-di-titoli-casuali-contro-l-indice-quanto-conta-scegliere-i-titoli/
 ## Come si rifà
 
 ```bash
-cd portafogli-di-titoli-casuali-contro-l-indice-quanto-conta-scegliere-i-titoli
+cd articoli/portafogli-di-titoli-casuali-contro-l-indice-quanto-conta-scegliere-i-titoli
 python -m venv .venv
 source .venv/bin/activate          # su Windows: .venv\Scripts\activate
 pip install -r requirements.txt
