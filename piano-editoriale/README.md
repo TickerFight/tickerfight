@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-6 pubblicati, 12 in revisione. La tabella si aggiorna da sola due volte al giorno leggendo il blog.
+6 pubblicati, 13 in revisione. La tabella si aggiorna da sola due volte al giorno leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -12,6 +12,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [Il cono della fortuna: la regola 50/200 sull'S&P 500 contro diecimila scimmie](../articoli/il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/il-cono-della-fortuna-la-regola-50200.html) |
 | [500 euro su Apple con le medie mobili: cinque anni di operazioni, commissioni e tasse](../articoli/500-euro-su-apple-con-le-medie-mobili-cinque-anni-di-operazioni-commissioni-e-tasse/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/500-euro-su-apple-con-le-medie-mobili.html) |
 | [50 titoli dell'S&P 500, medie mobili contro buy & hold: la classifica](../articoli/50-titoli-dell-sp-500-medie-mobili-contro-buy-hold-la-classifica/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/50-titoli-dells-500-medie-mobili-contro.html) |
+| [Che cos'è davvero un backtest, e che cosa non è?](../articoli/che-cos-e-davvero-un-backtest-e-che-cosa-non-e/) | In revisione | — | — |
 | [Il look-ahead bias in 10 righe di codice: quanto vale l'illusione?](../articoli/il-look-ahead-bias-in-10-righe-di-codice-quanto-vale-l-illusione/) | In revisione | — | — |
 | [Overfitting in pratica: ottimizzare su dieci anni, provare sui cinque dopo](../articoli/overfitting-in-pratica-ottimizzare-su-dieci-anni-provare-sui-cinque-dopo/) | In revisione | — | — |
 | [Sharpe, Sortino o Calmar: quale metrica ti inganna meno?](../articoli/sharpe-sortino-o-calmar-quale-metrica-ti-inganna-meno/) | In revisione | — | — |
