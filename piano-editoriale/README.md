@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-6 pubblicati, 13 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+6 pubblicati, 14 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -17,6 +17,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [Overfitting in pratica: ottimizzare su dieci anni, provare sui cinque dopo](https://tickerfight.github.io/tickerfight/articoli/overfitting-in-pratica-ottimizzare-su-dieci-anni-provare-sui-cinque-dopo/) | In revisione | — | — |
 | [Sharpe, Sortino o Calmar: quale metrica ti inganna meno?](https://tickerfight.github.io/tickerfight/articoli/sharpe-sortino-o-calmar-quale-metrica-ti-inganna-meno/) | In revisione | — | — |
 | [Quanto costa davvero ogni operazione? Da 0 a 0,5% su quasi un secolo di S&P 500](https://tickerfight.github.io/tickerfight/articoli/quanto-costa-davvero-ogni-operazione-da-0-a-0-5-su-quasi-un-secolo-di-sp-500/) | In revisione | — | — |
+| [A che costo per operazione smette di battere il buy & hold una regola di trading?](https://tickerfight.github.io/tickerfight/articoli/a-che-costo-per-operazione-smette-di-battere-il-buy-hold-una-regola-di-trading/) | In revisione | — | — |
 | [Il Santa Claus rally esiste? Sette sedute a cavallo dell'anno, sette indici e la fortuna](https://tickerfight.github.io/tickerfight/articoli/il-santa-claus-rally-esiste-sette-sedute-a-cavallo-dell-anno-sette-indici-e-la-fortuna/) | In revisione | — | — |
 | [«Vendi a maggio e vai via»: otto indici europei, la fortuna e il buy & hold](https://tickerfight.github.io/tickerfight/articoli/vendi-a-maggio-e-vai-via-otto-indici-europei-la-fortuna-e-il-buy-hold/) | In revisione | — | — |
 | [PAC contro lump sum: conta più la lunghezza delle rate o il decennio di partenza?](https://tickerfight.github.io/tickerfight/articoli/pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza/) | In revisione | — | — |
