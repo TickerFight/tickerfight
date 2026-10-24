@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-6 pubblicati, 10 in revisione. La tabella si aggiorna da sola due volte al giorno leggendo il blog.
+6 pubblicati, 11 in revisione. La tabella si aggiorna da sola due volte al giorno leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -21,4 +21,5 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [PAC contro lump sum: conta più la lunghezza delle rate o il decennio di partenza?](../articoli/pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza/) | In revisione | — | — |
 | [Volatility targeting: ridurre le azioni quando il mercato trema migliora il portafoglio?](../articoli/volatility-targeting-ridurre-le-azioni-quando-il-mercato-trema-migliora-il-portafoglio/) | In revisione | — | — |
 | [Portafogli di titoli casuali contro l'indice: quanto conta scegliere i titoli?](../articoli/portafogli-di-titoli-casuali-contro-l-indice-quanto-conta-scegliere-i-titoli/) | In revisione | — | — |
+| [Stazionarietà e test ADF: i prezzi dell'S&P 500 sono stazionari? E i rendimenti?](../articoli/stazionarieta-e-test-adf-i-prezzi-dell-sp-500-sono-stazionari-e-i-rendimenti/) | In revisione | — | — |
 | [Chi ha più fortuna: chi compra una volta o chi compra ogni mese?](../articoli/chi-ha-piu-fortuna-chi-compra-una-volta-o-chi-compra-ogni-mese/) | In revisione | — | — |
