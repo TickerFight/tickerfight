@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A che costo per operazione smette di battere il buy &amp; hold una regola di trading? · il codice · TickerFight</title>
+<meta name="description" content="per ogni regola di investimento, a quale costo per cambio di posizione smette di battere il buy &amp; hold? L&#x27;articolo 101 ha fatto crescere il costo e guardato la perdita; qui si cerca direttamente il costo di pareggio, una volta sul rendimento annuo e una volta sullo Sharpe.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>A che costo per operazione smette di battere il buy &amp; hold una regola di trading?</h1>
+<p class="domanda">Per ogni regola di investimento, a quale costo per cambio di posizione smette di battere il buy &amp; hold? L&#x27;articolo 101 ha fatto crescere il costo e guardato la perdita; qui si cerca direttamente il costo di pareggio, una volta sul rendimento annuo e una volta sullo Sharpe.</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="a-che-costo-per-operazione-smette-di-battere-il-buy-hold-una-regola-di-trading.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Dieci regole fisse, nessuna ottimizzata:</strong> prezzo sopra la media a 10, 20, 50, 100, 200 giorni; incroci 10/50 e 50/200; momentum a 3 e 12 mesi; ritorno alla media nel trend. Il segnale della chiusura di ieri decide la posizione di oggi. Riferimento: buy &amp; hold.</li>
+<li><strong>Costo di pareggio:</strong> il costo per cambio (commissione, spread e slippage insieme, nessuna tassa) a cui la regola ha lo stesso rendimento annuo, o lo stesso Sharpe, del buy &amp; hold. Si trova per bisezione tra 0 e 5%; se la regola è già sotto a costo zero vale 0, se è sopra anche al 5% è «oltre il 5%».</li>
+<li><strong>Due metà del periodo</strong> per vedere se il pareggio è stabile; <strong>500 scimmie</strong> con la stessa frequenza di cambi del prezzo sopra la media a 50 giorni per il confronto con il caso.</li>
+<li><strong>Cinque ipotesi</strong> scritte in <code>config.py</code> prima di guardare i dati.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>a-che-costo-per-operazione-smette-di-battere-il-buy-hold-una-regola-di-trading/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica l'S&amp;P 500 dal 1927
+    ├── 02_backtest_e_test.py  costo di pareggio, due metà del periodo, scimmie, verdetti
+    ├── 03_grafici.py          i cinque grafici
+    ├── config.py              regole, parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            regole, rendimenti netti dei costi, costo di pareggio, Spearman, scimmie
+    ├── motore_vettoriale.py   segnale, posizione con ritardo, valore
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd a-che-costo-per-operazione-smette-di-battere-il-buy-hold-una-regola-di-trading
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>costo di pareggio, due metà del periodo, scimmie, verdetti</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Il costo di pareggio: a che costo per cambio ogni regola smette di battere il buy &amp; hold.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json          ogni numero dell&#x27;articolo, con descrizione e origine
+  pareggio.csv           per ogni regola: cambi all&#x27;anno, costo di pareggio su rendimento annuo e su Sharpe (periodo intero e due metà)
+  curve_sharpe.csv       Sharpe di ogni regola per costi da 0 a 1%
+  scimmie.csv            Sharpe delle scimmie a costo zero e a costo tipico
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def it_pct(x: float, dec: int = 2) -&gt; str:
+    return f&quot;{x * 100:.{dec}f}&quot;.replace(&quot;.&quot;, &quot;,&quot;) + &quot;%&quot;
+
+
+def testo_costo(c: float, stato: str) -&gt; str:
+    if stato == &quot;gia_sotto&quot;:
+        return &quot;già sotto&quot;
+    if stato == &quot;oltre&quot;:
+        return &quot;oltre &quot; + it_pct(config.COSTO_MAX_RICERCA, 0)
+    if 0 &lt; c &lt; 0.0001:
+        return &quot;meno di 0,01%&quot;
+    return it_pct(c)
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    date = close.index
+    S0 = config.INIZIO_TEST_SEDUTE
+    ids = list(config.STRATEGIE)
+    regole = [i for i in ids if i != config.ID_BH]
+    nome = {i: config.STRATEGIE[i][0] for i in ids}
+    ret = close.pct_change().fillna(0.0)
+    ret_s = ret.iloc[S0:]
+    anni = (date[-1] - date[S0 - 1]).days / 365.25
+    T = len(ret_s)
+    meta = T // 2
+    periodi = {&quot;tutto&quot;: (0, T), &quot;prima&quot;: (0, meta), &quot;seconda&quot;: (meta, T)}
+    anni_p = {k: (date[S0 + b - 1] - date[S0 + a - 1]).days / 365.25 for k, (a, b) in periodi.items()}
+    pos = {i: fx.posizione_regola(close, config.STRATEGIE[i][1]).iloc[S0:] for i in ids}
+
+    def serie(i, costo, periodo):
+        a, b = periodi[periodo]
+        return fx.rendimenti_netti(ret_s.iloc[a:b], pos[i].iloc[a:b], costo).to_numpy()
+
+    def misura(i, periodo, tipo):
+        if tipo == &quot;sharpe&quot;:
+            return lambda c: float(fx.sharpe(serie(i, c, periodo), config.SEDUTE_ANNO))
+        return lambda c: float(fx.cagr(serie(i, c, periodo), anni_p[periodo]))
+
+    cambi_anno = {i: float(pos[i].diff().abs().fillna(0.0).sum() + abs(pos[i].iloc[0])) / anni for i in ids}
+
+    # --- Parametri e dati ---------------------------------------------------------------------------------------------------------
+    reg(&quot;prima_data&quot;, str(date[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;data_inizio&quot;, str(date[S0].date()), &quot;data_lunga&quot;, &quot;Prima seduta in cui si misurano tutte le regole&quot;, &quot;dati/ e config.py&quot;)
+    reg(&quot;data_meta&quot;, str(date[S0 + meta].date()), &quot;data_lunga&quot;, &quot;Prima seduta della seconda metà del periodo misurato&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(date[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_campione&quot;, anni, &quot;num1&quot;, &quot;Anni dell&#x27;intero periodo misurato&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_meta&quot;, anni_p[&quot;prima&quot;], &quot;num1&quot;, &quot;Anni della prima metà del periodo misurato&quot;, &quot;dati/&quot;)
+    reg(&quot;n_regole&quot;, len(regole), &quot;int&quot;, &quot;Regole confrontate con il buy &amp; hold&quot;, &quot;config.py, STRATEGIE&quot;)
+    reg(&quot;costo_tipico&quot;, config.COSTO_TIPICO, &quot;pct1&quot;, &quot;Costo tipico per cambio citato nel testo&quot;, &quot;config.py, COSTO_TIPICO&quot;)
+    reg(&quot;costo_ricerca_max&quot;, config.COSTO_MAX_RICERCA, &quot;pct0&quot;, &quot;Costo massimo cercato per il pareggio&quot;, &quot;config.py, COSTO_MAX_RICERCA&quot;)
+    reg(&quot;ordine_esempio&quot;, config.ORDINE_ESEMPIO, &quot;int&quot;, &quot;Euro di un ordine d&#x27;esempio per tradurre il costo percentuale in euro&quot;, &quot;config.py, ORDINE_ESEMPIO&quot;)
+    for w in (10, 20, 50, 100, 200):
+        reg(f&quot;w{w}&quot;, w, &quot;annonum&quot;, f&quot;Giorni della media mobile: regola &#x27;Prezzo sopra la media a {w} giorni&#x27;&quot;, &quot;config.py, STRATEGIE&quot;)
+    reg(&quot;w_inc_lenta&quot;, config.STRATEGIE[&quot;cross&quot;][1][2], &quot;annonum&quot;, &quot;Giorni della media lenta dell&#x27;incrocio 50/200&quot;, &quot;config.py, STRATEGIE&quot;)
+    reg(&quot;costo_tipico_euro&quot;, config.COSTO_TIPICO * config.ORDINE_ESEMPIO, &quot;num2&quot;, &quot;Euro di costo per ordine al costo tipico, su un ordine d&#x27;esempio&quot;, &quot;config.py&quot;)
+    reg(&quot;anno_bs&quot;, 2012, &quot;annonum&quot;, &quot;Anno di pubblicazione di Bajgrowicz e Scaillet, Journal of Financial Economics&quot;, &quot;pagina IDEAS/RePEc dell&#x27;articolo, letta il giorno dell&#x27;esecuzione&quot;)
+    reg(&quot;anno_bs_ini&quot;, 1897, &quot;annonum&quot;, &quot;Primo anno dei dati del Dow Jones usati da Bajgrowicz e Scaillet&quot;, &quot;abstract dell&#x27;articolo, pagina IDEAS/RePEc&quot;)
+    reg(&quot;anno_bs_fin&quot;, 2011, &quot;annonum&quot;, &quot;Ultimo anno dei dati del Dow Jones usati da Bajgrowicz e Scaillet&quot;, &quot;abstract dell&#x27;articolo, pagina IDEAS/RePEc&quot;)
+    reg(&quot;anno_nmv&quot;, 2016, &quot;annonum&quot;, &quot;Anno di pubblicazione di Novy-Marx e Velikov, Review of Financial Studies&quot;, &quot;pagina IDEAS/RePEc dell&#x27;articolo, letta il giorno dell&#x27;esecuzione&quot;)
+    reg(&quot;soglia_nmv&quot;, 0.5, &quot;pct0&quot;, &quot;Rotazione mensile sotto la quale, per Novy-Marx e Velikov, la maggior parte delle anomalie resta profittevole al netto dei costi&quot;, &quot;abstract dell&#x27;articolo, pagina IDEAS/RePEc&quot;)
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Scimmie estratte&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_spearman&quot;, config.SOGLIA_SPEARMAN, &quot;num1&quot;, &quot;Soglia di correlazione di rango per l&#x27;ipotesi 1&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_filtro&quot;, config.SOGLIA_FILTRO, &quot;pct1&quot;, &quot;Costo di pareggio minimo per il filtro a 200 giorni (ipotesi 2)&quot;, &quot;config.py&quot;)
+    reg(&quot;cambi_veloci_anno&quot;, config.CAMBI_VELOCI_ANNO, &quot;annonum&quot;, &quot;Cambi all&#x27;anno da cui una regola è &#x27;veloce&#x27; (ipotesi 3)&quot;, &quot;config.py&quot;)
+    reg(&quot;fattore_instabilita&quot;, config.FATTORE_INSTABILITA, &quot;annonum&quot;, &quot;Rapporto tra i due costi di pareggio delle metà oltre il quale la regola è instabile (ipotesi 4)&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_scimmie&quot;, config.SOGLIA_SCIMMIE, &quot;pct0&quot;, &quot;Quota massima di scimmie sopra il buy &amp; hold ammessa (ipotesi 5)&quot;, &quot;config.py&quot;)
+    reg(&quot;sharpe_bh_lordo&quot;, float(misura(&quot;bh&quot;, &quot;tutto&quot;, &quot;sharpe&quot;)(0.0)), &quot;num2&quot;, &quot;Sharpe del buy &amp; hold senza costi&quot;, &quot;costi calcolati sul periodo intero&quot;)
+    reg(&quot;cagr_bh_lordo&quot;, float(misura(&quot;bh&quot;, &quot;tutto&quot;, &quot;cagr&quot;)(0.0)), &quot;pct1&quot;, &quot;Rendimento annuo composto del buy &amp; hold senza costi&quot;, &quot;calcolato sul periodo intero&quot;)
+
+    # --- Costo di pareggio ---------------------------------------------------------------------------------------------------------
+    righe = []
+    BE = {}
+    for i in regole:
+        r = {&quot;id&quot;: i, &quot;nome&quot;: nome[i], &quot;cambi_anno&quot;: cambi_anno[i]}
+        for tipo in (&quot;sharpe&quot;, &quot;cagr&quot;):
+            for periodo in periodi:
+                c, stato = fx.costo_pareggio(misura(i, periodo, tipo), misura(&quot;bh&quot;, periodo, tipo), config.COSTO_MAX_RICERCA)
+                BE[(i, tipo, periodo)] = (c, stato)
+                r[f&quot;{tipo}_{periodo}&quot;] = c
+                r[f&quot;{tipo}_{periodo}_stato&quot;] = stato
+        righe.append(r)
+        sh0, shp = misura(i, &quot;tutto&quot;, &quot;sharpe&quot;)(0.0), misura(i, &quot;tutto&quot;, &quot;sharpe&quot;)(config.COSTO_TIPICO)
+        cg0, cgp = misura(i, &quot;tutto&quot;, &quot;cagr&quot;)(0.0), misura(i, &quot;tutto&quot;, &quot;cagr&quot;)(config.COSTO_TIPICO)
+        reg(f&quot;cambi_anno_{i}&quot;, cambi_anno[i], &quot;num1&quot;, f&quot;Cambi di posizione all&#x27;anno: {nome[i]}&quot;, &quot;posizioni sul periodo misurato&quot;)
+        reg(f&quot;sh_lordo_{i}&quot;, sh0, &quot;num2&quot;, f&quot;Sharpe senza costi: {nome[i]}&quot;, &quot;periodo intero&quot;)
+        reg(f&quot;sh_tipico_{i}&quot;, shp, &quot;num2&quot;, f&quot;Sharpe con costo tipico: {nome[i]}&quot;, &quot;periodo intero&quot;)
+        reg(f&quot;cg_lordo_{i}&quot;, cg0, &quot;pct1&quot;, f&quot;Rendimento annuo composto senza costi: {nome[i]}&quot;, &quot;periodo intero&quot;)
+        reg(f&quot;cg_tipico_{i}&quot;, cgp, &quot;pct1&quot;, f&quot;Rendimento annuo composto con costo tipico: {nome[i]}&quot;, &quot;periodo intero&quot;)
+        for tipo, et in ((&quot;sharpe&quot;, &quot;be_sh&quot;), (&quot;cagr&quot;, &quot;be_cg&quot;)):
+            c, stato = BE[(i, tipo, &quot;tutto&quot;)]
+            reg(f&quot;{et}_{i}&quot;, c, &quot;pct2&quot;, f&quot;Costo di pareggio sul {&#x27;rapporto rendimento/rischio (Sharpe)&#x27; if tipo == &#x27;sharpe&#x27; else &#x27;rendimento annuo&#x27;}: {nome[i]}&quot;, &quot;bisezione, periodo intero&quot;)
+            reg(f&quot;{et}_txt_{i}&quot;, testo_costo(c, stato), &quot;testo&quot;, f&quot;Costo di pareggio ({&#x27;Sharpe&#x27; if tipo == &#x27;sharpe&#x27; else &#x27;rendimento annuo&#x27;}) come testo, con i casi limite: {nome[i]}&quot;, &quot;bisezione, periodo intero&quot;)
+        for periodo, et in ((&quot;prima&quot;, &quot;p1&quot;), (&quot;seconda&quot;, &quot;p2&quot;)):
+            c, stato = BE[(i, &quot;sharpe&quot;, periodo)]
+            reg(f&quot;be_sh_{et}_txt_{i}&quot;, testo_costo(c, stato), &quot;testo&quot;, f&quot;Costo di pareggio sullo Sharpe nella {&#x27;prima&#x27; if periodo == &#x27;prima&#x27; else &#x27;seconda&#x27;} metà del periodo: {nome[i]}&quot;, &quot;bisezione, mezzo periodo&quot;)
+        c, _ = BE[(i, &quot;sharpe&quot;, &quot;tutto&quot;)]
+        reg(f&quot;be_sh_euro_{i}&quot;, c * config.ORDINE_ESEMPIO, &quot;num2&quot;, f&quot;Euro di costo per ordine, su un ordine d&#x27;esempio, a cui la regola pareggia lo Sharpe del buy &amp; hold: {nome[i]}&quot;, &quot;bisezione x ORDINE_ESEMPIO&quot;)
+    pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;pareggio.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    # --- Riepilogo sul pareggio -------------------------------------------------------------------------------------------------------
+    sh_tutto = {i: BE[(i, &quot;sharpe&quot;, &quot;tutto&quot;)] for i in regole}
+    n_gia_sotto_sh = sum(1 for i in regole if sh_tutto[i][1] == &quot;gia_sotto&quot;)
+    n_gia_sotto_cg = sum(1 for i in regole if BE[(i, &quot;cagr&quot;, &quot;tutto&quot;)][1] == &quot;gia_sotto&quot;)
+    n_oltre_sh = sum(1 for i in regole if sh_tutto[i][1] == &quot;oltre&quot;)
+    reg(&quot;n_gia_sotto_sh&quot;, n_gia_sotto_sh, &quot;int&quot;, &quot;Regole che a costo zero hanno già Sharpe non superiore al buy &amp; hold&quot;, &quot;pareggio.csv&quot;)
+    reg(&quot;n_gia_sotto_cg&quot;, n_gia_sotto_cg, &quot;int&quot;, &quot;Regole che a costo zero hanno già rendimento annuo non superiore al buy &amp; hold&quot;, &quot;pareggio.csv&quot;)
+    reg(&quot;n_oltre_sh&quot;, n_oltre_sh, &quot;int&quot;, &quot;Regole che battono lo Sharpe del buy &amp; hold anche con costo pari al massimo cercato&quot;, &quot;pareggio.csv&quot;)
+    n_vive_sh = sum(1 for i in regole if sh_tutto[i][0] &gt; 0)
+    reg(&quot;n_battono_sh_lordo&quot;, n_vive_sh, &quot;int&quot;, &quot;Regole con Sharpe più alto del buy &amp; hold a costo zero&quot;, &quot;pareggio.csv&quot;)
+    n_vive_tipico = sum(1 for i in regole if sh_tutto[i][0] &gt; config.COSTO_TIPICO)
+    reg(&quot;n_battono_sh_tipico&quot;, n_vive_tipico, &quot;int&quot;, &quot;Regole con Sharpe più alto del buy &amp; hold ancora al costo tipico&quot;, &quot;pareggio.csv&quot;)
+    n_vive_cg = sum(1 for i in regole if BE[(i, &quot;cagr&quot;, &quot;tutto&quot;)][0] &gt; 0)
+    reg(&quot;n_battono_cg_lordo&quot;, n_vive_cg, &quot;int&quot;, &quot;Regole con rendimento annuo più alto del buy &amp; hold a costo zero&quot;, &quot;pareggio.csv&quot;)
+    # regola con il pareggio più basso tra quelle che a costo zero battono il buy &amp; hold
+    vive = [i for i in regole if sh_tutto[i][0] &gt; 0]
+    if vive:
+        morta = min(vive, key=lambda i: sh_tutto[i][0])
+        reg(&quot;regola_piu_fragile&quot;, nome[morta], &quot;testo&quot;, &quot;Regola con Sharpe sopra il buy &amp; hold a costo zero e costo di pareggio più basso&quot;, &quot;pareggio.csv&quot;)
+        reg(&quot;regola_piu_fragile_be&quot;, sh_tutto[morta][0], &quot;pct2&quot;, &quot;Costo di pareggio (Sharpe) della regola più fragile tra quelle che partono sopra il buy &amp; hold&quot;, &quot;pareggio.csv&quot;)
+        reg(&quot;regola_piu_fragile_euro&quot;, sh_tutto[morta][0] * config.ORDINE_ESEMPIO, &quot;num2&quot;, &quot;Euro su un ordine d&#x27;esempio del costo di pareggio della regola più fragile&quot;, &quot;pareggio.csv&quot;)
+        forte = max(vive, key=lambda i: sh_tutto[i][0])
+        reg(&quot;regola_piu_robusta&quot;, nome[forte], &quot;testo&quot;, &quot;Regola con il costo di pareggio (Sharpe) più alto&quot;, &quot;pareggio.csv&quot;)
+        reg(&quot;regola_piu_robusta_be&quot;, sh_tutto[forte][0], &quot;pct2&quot;, &quot;Costo di pareggio (Sharpe) della regola più robusta&quot;, &quot;pareggio.csv&quot;)
+    reg(&quot;cambi_forte&quot;, cambi_anno[forte] if vive else 0.0, &quot;num1&quot;, &quot;Cambi all&#x27;anno della regola più robusta&quot;, &quot;posizioni&quot;)
+
+    # --- Curve dello Sharpe al crescere del costo ----------------------------------------------------------------------------------------
+    righe_c = []
+    for i in ids:
+        f = misura(i, &quot;tutto&quot;, &quot;sharpe&quot;)
+        for c in config.COSTO_CURVA:
+            righe_c.append({&quot;id&quot;: i, &quot;nome&quot;: nome[i], &quot;costo&quot;: c, &quot;sharpe&quot;: f(c)})
+    pd.DataFrame(righe_c).to_csv(config.RISULTATI / &quot;curve_sharpe.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    # --- Ipotesi 1: Spearman ----------------------------------------------------------------------------------------------------------------
+    rho = fx.spearman([cambi_anno[i] for i in regole], [sh_tutto[i][0] for i in regole])
+    if not np.isfinite(rho):
+        rho = 0.0                      # costi di pareggio tutti uguali (per esempio tutti zero): nessuna relazione misurabile
+    reg(&quot;spearman&quot;, rho, &quot;num2&quot;, &quot;Correlazione di rango di Spearman tra cambi all&#x27;anno e costo di pareggio (Sharpe), sulle regole&quot;, &quot;pareggio.csv&quot;)
+    # --- Ipotesi 2 ---------------------------------------------------------------------------------------------------------------------------
+    be200 = sh_tutto[config.ID_FILTRO]
+    # --- Ipotesi 3 ---------------------------------------------------------------------------------------------------------------------------
+    veloci = [i for i in regole if cambi_anno[i] &gt;= config.CAMBI_VELOCI_ANNO]
+    veloci_ok = [i for i in veloci if sh_tutto[i][0] &lt; config.COSTO_TIPICO]
+    reg(&quot;n_veloci&quot;, len(veloci), &quot;int&quot;, &quot;Regole con almeno il numero di cambi all&#x27;anno della soglia &#x27;veloce&#x27;&quot;, &quot;pareggio.csv&quot;)
+    reg(&quot;n_veloci_ok&quot;, len(veloci_ok), &quot;int&quot;, &quot;Regole veloci con costo di pareggio sotto il costo tipico&quot;, &quot;pareggio.csv&quot;)
+    # --- Ipotesi 4: instabilità tra le due metà ---------------------------------------------------------------------------------------------
+    instabili = 0
+    for i in regole:
+        a, b = BE[(i, &quot;sharpe&quot;, &quot;prima&quot;)][0], BE[(i, &quot;sharpe&quot;, &quot;seconda&quot;)][0]
+        lo, hi = min(a, b), max(a, b)
+        if hi &gt; 0 and (lo == 0 or hi / lo &gt; config.FATTORE_INSTABILITA):
+            instabili += 1
+    reg(&quot;n_instabili&quot;, instabili, &quot;int&quot;, &quot;Regole il cui costo di pareggio (Sharpe) nella metà migliore supera il fattore di instabilità volte quello della metà peggiore&quot;, &quot;pareggio.csv&quot;)
+    n_p1 = sum(1 for i in regole if BE[(i, &quot;sharpe&quot;, &quot;prima&quot;)][0] &gt; 0)
+    n_p2 = sum(1 for i in regole if BE[(i, &quot;sharpe&quot;, &quot;seconda&quot;)][0] &gt; 0)
+    reg(&quot;n_battono_prima&quot;, n_p1, &quot;int&quot;, &quot;Regole con Sharpe sopra il buy &amp; hold a costo zero nella prima metà&quot;, &quot;pareggio.csv&quot;)
+    reg(&quot;n_battono_seconda&quot;, n_p2, &quot;int&quot;, &quot;Regole con Sharpe sopra il buy &amp; hold a costo zero nella seconda metà&quot;, &quot;pareggio.csv&quot;)
+
+    # --- Ipotesi 5: scimmie ---------------------------------------------------------------------------------------------------------------------
+    rng = np.random.default_rng(config.SEME)
+    p_cambio = cambi_anno[config.ID_MEDIA] / config.SEDUTE_ANNO
+    pos_s = fx.posizioni_scimmie(config.N_SCIMMIE, T, p_cambio, rng)
+    cambi_s = float(np.abs(np.diff(pos_s, axis=1, prepend=np.zeros((config.N_SCIMMIE, 1)))).sum(axis=1).mean() / anni)
+    ra = ret_s.to_numpy()
+    sh0 = fx.sharpe(fx.rendimenti_scimmie(ra, pos_s, 0.0), config.SEDUTE_ANNO)
+    shp = fx.sharpe(fx.rendimenti_scimmie(ra, pos_s, config.COSTO_TIPICO), config.SEDUTE_ANNO)
+    pd.DataFrame({&quot;sharpe_lordo&quot;: sh0, &quot;sharpe_tipico&quot;: shp}).to_csv(config.RISULTATI / &quot;scimmie.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    sh_bh0 = misura(&quot;bh&quot;, &quot;tutto&quot;, &quot;sharpe&quot;)(0.0)
+    sh_bhp = misura(&quot;bh&quot;, &quot;tutto&quot;, &quot;sharpe&quot;)(config.COSTO_TIPICO)
+    sopra0 = float((sh0 &gt; sh_bh0).mean())
+    sopra_p = float((shp &gt; sh_bhp).mean())
+    reg(&quot;scimmie_cambi_anno&quot;, cambi_s, &quot;num1&quot;, &quot;Cambi all&#x27;anno medi delle scimmie (stessa frequenza del prezzo sopra la media a 50 giorni)&quot;, &quot;scimmie.csv&quot;)
+    reg(&quot;scimmie_sopra_bh_lordo&quot;, sopra0, &quot;pct1&quot;, &quot;Quota di scimmie con Sharpe più alto del buy &amp; hold a costo zero&quot;, &quot;scimmie.csv&quot;)
+    reg(&quot;scimmie_sopra_bh_tipico&quot;, sopra_p, &quot;pct1&quot;, &quot;Quota di scimmie con Sharpe più alto del buy &amp; hold al costo tipico&quot;, &quot;scimmie.csv&quot;)
+    reg(&quot;scimmie_sharpe_mediano&quot;, float(np.median(sh0)), &quot;num2&quot;, &quot;Sharpe mediano delle scimmie a costo zero&quot;, &quot;scimmie.csv&quot;)
+    m50 = config.ID_MEDIA
+    reg(&quot;media_batte_scimmie_lordo&quot;, float((misura(m50, &quot;tutto&quot;, &quot;sharpe&quot;)(0.0) &gt; sh0).mean()), &quot;pct0&quot;, &quot;Quota di scimmie battute dal prezzo sopra la media a 50 giorni sullo Sharpe a costo zero&quot;, &quot;scimmie.csv&quot;)
+    reg(&quot;media_batte_scimmie_tipico&quot;, float((misura(m50, &quot;tutto&quot;, &quot;sharpe&quot;)(config.COSTO_TIPICO) &gt; shp).mean()), &quot;pct0&quot;, &quot;Quota di scimmie battute dal prezzo sopra la media a 50 giorni sullo Sharpe al costo tipico&quot;, &quot;scimmie.csv&quot;)
+
+    h = {1: rho &lt;= config.SOGLIA_SPEARMAN,
+         2: be200[0] &gt; config.SOGLIA_FILTRO,
+         3: len(veloci_ok) == len(veloci),
+         4: instabili * 2 &gt;= len(regole),
+         5: sopra0 &lt; config.SOGLIA_SCIMMIE}
+    for n, ok in h.items():
+        reg(f&quot;h{n}_ok&quot;, int(ok), &quot;int&quot;, f&quot;1 se l&#x27;ipotesi {n} è confermata, 0 se smentita&quot;, &quot;02_backtest_e_test.py&quot;)
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri; {T} sedute&quot;)
+    print(&quot;ipotesi:&quot;, {n: int(ok) for n, ok in h.items()})
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i cinque grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_pareggio.png      costo di pareggio (Sharpe) di ogni regola
+  fig2_cambi_pareggio.png  cambi all&#x27;anno contro costo di pareggio
+  fig3_curve.png         Sharpe al crescere del costo: dove le curve incontrano il buy &amp; hold
+  fig4_meta.png          costo di pareggio nelle due metà del periodo
+  fig5_scimmie.png       Sharpe delle scimmie contro buy &amp; hold e contro il prezzo sopra la media a 50 giorni
+&quot;&quot;&quot;
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def virg(x, dec=2):
+    return f&quot;{x:.{dec}f}&quot;.replace(&quot;.&quot;, &quot;,&quot;)
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    P = pd.read_csv(R / &quot;pareggio.csv&quot;).sort_values(&quot;sharpe_tutto&quot;)
+    C = pd.read_csv(R / &quot;curve_sharpe.csv&quot;)
+    SC = pd.read_csv(R / &quot;scimmie.csv&quot;)
+    tip = config.COSTO_TIPICO * 100
+    cap = config.COSTO_MAX_RICERCA * 100
+
+    # Figura 1: barre orizzontali del costo di pareggio
+    fig, ax = plt.subplots(figsize=(10, 6))
+    y = np.arange(len(P))
+    val = P[&quot;sharpe_tutto&quot;].to_numpy() * 100
+    col = [ARANCIO if v &lt; tip else BLU for v in val]
+    ax.barh(y, val, color=col, height=0.6)
+    for k, (v, st) in enumerate(zip(val, P[&quot;sharpe_tutto_stato&quot;])):
+        t = &quot;già sotto a costo zero&quot; if st == &quot;gia_sotto&quot; else (f&quot;oltre {cap:g}%&quot; if st == &quot;oltre&quot; else virg(v) + &quot;%&quot;)
+        ax.text(v + cap * 0.01, k, t, va=&quot;center&quot;, fontsize=10)
+    ax.axvline(tip, color=&quot;#444&quot;, lw=1.6, ls=&quot;--&quot;)
+    ax.text(tip + cap * 0.01, len(P) - 0.45, &quot;costo tipico &quot; + virg(tip, 1) + &quot;%&quot;, fontsize=10, color=&quot;#444&quot;)
+    ax.set_yticks(y, [n for n in P[&quot;nome&quot;]])
+    ax.set_xlim(0, cap * 0.45)
+    ax.set_xlabel(&quot;costo per cambio a cui lo Sharpe scende sotto quello del buy &amp; hold (%)&quot;)
+    ax.grid(axis=&quot;y&quot;, visible=False)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_pareggio.png&quot;)
+    plt.close(fig)
+
+    # Figura 2: cambi all&#x27;anno contro pareggio
+    fig, ax = plt.subplots(figsize=(8.5, 5.8))
+    ax.scatter(P[&quot;cambi_anno&quot;], P[&quot;sharpe_tutto&quot;] * 100, color=BLU, s=70, zorder=3)
+    for _, r in P.iterrows():
+        ax.annotate(r[&quot;nome&quot;].replace(&quot;Prezzo sopra la media a &quot;, &quot;Media &quot;).replace(&quot; giorni&quot;, &quot;&quot;), (r[&quot;cambi_anno&quot;], r[&quot;sharpe_tutto&quot;] * 100),
+                    xytext=(6, 4), textcoords=&quot;offset points&quot;, fontsize=8.5, color=&quot;#333&quot;)
+    ax.axhline(tip, color=ARANCIO, lw=2, ls=&quot;--&quot;)
+    ax.set_xscale(&quot;log&quot;)
+    ax.set_xlabel(&quot;cambi di posizione all&#x27;anno (scala logaritmica)&quot;)
+    ax.set_ylabel(&quot;costo di pareggio sullo Sharpe (%)&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig2_cambi_pareggio.png&quot;)
+    plt.close(fig)
+
+    # Figura 3: curve dello Sharpe
+    fig, ax = plt.subplots(figsize=(9.5, 5.8))
+    bh = C[C[&quot;id&quot;] == config.ID_BH]
+    ax.plot(bh[&quot;costo&quot;] * 100, bh[&quot;sharpe&quot;], color=BLU, lw=3.2, label=&quot;Buy &amp; hold&quot;)
+    for i, col, ls in ((&quot;sma10&quot;, ARANCIO, &quot;-&quot;), (&quot;sma50&quot;, ARANCIO, &quot;--&quot;), (&quot;sma200&quot;, GRIGIO, &quot;-&quot;)):
+        d = C[C[&quot;id&quot;] == i]
+        ax.plot(d[&quot;costo&quot;] * 100, d[&quot;sharpe&quot;], color=col, lw=2.4, ls=ls, label=d[&quot;nome&quot;].iloc[0])
+    ax.axvline(tip, color=&quot;#444&quot;, lw=1, ls=&quot;:&quot;)
+    ax.set_xlabel(&quot;costo per cambio (% del valore scambiato)&quot;)
+    ax.set_ylabel(&quot;Sharpe&quot;)
+    ax.legend(loc=&quot;lower left&quot;, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_curve.png&quot;)
+    plt.close(fig)
+
+    # Figura 4: due metà
+    fig, ax = plt.subplots(figsize=(10, 5.8))
+    Q = pd.read_csv(R / &quot;pareggio.csv&quot;).sort_values(&quot;cambi_anno&quot;)
+    x = np.arange(len(Q))
+    ax.bar(x - 0.2, Q[&quot;sharpe_prima&quot;] * 100, width=0.4, color=BLU, label=&quot;prima metà del periodo&quot;)
+    ax.bar(x + 0.2, Q[&quot;sharpe_seconda&quot;] * 100, width=0.4, color=ARANCIO, label=&quot;seconda metà&quot;)
+    ax.set_xticks(x, [n.replace(&quot;Prezzo sopra la media a &quot;, &quot;Media &quot;).replace(&quot; giorni&quot;, &quot;&quot;).replace(&quot;Ritorno alla media nel trend&quot;, &quot;Ritorno alla media&quot;) for n in Q[&quot;nome&quot;]], rotation=35, ha=&quot;right&quot;, fontsize=10)
+    ax.set_ylabel(&quot;costo di pareggio sullo Sharpe (%)&quot;)
+    ax.grid(axis=&quot;x&quot;, visible=False)
+    ax.legend(loc=&quot;upper right&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig4_meta.png&quot;)
+    plt.close(fig)
+
+    # Figura 5: scimmie
+    fig, ax = plt.subplots(figsize=(9.5, 5.6))
+    ax.hist(SC[&quot;sharpe_lordo&quot;], bins=40, color=GRIGIO, alpha=0.85)
+    bh0 = float(bh[bh[&quot;costo&quot;] == 0][&quot;sharpe&quot;].iloc[0])
+    m0 = float(C[(C[&quot;id&quot;] == config.ID_MEDIA) &amp; (C[&quot;costo&quot;] == 0)][&quot;sharpe&quot;].iloc[0])
+    ax.axvline(bh0, color=BLU, lw=3, label=&quot;Buy &amp; hold&quot;)
+    ax.axvline(m0, color=ARANCIO, lw=3, ls=&quot;--&quot;, label=&quot;Prezzo sopra la media a 50 giorni&quot;)
+    ax.set_xlabel(&quot;Sharpe a costo zero&quot;)
+    ax.set_ylabel(&quot;numero di scimmie&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig5_scimmie.png&quot;)
+    plt.close(fig)
+    print(&quot;Grafici salvati in figure/&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>regole, parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 102 - &quot;A che costo per trade muore la strategia?&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file.
+
+Idea: l&#x27;articolo 101 ha fatto crescere il costo per operazione e ha guardato la perdita. Qui si rovescia la domanda: per ogni regola
+si cerca il costo per cambio di posizione a cui la regola smette di battere il buy &amp; hold (costo di pareggio), una volta sul rendimento
+annuo e una volta sullo Sharpe. Studi che motivano le ipotesi (abstract letti):
+  - Bajgrowicz e Scaillet (2012), Journal of Financial Economics: sul Dow Jones 1897-2011 i costi di transazione bassi eliminano
+    la performance in campione delle regole tecniche.
+  - Novy-Marx e Velikov (2016), Review of Financial Studies: le strategie con rotazione mensile sotto il 50% restano profittevoli
+    al netto dei costi, poche di quelle con rotazione più alta.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+
+# --- Dieci regole fisse (long o cash), decise prima, nessuna ottimizzata -----------------------------------------------------
+# Il segnale della chiusura di ieri decide la posizione di oggi. Un cambio = un acquisto o una vendita dell&#x27;intera posizione.
+STRATEGIE = {
+    &quot;bh&quot;: (&quot;Buy &amp; hold&quot;, (&quot;bh&quot;,)),
+    &quot;sma10&quot;: (&quot;Prezzo sopra la media a 10 giorni&quot;, (&quot;sopra_media&quot;, 10)),
+    &quot;sma20&quot;: (&quot;Prezzo sopra la media a 20 giorni&quot;, (&quot;sopra_media&quot;, 20)),
+    &quot;sma50&quot;: (&quot;Prezzo sopra la media a 50 giorni&quot;, (&quot;sopra_media&quot;, 50)),
+    &quot;sma100&quot;: (&quot;Prezzo sopra la media a 100 giorni&quot;, (&quot;sopra_media&quot;, 100)),
+    &quot;sma200&quot;: (&quot;Prezzo sopra la media a 200 giorni&quot;, (&quot;sopra_media&quot;, 200)),
+    &quot;cross1050&quot;: (&quot;Incrocio 10/50&quot;, (&quot;incrocio&quot;, 10, 50)),
+    &quot;cross&quot;: (&quot;Incrocio 50/200&quot;, (&quot;incrocio&quot;, 50, 200)),
+    &quot;mom63&quot;: (&quot;Momentum a 3 mesi&quot;, (&quot;momentum&quot;, 63)),
+    &quot;mom&quot;: (&quot;Momentum a 12 mesi&quot;, (&quot;momentum&quot;, 252)),
+    &quot;ritorno&quot;: (&quot;Ritorno alla media nel trend&quot;, (&quot;ritorno_media&quot;, 5, 200)),
+}
+ID_BH, ID_FILTRO, ID_MEDIA = &quot;bh&quot;, &quot;sma200&quot;, &quot;sma50&quot;
+NOMI_ESENTI = tuple(v[0] for v in STRATEGIE.values())
+
+SEDUTE_ANNO = 252
+INIZIO_TEST_SEDUTE = 260           # tutte le regole partono dallo stesso giorno (serve il momentum a 252 sedute)
+
+# --- Costo di pareggio ---------------------------------------------------------------------------------------------------------
+COSTO_MAX_RICERCA = 0.05           # si cerca fino al 5% per cambio; oltre, la regola è registrata come &quot;oltre il 5%&quot;
+COSTO_TIPICO = 0.001               # 0,1%: costo tipico citato nel testo (commissione + spread + slippage di un ETF molto liquido)
+COSTO_CURVA = tuple(round(0.0005 * k, 4) for k in range(0, 21))   # griglia 0 - 1% per le curve del grafico
+ORDINE_ESEMPIO = 5000              # euro per ordine, solo per tradurre il costo percentuale in euro
+
+# --- Scimmie: stessa frequenza di cambi della regola ID_MEDIA ----------------------------------------------------------------------
+SEME = 20261024
+N_SCIMMIE = 500
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------------------------
+SOGLIA_SPEARMAN = -0.8             # ipotesi 1
+SOGLIA_FILTRO = 0.005              # ipotesi 2: costo di pareggio (Sharpe) del filtro a 200 giorni oltre lo 0,5%
+CAMBI_VELOCI_ANNO = 10.0           # ipotesi 3: regole con almeno 10 cambi all&#x27;anno
+FATTORE_INSTABILITA = 2.0          # ipotesi 4
+SOGLIA_SCIMMIE = 0.10              # ipotesi 5
+
+IPOTESI = (
+    &quot;1) Più una regola cambia posizione, più presto muore: la correlazione di rango di Spearman tra cambi all&#x27;anno e costo di pareggio &quot;
+    &quot;(Sharpe) sulle dieci regole è pari o inferiore a -0,8. &quot;
+    &quot;2) Il filtro a 200 giorni, che cambia poco, ha un costo di pareggio sullo Sharpe superiore allo 0,5% per cambio. &quot;
+    &quot;3) Ogni regola con almeno 10 cambi all&#x27;anno ha un costo di pareggio sullo Sharpe inferiore allo 0,1% per cambio, il costo tipico di un ETF liquido. &quot;
+    &quot;4) Il costo di pareggio non è stabile nel tempo: dividendo il periodo in due metà, per almeno metà delle regole il più alto dei due valori &quot;
+    &quot;è più del doppio del più basso. &quot;
+    &quot;5) Il caso non batte il buy &amp; hold nemmeno gratis: meno del 10% delle scimmie con la stessa frequenza di cambi del prezzo sopra la media a 50 giorni &quot;
+    &quot;ha, a costo zero, uno Sharpe più alto del buy &amp; hold.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>regole, rendimenti netti dei costi, costo di pareggio, Spearman, scimmie</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 102: regole, rendimenti netti dei costi, costo di pareggio, scimmie.
+Separate dal flusso perché si possano controllare su dati inventati (verifica_motore.py).&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import motore_vettoriale as m
+
+
+# --- Regole (le stesse dell&#x27;articolo 61) --------------------------------------------------------------------------
+def segnale(close: pd.Series, spec: tuple) -&gt; pd.Series:
+    &quot;&quot;&quot;True se la regola è &#x27;investito&#x27;, calcolato con le chiusure fino a t incluse.&quot;&quot;&quot;
+    tipo = spec[0]
+    if tipo == &quot;bh&quot;:
+        return pd.Series(True, index=close.index)
+    if tipo == &quot;sopra_media&quot;:
+        return m.segnale_sopra_media(close, spec[1])
+    if tipo == &quot;incrocio&quot;:
+        return m.segnale_medie(close, spec[1], spec[2])
+    if tipo == &quot;momentum&quot;:
+        passato = close.shift(spec[1])
+        return (close &gt; passato) &amp; passato.notna()
+    if tipo == &quot;calma&quot;:
+        vol = m.rendimenti(close).rolling(spec[1]).std() * np.sqrt(252)
+        return (vol &lt; spec[2]) &amp; vol.notna()
+    if tipo == &quot;ritorno_media&quot;:
+        lenta = close.rolling(spec[2]).mean()
+        return (close &lt; close.rolling(spec[1]).mean()) &amp; (close &gt; lenta) &amp; lenta.notna()
+    raise ValueError(f&quot;regola sconosciuta: {tipo}&quot;)
+
+
+def posizione_regola(close: pd.Series, spec: tuple) -&gt; pd.Series:
+    &quot;&quot;&quot;Quota investita (0 o 1) nella seduta; il segnale di ieri decide la posizione di oggi.&quot;&quot;&quot;
+    return m.posizione(segnale(close, spec), 1).astype(float)
+
+
+def rendimenti_netti(rend: pd.Series, pos: pd.Series, costo: float) -&gt; pd.Series:
+    &quot;&quot;&quot;Rendimento giornaliero della regola (rend = rendimenti giornalieri dell&#x27;indice), meno il costo su ogni variazione della quota investita.&quot;&quot;&quot;
+    cambi = pos.diff().abs()
+    cambi.iloc[0] = abs(pos.iloc[0])          # l&#x27;ingresso iniziale dalla cassa è un cambio e si paga
+    return rend * pos - costo * cambi
+
+
+# --- Metriche ----------------------------------------------------------------------------------------------------------
+def sharpe(R: np.ndarray, sedute_anno: int = 252) -&gt; np.ndarray:
+    R = np.asarray(R, dtype=float)
+    sd = R.std(axis=-1, ddof=1)
+    with np.errstate(divide=&quot;ignore&quot;, invalid=&quot;ignore&quot;):
+        v = R.mean(axis=-1) / sd * np.sqrt(sedute_anno)
+    return np.where(sd &gt; 0, v, np.nan)
+
+
+def cagr(R: np.ndarray, anni: float) -&gt; np.ndarray:
+    R = np.asarray(R, dtype=float)
+    return np.exp(np.log1p(R).sum(axis=-1) / anni) - 1.0
+
+
+def perdita_massima(R: np.ndarray) -&gt; np.ndarray:
+    R = np.asarray(R, dtype=float)
+    v = np.cumprod(1.0 + R, axis=-1)
+    v = np.concatenate([np.ones(v.shape[:-1] + (1,)), v], axis=-1)
+    return (v / np.maximum.accumulate(v, axis=-1) - 1.0).min(axis=-1)
+
+
+# --- Ribilanciamento ---------------------------------------------------------------------------------------------------
+def mix_ribilanciato(rend: np.ndarray, quota: float, ogni: int, costo: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimenti giornalieri netti di un portafoglio con una quota fissa nell&#x27;indice e il resto in cassa (rendimento zero).
+
+    Ogni `ogni` sedute (alla chiusura) la quota derivata viene riportata a `quota`; si paga `costo` sul valore scambiato,
+    cioè |quota derivata - quota| del valore del portafoglio. All&#x27;inizio si parte tutto in cassa e si compra la quota obiettivo
+    il primo giorno (anche questo scambio si paga: `quota` del valore).&quot;&quot;&quot;
+    rend = np.asarray(rend, dtype=float)
+    out = np.empty(len(rend))
+    w = quota
+    for t, r in enumerate(rend):
+        p = w * r
+        w = w * (1.0 + r) / (1.0 + p)
+        netto = p
+        if t == 0:
+            netto = (1.0 + p) * (1.0 - costo * quota) - 1.0   # ingresso iniziale dalla cassa
+        if (t + 1) % ogni == 0:
+            scambio = abs(w - quota)
+            netto = (1.0 + netto) * (1.0 - costo * scambio) - 1.0
+            w = quota
+        out[t] = netto
+    return out
+
+
+# --- Scimmie -----------------------------------------------------------------------------------------------------------
+def posizioni_scimmie(n: int, T: int, prob: float, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;n posizioni casuali (1 investito, 0 cassa) lunghe T: partono investite e a ogni seduta cambiano stato con probabilità `prob`.&quot;&quot;&quot;
+    cambia = rng.random((n, T)) &lt; prob
+    cambia[:, 0] = False
+    return (np.cumsum(cambia, axis=1) % 2 == 0).astype(float)
+
+
+def rendimenti_scimmie(rend: np.ndarray, pos: np.ndarray, costo: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimenti netti di più posizioni (una per riga); il costo si paga a ogni cambio di stato.&quot;&quot;&quot;
+    cambi = np.abs(np.diff(pos, axis=1, prepend=np.zeros((pos.shape[0], 1))))   # l&#x27;ingresso iniziale dalla cassa si paga
+    return rend[None, :] * pos - costo * cambi
+
+
+# --- Correlazione di rango tra due classifiche ---------------------------------------------------------------------------
+def posti(valori) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posto in classifica, 1 = valore più alto; parità = posto medio; valori non definiti = ultimi.&quot;&quot;&quot;
+    v = np.where(np.isnan(np.asarray(valori, dtype=float)), -np.inf, valori)
+    return pd.Series(v).rank(ascending=False, method=&quot;average&quot;).to_numpy()
+
+
+def kendall(a, b) -&gt; float:
+    &quot;&quot;&quot;Tau-b di Kendall tra due vettori.&quot;&quot;&quot;
+    a, b = np.asarray(a, dtype=float), np.asarray(b, dtype=float)
+    da, db = np.sign(a[:, None] - a[None, :]), np.sign(b[:, None] - b[None, :])
+    iu = np.triu_indices(len(a), 1)
+    x, y = da[iu], db[iu]
+    den = np.sqrt((x != 0).sum() * (y != 0).sum())
+    return float((x * y).sum() / den) if den &gt; 0 else float(&quot;nan&quot;)
+
+
+# --- Costo di pareggio (articolo 102) ------------------------------------------------------------------------------------
+def costo_pareggio(f_regola, f_riferimento, massimo: float, passi: int = 60) -&gt; tuple[float, str]:
+    &quot;&quot;&quot;Costo per cambio a cui una regola smette di battere il riferimento.
+
+    f_regola(c) e f_riferimento(c) restituiscono la misura (rendimento annuo o Sharpe) a costo c; la differenza non cresce con c.
+    Ritorna (costo, stato): &#x27;gia_sotto&#x27; se già a costo zero la regola non batte il riferimento (costo 0);
+    &#x27;oltre&#x27; se la batte ancora al costo massimo (costo = massimo); altrimenti &#x27;normale&#x27;, con il costo trovato per bisezione.&quot;&quot;&quot;
+    if not f_regola(0.0) &gt; f_riferimento(0.0):
+        return 0.0, &quot;gia_sotto&quot;
+    if f_regola(massimo) &gt; f_riferimento(massimo):
+        return massimo, &quot;oltre&quot;
+    lo, hi = 0.0, massimo
+    for _ in range(passi):
+        mid = (lo + hi) / 2
+        if f_regola(mid) &gt; f_riferimento(mid):
+            lo = mid
+        else:
+            hi = mid
+    return (lo + hi) / 2, &quot;normale&quot;
+
+
+def spearman(a, b) -&gt; float:
+    &quot;&quot;&quot;Correlazione di rango di Spearman (parità = rango medio).&quot;&quot;&quot;
+    ra = pd.Series(np.asarray(a, dtype=float)).rank(method=&quot;average&quot;)
+    rb = pd.Series(np.asarray(b, dtype=float)).rank(method=&quot;average&quot;)
+    return float(np.corrcoef(ra, rb)[0, 1])
+</code></pre></details>
+<details><summary>flusso/motore_vettoriale.py<small>segnale, posizione con ritardo, valore</small></summary><pre><code class="language-python">&quot;&quot;&quot;Motore vettoriale minimo: segnale, posizione, rendimenti. Senza commissioni né tasse, per isolare l&#x27;effetto del look-ahead.
+
+Convenzioni:
+  - rend[t] è il rendimento della seduta t: chiusura di t su chiusura di t-1;
+  - il segnale[t] si calcola con le chiusure fino a t incluse;
+  - posizione(segnale, ritardo): ritardo = 0 usa il segnale di t per il rendimento di t (LOOK-AHEAD: si compra alla
+    chiusura di ieri sapendo la chiusura di oggi); ritardo = 1 usa il segnale di ieri (onesto).
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def rendimenti(close: pd.Series) -&gt; pd.Series:
+    return close.pct_change().fillna(0.0)
+
+
+def segnale_un_giorno(close: pd.Series) -&gt; pd.Series:
+    return close &gt; close.shift(1)
+
+
+def segnale_sopra_media(close: pd.Series, n: int) -&gt; pd.Series:
+    return (close &gt; close.rolling(n).mean()) &amp; close.rolling(n).mean().notna()
+
+
+def segnale_medie(close: pd.Series, veloce: int, lenta: int) -&gt; pd.Series:
+    sl = close.rolling(lenta).mean()
+    return (close.rolling(veloce).mean() &gt; sl) &amp; sl.notna()
+
+
+def posizione(segnale: pd.Series, ritardo: int) -&gt; pd.Series:
+    &quot;&quot;&quot;True se si è investiti nella seduta, dato il ritardo con cui il segnale è noto.&quot;&quot;&quot;
+    if ritardo &lt; 0:
+        raise ValueError(&quot;ritardo negativo: sarebbe usare il futuro&quot;)
+    return segnale.shift(ritardo, fill_value=False).astype(bool)
+
+
+def valore(rend: pd.Series, pos: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Valore di 1 investito, composto giorno per giorno: nei giorni in cassa il rendimento è zero.&quot;&quot;&quot;
+    return (1.0 + rend * pos.astype(float)).cumprod()
+
+
+def cagr(v: pd.Series, anni: float) -&gt; float:
+    return float(v.iloc[-1] ** (1.0 / anni) - 1.0)
+
+
+def perdita_massima(v: pd.Series) -&gt; float:
+    return float((v / v.cummax() - 1.0).min())
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni dell&#x27;articolo 102 su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+def serie(valori, inizio=&quot;2000-01-03&quot;) -&gt; pd.Series:
+    return pd.Series(np.asarray(valori, float), index=pd.bdate_range(inizio, periods=len(valori)))
+
+
+rng = np.random.default_rng(1)
+close = serie(100 * np.exp(np.cumsum(rng.normal(0.0003, 0.012, 1200))))
+
+for i, (nome, spec) in config.STRATEGIE.items():
+    completa = fx.posizione_regola(close, spec)
+    alt = close.copy()
+    alt.iloc[900:] *= 3.0
+    controlla(f&quot;{i}: la posizione fino al giorno 900 non dipende dai prezzi dopo&quot;, np.array_equal(completa.iloc[:901].to_numpy(), fx.posizione_regola(alt, spec).iloc[:901].to_numpy()))
+
+pos = pd.Series([0, 0, 1, 1, 0, 0], index=close.index[:6], dtype=float)
+rend = serie([0, 0, 0.10, 0.10, 0, 0])
+controlla(&quot;due cambi: lordo 0,20 meno 0,02&quot;, abs(float(fx.rendimenti_netti(rend, pos, 0.01).sum()) - 0.18) &lt; 1e-12)
+pos1 = pd.Series([1, 1, 1], index=close.index[:3], dtype=float)
+controlla(&quot;l&#x27;ingresso iniziale si paga&quot;, abs(float(fx.rendimenti_netti(serie([0, 0, 0]), pos1, 0.01).sum()) + 0.01) &lt; 1e-12)
+
+# costo di pareggio: funzioni lineari note
+c, st = fx.costo_pareggio(lambda c: 1.0 - 100 * c, lambda c: 0.5, 0.05)
+controlla(&quot;pareggio lineare: 1 - 100c = 0,5 -&gt; c = 0,005&quot;, st == &quot;normale&quot; and abs(c - 0.005) &lt; 1e-9)
+c, st = fx.costo_pareggio(lambda c: 0.4 - c, lambda c: 0.5, 0.05)
+controlla(&quot;già sotto a costo zero -&gt; costo 0&quot;, st == &quot;gia_sotto&quot; and c == 0.0)
+c, st = fx.costo_pareggio(lambda c: 2.0 - c, lambda c: 0.5, 0.05)
+controlla(&quot;sopra anche al massimo -&gt; oltre&quot;, st == &quot;oltre&quot; and c == 0.05)
+
+# pareggio con una regola vera: sul rendimento annuo il pareggio coincide con il costo che azzera la differenza
+ret = close.pct_change().fillna(0.0)
+p50 = fx.posizione_regola(close, (&quot;sopra_media&quot;, 50))
+anni = 4.0
+f_r = lambda c: float(fx.cagr(fx.rendimenti_netti(ret, p50, c).to_numpy(), anni))
+f_b = lambda c: float(fx.cagr(fx.rendimenti_netti(ret, fx.posizione_regola(close, (&quot;bh&quot;,)), c).to_numpy(), anni))
+c, st = fx.costo_pareggio(f_r, f_b, 0.05)
+if st == &quot;normale&quot;:
+    controlla(&quot;al costo di pareggio le due misure coincidono&quot;, abs(f_r(c) - f_b(c)) &lt; 1e-9)
+else:
+    controlla(&quot;pareggio: stato valido su dati inventati&quot;, st in (&quot;gia_sotto&quot;, &quot;oltre&quot;))
+
+controlla(&quot;Spearman: ordine opposto = -1&quot;, abs(fx.spearman([1, 2, 3, 4], [9, 7, 5, 1]) + 1) &lt; 1e-12)
+controlla(&quot;Spearman: stesso ordine = 1&quot;, abs(fx.spearman([1, 2, 3, 4], [1, 5, 6, 9]) - 1) &lt; 1e-12)
+ps = fx.posizioni_scimmie(400, 5000, 0.04, np.random.default_rng(3))
+controlla(&quot;scimmie: frequenza dei cambi vicina alla probabilità&quot;, abs(np.abs(np.diff(ps, axis=1)).sum(axis=1).mean() / 5000 - 0.04) &lt; 0.005)
+controlla(&quot;Sharpe a mano&quot;, abs(float(fx.sharpe(np.array([0.01, -0.01, 0.02, 0.0]))) - np.array([0.01, -0.01, 0.02, 0.0]).mean() / np.array([0.01, -0.01, 0.02, 0.0]).std(ddof=1) * np.sqrt(252)) &lt; 1e-9)
+print(f&quot;{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
