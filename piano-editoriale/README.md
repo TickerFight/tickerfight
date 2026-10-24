@@ -2,10 +2,11 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-6 pubblicati, 15 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+7 pubblicati, 14 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
+| [Il look-ahead bias in 10 righe di codice: quanto vale l'illusione?](https://tickerfight.github.io/tickerfight/articoli/il-look-ahead-bias-in-10-righe-di-codice-quanto-vale-l-illusione/) | Pubblicato | 24/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/il-look-ahead-bias-in-10-righe-di.html) |
 | [Quanto è fortunata la tua strategia? Il Golden Cross alla prova del caso](https://tickerfight.github.io/tickerfight/articoli/quanto-e-fortunata-la-tua-strategia-il-golden-cross-alla-prova-del-caso/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/quanto-e-fortunata-la-tua-strategia-il.html) |
 | [Quando le medie mobili battono il buy & hold? Tre indizi dalla letteratura messi alla prova](https://tickerfight.github.io/tickerfight/articoli/quando-le-medie-mobili-battono-il-buy-hold-tre-indizi-dalla-letteratura-messi-alla-prova/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/quando-le-medie-mobili-battono-il-buy.html) |
 | [Il filtro sul rendimento passato funziona davvero? Prova fuori campione su 150 titoli](https://tickerfight.github.io/tickerfight/articoli/il-filtro-sul-rendimento-passato-funziona-davvero-prova-fuori-campione-su-150-titoli/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/il-filtro-sul-rendimento-passato.html) |
@@ -13,7 +14,6 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [500 euro su Apple con le medie mobili: cinque anni di operazioni, commissioni e tasse](https://tickerfight.github.io/tickerfight/articoli/500-euro-su-apple-con-le-medie-mobili-cinque-anni-di-operazioni-commissioni-e-tasse/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/500-euro-su-apple-con-le-medie-mobili.html) |
 | [50 titoli dell'S&P 500, medie mobili contro buy & hold: la classifica](https://tickerfight.github.io/tickerfight/articoli/50-titoli-dell-sp-500-medie-mobili-contro-buy-hold-la-classifica/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/50-titoli-dells-500-medie-mobili-contro.html) |
 | [Che cos'è davvero un backtest, e che cosa non è?](https://tickerfight.github.io/tickerfight/articoli/che-cos-e-davvero-un-backtest-e-che-cosa-non-e/) | In revisione | — | — |
-| [Il look-ahead bias in 10 righe di codice: quanto vale l'illusione?](https://tickerfight.github.io/tickerfight/articoli/il-look-ahead-bias-in-10-righe-di-codice-quanto-vale-l-illusione/) | In revisione | — | — |
 | [Overfitting in pratica: ottimizzare su dieci anni, provare sui cinque dopo](https://tickerfight.github.io/tickerfight/articoli/overfitting-in-pratica-ottimizzare-su-dieci-anni-provare-sui-cinque-dopo/) | In revisione | — | — |
 | [Sharpe, Sortino o Calmar: quale metrica ti inganna meno?](https://tickerfight.github.io/tickerfight/articoli/sharpe-sortino-o-calmar-quale-metrica-ti-inganna-meno/) | In revisione | — | — |
 | [Quanto costa davvero ogni operazione? Da 0 a 0,5% su quasi un secolo di S&P 500](https://tickerfight.github.io/tickerfight/articoli/quanto-costa-davvero-ogni-operazione-da-0-a-0-5-su-quasi-un-secolo-di-sp-500/) | In revisione | — | — |
