@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Il 60/40 è morto? Azioni e obbligazioni nei diversi regimi di tassi · il codice · TickerFight</title>
+<meta name="description" content="il portafoglio classico 60% azioni / 40% obbligazioni funziona ancora, o dipende dal regime di tassi in cui lo si usa? Qui il 60/40 viene seguito dal 1981 a oggi, diviso in tre regimi di tassi (bassi, medi, alti), con un controllo sul caso (portafogli a peso azionario casuale) e sull&#x27;incertezza (bootstrap).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Il 60/40 è morto? Azioni e obbligazioni nei diversi regimi di tassi</h1>
+<p class="domanda">Il portafoglio classico 60% azioni / 40% obbligazioni funziona ancora, o dipende dal regime di tassi in cui lo si usa? Qui il 60/40 viene seguito dal 1981 a oggi, diviso in tre regimi di tassi (bassi, medi, alti), con un controllo sul caso (portafogli a peso azionario casuale) e sull&#x27;incertezza (bootstrap).</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="il-60-40-e-morto-azioni-e-obbligazioni-nei-diversi-regimi-di-tassi.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Dati (Yahoo Finance):</strong> fondo Vanguard 500 Index <code>VFINX</code> (azioni USA, dividendi reinvestiti), rendimento del Treasury a 10 anni <code>^TNX</code>, Bot a 13 settimane <code>^IRX</code> (liquidità), fondo Vanguard Total Bond Market <code>VBMFX</code> (solo controllo).</li>
+<li><strong>Obbligazioni:</strong> serie sintetica di un Treasury a 10 anni a cedola pari, ricostruita ogni mese dal rendimento a 10 anni con il prezzo esatto di un'obbligazione a cedole semestrali (cedola = rendimento del mese precedente, scadenza residua 10 anni meno un mese, più un mese di cedola).</li>
+<li><strong>Portafoglio:</strong> 60/40, ribilanciato ogni gennaio, da gennaio 1981 all'ultimo mese completo. Rendimenti nominali in dollari, lordi di costi e tasse.</li>
+<li><strong>Regimi:</strong> rendimento a 10 anni di fine mese precedente: bassi sotto il 3%, alti dal 6% in su, medi in mezzo.</li>
+<li><strong>Finestre a 10 anni:</strong> rendimento annuo del 60/40 nei 120 mesi successivi a ogni mese, con il regime di partenza noto alla partenza.</li>
+<li><strong>Incertezza e caso:</strong> bootstrap a blocchi circolari di 12 mesi sulla differenza di Sharpe; 2000 portafogli con peso azionario casuale ripescato ogni gennaio.</li>
+<li><strong>Controllo del metodo:</strong> correlazione tra la serie sintetica e <code>VBMFX</code> dal 1987.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>il-60-40-e-morto-azioni-e-obbligazioni-nei-diversi-regimi-di-tassi/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica fondo azionario, fondo obbligazionario, tassi a 10 anni e a 13 settimane
+    ├── 02_backtest_e_test.py  serie mensili, regimi, finestre a 10 anni, bootstrap, scimmie
+    ├── 03_grafici.py          i tre grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            obbligazione sintetica, portafoglio ribilanciato, statistiche, bootstrap
+    └── verifica_motore.py     19 controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd il-60-40-e-morto-azioni-e-obbligazioni-nei-diversi-regimi-di-tassi
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance le serie giornaliere (fondo azionario, fondo obbligazionario, tassi a 10 anni e a 13 settimane).
+
+Salva dati/&lt;ticker&gt;.csv (Date, Close) e dati/metadati.json con fonte, data del download, versione di yfinance e impronta SHA-256.
+Per i fondi Close è il prezzo corretto per dividendi (rendimento totale). Gli script successivi leggono SOLO i file salvati.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=True)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;serie&quot;: []}
+    for ticker, nome, ruolo in config.SERIE:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nome, &quot;ruolo&quot;: ruolo}
+        grezzo = scarica(ticker)
+        if grezzo.empty:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;serie&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Close&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;])
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;serie&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    if sum(1 for r in meta[&quot;serie&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;) &lt; len(config.SERIE):
+        raise SystemExit(&quot;Non tutte le serie sono state scaricate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>serie mensili, regimi, finestre a 10 anni, bootstrap, scimmie</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Il 60/40 nei regimi di tassi: serie mensili, statistiche, correlazioni, finestre a 10 anni, bootstrap e scimmie.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json          ogni numero dell&#x27;articolo, con descrizione e origine
+  mensili.csv            per ogni mese: rendimenti di azioni, obbligazioni sintetiche, 60/40, liquidità, tasso a 10 anni, regime
+  finestre_10anni.csv    per ogni mese di partenza: rendimento annuo dei 10 anni successivi (60/40, azioni, obbligazioni)
+  per_regime.csv         statistiche per regime di tassi
+  anni_solari.csv        rendimento di ogni anno solare
+  scimmie_sharpe.csv     Sharpe dei portafogli a peso azionario casuale
+
+Nessun look-ahead: il regime di un mese usa il rendimento a 10 anni di fine mese precedente; il ribilanciamento è a gennaio.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer, np.bool_)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def leggi(ticker: str) -&gt; pd.Series:
+    return pd.read_csv(config.file_dati(ticker), index_col=0, parse_dates=True)[&quot;Close&quot;]
+
+
+def tasso_pct(s: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Rendimento in % a fine mese; se la scala fosse in decimi di punto (valori mediani &gt; 25) si divide per 10.&quot;&quot;&quot;
+    m = fx.fine_mese(s)
+    return m / 10.0 if m.median() &gt; 25 else m
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    meta = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    rng = np.random.default_rng(config.SEME)
+    scarico = pd.Timestamp(meta[&quot;scaricato_il_utc&quot;][:10]).to_period(&quot;M&quot;)
+
+    az_m = fx.fine_mese(leggi(&quot;VFINX&quot;))
+    fondo_m = fx.fine_mese(leggi(&quot;VBMFX&quot;))
+    y = tasso_pct(leggi(&quot;^TNX&quot;))
+    irx = tasso_pct(leggi(&quot;^IRX&quot;))
+    ultimo = min(az_m.index[-1], y.index[-1], irx.index[-1], scarico - 1)     # solo mesi completi
+
+    mesi = pd.period_range(config.INIZIO_CAMPIONE, ultimo, freq=&quot;M&quot;)
+    ra = az_m.pct_change().reindex(mesi)
+    y_prec = y.shift(1).reindex(mesi)
+    y_ora = y.reindex(mesi)
+    rb = pd.Series([fx.rendimento_obbligazione(a / 100, b / 100, config.SCADENZA_OBBL) for a, b in zip(y_prec, y_ora)], index=mesi)
+    cassa = (irx.shift(1) / 100 / 12).reindex(mesi)
+    if ra.isna().any() or rb.isna().any() or cassa.isna().any():
+        raise SystemExit(&quot;Valori mancanti nelle serie mensili&quot;)
+    n = len(mesi)
+    A, B, C = ra.values, rb.values, cassa.values
+    W = config.PESO_AZIONI
+    M = fx.portafoglio(A, B, mesi, W)[0]
+    reg_m = fx.regime(y_prec.values, config.SOGLIA_BASSI, config.SOGLIA_ALTI)
+
+    pd.DataFrame({&quot;mese&quot;: mesi.astype(str), &quot;azioni&quot;: A, &quot;obbligazioni&quot;: B, &quot;mix&quot;: M, &quot;cassa&quot;: C,
+                  &quot;tasso10_prec&quot;: y_prec.values, &quot;regime&quot;: reg_m}).to_csv(config.RISULTATI / &quot;mensili.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    reg(&quot;campione_inizio&quot;, mesi[0].year, &quot;annonum&quot;, &quot;Anno del primo mese del campione&quot;, &quot;config.py, INIZIO_CAMPIONE&quot;)
+    reg(&quot;campione_fine_anno&quot;, mesi[-1].year, &quot;annonum&quot;, &quot;Anno dell&#x27;ultimo mese completo del campione&quot;, &quot;dati/&quot;)
+    reg(&quot;campione_fine_mese&quot;, f&quot;{mesi[-1].year}-{mesi[-1].month:02d}-{mesi[-1].days_in_month:02d}&quot;,
+        &quot;data_lunga&quot;, &quot;Ultimo mese completo del campione (fine mese)&quot;, &quot;dati/&quot;)
+    reg(&quot;n_mesi&quot;, n, &quot;int&quot;, &quot;Mesi del campione&quot;, &quot;numero di mesi&quot;)
+    reg(&quot;n_anni&quot;, n / 12, &quot;num1&quot;, &quot;Anni del campione&quot;, &quot;mesi / 12&quot;)
+    reg(&quot;peso_azioni&quot;, W, &quot;pct0&quot;, &quot;Peso delle azioni&quot;, &quot;config.py, PESO_AZIONI&quot;)
+    reg(&quot;peso_obbl&quot;, 1 - W, &quot;pct0&quot;, &quot;Peso delle obbligazioni&quot;, &quot;config.py, PESO_AZIONI&quot;)
+    reg(&quot;soglia_bassi&quot;, config.SOGLIA_BASSI, &quot;int&quot;, &quot;Soglia dei tassi bassi (rendimento a 10 anni, in %)&quot;, &quot;config.py, SOGLIA_BASSI&quot;)
+    reg(&quot;soglia_alti&quot;, config.SOGLIA_ALTI, &quot;int&quot;, &quot;Soglia dei tassi alti (rendimento a 10 anni, in %)&quot;, &quot;config.py, SOGLIA_ALTI&quot;)
+    reg(&quot;scadenza&quot;, config.SCADENZA_OBBL, &quot;int&quot;, &quot;Scadenza dell&#x27;obbligazione sintetica, anni&quot;, &quot;config.py, SCADENZA_OBBL&quot;)
+    reg(&quot;data_scarico&quot;, meta[&quot;scaricato_il_utc&quot;][:10], &quot;data&quot;, &quot;Data del download dei dati&quot;, &quot;dati/metadati.json&quot;)
+    reg(&quot;y_min&quot;, float(np.nanmin(y_ora.values)), &quot;num2&quot;, &quot;Rendimento a 10 anni minimo nel campione (%)&quot;, &quot;dati/TNX.csv, fine mese&quot;)
+    reg(&quot;y_max&quot;, float(np.nanmax(y_ora.values)), &quot;num2&quot;, &quot;Rendimento a 10 anni massimo nel campione (%)&quot;, &quot;dati/TNX.csv, fine mese&quot;)
+
+    # --- statistiche complessive ------------------------------------------------------------------------------------
+    serie = {&quot;az&quot;: A, &quot;mix&quot;: M, &quot;ob&quot;: B}
+    nomi = {&quot;az&quot;: &quot;100% azioni&quot;, &quot;mix&quot;: &quot;60/40&quot;, &quot;ob&quot;: &quot;100% obbligazioni a 10 anni&quot;}
+    for k, r in serie.items():
+        reg(f&quot;{k}_cagr&quot;, fx.cagr(r), &quot;pct1&quot;, f&quot;Rendimento annuo composto, {nomi[k]}&quot;)
+        reg(f&quot;{k}_vol&quot;, fx.volatilita(r), &quot;pct1&quot;, f&quot;Volatilità annua, {nomi[k]}&quot;)
+        reg(f&quot;{k}_sharpe&quot;, float(fx.sharpe(r, C)), &quot;num2&quot;, f&quot;Sharpe ratio annualizzato (eccesso sui Bot a 13 settimane), {nomi[k]}&quot;)
+        reg(f&quot;{k}_dd&quot;, fx.perdita_massima(r), &quot;pct1&quot;, f&quot;Perdita massima dal picco (mensile), {nomi[k]}&quot;)
+    reg(&quot;cassa_cagr&quot;, fx.cagr(C), &quot;pct1&quot;, &quot;Rendimento annuo composto dei Bot a 13 settimane&quot;, &quot;dati/IRX.csv&quot;)
+    reg(&quot;valore_az&quot;, float(np.prod(1 + A)), &quot;num1&quot;, &quot;Valore finale di 1 dollaro in azioni&quot;, SORGENTE)
+    reg(&quot;valore_mix&quot;, float(np.prod(1 + M)), &quot;num1&quot;, &quot;Valore finale di 1 dollaro nel 60/40&quot;, SORGENTE)
+    reg(&quot;valore_ob&quot;, float(np.prod(1 + B)), &quot;num1&quot;, &quot;Valore finale di 1 dollaro in obbligazioni&quot;, SORGENTE)
+
+    # --- anni solari ------------------------------------------------------------------------------------------------
+    ann = pd.DataFrame({k: fx.rendimenti_anno_solare(r, mesi) for k, r in serie.items()})
+    anni_pieni = [a for a in ann.index if sum(1 for m in mesi if m.year == a) == 12]
+    ann = ann.loc[anni_pieni]
+    ann.to_csv(config.RISULTATI / &quot;anni_solari.csv&quot;, index_label=&quot;anno&quot;, float_format=&quot;%.5f&quot;)
+    pa = int(ann[&quot;mix&quot;].idxmin())
+    reg(&quot;mix_peggior_anno&quot;, pa, &quot;annonum&quot;, &quot;Anno solare peggiore del 60/40&quot;, &quot;anni_solari.csv&quot;)
+    reg(&quot;mix_peggior_rend&quot;, float(ann[&quot;mix&quot;].min()), &quot;pct1&quot;, &quot;Rendimento dell&#x27;anno solare peggiore del 60/40&quot;, &quot;anni_solari.csv&quot;)
+    reg(&quot;anno_crisi&quot;, 2008, &quot;annonum&quot;, &quot;Anno della crisi finanziaria, usato come confronto&quot;, &quot;scelto a priori nelle ipotesi&quot;)
+    reg(&quot;anno_rialzi&quot;, 2022, &quot;annonum&quot;, &quot;Anno dei rialzi dei tassi, ipotesi 1&quot;, &quot;config.py, SOGLIE&quot;)
+    for a in (2008, 2022):
+        for k in (&quot;az&quot;, &quot;mix&quot;, &quot;ob&quot;):
+            reg(f&quot;{k}_{a}&quot;, float(ann.loc[a, k]), &quot;pct1&quot;, f&quot;Rendimento {nomi[k]} nel {a}&quot;, &quot;anni_solari.csv&quot;)
+    reg(&quot;mix_anni_neg&quot;, int((ann[&quot;mix&quot;] &lt; 0).sum()), &quot;int&quot;, &quot;Anni solari negativi del 60/40&quot;, &quot;anni_solari.csv&quot;)
+    reg(&quot;n_anni_pieni&quot;, len(ann), &quot;int&quot;, &quot;Anni solari completi nel campione&quot;, &quot;anni_solari.csv&quot;)
+    reg(&quot;az_anni_neg&quot;, int((ann[&quot;az&quot;] &lt; 0).sum()), &quot;int&quot;, &quot;Anni solari negativi delle azioni&quot;, &quot;anni_solari.csv&quot;)
+    both = int(((ann[&quot;az&quot;] &lt; 0) &amp; (ann[&quot;ob&quot;] &lt; 0)).sum())
+    reg(&quot;anni_entrambi_neg&quot;, both, &quot;int&quot;, &quot;Anni solari in cui azioni e obbligazioni sono andate entrambe in perdita&quot;, &quot;anni_solari.csv&quot;)
+    anni_ent = &quot;, &quot;.join(str(a) for a in ann.index[(ann[&quot;az&quot;] &lt; 0) &amp; (ann[&quot;ob&quot;] &lt; 0)])
+    reg(&quot;anni_entrambi_elenco&quot;, anni_ent if anni_ent else &quot;nessuno&quot;, &quot;testo&quot;, &quot;Elenco degli anni con azioni e obbligazioni entrambe in perdita&quot;, &quot;anni_solari.csv&quot;)
+
+    # --- regimi ---------------------------------------------------------------------------------------------------
+    righe = []
+    for rg in (&quot;bassi&quot;, &quot;medi&quot;, &quot;alti&quot;):
+        sel = reg_m == rg
+        k_n = int(sel.sum())
+        reg(f&quot;n_{rg}&quot;, k_n, &quot;int&quot;, f&quot;Mesi con tassi {rg}&quot;)
+        reg(f&quot;quota_{rg}&quot;, k_n / n, &quot;pct0&quot;, f&quot;Quota dei mesi con tassi {rg}&quot;)
+        riga = {&quot;regime&quot;: rg, &quot;mesi&quot;: k_n}
+        if k_n &gt;= 12:
+            c = float(np.corrcoef(A[sel], B[sel])[0, 1])
+            reg(f&quot;corr_{rg}&quot;, c, &quot;num2&quot;, f&quot;Correlazione mensile azioni/obbligazioni con tassi {rg}&quot;)
+            riga[&quot;corr&quot;] = c
+            for k, r in serie.items():
+                v = float(np.prod(1 + r[sel]) ** (12 / k_n) - 1)
+                reg(f&quot;reg_{rg}_{k}&quot;, v, &quot;pct1&quot;, f&quot;Rendimento annuo composto ({nomi[k]}) nei mesi con tassi {rg}&quot;)
+                riga[k] = v
+        righe.append(riga)
+    pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;per_regime.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    reg(&quot;corr_tutto&quot;, float(np.corrcoef(A, B)[0, 1]), &quot;num2&quot;, &quot;Correlazione mensile azioni/obbligazioni, intero campione&quot;)
+    reg(&quot;corr_diff&quot;, RIS[&quot;corr_alti&quot;][&quot;valore&quot;] - RIS[&quot;corr_bassi&quot;][&quot;valore&quot;], &quot;num2&quot;, &quot;Correlazione con tassi alti meno correlazione con tassi bassi&quot;)
+
+    # --- correlazione mobile e anni delle citazioni ---------------------------------------------------------------------
+    FIN = 36
+    rc = pd.Series(A).rolling(FIN).corr(pd.Series(B)).replace([np.inf, -np.inf], np.nan).dropna()
+    reg(&quot;finestra_corr&quot;, FIN, &quot;int&quot;, &quot;Mesi della finestra mobile della correlazione&quot;, &quot;costante dello script (FIN)&quot;)
+    reg(&quot;corr_mob_min&quot;, float(rc.min()), &quot;num2&quot;, &quot;Correlazione mobile minima azioni/obbligazioni&quot;)
+    reg(&quot;corr_mob_min_anno&quot;, mesi[int(rc.idxmin())].year, &quot;annonum&quot;, &quot;Anno in cui la correlazione mobile ha toccato il minimo&quot;)
+    reg(&quot;corr_mob_max&quot;, float(rc.max()), &quot;num2&quot;, &quot;Correlazione mobile massima azioni/obbligazioni&quot;)
+    reg(&quot;corr_mob_max_anno&quot;, mesi[int(rc.idxmax())].year, &quot;annonum&quot;, &quot;Anno in cui la correlazione mobile ha toccato il massimo&quot;)
+    reg(&quot;corr_mob_ultima&quot;, float(rc.iloc[-1]), &quot;num2&quot;, &quot;Ultima correlazione mobile del campione&quot;)
+    reg(&quot;corr_mob_quota_neg&quot;, float((rc &lt; 0).mean()), &quot;pct0&quot;, &quot;Quota dei mesi con correlazione mobile negativa&quot;)
+    reg(&quot;cit_campbell&quot;, 2017, &quot;annonum&quot;, &quot;Anno di pubblicazione di Campbell, Sunderam e Viceira (Critical Finance Review)&quot;, &quot;abstract letto su nber.org/papers/w14701&quot;)
+    reg(&quot;cit_baele&quot;, 2010, &quot;annonum&quot;, &quot;Anno di pubblicazione di Baele, Bekaert e Inghelbrecht (Review of Financial Studies)&quot;, &quot;abstract letto su nber.org/papers/w15260&quot;)
+
+    # --- finestre a 10 anni ---------------------------------------------------------------------------------------
+    H = config.ORIZZONTE_ANNI * 12
+    fw = {k: fx.finestre_mobili(r, H) for k, r in serie.items()}
+    nf = len(fw[&quot;mix&quot;])
+    y_part = y_ora.values[:nf]                       # rendimento a 10 anni a fine del mese t, noto alla partenza
+    reg_f = fx.regime(y_part, config.SOGLIA_BASSI, config.SOGLIA_ALTI)
+    pd.DataFrame({&quot;mese_partenza&quot;: mesi[:nf].astype(str), &quot;tasso10&quot;: y_part, &quot;regime&quot;: reg_f,
+                  &quot;mix&quot;: fw[&quot;mix&quot;], &quot;az&quot;: fw[&quot;az&quot;], &quot;ob&quot;: fw[&quot;ob&quot;]}).to_csv(config.RISULTATI / &quot;finestre_10anni.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    reg(&quot;fw_anni&quot;, config.ORIZZONTE_ANNI, &quot;int&quot;, &quot;Anni di ciascuna finestra&quot;, &quot;config.py, ORIZZONTE_ANNI&quot;)
+    reg(&quot;fw_n&quot;, nf, &quot;int&quot;, &quot;Mesi di partenza con una finestra completa&quot;, &quot;numero di finestre&quot;)
+    for rg in (&quot;bassi&quot;, &quot;alti&quot;, &quot;medi&quot;):
+        sel = reg_f == rg
+        reg(f&quot;fw_n_{rg}&quot;, int(sel.sum()), &quot;int&quot;, f&quot;Finestre che partono con tassi {rg}&quot;)
+        if sel.sum() &gt; 0:
+            reg(f&quot;fw_med_{rg}&quot;, float(np.median(fw[&quot;mix&quot;][sel])), &quot;pct1&quot;, f&quot;Mediana del rendimento annuo del 60/40 nei 10 anni dopo una partenza con tassi {rg}&quot;)
+            reg(f&quot;fw_med_az_{rg}&quot;, float(np.median(fw[&quot;az&quot;][sel])), &quot;pct1&quot;, f&quot;Mediana del rendimento annuo delle azioni nei 10 anni dopo una partenza con tassi {rg}&quot;)
+            reg(f&quot;fw_med_ob_{rg}&quot;, float(np.median(fw[&quot;ob&quot;][sel])), &quot;pct1&quot;, f&quot;Mediana del rendimento annuo delle obbligazioni nei 10 anni dopo una partenza con tassi {rg}&quot;)
+    reg(&quot;fw_diff&quot;, RIS[&quot;fw_med_alti&quot;][&quot;valore&quot;] - RIS[&quot;fw_med_bassi&quot;][&quot;valore&quot;], &quot;pp1&quot;,
+        &quot;Mediana 60/40 dopo tassi alti meno mediana dopo tassi bassi (punti percentuali annui)&quot;)
+    reg(&quot;fw_corr_tasso&quot;, float(np.corrcoef(y_part, fw[&quot;mix&quot;])[0, 1]), &quot;num2&quot;, &quot;Correlazione tra il rendimento a 10 anni alla partenza e il rendimento annuo del 60/40 nei 10 anni dopo&quot;)
+    reg(&quot;fw_corr_tasso_ob&quot;, float(np.corrcoef(y_part, fw[&quot;ob&quot;])[0, 1]), &quot;num2&quot;, &quot;Come sopra, per le sole obbligazioni&quot;)
+    reg(&quot;fw_ultima_partenza&quot;, f&quot;{mesi[nf-1].year}-{mesi[nf-1].month:02d}-{mesi[nf-1].days_in_month:02d}&quot;, &quot;data_lunga&quot;, &quot;Ultimo mese di partenza con finestra completa&quot;)
+
+    # --- bootstrap della differenza di Sharpe ---------------------------------------------------------------------------
+    eA, eM = A - C, M - C
+    punto = float(fx.sharpe(M, C) - fx.sharpe(A, C))
+    dif = []
+    for _ in range(config.N_BOOTSTRAP):
+        ix = fx.indici_blocchi(n, config.BLOCCO_MESI, rng)
+        dif.append(float(fx.sharpe(M[ix], C[ix]) - fx.sharpe(A[ix], C[ix])))
+    a = (1 - config.LIVELLO_CONFIDENZA) / 2
+    lo, hi = float(np.quantile(dif, a)), float(np.quantile(dif, 1 - a))
+    reg(&quot;boot_diff&quot;, punto, &quot;num2&quot;, &quot;Sharpe del 60/40 meno Sharpe delle azioni&quot;)
+    reg(&quot;boot_lo&quot;, lo, &quot;num2&quot;, &quot;Estremo inferiore dell&#x27;intervallo di confidenza della differenza di Sharpe&quot;)
+    reg(&quot;boot_hi&quot;, hi, &quot;num2&quot;, &quot;Estremo superiore dell&#x27;intervallo di confidenza della differenza di Sharpe&quot;)
+    reg(&quot;boot_zero_dentro&quot;, int(lo &lt;= 0 &lt;= hi), &quot;int&quot;, &quot;1 se l&#x27;intervallo comprende lo zero&quot;)
+    reg(&quot;n_bootstrap&quot;, config.N_BOOTSTRAP, &quot;int&quot;, &quot;Ricampionamenti bootstrap&quot;, &quot;config.py, N_BOOTSTRAP&quot;)
+    reg(&quot;blocco&quot;, config.BLOCCO_MESI, &quot;int&quot;, &quot;Lunghezza dei blocchi del bootstrap, mesi&quot;, &quot;config.py, BLOCCO_MESI&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello dell&#x27;intervallo di confidenza&quot;, &quot;config.py, LIVELLO_CONFIDENZA&quot;)
+
+    # --- scimmie: peso azionario casuale per ogni anno -------------------------------------------------------------
+    anni_u = list(dict.fromkeys(m.year for m in mesi))
+    Wc = rng.uniform(0.0, 1.0, size=(config.N_SCIMMIE, len(anni_u)))
+    P = fx.portafoglio(A, B, mesi, Wc)
+    sh = np.asarray(fx.sharpe(P, C[None, :], asse=1))
+    pd.DataFrame({&quot;sharpe&quot;: sh}).to_csv(config.RISULTATI / &quot;scimmie_sharpe.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    s_mix, s_az = float(fx.sharpe(M, C)), float(fx.sharpe(A, C))
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Portafogli a peso azionario casuale&quot;, &quot;config.py, N_SCIMMIE&quot;)
+    reg(&quot;scim_perc_mix&quot;, float((sh &lt;= s_mix).mean()), &quot;pct1&quot;, &quot;Quota di scimmie con Sharpe non superiore a quello del 60/40&quot;)
+    reg(&quot;scim_perc_az&quot;, float((sh &lt;= s_az).mean()), &quot;pct1&quot;, &quot;Quota di scimmie con Sharpe non superiore a quello delle sole azioni&quot;)
+    reg(&quot;scim_med&quot;, float(np.median(sh)), &quot;num2&quot;, &quot;Sharpe mediano delle scimmie&quot;)
+    reg(&quot;scim_p05&quot;, float(np.quantile(sh, 0.05)), &quot;num2&quot;, &quot;Sharpe del 5° percentile delle scimmie&quot;)
+    reg(&quot;scim_p95&quot;, float(np.quantile(sh, 0.95)), &quot;num2&quot;, &quot;Sharpe del 95° percentile delle scimmie&quot;)
+
+    # --- controllo del proxy obbligazionario -------------------------------------------------------------------------
+    rf = fondo_m.pct_change()
+    comune = mesi.intersection(rf.dropna().index)
+    comune = comune[comune &gt;= pd.Period(&quot;1987-01&quot;, &quot;M&quot;)]
+    x, z = rb.reindex(comune).values, rf.reindex(comune).values
+    reg(&quot;proxy_n&quot;, len(comune), &quot;int&quot;, &quot;Mesi in comune tra serie sintetica e fondo obbligazionario&quot;, &quot;dati/VBMFX.csv&quot;)
+    reg(&quot;proxy_corr&quot;, float(np.corrcoef(x, z)[0, 1]), &quot;num2&quot;, &quot;Correlazione mensile tra obbligazioni sintetiche a 10 anni e fondo VBMFX&quot;, &quot;dati/VBMFX.csv&quot;)
+    reg(&quot;proxy_cagr_sint&quot;, fx.cagr(x), &quot;pct1&quot;, &quot;Rendimento annuo composto della serie sintetica nel periodo in comune&quot;)
+    reg(&quot;proxy_cagr_fondo&quot;, fx.cagr(z), &quot;pct1&quot;, &quot;Rendimento annuo composto del fondo VBMFX nel periodo in comune&quot;, &quot;dati/VBMFX.csv&quot;)
+    reg(&quot;proxy_inizio&quot;, comune[0].year, &quot;annonum&quot;, &quot;Anno di inizio del confronto con il fondo&quot;, &quot;dati/VBMFX.csv&quot;)
+
+    # --- verdetti delle ipotesi (flag 1/0) -------------------------------------------------------------------------------
+    S = config.SOGLIE
+    reg(&quot;ip1_ok&quot;, int(pa == S[&quot;ip1_anno&quot;]), &quot;int&quot;, &quot;Ipotesi 1 verificata (anno peggiore = 2022)&quot;, &quot;confronto con config.SOGLIE&quot;)
+    reg(&quot;ip2_ok&quot;, int(RIS[&quot;corr_diff&quot;][&quot;valore&quot;] &gt;= S[&quot;ip2_diff&quot;]), &quot;int&quot;, &quot;Ipotesi 2 verificata&quot;, &quot;confronto con config.SOGLIE&quot;)
+    reg(&quot;ip3_sharpe_ok&quot;, int(RIS[&quot;mix_sharpe&quot;][&quot;valore&quot;] &gt; RIS[&quot;az_sharpe&quot;][&quot;valore&quot;]), &quot;int&quot;, &quot;Ipotesi 3, parte Sharpe&quot;)
+    reg(&quot;ip3_dd_ok&quot;, int(abs(RIS[&quot;mix_dd&quot;][&quot;valore&quot;]) &lt; abs(RIS[&quot;az_dd&quot;][&quot;valore&quot;])), &quot;int&quot;, &quot;Ipotesi 3, parte perdita massima&quot;)
+    reg(&quot;ip4_ok&quot;, int(RIS[&quot;fw_diff&quot;][&quot;valore&quot;] &gt;= S[&quot;ip4_pp&quot;]), &quot;int&quot;, &quot;Ipotesi 4 verificata&quot;, &quot;confronto con config.SOGLIE&quot;)
+    reg(&quot;ip5_ok&quot;, RIS[&quot;boot_zero_dentro&quot;][&quot;valore&quot;], &quot;int&quot;, &quot;Ipotesi 5 verificata (intervallo comprende lo zero)&quot;)
+    reg(&quot;ip6_ok&quot;, int(S[&quot;ip6_lo&quot;] &lt;= RIS[&quot;scim_perc_mix&quot;][&quot;valore&quot;] &lt;= S[&quot;ip6_hi&quot;]), &quot;int&quot;, &quot;Ipotesi 6 verificata&quot;)
+    reg(&quot;ip7_ok&quot;, int(RIS[&quot;proxy_corr&quot;][&quot;valore&quot;] &gt;= S[&quot;ip7_corr&quot;]), &quot;int&quot;, &quot;Ipotesi 7 verificata&quot;)
+    reg(&quot;s_ip1_anno&quot;, S[&quot;ip1_anno&quot;], &quot;annonum&quot;, &quot;Soglia ipotesi 1: anno&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip2_diff&quot;, S[&quot;ip2_diff&quot;], &quot;num2&quot;, &quot;Soglia ipotesi 2: differenza di correlazione&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip4_pp&quot;, S[&quot;ip4_pp&quot;], &quot;pp1&quot;, &quot;Soglia ipotesi 4: punti percentuali annui&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip6_lo&quot;, S[&quot;ip6_lo&quot;], &quot;pct0&quot;, &quot;Soglia ipotesi 6: percentile inferiore&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip6_hi&quot;, S[&quot;ip6_hi&quot;], &quot;pct0&quot;, &quot;Soglia ipotesi 6: percentile superiore&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip7_corr&quot;, S[&quot;ip7_corr&quot;], &quot;num2&quot;, &quot;Soglia ipotesi 7: correlazione minima&quot;, &quot;config.py, SOGLIE&quot;)
+
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri su {n} mesi&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i tre grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_crescita.png         crescita di 1 dollaro: azioni, 60/40, obbligazioni (scala logaritmica)
+  fig2_correlazione.png     tasso a 10 anni e correlazione mobile a 36 mesi tra azioni e obbligazioni
+  fig3_tassi_e_rendimento.png  tasso di partenza e rendimento annuo del 60/40 nei 10 anni dopo
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    m = pd.read_csv(R / &quot;mensili.csv&quot;)
+    t = pd.PeriodIndex(m[&quot;mese&quot;], freq=&quot;M&quot;).to_timestamp(how=&quot;end&quot;)
+    fw = pd.read_csv(R / &quot;finestre_10anni.csv&quot;)
+
+    # Figura 1
+    fig, ax = plt.subplots(figsize=(8.4, 4.8))
+    for col, c, lab, lw in ((&quot;azioni&quot;, BLU, &quot;100% azioni&quot;, 2.2), (&quot;mix&quot;, ARANCIO, &quot;60/40&quot;, 2.8), (&quot;obbligazioni&quot;, GRIGIO, &quot;100% obbligazioni a 10 anni&quot;, 2.0)):
+        ax.plot(t, (1 + m[col]).cumprod(), color=c, lw=lw, label=lab)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_ylabel(&quot;Valore di 1 dollaro (scala logaritmica)&quot;)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_crescita.png&quot;)
+    plt.close(fig)
+
+    # Figura 2
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(8.4, 6.2), sharex=True, gridspec_kw={&quot;height_ratios&quot;: [1, 1.3]})
+    a1.plot(t, m[&quot;tasso10_prec&quot;], color=GRIGIO, lw=2)
+    a1.axhline(config.SOGLIA_ALTI, color=GRIGIO, ls=&quot;--&quot;, lw=1)
+    a1.axhline(config.SOGLIA_BASSI, color=GRIGIO, ls=&quot;--&quot;, lw=1)
+    a1.set_ylabel(&quot;Rendimento a 10 anni (%)&quot;)
+    rc = m[&quot;azioni&quot;].rolling(36).corr(m[&quot;obbligazioni&quot;])
+    a2.plot(t, rc, color=BLU, lw=2.4)
+    a2.axhline(0, color=&quot;black&quot;, lw=1)
+    a2.fill_between(t, 0, rc, where=rc &lt; 0, color=ARANCIO, alpha=0.35, lw=0)
+    a2.set_ylabel(&quot;Correlazione azioni/obbligazioni\n(finestra mobile di 36 mesi)&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig2_correlazione.png&quot;)
+    plt.close(fig)
+
+    # Figura 3
+    fig, ax = plt.subplots(figsize=(8.4, 4.8))
+    ax.scatter(fw[&quot;tasso10&quot;], fw[&quot;mix&quot;] * 100, s=14, color=ARANCIO, alpha=0.7, label=&quot;60/40&quot;)
+    ax.scatter(fw[&quot;tasso10&quot;], fw[&quot;ob&quot;] * 100, s=10, color=GRIGIO, alpha=0.5, label=&quot;100% obbligazioni a 10 anni&quot;)
+    ax.axvline(config.SOGLIA_BASSI, color=&quot;black&quot;, ls=&quot;--&quot;, lw=1)
+    ax.axvline(config.SOGLIA_ALTI, color=&quot;black&quot;, ls=&quot;--&quot;, lw=1)
+    ax.set_xlabel(&quot;Rendimento a 10 anni alla partenza (%)&quot;)
+    ax.set_ylabel(&quot;Rendimento annuo nei 10 anni dopo (%)&quot;)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.savefig(config.FIGURE / &quot;fig3_tassi_e_rendimento.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 181 - &quot;Il 60/40 è morto? Azioni e obbligazioni nei diversi regimi di tassi&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui, scritti PRIMA di guardare i risultati. Gli script numerati li leggono da questo file.
+
+Il disegno: un portafoglio 60% azioni americane / 40% obbligazioni del Tesoro a 10 anni, ribilanciato a ogni gennaio, dal gennaio 1981
+all&#x27;ultimo mese completo. Azioni: il fondo Vanguard 500 Index (VFINX), con dividendi reinvestiti. Obbligazioni: serie SINTETICA di un
+Treasury a 10 anni a cedola pari, ricostruita mese per mese dal rendimento a 10 anni (^TNX) con la formula esatta del prezzo; la
+si controlla contro il fondo Vanguard Total Bond Market (VBMFX) dal 1987. Liquidità: rendimento dei Bot a 13 settimane (^IRX).
+Rendimenti nominali, in dollari, lordi di costi e tasse. Il &quot;regime di tassi&quot; di un mese è deciso dal rendimento a 10 anni
+della fine del mese PRECEDENTE (nessun look-ahead).
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati (ticker Yahoo Finance, nome, ruolo) ------------------------------------------------------------------
+SERIE = [
+    (&quot;VFINX&quot;, &quot;Vanguard 500 Index (azioni USA, dividendi reinvestiti)&quot;, &quot;azioni&quot;),
+    (&quot;VBMFX&quot;, &quot;Vanguard Total Bond Market Index (controllo delle obbligazioni)&quot;, &quot;controllo&quot;),
+    (&quot;^TNX&quot;, &quot;Rendimento del Treasury a 10 anni (in %)&quot;, &quot;tasso10&quot;),
+    (&quot;^IRX&quot;, &quot;Rendimento dei Bot a 13 settimane (in %)&quot;, &quot;cassa&quot;),
+]
+INIZIO_DOWNLOAD = &quot;1960-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le serie mensili di un fondo azionario S&amp;P 500, di un fondo obbligazionario e dei rendimenti dei titoli di Stato USA&quot;
+NOMI_ESENTI = (&quot;S&amp;P&quot;, &quot;TickerFight&quot;, &quot;181&quot;, &quot;60/40&quot;, &quot;VFINX&quot;, &quot;VBMFX&quot;, &quot;Treasury&quot;, &quot;10 anni&quot;)
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+# --- Il portafoglio ------------------------------------------------------------------------------------------------
+INIZIO_CAMPIONE = &quot;1981-01&quot;        # primo mese di rendimento (il fondo azionario parte nel 1980)
+PESO_AZIONI = 0.60                 # il resto va in obbligazioni a 10 anni
+SCADENZA_OBBL = 10.0               # anni, cedola pari al rendimento del mese precedente
+# Il ribilanciamento è sempre al primo mese di ogni anno solare.
+
+# --- Regimi di tassi (rendimento a 10 anni di fine mese precedente, in %) --------------------------------------------
+SOGLIA_BASSI = 3.0                 # sotto: tassi bassi
+SOGLIA_ALTI = 6.0                  # da qui in su: tassi alti; in mezzo: medi
+
+ORIZZONTE_ANNI = 10                # finestre mobili per la domanda &quot;da che tassi parti?&quot;
+
+# --- Il caso e l&#x27;incertezza ------------------------------------------------------------------------------------------
+SEME = 20261024
+N_SCIMMIE = 2000                   # portafogli con peso azionario a caso (uniforme 0-100%), ripescato ogni gennaio
+N_BOOTSTRAP = 2000
+BLOCCO_MESI = 12                   # bootstrap a blocchi circolari
+LIVELLO_CONFIDENZA = 0.95
+
+# --- Soglie delle ipotesi (riportate qui per scriverle nell&#x27;articolo senza cifre a mano) ----------------------------
+SOGLIE = {&quot;ip1_anno&quot;: 2022, &quot;ip2_diff&quot;: 0.20, &quot;ip4_pp&quot;: 0.03, &quot;ip6_lo&quot;: 0.25, &quot;ip6_hi&quot;: 0.75, &quot;ip7_corr&quot;: 0.80}
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati ---------------------------------------------------------------
+IPOTESI = (
+    &quot;1) Il 2022 è l&#x27;anno solare peggiore del 60/40 dal 1981 a oggi: peggio anche del 2008, quando le obbligazioni avevano protetto. &quot;
+    &quot;2) La correlazione mensile tra azioni e obbligazioni è più alta con tassi alti (10 anni da 6% in su) che con tassi bassi (sotto il 3%): &quot;
+    &quot;la differenza è di almeno 0,20. &quot;
+    &quot;3) Sull&#x27;intero periodo il 60/40 ha un Sharpe ratio più alto delle sole azioni E una perdita massima più piccola. &quot;
+    &quot;4) Partire da tassi alti conta: la mediana del rendimento annuo del 60/40 nei 10 anni successivi è più alta di almeno 3 punti percentuali &quot;
+    &quot;se si parte con tassi alti rispetto a tassi bassi. &quot;
+    &quot;5) Il vantaggio di Sharpe del 60/40 sulle sole azioni non è distinguibile dal caso: l&#x27;intervallo di confidenza al 95% (bootstrap a blocchi di 12 mesi) &quot;
+    &quot;della differenza comprende lo zero. &quot;
+    &quot;6) Il 60/40 non è speciale rispetto a un peso azionario scelto a caso: il suo Sharpe sta tra il 25° e il 75° percentile di 2000 portafogli con peso azionario casuale. &quot;
+    &quot;7) Controllo del metodo: la serie sintetica delle obbligazioni a 10 anni ha una correlazione mensile di almeno 0,80 con il fondo obbligazionario reale dal 1987.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>obbligazione sintetica, portafoglio ribilanciato, statistiche, bootstrap</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;esperimento: serie mensili, obbligazione sintetica a 10 anni, portafoglio ribilanciato, statistiche, bootstrap.
+
+Convenzioni: tutti i rendimenti sono mensili e semplici (0,01 = 1%); i rendimenti da tassi sono decimali annui (0,04 = 4%).
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def fine_mese(serie: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Ultimo valore di ogni mese (indice = periodo mensile).&quot;&quot;&quot;
+    s = serie.sort_index()
+    return s.groupby(s.index.to_period(&quot;M&quot;)).last()
+
+
+def prezzo_cedola_pari(cedola: float, y: float, n_semestri: float) -&gt; float:
+    &quot;&quot;&quot;Prezzo (per 1 di nominale) di un&#x27;obbligazione a cedole semestrali, con cedola annua `cedola`, al rendimento annuo `y`.&quot;&quot;&quot;
+    i = y / 2.0
+    if abs(i) &lt; 1e-12:
+        return cedola / 2.0 * n_semestri + 1.0
+    return cedola / 2.0 * (1.0 - (1.0 + i) ** (-n_semestri)) / i + (1.0 + i) ** (-n_semestri)
+
+
+def rendimento_obbligazione(y_prec: float, y_ora: float, scadenza: float = 10.0) -&gt; float:
+    &quot;&quot;&quot;Rendimento di un mese di un Treasury a cedola pari comprato a fine mese precedente (cedola = y_prec) e rivenduto a fine mese.
+
+    A fine mese la scadenza residua è scadenza - 1/12 anni; il rendimento è y_ora. Include il rateo di cedola di un mese.
+    &quot;&quot;&quot;
+    n = 2.0 * (scadenza - 1.0 / 12.0)
+    return prezzo_cedola_pari(y_prec, y_ora, n) + y_prec / 12.0 - 1.0
+
+
+def portafoglio(rs: np.ndarray, rb: np.ndarray, mesi: pd.PeriodIndex, w) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimenti mensili di un portafoglio azioni/obbligazioni ribilanciato a ogni gennaio (e al primo mese).
+
+    w: peso azionario. Scalare; oppure array (S,) = S portafogli con un peso ciascuno; oppure array (S, Y) con un peso per anno
+    solare (Y = numero di anni solari distinti dei mesi, in ordine). Restituisce un array (S, n_mesi).
+    &quot;&quot;&quot;
+    anni = np.array([m.year for m in mesi])
+    anni_u = list(dict.fromkeys(anni))
+    w = np.asarray(w, float)
+    if w.ndim == 0:
+        w = w.reshape(1, 1)
+    elif w.ndim == 1:
+        w = w[:, None]
+    S = w.shape[0]
+    out = np.empty((S, len(mesi)))
+    va = vb = None
+    for i, m in enumerate(mesi):
+        if i == 0 or m.month == 1:
+            wy = w[:, 0] if w.shape[1] == 1 else w[:, anni_u.index(m.year)]
+            va, vb = wy.copy(), 1.0 - wy
+        tot = va + vb
+        va = va * (1.0 + rs[i])
+        vb = vb * (1.0 + rb[i])
+        out[:, i] = (va + vb) / tot - 1.0
+    return out
+
+
+def cagr(r: np.ndarray) -&gt; float:
+    return float(np.prod(1.0 + r) ** (12.0 / len(r)) - 1.0)
+
+
+def volatilita(r: np.ndarray) -&gt; float:
+    return float(np.std(r, ddof=1) * np.sqrt(12.0))
+
+
+def sharpe(r: np.ndarray, cassa: np.ndarray, asse: int = -1):
+    &quot;&quot;&quot;Sharpe annualizzato sugli eccessi mensili rispetto alla liquidità.&quot;&quot;&quot;
+    e = r - cassa
+    return e.mean(axis=asse) / e.std(axis=asse, ddof=1) * np.sqrt(12.0)
+
+
+def perdita_massima(r: np.ndarray) -&gt; float:
+    &quot;&quot;&quot;Massimo calo dal picco (numero negativo), sul valore cumulato dei rendimenti mensili.&quot;&quot;&quot;
+    v = np.cumprod(1.0 + np.r_[0.0, r][1:])
+    v = np.r_[1.0, v]
+    return float((v / np.maximum.accumulate(v) - 1.0).min())
+
+
+def rendimenti_anno_solare(r: np.ndarray, mesi: pd.PeriodIndex) -&gt; pd.Series:
+    anni = np.array([m.year for m in mesi])
+    return pd.Series(1.0 + r, index=anni).groupby(level=0).prod() - 1.0
+
+
+def regime(y_prec_pct: np.ndarray, soglia_bassi: float, soglia_alti: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;&#x27;bassi&#x27; sotto soglia_bassi, &#x27;alti&#x27; da soglia_alti in su, &#x27;medi&#x27; in mezzo (rendimento in %).&quot;&quot;&quot;
+    return np.where(y_prec_pct &lt; soglia_bassi, &quot;bassi&quot;, np.where(y_prec_pct &gt;= soglia_alti, &quot;alti&quot;, &quot;medi&quot;))
+
+
+def finestre_mobili(r: np.ndarray, n: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimento annualizzato dei rendimenti r[t+1 .. t+n] per ogni t con t+n &lt; len(r) (t = ultimo mese noto alla partenza).&quot;&quot;&quot;
+    lr = np.log1p(r)
+    c = np.r_[0.0, np.cumsum(lr)]
+    k = len(r) - n
+    tot = c[n + 1:n + 1 + k] - c[1:1 + k] if k &gt; 0 else np.array([])
+    return np.expm1(tot * 12.0 / n)
+
+
+def indici_blocchi(n: int, blocco: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Indici di un campione bootstrap a blocchi circolari lungo n.&quot;&quot;&quot;
+    k = int(np.ceil(n / blocco))
+    inizi = rng.integers(0, n, k)
+    return ((inizi[:, None] + np.arange(blocco)[None, :]) % n).ravel()[:n]
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>19 controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+mesi = pd.period_range(&quot;2000-01&quot;, periods=36, freq=&quot;M&quot;)
+
+# 1-3. Obbligazione sintetica
+controlla(&quot;tasso fermo: rendimento mensile = tasso/12&quot;, abs(fx.rendimento_obbligazione(0.05, 0.05) - 0.05 / 12) &lt; 1e-12)
+controlla(&quot;tassi in salita: rendimento sotto il carry&quot;, fx.rendimento_obbligazione(0.04, 0.05) &lt; 0.04 / 12)
+controlla(&quot;tassi in discesa: rendimento sopra il carry&quot;, fx.rendimento_obbligazione(0.04, 0.03) &gt; 0.04 / 12)
+d = (fx.rendimento_obbligazione(0.04, 0.0401) - fx.rendimento_obbligazione(0.04, 0.04)) / 0.0001
+controlla(&quot;durata: +1 punto base fa perdere circa 8 punti base per ogni punto di tasso&quot;, -9.0 &lt; d &lt; -7.0)
+
+# 4-6. Portafoglio
+rs = np.random.default_rng(1).normal(0.01, 0.04, 36)
+rb = np.random.default_rng(2).normal(0.004, 0.015, 36)
+controlla(&quot;peso 1 = solo azioni&quot;, np.allclose(fx.portafoglio(rs, rb, mesi, 1.0)[0], rs))
+controlla(&quot;peso 0 = solo obbligazioni&quot;, np.allclose(fx.portafoglio(rs, rb, mesi, 0.0)[0], rb))
+rc = np.full(36, 0.01)
+controlla(&quot;stesso rendimento nei due titoli: portafoglio uguale&quot;, np.allclose(fx.portafoglio(rc, rc, mesi, 0.6)[0], rc))
+rs2, rb2 = np.full(36, 0.01), np.zeros(36)
+p = fx.portafoglio(rs2, rb2, mesi, 0.6)[0]
+atteso1 = 0.6 * 1.01 ** 12 + 0.4
+controlla(&quot;primo anno: valore = 0,6 x crescita azioni + 0,4&quot;, abs(np.prod(1 + p[:12]) - atteso1) &lt; 1e-12)
+controlla(&quot;secondo anno dopo ribilanciamento: ripartenza da 60/40&quot;, abs(np.prod(1 + p[12:24]) - atteso1) &lt; 1e-12)
+pw = fx.portafoglio(rs, rb, mesi, np.array([[0.2, 0.8, 0.5]]))[0]
+controlla(&quot;un peso per anno: primo anno con peso 0,2&quot;, abs(pw[0] - (0.2 * rs[0] + 0.8 * rb[0])) &lt; 1e-12 and abs(pw[12] - (0.8 * rs[12] + 0.2 * rb[12])) &lt; 1e-12)
+
+# 7-10. Statistiche
+controlla(&quot;perdita massima: +10% poi -50%&quot;, abs(fx.perdita_massima(np.array([0.1, -0.5])) - (-0.5)) &lt; 1e-12)
+controlla(&quot;perdita massima: solo rialzi = 0&quot;, fx.perdita_massima(np.full(10, 0.01)) == 0.0)
+e = np.array([0.01, -0.01] * 6)
+controlla(&quot;Sharpe zero se l&#x27;eccesso medio è zero&quot;, abs(fx.sharpe(e, np.zeros(12))) &lt; 1e-12)
+controlla(&quot;CAGR di 1% al mese&quot;, abs(fx.cagr(np.full(12, 0.01)) - (1.01 ** 12 - 1)) &lt; 1e-12)
+controlla(&quot;rendimento anno solare&quot;, abs(fx.rendimenti_anno_solare(np.full(24, 0.01), mesi[:24]).iloc[0] - (1.01 ** 12 - 1)) &lt; 1e-12)
+
+# 11-13. Regimi, finestre, bootstrap
+controlla(&quot;regimi&quot;, list(fx.regime(np.array([2.0, 3.0, 5.9, 6.0]), 3.0, 6.0)) == [&quot;bassi&quot;, &quot;medi&quot;, &quot;medi&quot;, &quot;alti&quot;])
+fm = fx.finestre_mobili(np.full(30, 0.01), 12)
+controlla(&quot;finestre mobili: numero e valore&quot;, len(fm) == 18 and np.allclose(fm, 1.01 ** 12 - 1))
+rng = np.random.default_rng(5)
+ix = fx.indici_blocchi(100, 12, rng)
+controlla(&quot;bootstrap a blocchi: lunghezza e intervallo&quot;, len(ix) == 100 and ix.min() &gt;= 0 and ix.max() &lt; 100)
+s = pd.Series([1.0, 2.0, 3.0], index=pd.to_datetime([&quot;2000-01-03&quot;, &quot;2000-01-31&quot;, &quot;2000-02-10&quot;]))
+controlla(&quot;fine mese: ultimo valore&quot;, list(fx.fine_mese(s).values) == [2.0, 3.0])
+print(f&quot;{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
