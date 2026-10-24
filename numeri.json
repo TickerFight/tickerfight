@@ -1,0 +1,94 @@
+{
+ "metriche": [
+  {
+   "valore": "19",
+   "testo": "articoli scritti",
+   "nota": "6 già sul blog, 13 in arrivo",
+   "articoli": [
+    {
+     "t": "500 euro su Apple con le medie mobili: cinque anni di operazioni, commissioni e tasse",
+     "h": "https://ticker-fight.blogspot.com/2026/10/500-euro-su-apple-con-le-medie-mobili.html"
+    },
+    {
+     "t": "Il cono della fortuna: la regola 50/200 sull'S&P 500 contro diecimila scimmie",
+     "h": "https://ticker-fight.blogspot.com/2026/10/il-cono-della-fortuna-la-regola-50200.html"
+    },
+    {
+     "t": "Il filtro sul rendimento passato funziona davvero? Prova fuori campione su 150 titoli",
+     "h": "https://ticker-fight.blogspot.com/2026/10/il-filtro-sul-rendimento-passato.html"
+    },
+    {
+     "t": "Quando le medie mobili battono il buy & hold? Tre indizi dalla letteratura messi alla prova",
+     "h": "https://ticker-fight.blogspot.com/2026/10/quando-le-medie-mobili-battono-il-buy.html"
+    },
+    {
+     "t": "50 titoli dell'S&P 500, medie mobili contro buy & hold: la classifica",
+     "h": "https://ticker-fight.blogspot.com/2026/10/50-titoli-dells-500-medie-mobili-contro.html"
+    },
+    {
+     "t": "Quanto è fortunata la tua strategia? Il Golden Cross alla prova del caso",
+     "h": "https://ticker-fight.blogspot.com/2026/10/quanto-e-fortunata-la-tua-strategia-il.html"
+    }
+   ]
+  },
+  {
+   "valore": "0 su 6",
+   "testo": "battono chi compra e tiene",
+   "nota": "",
+   "articoli": [
+    {
+     "t": "500 euro su Apple con le medie mobili: cinque anni di operazioni, commissioni e tasse",
+     "h": "https://ticker-fight.blogspot.com/2026/10/500-euro-su-apple-con-le-medie-mobili.html",
+     "e": "No"
+    },
+    {
+     "t": "Il cono della fortuna: la regola 50/200 sull'S&P 500 contro diecimila scimmie",
+     "h": "https://ticker-fight.blogspot.com/2026/10/il-cono-della-fortuna-la-regola-50200.html",
+     "e": "No"
+    },
+    {
+     "t": "Il filtro sul rendimento passato funziona davvero? Prova fuori campione su 150 titoli",
+     "h": "https://ticker-fight.blogspot.com/2026/10/il-filtro-sul-rendimento-passato.html",
+     "e": "No"
+    },
+    {
+     "t": "Quando le medie mobili battono il buy & hold? Tre indizi dalla letteratura messi alla prova",
+     "h": "https://ticker-fight.blogspot.com/2026/10/quando-le-medie-mobili-battono-il-buy.html",
+     "e": "No"
+    },
+    {
+     "t": "50 titoli dell'S&P 500, medie mobili contro buy & hold: la classifica",
+     "h": "https://ticker-fight.blogspot.com/2026/10/50-titoli-dells-500-medie-mobili-contro.html",
+     "e": "No"
+    },
+    {
+     "t": "Quanto è fortunata la tua strategia? Il Golden Cross alla prova del caso",
+     "h": "https://ticker-fight.blogspot.com/2026/10/quanto-e-fortunata-la-tua-strategia-il.html",
+     "e": "In parte"
+    }
+   ]
+  },
+  {
+   "valore": "1 su 3",
+   "testo": "batte il caso",
+   "nota": "",
+   "articoli": [
+    {
+     "t": "Il cono della fortuna: la regola 50/200 sull'S&P 500 contro diecimila scimmie",
+     "h": "https://ticker-fight.blogspot.com/2026/10/il-cono-della-fortuna-la-regola-50200.html",
+     "e": "No"
+    },
+    {
+     "t": "Il filtro sul rendimento passato funziona davvero? Prova fuori campione su 150 titoli",
+     "h": "https://ticker-fight.blogspot.com/2026/10/il-filtro-sul-rendimento-passato.html",
+     "e": "No"
+    },
+    {
+     "t": "Quanto è fortunata la tua strategia? Il Golden Cross alla prova del caso",
+     "h": "https://ticker-fight.blogspot.com/2026/10/quanto-e-fortunata-la-tua-strategia-il.html",
+     "e": "Sì"
+    }
+   ]
+  }
+ ]
+}
