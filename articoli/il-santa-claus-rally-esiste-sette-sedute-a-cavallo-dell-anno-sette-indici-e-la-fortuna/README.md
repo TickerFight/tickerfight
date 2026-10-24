@@ -2,7 +2,7 @@
 
 **Domanda:** le ultime cinque sedute di dicembre e le prime due di gennaio rendono davvero più di sette sedute qualunque, o è fortuna?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Il Santa Claus rally esiste? Sette sedute a cavallo dell'anno, sette indici e la fortuna](https://ticker-fight.blogspot.com/2026/10/il-santa-claus-rally-esiste-sette.html).
 
 ## Il disegno
 

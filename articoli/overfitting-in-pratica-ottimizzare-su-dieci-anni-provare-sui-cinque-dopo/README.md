@@ -2,7 +2,7 @@
 
 **Domanda:** se scelgo la migliore coppia di medie mobili su dieci anni e la uso nei cinque successivi, quanto crolla il rendimento? E cosa succede quando provo più coppie?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Overfitting in pratica: ottimizzare su dieci anni, provare sui cinque dopo](https://ticker-fight.blogspot.com/2026/10/overfitting-in-pratica-ottimizzare-su.html).
 
 ## Il disegno
 

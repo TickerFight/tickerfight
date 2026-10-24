@@ -2,7 +2,7 @@
 
 **Domanda:** la stessa regola di investimento, misurata con tre metriche diverse, porta a conclusioni diverse? E quale delle tre metriche è la meno fragile?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Sharpe, Sortino o Calmar: quale metrica ti inganna meno?](https://ticker-fight.blogspot.com/2026/10/sharpe-sortino-o-calmar-quale-metrica.html).
 
 ## Il disegno
 
