@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-6 pubblicati, 14 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+6 pubblicati, 15 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -20,6 +20,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [A che costo per operazione smette di battere il buy & hold una regola di trading?](https://tickerfight.github.io/tickerfight/articoli/a-che-costo-per-operazione-smette-di-battere-il-buy-hold-una-regola-di-trading/) | In revisione | — | — |
 | [Il Santa Claus rally esiste? Sette sedute a cavallo dell'anno, sette indici e la fortuna](https://tickerfight.github.io/tickerfight/articoli/il-santa-claus-rally-esiste-sette-sedute-a-cavallo-dell-anno-sette-indici-e-la-fortuna/) | In revisione | — | — |
 | [«Vendi a maggio e vai via»: otto indici europei, la fortuna e il buy & hold](https://tickerfight.github.io/tickerfight/articoli/vendi-a-maggio-e-vai-via-otto-indici-europei-la-fortuna-e-il-buy-hold/) | In revisione | — | — |
+| [Il 60/40 è morto? Azioni e obbligazioni nei diversi regimi di tassi](https://tickerfight.github.io/tickerfight/articoli/il-60-40-e-morto-azioni-e-obbligazioni-nei-diversi-regimi-di-tassi/) | In revisione | — | — |
 | [PAC contro lump sum: conta più la lunghezza delle rate o il decennio di partenza?](https://tickerfight.github.io/tickerfight/articoli/pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza/) | In revisione | — | — |
 | [Volatility targeting: ridurre le azioni quando il mercato trema migliora il portafoglio?](https://tickerfight.github.io/tickerfight/articoli/volatility-targeting-ridurre-le-azioni-quando-il-mercato-trema-migliora-il-portafoglio/) | In revisione | — | — |
 | [Portafogli di titoli casuali contro l'indice: quanto conta scegliere i titoli?](https://tickerfight.github.io/tickerfight/articoli/portafogli-di-titoli-casuali-contro-l-indice-quanto-conta-scegliere-i-titoli/) | In revisione | — | — |
