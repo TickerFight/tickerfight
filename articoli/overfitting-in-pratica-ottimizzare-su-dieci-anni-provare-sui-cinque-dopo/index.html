@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Overfitting in pratica: ottimizzare su dieci anni, provare sui cinque dopo · il codice · TickerFight</title>
+<meta name="description" content="se scelgo la migliore coppia di medie mobili su dieci anni e la uso nei cinque successivi, quanto crolla il rendimento? E cosa succede quando provo più coppie?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a><a href="https://github.com/TickerFight/tickerfight">GitHub</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Overfitting in pratica: ottimizzare su dieci anni, provare sui cinque dopo</h1>
+<p class="domanda">Se scelgo la migliore coppia di medie mobili su dieci anni e la uso nei cinque successivi, quanto crolla il rendimento? E cosa succede quando provo più coppie?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="overfitting-in-pratica-ottimizzare-su-dieci-anni-provare-sui-cinque-dopo.zip" download>⬇ Scarica il codice (.zip)</a><a class="btn" href="https://github.com/TickerFight/tickerfight/tree/main/articoli/overfitting-in-pratica-ottimizzare-su-dieci-anni-provare-sui-cinque-dopo">Vedi su GitHub</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Regola:</strong> media mobile veloce sopra la lenta, segnale ritardato di un giorno (nessun look-ahead), costo di 0,1% a ogni cambio di posizione, nessuna tassa, cassa a rendimento zero.</li>
+<li><strong>Finestre:</strong> si ottimizza su dieci anni, si prova sui cinque successivi, si avanza di cinque anni: i periodi di prova non si sovrappongono.</li>
+<li><strong>Griglia principale:</strong> 8 medie veloci per 6 medie lente, 44 coppie con veloce &lt; lenta. <strong>Pool (684 coppie):</strong> tutte le coppie con veloce da 5 a 100 e lenta da 50 a 400 per l'esperimento sulla dimensione della griglia.</li>
+<li><strong>Confronti in prova:</strong> coppia ottimizzata contro la media della griglia (una coppia a caso), contro la coppia 50/200 scelta a priori e contro il buy &amp; hold.</li>
+<li><strong>Esperimento:</strong> per ogni finestra si estraggono sottoinsiemi casuali del pool di 1, 2, 4 ... 512 coppie, si sceglie la migliore in ottimizzazione e si guarda cosa fa in prova.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>overfitting-in-pratica-ottimizzare-su-dieci-anni-provare-sui-cinque-dopo/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica l'S&amp;P 500 dal 1927
+    ├── 02_backtest_e_test.py  ottimizzazione e prova, confronti, esperimento sulla dimensione della griglia
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              parametri, griglie e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            rendimenti di tutte le coppie, finestre, migliore di un sottoinsieme
+    ├── motore_vettoriale.py   segnale, posizione con ritardo, valore (dall'articolo 4)
+    └── verifica_motore.py     16 controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd overfitting-in-pratica-ottimizzare-su-dieci-anni-provare-sui-cinque-dopo
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>ottimizzazione e prova, confronti, esperimento sulla dimensione della griglia</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Overfitting in pratica: ottimizzare su dieci anni, provare sui cinque successivi.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json              ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  finestre.csv               per ogni finestra: periodi, coppia scelta, rendimento in ottimizzazione e in prova, confronti
+  esperimento_griglia.csv    per ogni dimensione di griglia: rendimento in ottimizzazione e in prova del migliore, e distanza
+  rendimenti_griglia.csv     rendimento annuo in ottimizzazione e in prova di ogni coppia della griglia principale, per finestra
+
+Tutto passa da funzioni.py (segnale ritardato di un giorno, costo a ogni cambio di posizione).
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def bootstrap_ic(x: np.ndarray, rng) -&gt; tuple[float, float]:
+    b = rng.choice(x, size=(config.N_BOOTSTRAP, len(x)), replace=True).mean(axis=1)
+    a = (1 - config.LIVELLO_CONFIDENZA) / 2
+    lo, hi = np.quantile(b, [a, 1 - a])
+    return float(lo), float(hi)
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    date = close.index
+    n = len(close)
+    pool = fx.coppie(config.POOL_VELOCE, config.POOL_LENTA)
+    griglia = fx.coppie(config.GRIGLIA_VELOCE, config.GRIGLIA_LENTA)
+    indice = {c: k for k, c in enumerate(pool)}
+    if config.COPPIA_FISSA not in indice or any(c not in indice for c in griglia):
+        raise SystemExit(&quot;La griglia principale e la coppia fissa devono stare nel pool.&quot;)
+    g_idx = np.array([indice[c] for c in griglia])
+    logr = fx.log_rendimenti(close, pool, config.COSTO_CAMBIO)
+    rend_bh = np.log1p(m_rend(close))
+    fin = fx.finestre(n, config.INIZIO_TEST_SEDUTE, config.SEDUTE_OTTIMIZZAZIONE, config.SEDUTE_PROVA, config.PASSO)
+    if len(fin) &lt; 8:
+        raise SystemExit(&quot;Troppo poche finestre.&quot;)
+    rng = np.random.default_rng(config.SEME)
+
+    righe, righe_g = [], []
+    perm_cache = []
+    exp_is = {d: [] for d in config.DIMENSIONI}
+    exp_oos = {d: [] for d in config.DIMENSIONI}
+    for w, (a, b, c) in enumerate(fin):
+        tr, te = fx.cagr_finestra(logr, date, a, b), fx.cagr_finestra(logr, date, b, c)
+        j = int(tr[g_idx].argmax())
+        f_scelta, l_scelta = griglia[j]
+        k_sc = g_idx[j]
+        bh_te = float(np.exp(rend_bh[b:c].sum() / ((date[c - 1] - date[b - 1]).days / 365.25)) - 1)
+        bh_tr = float(np.exp(rend_bh[a:b].sum() / ((date[b - 1] - date[a - 1]).days / 365.25)) - 1)
+        kf = indice[config.COPPIA_FISSA]
+        casuale_te = float(te[g_idx].mean())
+        rango = float((te[g_idx] &lt;= te[k_sc]).mean())
+        righe.append({&quot;finestra&quot;: w + 1, &quot;inizio_ott&quot;: date[a].date(), &quot;fine_ott&quot;: date[b - 1].date(), &quot;inizio_prova&quot;: date[b].date(),
+                      &quot;fine_prova&quot;: date[c - 1].date(), &quot;veloce&quot;: f_scelta, &quot;lenta&quot;: l_scelta, &quot;cagr_ott&quot;: tr[k_sc], &quot;cagr_prova&quot;: te[k_sc],
+                      &quot;cagr_prova_griglia_media&quot;: casuale_te, &quot;rango_prova&quot;: rango, &quot;cagr_prova_fissa&quot;: te[kf],
+                      &quot;cagr_ott_fissa&quot;: tr[kf], &quot;cagr_ott_bh&quot;: bh_tr, &quot;cagr_prova_bh&quot;: bh_te})
+        for q, k in enumerate(g_idx):
+            righe_g.append({&quot;finestra&quot;: w + 1, &quot;veloce&quot;: griglia[q][0], &quot;lenta&quot;: griglia[q][1], &quot;cagr_ott&quot;: tr[k], &quot;cagr_prova&quot;: te[k]})
+        perm = np.argsort(rng.random((config.N_ESTRAZIONI, len(pool))), axis=1)
+        r = fx.migliore_nei_sottoinsiemi(tr, te, perm, config.DIMENSIONI)
+        for d in config.DIMENSIONI:
+            exp_is[d].append(r[d][0])
+            exp_oos[d].append(r[d][1])
+    W = pd.DataFrame(righe)
+    nf = len(W)
+
+    reg(&quot;n_finestre&quot;, nf, &quot;int&quot;, &quot;Finestre (ottimizzazione e prova) dentro la storia&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;anni_ott&quot;, config.SEDUTE_OTTIMIZZAZIONE / 252, &quot;annonum&quot;, &quot;Anni del periodo di ottimizzazione&quot;, &quot;config.py, SEDUTE_OTTIMIZZAZIONE&quot;)
+    reg(&quot;anni_prova&quot;, config.SEDUTE_PROVA / 252, &quot;annonum&quot;, &quot;Anni del periodo di prova&quot;, &quot;config.py, SEDUTE_PROVA&quot;)
+    reg(&quot;n_coppie_griglia&quot;, len(griglia), &quot;int&quot;, &quot;Coppie di medie nella griglia principale&quot;, &quot;config.py&quot;)
+    reg(&quot;n_coppie_pool&quot;, len(pool), &quot;int&quot;, &quot;Coppie di medie nel pool dell&#x27;esperimento sulla dimensione della griglia&quot;, &quot;config.py&quot;)
+    reg(&quot;costo&quot;, config.COSTO_CAMBIO, &quot;pct1&quot;, &quot;Costo per ogni cambio di posizione, quota del valore&quot;, &quot;config.py, COSTO_CAMBIO&quot;)
+    reg(&quot;prima_data&quot;, str(date[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;data_inizio&quot;, str(date[config.INIZIO_TEST_SEDUTE].date()), &quot;data_lunga&quot;, &quot;Inizio della prima finestra di ottimizzazione&quot;, &quot;dati/ e config.py&quot;)
+    reg(&quot;data_fine&quot;, str(date[fin[-1][2] - 1].date()), &quot;data_lunga&quot;, &quot;Fine dell&#x27;ultimo periodo di prova&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;data_ultima&quot;, str(date[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;n_estrazioni&quot;, config.N_ESTRAZIONI, &quot;int&quot;, &quot;Sottoinsiemi casuali per finestra e dimensione&quot;, &quot;config.py&quot;)
+    reg(&quot;n_bootstrap&quot;, config.N_BOOTSTRAP, &quot;int&quot;, &quot;Ricampionamenti bootstrap&quot;, &quot;config.py&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello degli intervalli di confidenza&quot;, &quot;config.py&quot;)
+    reg(&quot;coppia_fissa_veloce&quot;, config.COPPIA_FISSA[0], &quot;annonum&quot;, &quot;Media veloce della coppia scelta a priori&quot;, &quot;config.py&quot;)
+    reg(&quot;coppia_fissa_lenta&quot;, config.COPPIA_FISSA[1], &quot;annonum&quot;, &quot;Media lenta della coppia scelta a priori&quot;, &quot;config.py&quot;)
+
+    # --- Ipotesi 1: il crollo ---------------------------------------------------------------------------------
+    degrado = (W[&quot;cagr_ott&quot;] - W[&quot;cagr_prova&quot;]).to_numpy()
+    lo, hi = bootstrap_ic(degrado, rng)
+    reg(&quot;media_ott&quot;, float(W[&quot;cagr_ott&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento annuo medio della coppia ottimizzata nel periodo di ottimizzazione&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;media_prova&quot;, float(W[&quot;cagr_prova&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento annuo medio della stessa coppia nel periodo di prova&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;degrado_medio&quot;, float(degrado.mean()), &quot;pp1&quot;, &quot;Distanza media tra rendimento in ottimizzazione e in prova, punti percentuali&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;degrado_lo&quot;, lo, &quot;pp1&quot;, &quot;Estremo inferiore dell&#x27;intervallo bootstrap della distanza&quot;, &quot;bootstrap sulle finestre&quot;)
+    reg(&quot;degrado_hi&quot;, hi, &quot;pp1&quot;, &quot;Estremo superiore dell&#x27;intervallo bootstrap della distanza&quot;, &quot;bootstrap sulle finestre&quot;)
+    reg(&quot;n_prova_sotto_ott&quot;, int((W[&quot;cagr_prova&quot;] &lt; W[&quot;cagr_ott&quot;]).sum()), &quot;int&quot;, &quot;Finestre in cui il rendimento in prova è più basso di quello in ottimizzazione&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;peggio_degrado&quot;, float(degrado.max()), &quot;pp1&quot;, &quot;La distanza più grande tra le finestre, punti percentuali&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;n_prova_negativa&quot;, int((W[&quot;cagr_prova&quot;] &lt; 0).sum()), &quot;int&quot;, &quot;Finestre in cui la coppia ottimizzata ha un rendimento annuo negativo in prova&quot;, &quot;finestre.csv&quot;)
+
+    # --- Ipotesi 2: contro una coppia a caso ---------------------------------------------------------------------
+    dif = (W[&quot;cagr_prova&quot;] - W[&quot;cagr_prova_griglia_media&quot;]).to_numpy()
+    lo, hi = bootstrap_ic(dif, rng)
+    reg(&quot;media_prova_casuale&quot;, float(W[&quot;cagr_prova_griglia_media&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento annuo medio in prova della coppia media della griglia (una coppia a caso)&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;dif_casuale_media&quot;, float(dif.mean()), &quot;pp1&quot;, &quot;Rendimento in prova della coppia ottimizzata meno quello della coppia a caso, punti percentuali&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;dif_casuale_lo&quot;, lo, &quot;pp1&quot;, &quot;Estremo inferiore dell&#x27;intervallo bootstrap&quot;, &quot;bootstrap sulle finestre&quot;)
+    reg(&quot;dif_casuale_hi&quot;, hi, &quot;pp1&quot;, &quot;Estremo superiore dell&#x27;intervallo bootstrap&quot;, &quot;bootstrap sulle finestre&quot;)
+    reg(&quot;n_batte_casuale&quot;, int((dif &gt; 0).sum()), &quot;int&quot;, &quot;Finestre in cui la coppia ottimizzata batte la coppia a caso in prova&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;rango_mediano&quot;, float(W[&quot;rango_prova&quot;].median()), &quot;pct0&quot;, &quot;Posto mediano della coppia ottimizzata in prova: quota di coppie della griglia che fa meno o uguale&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;n_rango_primo_quarto&quot;, int((W[&quot;rango_prova&quot;] &gt;= 0.75).sum()), &quot;int&quot;, &quot;Finestre in cui la coppia ottimizzata sta nel quarto migliore della griglia in prova&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;n_rango_ultimo_quarto&quot;, int((W[&quot;rango_prova&quot;] &lt;= 0.25).sum()), &quot;int&quot;, &quot;Finestre in cui la coppia ottimizzata sta nel quarto peggiore della griglia in prova&quot;, &quot;finestre.csv&quot;)
+    dfix = (W[&quot;cagr_prova&quot;] - W[&quot;cagr_prova_fissa&quot;]).to_numpy()
+    reg(&quot;media_prova_fissa&quot;, float(W[&quot;cagr_prova_fissa&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento annuo medio in prova della coppia scelta a priori&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;dif_fissa_media&quot;, float(dfix.mean()), &quot;pp1&quot;, &quot;Rendimento in prova della coppia ottimizzata meno quello della coppia scelta a priori, punti percentuali&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;n_batte_fissa&quot;, int((dfix &gt; 0).sum()), &quot;int&quot;, &quot;Finestre in cui la coppia ottimizzata batte la coppia scelta a priori in prova&quot;, &quot;finestre.csv&quot;)
+
+    # --- Ipotesi 4: contro il buy &amp; hold ----------------------------------------------------------------------------
+    reg(&quot;media_prova_bh&quot;, float(W[&quot;cagr_prova_bh&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento annuo medio del buy &amp; hold nei periodi di prova&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;media_ott_bh&quot;, float(W[&quot;cagr_ott_bh&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento annuo medio del buy &amp; hold nei periodi di ottimizzazione&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;n_batte_bh&quot;, int((W[&quot;cagr_prova&quot;] &gt; W[&quot;cagr_prova_bh&quot;]).sum()), &quot;int&quot;, &quot;Finestre in cui la coppia ottimizzata batte il buy &amp; hold in prova&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;n_batte_bh_ott&quot;, int((W[&quot;cagr_ott&quot;] &gt; W[&quot;cagr_ott_bh&quot;]).sum()), &quot;int&quot;, &quot;Finestre in cui la coppia ottimizzata batte il buy &amp; hold in ottimizzazione&quot;, &quot;finestre.csv&quot;)
+
+    # --- Stabilità delle scelte -----------------------------------------------------------------------------------
+    reg(&quot;n_coppie_distinte&quot;, int(len(set(zip(W[&quot;veloce&quot;], W[&quot;lenta&quot;])))), &quot;int&quot;, &quot;Coppie diverse scelte nelle finestre&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;salto_lenta_mediano&quot;, float(np.median(np.abs(np.diff(W[&quot;lenta&quot;])))), &quot;int&quot;, &quot;Variazione mediana, tra finestre consecutive, della media lenta scelta (giorni)&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;salto_veloce_mediano&quot;, float(np.median(np.abs(np.diff(W[&quot;veloce&quot;])))), &quot;int&quot;, &quot;Variazione mediana, tra finestre consecutive, della media veloce scelta (giorni)&quot;, &quot;finestre.csv&quot;)
+    ripetute = sum(1 for k in range(1, nf) if (W[&quot;veloce&quot;].iloc[k], W[&quot;lenta&quot;].iloc[k]) == (W[&quot;veloce&quot;].iloc[k - 1], W[&quot;lenta&quot;].iloc[k - 1]))
+    reg(&quot;n_scelte_ripetute&quot;, ripetute, &quot;int&quot;, &quot;Volte in cui la finestra successiva sceglie la stessa coppia della precedente&quot;, &quot;finestre.csv&quot;)
+
+    # --- Ipotesi 3: la dimensione della griglia ---------------------------------------------------------------------
+    esp = pd.DataFrame({&quot;dimensione&quot;: list(config.DIMENSIONI),
+                        &quot;cagr_ott&quot;: [float(np.mean(exp_is[d])) for d in config.DIMENSIONI],
+                        &quot;cagr_prova&quot;: [float(np.mean(exp_oos[d])) for d in config.DIMENSIONI]})
+    esp[&quot;distanza&quot;] = esp[&quot;cagr_ott&quot;] - esp[&quot;cagr_prova&quot;]
+    gp = {int(r.dimensione): r for r in esp.itertuples()}
+    for d in (1, 16, 256, max(config.DIMENSIONI)):
+        reg(f&quot;esp_ott_{d}&quot;, float(gp[d].cagr_ott), &quot;pct1&quot;, f&quot;Rendimento annuo medio in ottimizzazione del migliore tra {d} coppie estratte a caso&quot;, &quot;esperimento_griglia.csv&quot;)
+        reg(f&quot;esp_prova_{d}&quot;, float(gp[d].cagr_prova), &quot;pct1&quot;, f&quot;Rendimento annuo medio in prova del migliore tra {d} coppie estratte a caso&quot;, &quot;esperimento_griglia.csv&quot;)
+        reg(f&quot;esp_dist_{d}&quot;, float(gp[d].distanza), &quot;pp1&quot;, f&quot;Distanza tra rendimento in ottimizzazione e in prova con {d} coppie, punti percentuali&quot;, &quot;esperimento_griglia.csv&quot;)
+    reg(&quot;h3_ok&quot;, int(gp[256].distanza &gt; gp[16].distanza &gt; gp[1].distanza), &quot;int&quot;, &quot;1 se la distanza cresce da 1 a 16 a 256 coppie&quot;, &quot;esperimento_griglia.csv&quot;)
+    reg(&quot;esp_crescita_prova&quot;, float(gp[max(config.DIMENSIONI)].cagr_prova - gp[1].cagr_prova), &quot;pp1&quot;, &quot;Guadagno medio in prova passando da una coppia al massimo della dimensione, punti percentuali&quot;, &quot;esperimento_griglia.csv&quot;)
+    reg(&quot;esp_crescita_ott&quot;, float(gp[max(config.DIMENSIONI)].cagr_ott - gp[1].cagr_ott), &quot;pp1&quot;, &quot;Guadagno medio in ottimizzazione passando da una coppia al massimo della dimensione, punti percentuali&quot;, &quot;esperimento_griglia.csv&quot;)
+    reg(&quot;dim_256&quot;, 256, &quot;int&quot;, &quot;Dimensione di griglia usata come confronto intermedio nell&#x27;esperimento&quot;, &quot;config.py, DIMENSIONI&quot;)
+    reg(&quot;gv_min&quot;, min(config.GRIGLIA_VELOCE), &quot;annonum&quot;, &quot;Media veloce più corta della griglia principale (giorni)&quot;, &quot;config.py&quot;)
+    reg(&quot;gv_max&quot;, max(config.GRIGLIA_VELOCE), &quot;annonum&quot;, &quot;Media veloce più lunga della griglia principale (giorni)&quot;, &quot;config.py&quot;)
+    reg(&quot;gl_min&quot;, min(config.GRIGLIA_LENTA), &quot;annonum&quot;, &quot;Media lenta più corta della griglia principale (giorni)&quot;, &quot;config.py&quot;)
+    reg(&quot;gl_max&quot;, max(config.GRIGLIA_LENTA), &quot;annonum&quot;, &quot;Media lenta più lunga della griglia principale (giorni)&quot;, &quot;config.py&quot;)
+    reg(&quot;dim_max&quot;, max(config.DIMENSIONI), &quot;int&quot;, &quot;Dimensione massima della griglia nell&#x27;esperimento&quot;, &quot;config.py, DIMENSIONI&quot;)
+
+    # --- Due finestre da raccontare ----------------------------------------------------------------------------------
+    for nome, r in ((&quot;ult&quot;, W.iloc[-1]), (&quot;pegg&quot;, W.iloc[int(np.argmax(degrado))])):
+        reg(f&quot;{nome}_inizio_ott&quot;, str(r[&quot;inizio_ott&quot;]), &quot;data_lunga&quot;, &quot;Inizio del periodo di ottimizzazione della finestra&quot;, &quot;finestre.csv&quot;)
+        reg(f&quot;{nome}_inizio_prova&quot;, str(r[&quot;inizio_prova&quot;]), &quot;data_lunga&quot;, &quot;Inizio del periodo di prova della finestra&quot;, &quot;finestre.csv&quot;)
+        reg(f&quot;{nome}_fine_prova&quot;, str(r[&quot;fine_prova&quot;]), &quot;data_lunga&quot;, &quot;Fine del periodo di prova della finestra&quot;, &quot;finestre.csv&quot;)
+        reg(f&quot;{nome}_veloce&quot;, int(r[&quot;veloce&quot;]), &quot;annonum&quot;, &quot;Media veloce scelta nella finestra&quot;, &quot;finestre.csv&quot;)
+        reg(f&quot;{nome}_lenta&quot;, int(r[&quot;lenta&quot;]), &quot;annonum&quot;, &quot;Media lenta scelta nella finestra&quot;, &quot;finestre.csv&quot;)
+        reg(f&quot;{nome}_ott&quot;, float(r[&quot;cagr_ott&quot;]), &quot;pct1&quot;, &quot;Rendimento annuo in ottimizzazione della coppia scelta&quot;, &quot;finestre.csv&quot;)
+        reg(f&quot;{nome}_prova&quot;, float(r[&quot;cagr_prova&quot;]), &quot;pct1&quot;, &quot;Rendimento annuo in prova della coppia scelta&quot;, &quot;finestre.csv&quot;)
+        reg(f&quot;{nome}_bh&quot;, float(r[&quot;cagr_prova_bh&quot;]), &quot;pct1&quot;, &quot;Rendimento annuo in prova del buy &amp; hold&quot;, &quot;finestre.csv&quot;)
+
+    W.to_csv(config.RISULTATI / &quot;finestre.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    esp.to_csv(config.RISULTATI / &quot;esperimento_griglia.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    pd.DataFrame(righe_g).to_csv(config.RISULTATI / &quot;rendimenti_griglia.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri; {nf} finestre&quot;)
+    print(f&quot;in ottimizzazione {W[&#x27;cagr_ott&#x27;].mean():.1%}, in prova {W[&#x27;cagr_prova&#x27;].mean():.1%}, griglia a caso {W[&#x27;cagr_prova_griglia_media&#x27;].mean():.1%}, buy &amp; hold {W[&#x27;cagr_prova_bh&#x27;].mean():.1%}&quot;)
+
+
+def m_rend(close: pd.Series) -&gt; np.ndarray:
+    return close.pct_change().fillna(0.0).to_numpy()
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_ottimizzazione_e_prova.png   per ogni finestra: rendimento annuo della coppia scelta in ottimizzazione e in prova
+  fig2_dimensione_griglia.png       quanto sale il rendimento in ottimizzazione e quanto in prova, al crescere delle coppie provate
+  fig3_posto_in_prova.png           il posto della coppia ottimizzata tra tutte quelle della griglia, nel periodo di prova
+  fig4_coppie_scelte.png            le coppie scelte finestra dopo finestra
+&quot;&quot;&quot;
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+pct = lambda x, _: f&quot;{x:.0f}%&quot;
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    W = pd.read_csv(R / &quot;finestre.csv&quot;, parse_dates=[&quot;inizio_prova&quot;, &quot;fine_prova&quot;, &quot;inizio_ott&quot;, &quot;fine_ott&quot;])
+    E = pd.read_csv(R / &quot;esperimento_griglia.csv&quot;)
+    etich = [str(d.year) for d in W[&quot;inizio_prova&quot;]]
+    x = np.arange(len(W))
+
+    # --- Figura 1 ------------------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(11, 5.4))
+    for k in x:
+        ax.plot([k, k], [W[&quot;cagr_ott&quot;][k] * 100, W[&quot;cagr_prova&quot;][k] * 100], color=GRIGIO, lw=1.6, zorder=1)
+    ax.scatter(x, W[&quot;cagr_ott&quot;] * 100, color=BLU, s=60, zorder=3, label=&quot;in ottimizzazione (dieci anni, la coppia è scelta qui)&quot;)
+    ax.scatter(x, W[&quot;cagr_prova&quot;] * 100, color=ARANCIO, s=60, marker=&quot;D&quot;, zorder=3, label=&quot;in prova (i cinque anni dopo, mai visti)&quot;)
+    ax.scatter(x, W[&quot;cagr_prova_bh&quot;] * 100, color=GRIGIO, s=40, marker=&quot;_&quot;, linewidths=2.5, zorder=2, label=&quot;buy &amp; hold, stessi cinque anni&quot;)
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_xticks(x, etich, rotation=45, ha=&quot;right&quot;, fontsize=10)
+    ax.yaxis.set_major_formatter(pct)
+    ax.set_xlabel(&quot;anno di inizio del periodo di prova&quot;)
+    ax.set_ylabel(&quot;rendimento annuo composto netto dei costi&quot;)
+    ax.legend(loc=&quot;lower left&quot;, bbox_to_anchor=(0, 1.0), ncol=3, fontsize=9, columnspacing=1.0, handletextpad=0.3)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_ottimizzazione_e_prova.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 2 ------------------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(10, 5.2))
+    d = E[&quot;dimensione&quot;].to_numpy()
+    ax.plot(d, E[&quot;cagr_ott&quot;] * 100, color=BLU, lw=2.4, marker=&quot;o&quot;, label=&quot;in ottimizzazione&quot;)
+    ax.plot(d, E[&quot;cagr_prova&quot;] * 100, color=ARANCIO, lw=2.4, marker=&quot;D&quot;, label=&quot;in prova&quot;)
+    ax.fill_between(d, E[&quot;cagr_prova&quot;] * 100, E[&quot;cagr_ott&quot;] * 100, color=GRIGIO, alpha=0.2, lw=0)
+    ax.set_xscale(&quot;log&quot;, base=2)
+    ax.set_xticks(d, [str(int(v)) for v in d])
+    ax.yaxis.set_major_formatter(pct)
+    ax.set_xlabel(&quot;coppie di medie provate (il migliore in ottimizzazione viene scelto)&quot;)
+    ax.set_ylabel(&quot;rendimento annuo medio del migliore&quot;)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig2_dimensione_griglia.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 3 ------------------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(11, 5.0))
+    colori = [BLU if r &gt; 0.5 else ARANCIO for r in W[&quot;rango_prova&quot;]]
+    ax.bar(x, W[&quot;rango_prova&quot;] * 100, color=colori, width=0.7)
+    ax.axhline(50, color=&quot;#555&quot;, lw=1.3, ls=&quot;--&quot;)
+    ax.text(len(x) - 0.5, 52, &quot;metà: come una coppia scelta a caso&quot;, ha=&quot;right&quot;, fontsize=10)
+    ax.set_xticks(x, etich, rotation=45, ha=&quot;right&quot;, fontsize=10)
+    ax.set_ylim(0, 105)
+    ax.yaxis.set_major_formatter(pct)
+    ax.set_xlabel(&quot;anno di inizio del periodo di prova&quot;)
+    ax.set_ylabel(&quot;quota di coppie della griglia che fa meno&quot;)
+    ax.grid(axis=&quot;x&quot;, visible=False)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_posto_in_prova.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 4 ------------------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(11, 4.8))
+    ax.plot(x, W[&quot;lenta&quot;], color=BLU, lw=2.2, marker=&quot;o&quot;, label=&quot;media lenta scelta&quot;)
+    ax.plot(x, W[&quot;veloce&quot;], color=ARANCIO, lw=2.2, marker=&quot;D&quot;, label=&quot;media veloce scelta&quot;)
+    ax.set_xticks(x, etich, rotation=45, ha=&quot;right&quot;, fontsize=10)
+    ax.set_xlabel(&quot;anno di inizio del periodo di prova&quot;)
+    ax.set_ylabel(&quot;giorni&quot;)
+    ax.legend(loc=&quot;upper right&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig4_coppie_scelte.png&quot;)
+    plt.close(fig)
+    print(&quot;Grafici salvati in figure/&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri, griglie e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 41 - &quot;Overfitting in pratica&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Idea: si sceglie la migliore coppia di medie mobili su dieci anni (periodo di ottimizzazione) e la si usa nei cinque anni
+successivi (periodo di prova, mai visto). Si ripete facendo avanzare le finestre. Poi si misura quanto crolla il
+rendimento e come cresce l&#x27;illusione quando si provano più coppie.
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati ---------------------------------------------------------------
+TICKER = &quot;^GSPC&quot;                  # S&amp;P 500, indice di prezzo (senza dividendi), dal 1927
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+
+# --- La famiglia di regole: medie mobili veloce/lenta ---------------------------------------------
+# Il segnale della chiusura di ieri decide la posizione di oggi (nessun look-ahead, come nell&#x27;articolo 4).
+# Il &quot;pool&quot; contiene tutte le coppie con media veloce da 5 a 100 giorni (passo 5) e media lenta da 50 a 400 giorni
+# (passo 10), con veloce &lt; lenta. La &quot;griglia principale&quot; è un sottoinsieme che un analista userebbe davvero.
+POOL_VELOCE = tuple(range(5, 101, 5))
+POOL_LENTA = tuple(range(50, 401, 10))
+GRIGLIA_VELOCE = (5, 10, 20, 30, 40, 50, 75, 100)
+GRIGLIA_LENTA = (50, 100, 150, 200, 250, 300)
+COPPIA_FISSA = (50, 200)          # la regola scelta a priori, mai ottimizzata, come riferimento
+
+# --- Finestre ---------------------------------------------------------------------------------------
+INIZIO_TEST_SEDUTE = 401          # le prime sedute servono per la media più lenta; tutte le coppie partono dallo stesso giorno
+SEDUTE_OTTIMIZZAZIONE = 2520      # dieci anni di borsa
+SEDUTE_PROVA = 1260               # cinque anni di borsa
+PASSO = 1260                      # le finestre avanzano di cinque anni: i periodi di prova non si sovrappongono
+COSTO_CAMBIO = 0.001              # 0,1% del valore a ogni acquisto o vendita; nessuna tassa, la cassa non rende
+
+# --- Esperimento sulla dimensione della griglia --------------------------------------------------------
+DIMENSIONI = (1, 2, 4, 8, 16, 32, 64, 128, 256, 512)
+N_ESTRAZIONI = 2000               # sottoinsiemi casuali del pool per ogni finestra e dimensione
+SEME = 20261021
+N_BOOTSTRAP = 5000
+LIVELLO_CONFIDENZA = 0.95
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) Fuori campione il rendimento annuo della coppia ottimizzata è più basso di quello in campione in almeno quattro &quot;
+    &quot;finestre su cinque. &quot;
+    &quot;2) La coppia ottimizzata batte la media delle coppie della griglia (cioè una coppia scelta a caso) fuori campione in meno &quot;
+    &quot;di due finestre su tre: ottimizzare aggiunge poco. &quot;
+    &quot;3) Più coppie si provano, più cresce la distanza tra il rendimento in campione e quello fuori campione del migliore: &quot;
+    &quot;la distanza con 256 coppie è più grande di quella con 16, e questa più grande di quella con una sola coppia. &quot;
+    &quot;4) La coppia ottimizzata batte il buy &amp; hold fuori campione in meno della metà delle finestre.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>rendimenti di tutte le coppie, finestre, migliore di un sottoinsieme</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;esperimento sull&#x27;overfitting, separate dal flusso perché si possano controllare su dati inventati.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import motore_vettoriale as m
+
+
+def coppie(veloci, lente) -&gt; list[tuple[int, int]]:
+    return [(f, l) for f in veloci for l in lente if f &lt; l]
+
+
+def log_rendimenti(close: pd.Series, lista: list[tuple[int, int]], costo: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Matrice (coppie x sedute) dei logaritmi di 1 + rendimento giornaliero netto della regola con segnale ritardato di un giorno.
+    Il costo è una quota del valore a ogni cambio di posizione.&quot;&quot;&quot;
+    rend = m.rendimenti(close)
+    medie = {}
+    for n in sorted({x for c in lista for x in c}):
+        medie[n] = close.rolling(n).mean()
+    out = np.empty((len(lista), len(close)), dtype=np.float32)
+    for k, (f, l) in enumerate(lista):
+        seg = (medie[f] &gt; medie[l]) &amp; medie[l].notna()
+        pos = m.posizione(seg, 1)
+        cambi = pos.astype(int).diff().abs().fillna(0)
+        r = rend * pos.astype(float) - costo * cambi
+        out[k] = np.log1p(r.to_numpy())
+    return out
+
+
+def finestre(n: int, inizio: int, ott: int, prova: int, passo: int) -&gt; list[tuple[int, int, int]]:
+    &quot;&quot;&quot;(inizio ottimizzazione, inizio prova, fine prova esclusa) di ogni finestra che sta dentro i dati.&quot;&quot;&quot;
+    out, s = [], inizio
+    while s + ott + prova &lt;= n:
+        out.append((s, s + ott, s + ott + prova))
+        s += passo
+    return out
+
+
+def cagr_finestra(logr: np.ndarray, date: pd.DatetimeIndex, a: int, b: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimento annuo composto di ogni riga della matrice sulle sedute da a (inclusa) a b (esclusa).&quot;&quot;&quot;
+    anni = (date[b - 1] - date[a - 1]).days / 365.25
+    return np.exp(logr[:, a:b].sum(axis=1, dtype=np.float64) / anni) - 1.0
+
+
+def migliore_nei_sottoinsiemi(train: np.ndarray, test: np.ndarray, perm: np.ndarray, dimensioni) -&gt; dict[int, tuple[float, float]]:
+    &quot;&quot;&quot;Per ogni dimensione n, tra i primi n elementi di ciascuna permutazione prende quello col rendimento di ottimizzazione più alto;
+    restituisce la media, sulle permutazioni, del suo rendimento in ottimizzazione e in prova.&quot;&quot;&quot;
+    out = {}
+    for n in dimensioni:
+        idx = perm[:, :n]
+        t = train[idx]
+        j = idx[np.arange(len(idx)), t.argmax(axis=1)]
+        out[n] = (float(train[j].mean()), float(test[j].mean()))
+    return out
+</code></pre></details>
+<details><summary>flusso/motore_vettoriale.py<small>segnale, posizione con ritardo, valore (dall&#x27;articolo 4)</small></summary><pre><code class="language-python">&quot;&quot;&quot;Motore vettoriale minimo: segnale, posizione, rendimenti. Senza commissioni né tasse, per isolare l&#x27;effetto del look-ahead.
+
+Convenzioni:
+  - rend[t] è il rendimento della seduta t: chiusura di t su chiusura di t-1;
+  - il segnale[t] si calcola con le chiusure fino a t incluse;
+  - posizione(segnale, ritardo): ritardo = 0 usa il segnale di t per il rendimento di t (LOOK-AHEAD: si compra alla
+    chiusura di ieri sapendo la chiusura di oggi); ritardo = 1 usa il segnale di ieri (onesto).
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def rendimenti(close: pd.Series) -&gt; pd.Series:
+    return close.pct_change().fillna(0.0)
+
+
+def segnale_un_giorno(close: pd.Series) -&gt; pd.Series:
+    return close &gt; close.shift(1)
+
+
+def segnale_sopra_media(close: pd.Series, n: int) -&gt; pd.Series:
+    return (close &gt; close.rolling(n).mean()) &amp; close.rolling(n).mean().notna()
+
+
+def segnale_medie(close: pd.Series, veloce: int, lenta: int) -&gt; pd.Series:
+    sl = close.rolling(lenta).mean()
+    return (close.rolling(veloce).mean() &gt; sl) &amp; sl.notna()
+
+
+def posizione(segnale: pd.Series, ritardo: int) -&gt; pd.Series:
+    &quot;&quot;&quot;True se si è investiti nella seduta, dato il ritardo con cui il segnale è noto.&quot;&quot;&quot;
+    if ritardo &lt; 0:
+        raise ValueError(&quot;ritardo negativo: sarebbe usare il futuro&quot;)
+    return segnale.shift(ritardo, fill_value=False).astype(bool)
+
+
+def valore(rend: pd.Series, pos: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Valore di 1 investito, composto giorno per giorno: nei giorni in cassa il rendimento è zero.&quot;&quot;&quot;
+    return (1.0 + rend * pos.astype(float)).cumprod()
+
+
+def cagr(v: pd.Series, anni: float) -&gt; float:
+    return float(v.iloc[-1] ** (1.0 / anni) - 1.0)
+
+
+def perdita_massima(v: pd.Series) -&gt; float:
+    return float((v / v.cummax() - 1.0).min())
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>16 controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni dell&#x27;esperimento su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+def serie(valori, inizio=&quot;2000-01-03&quot;) -&gt; pd.Series:
+    return pd.Series(np.asarray(valori, float), index=pd.bdate_range(inizio, periods=len(valori)))
+
+
+# 1. Le coppie hanno sempre la media veloce più corta della lenta
+cp = fx.coppie((5, 10, 50), (10, 50, 100))
+controlla(&quot;solo coppie con veloce &lt; lenta&quot;, all(f &lt; l for f, l in cp))
+controlla(&quot;numero di coppie corretto (5/10, 5/50, 5/100, 10/50, 10/100, 50/100)&quot;, len(cp) == 6)
+
+# 2. Prezzo che sale dell&#x27;1% al giorno: la posizione scatta dopo la media lenta, con un giorno di ritardo; costo solo all&#x27;ingresso
+c = serie(100 * 1.01 ** np.arange(60))
+lr0 = fx.log_rendimenti(c, [(5, 20)], 0.0)[0]
+lr1 = fx.log_rendimenti(c, [(5, 20)], 0.001)[0]
+primo = int(np.flatnonzero(lr0 != 0)[0])
+controlla(&quot;prima posizione dopo la media lenta più un giorno di ritardo (20 chiusure + 1)&quot;, primo == 20)
+controlla(&quot;una volta dentro, ogni giorno rende l&#x27;1%&quot;, np.allclose(lr0[primo:], np.log(1.01), atol=1e-6))
+controlla(&quot;il costo si paga una volta sola, all&#x27;ingresso&quot;, np.isclose(lr0[primo] - lr1[primo], np.log1p(0.01) - np.log1p(0.01 - 0.001), atol=1e-6)
+          and np.allclose(lr0[primo + 1:], lr1[primo + 1:], atol=1e-7))
+
+# 3. Nessun look-ahead: tagliare il futuro non cambia i rendimenti passati
+rng = np.random.default_rng(1)
+p = serie(100 * np.exp(np.cumsum(rng.normal(0.0003, 0.01, 900))))
+pieno = fx.log_rendimenti(p, [(5, 30), (10, 60), (20, 100)], 0.001)
+ok = True
+for taglio in (200, 450, 700):
+    parz = fx.log_rendimenti(p.iloc[:taglio], [(5, 30), (10, 60), (20, 100)], 0.001)
+    ok &amp;= bool(np.allclose(parz, pieno[:, :taglio], atol=1e-7))
+controlla(&quot;i rendimenti di una seduta non cambiano se si taglia il futuro&quot;, ok)
+
+# 4. Le finestre: ottimizzazione prima della prova, prove senza sovrapposizione, tutto dentro i dati
+fin = fx.finestre(10000, 401, 2520, 1260, 1260)
+controlla(&quot;finestre non vuote&quot;, len(fin) &gt; 0)
+controlla(&quot;ottimizzazione e prova contigue e in ordine&quot;, all(a &lt; b &lt; c for a, b, c in fin) and all(b == a + 2520 and c == b + 1260 for a, b, c in fin))
+controlla(&quot;i periodi di prova non si sovrappongono&quot;, all(fin[k][2] &lt;= fin[k + 1][1] + 2520 and fin[k][2] == fin[k + 1][2] - 1260 for k in range(len(fin) - 1))
+          and all(fin[k][2] - fin[k][1] == 1260 for k in range(len(fin))))
+controlla(&quot;l&#x27;ultima finestra sta dentro i dati e un&#x27;altra non ci starebbe&quot;, fin[-1][2] &lt;= 10000 &lt; fin[-1][2] + 1260)
+controlla(&quot;nessuna finestra se i dati sono troppo corti&quot;, fx.finestre(3000, 401, 2520, 1260, 1260) == [])
+
+# 5. Il rendimento annuo di una finestra è quello composto
+date = pd.bdate_range(&quot;2000-01-03&quot;, periods=800)
+lr = np.full((1, 800), np.log(1.0004), dtype=np.float32)
+anni = (date[599] - date[199]).days / 365.25
+atteso = np.exp(400 * np.log(1.0004) / anni) - 1
+controlla(&quot;CAGR della finestra = crescita composta annualizzata&quot;, abs(fx.cagr_finestra(lr, date, 200, 600)[0] - atteso) &lt; 1e-6)
+
+# 6. Il migliore di un sottoinsieme
+train = np.array([0.01, 0.05, 0.02, 0.04])
+test = np.array([0.10, 0.20, 0.30, 0.40])
+perm = np.array([[0, 1, 2, 3], [3, 2, 1, 0]])
+r = fx.migliore_nei_sottoinsiemi(train, test, perm, (1, 4))
+controlla(&quot;con tutte le coppie sceglie la migliore in ottimizzazione e ne riporta la prova&quot;, np.isclose(r[4][0], 0.05) and np.isclose(r[4][1], 0.20))
+controlla(&quot;con una coppia sola non sceglie nulla: media dei primi elementi&quot;, np.isclose(r[1][0], (0.01 + 0.04) / 2) and np.isclose(r[1][1], (0.10 + 0.40) / 2))
+
+# 7. Sul puro rumore, il migliore in ottimizzazione fa meglio in ottimizzazione che in prova, e sempre di più con più coppie
+rng = np.random.default_rng(2)
+tr, te = rng.normal(0.05, 0.03, 700), rng.normal(0.05, 0.03, 700)
+perm = np.argsort(rng.random((500, 700)), axis=1)
+r = fx.migliore_nei_sottoinsiemi(tr, te, perm, (1, 16, 256))
+controlla(&quot;sul rumore la distanza cresce con la dimensione della griglia&quot;, (r[256][0] - r[256][1]) &gt; (r[16][0] - r[16][1]) &gt; (r[1][0] - r[1][1]))
+controlla(&quot;sul rumore scegliere il migliore in ottimizzazione fa salire molto il rendimento in ottimizzazione&quot;, r[256][0] &gt; tr.mean() + 0.03)
+
+print(f&quot;\nVerifica del motore: {n_ok} controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>

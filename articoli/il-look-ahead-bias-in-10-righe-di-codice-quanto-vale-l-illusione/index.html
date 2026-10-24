@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Il look-ahead bias in 10 righe di codice: quanto vale l&#x27;illusione? · il codice · TickerFight</title>
+<meta name="description" content="se calcolo il segnale con la chiusura di oggi e lo applico al rendimento di oggi, quanto vale l&#x27;illusione? E come mi accorgo di averlo fatto?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a><a href="https://github.com/TickerFight/tickerfight">GitHub</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Il look-ahead bias in 10 righe di codice: quanto vale l&#x27;illusione?</h1>
+<p class="domanda">Se calcolo il segnale con la chiusura di oggi e lo applico al rendimento di oggi, quanto vale l&#x27;illusione? E come mi accorgo di averlo fatto?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="il-look-ahead-bias-in-10-righe-di-codice-quanto-vale-l-illusione.zip" download>⬇ Scarica il codice (.zip)</a><a class="btn" href="https://github.com/TickerFight/tickerfight/tree/main/articoli/il-look-ahead-bias-in-10-righe-di-codice-quanto-vale-l-illusione">Vedi su GitHub</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Il look-ahead:</strong> posizione[t] = segnale[t], cioè la chiusura di oggi decide se oggi si è già dentro. La versione onesta usa il segnale di ieri: <code>segnale.shift(1)</code>.</li>
+<li><strong>Tre regole, dalla più veloce alla più lenta:</strong> chiusura sopra quella di ieri; chiusura sopra la media a 20 giorni; media a 50 giorni sopra la media a 200.</li>
+<li><strong>Il test del ritardo:</strong> si sposta il segnale di 0, 1, 2 ... 10 sedute. Un rendimento che crolla appena si ritarda di un giorno è il segno del look-ahead.</li>
+<li><strong>Griglia di medie:</strong> l'illusione per 29 coppie veloce/lenta, per vedere come cresce con la velocità della regola.</li>
+<li><strong>Niente commissioni né tasse:</strong> l'obiettivo è isolare l'effetto del look-ahead.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>il-look-ahead-bias-in-10-righe-di-codice-quanto-vale-l-illusione/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica l'S&amp;P 500 dal 1927
+    ├── 02_backtest_e_test.py  tre regole con e senza look-ahead, test del ritardo, griglia di medie, sottoperiodi
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              parametri, regole e ipotesi, scritti prima dei risultati
+    ├── motore_vettoriale.py   segnale, posizione con ritardo, valore, rendimento annuo, perdita massima
+    └── verifica_motore.py     17 controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd il-look-ahead-bias-in-10-righe-di-codice-quanto-vale-l-illusione
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>tre regole con e senza look-ahead, test del ritardo, griglia di medie, sottoperiodi</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Il look-ahead bias: quanto vale l&#x27;illusione, e come si riconosce.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json       ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  curve.csv           valore giorno per giorno (una seduta su cinque) della regola 50/200: con look-ahead, onesta, buy &amp; hold
+  ritardi.csv         rendimento annuo di ogni regola per ogni ritardo del segnale (zero = look-ahead)
+  griglia.csv         rendimento annuo con look-ahead e onesto per una griglia di coppie di medie
+  sottoperiodi.csv    la regola 50/200 nei tre sottoperiodi
+
+Tutte le versioni usano lo stesso motore (motore_vettoriale.py): cambia solo il ritardo con cui il segnale è noto.
+Nessuna commissione, nessuna tassa: l&#x27;obiettivo è isolare l&#x27;effetto del look-ahead.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import motore_vettoriale as m
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con motore_vettoriale.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def importo(x: float) -&gt; str:
+    &quot;&quot;&quot;Un importo in euro; se è assurdamente grande si dice solo quante cifre ha.&quot;&quot;&quot;
+    if x &lt; 1e9:
+        return f&quot;{x:,.0f}&quot;.replace(&quot;,&quot;, &quot;.&quot;) + &quot; euro&quot;
+    return f&quot;un numero con {int(np.floor(np.log10(x))) + 1} cifre&quot;
+
+
+def segnali(close: pd.Series) -&gt; dict[str, pd.Series]:
+    return {&quot;un_giorno&quot;: m.segnale_un_giorno(close),
+            &quot;media_20&quot;: m.segnale_sopra_media(close, config.SMA_BREVE),
+            &quot;medie_50_200&quot;: m.segnale_medie(close, config.SMA_VELOCE, config.SMA_LENTA)}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    rend_pieno = m.rendimenti(close)
+    sig = segnali(close)
+    i0 = config.INIZIO_TEST_SEDUTE
+    date = close.index
+    sl = slice(i0, None)
+    rend = rend_pieno.iloc[sl]
+    anni = (date[-1] - date[i0 - 1]).days / 365.25
+
+    def versione(segnale: pd.Series, ritardo: int, rend_x=None, sl_x=None):
+        pos = m.posizione(segnale, ritardo).iloc[sl_x or sl]
+        r = rend if rend_x is None else rend_x
+        return pos, m.valore(r, pos)
+
+    bh_pos = pd.Series(True, index=rend.index)
+    v_bh = m.valore(rend, bh_pos)
+    reg(&quot;prima_data&quot;, str(date[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dei dati scaricati&quot;, &quot;dati/gspc_giornaliero.csv&quot;)
+    reg(&quot;data_inizio&quot;, str(date[i0].date()), &quot;data_lunga&quot;, &quot;Prima seduta del test (le precedenti servono per le medie)&quot;, &quot;dati/ e config.py, INIZIO_TEST_SEDUTE&quot;)
+    reg(&quot;data_fine&quot;, str(date[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta del test&quot;, &quot;dati/gspc_giornaliero.csv&quot;)
+    reg(&quot;sedute_avvio&quot;, config.INIZIO_TEST_SEDUTE, &quot;int&quot;, &quot;Sedute iniziali usate solo per calcolare le medie, prima dell&#x27;inizio del test&quot;, &quot;config.py, INIZIO_TEST_SEDUTE&quot;)
+    reg(&quot;n_sedute&quot;, len(rend), &quot;int&quot;, &quot;Sedute nel periodo del test&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_test&quot;, anni, &quot;num1&quot;, &quot;Anni del test&quot;)
+    reg(&quot;capitale&quot;, config.CAPITALE, &quot;int&quot;, &quot;Capitale iniziale, solo per dare un&#x27;idea (valori lordi)&quot;, &quot;config.py, CAPITALE&quot;)
+    reg(&quot;sma_breve&quot;, config.SMA_BREVE, &quot;annonum&quot;, &quot;Giorni della media breve&quot;, &quot;config.py&quot;)
+    reg(&quot;sma_veloce&quot;, config.SMA_VELOCE, &quot;annonum&quot;, &quot;Giorni della media veloce&quot;, &quot;config.py&quot;)
+    reg(&quot;sma_lenta&quot;, config.SMA_LENTA, &quot;annonum&quot;, &quot;Giorni della media lenta&quot;, &quot;config.py&quot;)
+    reg(&quot;cagr_bh&quot;, m.cagr(v_bh, anni), &quot;pct1&quot;, &quot;Rendimento annuo composto del buy &amp; hold sul S&amp;P 500, senza costi né tasse&quot;)
+    reg(&quot;dd_bh&quot;, -m.perdita_massima(v_bh), &quot;pct0&quot;, &quot;Perdita massima dal picco del buy &amp; hold&quot;)
+    reg(&quot;finale_bh&quot;, importo(config.CAPITALE * v_bh.iloc[-1]), &quot;testo&quot;, &quot;Valore finale del buy &amp; hold, partendo dal capitale iniziale&quot;)
+
+    righe_rit, curva = [], None
+    n_h1 = 0
+    gap = {}
+    drop_ok = 0
+    for sl_id, _ in config.REGOLE:
+        s = sig[sl_id]
+        pos0, v0 = versione(s, 0)
+        pos1, v1 = versione(s, config.RITARDO_ONESTO)
+        c0, c1 = m.cagr(v0, anni), m.cagr(v1, anni)
+        gap[sl_id] = c0 - c1
+        n_h1 += int(c0 &gt; c1)
+        reg(f&quot;{sl_id}_cagr_cheat&quot;, c0, &quot;pct1&quot;, f&quot;Rendimento annuo con look-ahead, regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_cagr_onesto&quot;, c1, &quot;pct1&quot;, f&quot;Rendimento annuo con segnale onesto (ritardo di un giorno), regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_illusione&quot;, c0 - c1, &quot;pp2&quot;, f&quot;Illusione: rendimento annuo con look-ahead meno quello onesto, in punti percentuali, regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_finale_cheat&quot;, importo(config.CAPITALE * v0.iloc[-1]), &quot;testo&quot;, f&quot;Valore finale con look-ahead, regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_finale_onesto&quot;, importo(config.CAPITALE * v1.iloc[-1]), &quot;testo&quot;, f&quot;Valore finale con segnale onesto, regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_dd_onesto&quot;, -m.perdita_massima(v1), &quot;pct0&quot;, f&quot;Perdita massima dal picco, versione onesta, regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_quota_investito&quot;, float(pos1.mean()), &quot;pct0&quot;, f&quot;Quota di sedute investite, versione onesta, regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_n_cambi&quot;, int(pos1.astype(int).diff().abs().sum()), &quot;int&quot;, f&quot;Numero di cambi di posizione (acquisti e vendite), regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_cambi_anno&quot;, int(pos1.astype(int).diff().abs().sum()) / anni, &quot;int&quot;, f&quot;Cambi di posizione all&#x27;anno, regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_costo_decimo&quot;, int(pos1.astype(int).diff().abs().sum()) / anni * 0.001, &quot;pp1&quot;,
+            f&quot;Costo annuo, in punti percentuali, se ogni cambio di posizione costasse un decimo di punto percentuale, regola «{sl_id}»&quot;)
+        rubati = pos0 &amp; ~pos1       # giorni in cui il look-ahead è investito e l&#x27;onesto no: ha già &quot;visto&quot; il rialzo
+        evitati = ~pos0 &amp; pos1      # giorni in cui il look-ahead è già fuori e l&#x27;onesto no: ha già &quot;visto&quot; il ribasso
+        reg(f&quot;{sl_id}_n_rubati&quot;, int(rubati.sum()), &quot;int&quot;, f&quot;Giorni in cui la versione con look-ahead è dentro e quella onesta no, regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_ret_rubati&quot;, float(rend[rubati].mean()), &quot;pct2&quot;, f&quot;Rendimento medio di quei giorni (guadagno «rubato»), regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_n_evitati&quot;, int(evitati.sum()), &quot;int&quot;, f&quot;Giorni in cui la versione con look-ahead è fuori e quella onesta no, regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_ret_evitati&quot;, float(rend[evitati].mean()), &quot;pct2&quot;, f&quot;Rendimento medio di quei giorni (perdita «evitata»), regola «{sl_id}»&quot;)
+        # test del ritardo
+        cr = []
+        for d in config.RITARDI:
+            _, vd = versione(s, d)
+            cr.append(m.cagr(vd, anni))
+            righe_rit.append({&quot;regola&quot;: sl_id, &quot;ritardo&quot;: d, &quot;cagr&quot;: cr[-1]})
+        cali = [cr[k] - cr[k + 1] for k in range(len(cr) - 1)]
+        ok = int(np.argmax(cali) == 0)
+        drop_ok += ok
+        reg(f&quot;{sl_id}_calo_0_1&quot;, cali[0], &quot;pp2&quot;, f&quot;Calo del rendimento annuo passando da ritardo zero a ritardo uno, punti percentuali, regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_calo_1_2&quot;, cali[1], &quot;pp2&quot;, f&quot;Calo del rendimento annuo passando da ritardo uno a ritardo due, punti percentuali, regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_calo_max_dopo&quot;, max(cali[1:]), &quot;pp2&quot;, f&quot;Il calo più grande tra due ritardi successivi dopo il primo, punti percentuali, regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_cagr_ritardo_10&quot;, cr[-1], &quot;pct1&quot;, f&quot;Rendimento annuo con dieci sedute di ritardo, regola «{sl_id}»&quot;)
+        reg(f&quot;{sl_id}_h4_ok&quot;, ok, &quot;int&quot;, f&quot;1 se il calo più grande è tra ritardo zero e uno, regola «{sl_id}»&quot;)
+        if sl_id == &quot;medie_50_200&quot;:
+            camp = np.r_[np.arange(0, len(rend), 5), len(rend) - 1]
+            curva = pd.DataFrame({&quot;data&quot;: rend.index[camp], &quot;valore_bh&quot;: v_bh.iloc[camp].to_numpy(),
+                                  &quot;valore_cheat&quot;: v0.iloc[camp].to_numpy(), &quot;valore_onesto&quot;: v1.iloc[camp].to_numpy()})
+
+    reg(&quot;n_h1&quot;, n_h1, &quot;int&quot;, &quot;Regole per cui il look-ahead rende più della versione onesta&quot;, &quot;calcolo sopra&quot;)
+    ordine_ok = int(gap[&quot;un_giorno&quot;] &gt; gap[&quot;media_20&quot;] &gt; gap[&quot;medie_50_200&quot;])
+    reg(&quot;h2_ordine_ok&quot;, ordine_ok, &quot;int&quot;, &quot;1 se l&#x27;illusione è decrescente: regola di un giorno, media a 20 giorni, medie 50/200&quot;, &quot;calcolo sopra&quot;)
+    reg(&quot;n_h4_ok&quot;, drop_ok, &quot;int&quot;, &quot;Regole per cui il calo più grande è tra ritardo zero e ritardo uno&quot;, &quot;ritardi.csv&quot;)
+    reg(&quot;n_regole&quot;, len(config.REGOLE), &quot;int&quot;, &quot;Regole confrontate&quot;, &quot;config.py, REGOLE&quot;)
+
+    # --- sottoperiodi della regola 50/200 -----------------------------------------------------------------------
+    s = sig[&quot;medie_50_200&quot;]
+    rsp = []
+    n_sotto = 0
+    for k, (nome, a, b) in enumerate(config.SOTTOPERIODI, 1):
+        idx = rend.index
+        msk = np.ones(len(idx), bool)
+        if a: msk &amp;= idx &gt;= pd.Timestamp(a)
+        if b: msk &amp;= idx &lt;= pd.Timestamp(b)
+        r_p = rend[msk]
+        p0 = m.posizione(s, 0).iloc[sl][msk]
+        p1 = m.posizione(s, 1).iloc[sl][msk]
+        an = (r_p.index[-1] - r_p.index[0]).days / 365.25
+        c0, c1, cb = (m.cagr(m.valore(r_p, p), an) for p in (p0, p1, pd.Series(True, index=r_p.index)))
+        n_sotto += int(c0 - c1 &lt; 0.02)
+        rsp.append({&quot;periodo&quot;: nome, &quot;cagr_cheat&quot;: c0, &quot;cagr_onesto&quot;: c1, &quot;cagr_bh&quot;: cb, &quot;illusione&quot;: c0 - c1})
+        reg(f&quot;sp{k}_nome&quot;, nome, &quot;testo&quot;, &quot;Nome del sottoperiodo&quot;, &quot;config.py, SOTTOPERIODI&quot;)
+        reg(f&quot;sp{k}_cagr_cheat&quot;, c0, &quot;pct1&quot;, f&quot;Rendimento annuo con look-ahead, medie 50/200, {nome}&quot;)
+        reg(f&quot;sp{k}_cagr_onesto&quot;, c1, &quot;pct1&quot;, f&quot;Rendimento annuo onesto, medie 50/200, {nome}&quot;)
+        reg(f&quot;sp{k}_illusione&quot;, c0 - c1, &quot;pp2&quot;, f&quot;Illusione in punti percentuali, medie 50/200, {nome}&quot;)
+    reg(&quot;n_sp_sotto_2pp&quot;, n_sotto, &quot;int&quot;, &quot;Sottoperiodi in cui l&#x27;illusione delle medie 50/200 è sotto i due punti percentuali&quot;, &quot;sottoperiodi.csv&quot;)
+    pd.DataFrame(rsp).to_csv(config.RISULTATI / &quot;sottoperiodi.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    # --- griglia di medie -------------------------------------------------------------------------------------
+    gr = []
+    for f in config.GRIGLIA_VELOCE:
+        for l in config.GRIGLIA_LENTA:
+            if f &gt;= l:
+                continue
+            sg = m.segnale_medie(close, f, l)
+            c0 = m.cagr(m.valore(rend, m.posizione(sg, 0).iloc[sl]), anni)
+            c1 = m.cagr(m.valore(rend, m.posizione(sg, 1).iloc[sl]), anni)
+            gr.append({&quot;veloce&quot;: f, &quot;lenta&quot;: l, &quot;cagr_cheat&quot;: c0, &quot;cagr_onesto&quot;: c1, &quot;illusione&quot;: c0 - c1})
+    gr = pd.DataFrame(gr)
+    imax, imin = gr[&quot;illusione&quot;].idxmax(), gr[&quot;illusione&quot;].idxmin()
+    reg(&quot;griglia_n&quot;, len(gr), &quot;int&quot;, &quot;Coppie di medie provate&quot;, &quot;griglia.csv&quot;)
+    reg(&quot;griglia_max&quot;, float(gr.loc[imax, &quot;illusione&quot;]), &quot;pp2&quot;, &quot;Illusione massima della griglia, punti percentuali&quot;, &quot;griglia.csv&quot;)
+    reg(&quot;griglia_max_veloce&quot;, int(gr.loc[imax, &quot;veloce&quot;]), &quot;annonum&quot;, &quot;Media veloce della coppia con l&#x27;illusione massima&quot;, &quot;griglia.csv&quot;)
+    reg(&quot;griglia_max_lenta&quot;, int(gr.loc[imax, &quot;lenta&quot;]), &quot;annonum&quot;, &quot;Media lenta della coppia con l&#x27;illusione massima&quot;, &quot;griglia.csv&quot;)
+    reg(&quot;griglia_min&quot;, float(gr.loc[imin, &quot;illusione&quot;]), &quot;pp2&quot;, &quot;Illusione minima della griglia, punti percentuali&quot;, &quot;griglia.csv&quot;)
+    reg(&quot;griglia_min_veloce&quot;, int(gr.loc[imin, &quot;veloce&quot;]), &quot;annonum&quot;, &quot;Media veloce della coppia con l&#x27;illusione minima&quot;, &quot;griglia.csv&quot;)
+    reg(&quot;griglia_min_lenta&quot;, int(gr.loc[imin, &quot;lenta&quot;]), &quot;annonum&quot;, &quot;Media lenta della coppia con l&#x27;illusione minima&quot;, &quot;griglia.csv&quot;)
+    reg(&quot;griglia_mediana&quot;, float(gr[&quot;illusione&quot;].median()), &quot;pp2&quot;, &quot;Illusione mediana della griglia, punti percentuali&quot;, &quot;griglia.csv&quot;)
+    reg(&quot;griglia_tutte_positive&quot;, int((gr[&quot;illusione&quot;] &gt; 0).all()), &quot;int&quot;, &quot;1 se l&#x27;illusione è positiva per ogni coppia della griglia&quot;, &quot;griglia.csv&quot;)
+    gr.to_csv(config.RISULTATI / &quot;griglia.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    pd.DataFrame(righe_rit).to_csv(config.RISULTATI / &quot;ritardi.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    curva.to_csv(config.RISULTATI / &quot;curve.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri&quot;)
+    for sid, _ in config.REGOLE:
+        print(f&quot;{sid}: look-ahead {RIS[sid + &#x27;_cagr_cheat&#x27;][&#x27;valore&#x27;]:.1%}, onesto {RIS[sid + &#x27;_cagr_onesto&#x27;][&#x27;valore&#x27;]:.1%}, &quot;
+              f&quot;buy &amp; hold {RIS[&#x27;cagr_bh&#x27;][&#x27;valore&#x27;]:.1%}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_curve_50_200.png       le medie 50/200: valore di 500 euro con look-ahead, onesto e buy &amp; hold (scala logaritmica)
+  fig2_tre_regole.png         rendimento annuo di tre regole, con look-ahead, onesto e buy &amp; hold
+  fig3_test_ritardo.png       il test del ritardo: rendimento annuo contro ritardo del segnale
+  fig4_griglia_medie.png      l&#x27;illusione per una griglia di coppie di medie
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
+from matplotlib.patches import Rectangle  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+TITOLI = {&quot;un_giorno&quot;: &quot;un giorno&quot;, &quot;media_20&quot;: &quot;media a 20 giorni&quot;, &quot;medie_50_200&quot;: &quot;medie 50/200&quot;}
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    v = lambda k: V[k][&quot;valore&quot;]
+
+    # --- Figura 1: curve della 50/200 -----------------------------------------------------------------------------
+    c = pd.read_csv(R / &quot;curve.csv&quot;, parse_dates=[&quot;data&quot;])
+    fig, ax = plt.subplots(figsize=(11, 5.6))
+    ax.plot(c[&quot;data&quot;], config.CAPITALE * c[&quot;valore_cheat&quot;], color=ARANCIO, lw=1.8, label=&quot;con look-ahead (segnale e rendimento dello stesso giorno)&quot;)
+    ax.plot(c[&quot;data&quot;], config.CAPITALE * c[&quot;valore_onesto&quot;], color=BLU, lw=2.0, label=&quot;onesta (il segnale di ieri decide la posizione di oggi)&quot;)
+    ax.plot(c[&quot;data&quot;], config.CAPITALE * c[&quot;valore_bh&quot;], color=GRIGIO, lw=1.6, ls=&quot;--&quot;, label=&quot;buy &amp; hold&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.yaxis.set_major_formatter(lambda x, _: f&quot;{x:,.0f}&quot;.replace(&quot;,&quot;, &quot;.&quot;))
+    ax.set_ylabel(&quot;valore di 500 euro, scala logaritmica&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_curve_50_200.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 2: tre regole ------------------------------------------------------------------------------------
+    fig, assi = plt.subplots(1, 3, figsize=(14, 4.8))
+    for a, (rid, _) in zip(assi, config.REGOLE):
+        valori = [v(f&quot;{rid}_cagr_cheat&quot;) * 100, v(f&quot;{rid}_cagr_onesto&quot;) * 100, v(&quot;cagr_bh&quot;) * 100]
+        a.bar(range(3), valori, color=[ARANCIO, BLU, GRIGIO], width=0.65)
+        for k, y in enumerate(valori):
+            a.text(k, y + max(valori) * 0.02, f&quot;{y:.1f}%&quot;.replace(&quot;.&quot;, &quot;,&quot;), ha=&quot;center&quot;, fontsize=11)
+        a.set_xticks(range(3), [&quot;look-ahead&quot;, &quot;onesta&quot;, &quot;buy &amp; hold&quot;])
+        a.set_title(TITOLI[rid], fontsize=12)
+        a.yaxis.set_major_formatter(lambda x, _: f&quot;{x:.0f}%&quot;)
+        a.grid(axis=&quot;x&quot;, visible=False)
+        a.set_ylim(0, max(valori) * 1.12)
+    assi[0].set_ylabel(&quot;rendimento annuo composto, senza costi&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig2_tre_regole.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 3: test del ritardo ----------------------------------------------------------------------------
+    rit = pd.read_csv(R / &quot;ritardi.csv&quot;)
+    fig, assi = plt.subplots(1, 3, figsize=(14, 4.6))
+    for a, (rid, _) in zip(assi, config.REGOLE):
+        d = rit[rit[&quot;regola&quot;] == rid]
+        a.plot(d[&quot;ritardo&quot;], d[&quot;cagr&quot;] * 100, color=BLU, lw=2.2, marker=&quot;o&quot;, ms=5)
+        a.axhline(v(&quot;cagr_bh&quot;) * 100, color=GRIGIO, lw=1.6, ls=&quot;--&quot;, label=&quot;buy &amp; hold&quot;)
+        a.scatter([0], [d[&quot;cagr&quot;].iloc[0] * 100], color=ARANCIO, s=90, zorder=3, label=&quot;look-ahead&quot;)
+        a.set_title(TITOLI[rid], fontsize=12)
+        a.set_xlabel(&quot;ritardo del segnale, sedute&quot;)
+        a.yaxis.set_major_formatter(lambda x, _: f&quot;{x:.0f}%&quot;)
+    assi[0].set_ylabel(&quot;rendimento annuo composto, senza costi&quot;)
+    assi[0].legend(fontsize=9, loc=&quot;upper right&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_test_ritardo.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 4: griglia di medie ---------------------------------------------------------------------------
+    g = pd.read_csv(R / &quot;griglia.csv&quot;)
+    P = g.pivot(index=&quot;veloce&quot;, columns=&quot;lenta&quot;, values=&quot;illusione&quot;) * 100
+    mappa = LinearSegmentedColormap.from_list(&quot;bo&quot;, [&quot;white&quot;, ARANCIO])
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    im = ax.imshow(P.values, cmap=mappa, aspect=&quot;auto&quot;, vmin=0, vmax=float(np.nanmax(P.values)))
+    for r in range(P.shape[0]):
+        for k in range(P.shape[1]):
+            if not np.isnan(P.values[r, k]):
+                ax.text(k, r, f&quot;{P.values[r, k]:.1f}&quot;.replace(&quot;.&quot;, &quot;,&quot;), ha=&quot;center&quot;, va=&quot;center&quot;, fontsize=10)
+    ax.set_xticks(range(P.shape[1]), [int(x) for x in P.columns])
+    ax.set_yticks(range(P.shape[0]), [int(x) for x in P.index])
+    ax.set_xlabel(&quot;media lenta, giorni&quot;)
+    ax.set_ylabel(&quot;media veloce, giorni&quot;)
+    if config.SMA_VELOCE in P.index and config.SMA_LENTA in P.columns:
+        ax.add_patch(Rectangle((list(P.columns).index(config.SMA_LENTA) - 0.5, list(P.index).index(config.SMA_VELOCE) - 0.5), 1, 1, fill=False, ec=&quot;black&quot;, lw=2.5))
+    ax.grid(False)
+    cb = fig.colorbar(im, ax=ax, pad=0.02)
+    cb.set_label(&quot;illusione, punti percentuali l&#x27;anno&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig4_griglia_medie.png&quot;)
+    plt.close(fig)
+    print(&quot;Grafici salvati in figure/&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri, regole e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 4 - &quot;Il look-ahead bias in 10 righe di codice&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Idea: il look-ahead bias è usare nel segnale un&#x27;informazione che nel momento dell&#x27;operazione non c&#x27;era ancora. Il caso
+più comune è il più banale: calcolare il segnale con la chiusura di oggi e applicarlo al rendimento di oggi, cioè
+comprare ieri sapendo come finirà oggi. Si misura quanto vale questa illusione per tre regole di velocità diversa,
+sul S&amp;P 500, e come riconoscerla con un controllo semplice: ritardare il segnale e guardare se il risultato crolla.
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati ---------------------------------------------------------------
+TICKER = &quot;^GSPC&quot;                  # S&amp;P 500, indice di prezzo (senza dividendi), dal 1927
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+
+# --- Le regole (scelte a priori, non ottimizzate) ----------------------------------------------
+# Tre regole sempre investite o in cassa, dalla più veloce alla più lenta.
+REGOLE = [
+    (&quot;un_giorno&quot;, &quot;un giorno: la chiusura di oggi è sopra quella di ieri&quot;),
+    (&quot;media_20&quot;, &quot;media a 20 giorni: la chiusura è sopra la media a 20 giorni&quot;),
+    (&quot;medie_50_200&quot;, &quot;medie 50/200: la media a 50 giorni è sopra quella a 200&quot;),
+]
+SMA_BREVE = 20
+SMA_VELOCE = 50
+SMA_LENTA = 200
+
+# --- Convenzioni di calcolo ---------------------------------------------
+INIZIO_TEST_SEDUTE = 300         # le prime sedute servono per le medie; tutte le regole partono dallo stesso giorno
+RITARDO_ONESTO = 1               # il segnale della chiusura di ieri decide la posizione di oggi
+RITARDI = list(range(0, 11))     # test del ritardo: 0 = look-ahead, 1 = onesto, poi 2, 3 ... 10 sedute
+SOTTOPERIODI = [
+    (&quot;dall&#x27;inizio al 1969&quot;, None, &quot;1969-12-31&quot;),
+    (&quot;1970-1999&quot;, &quot;1970-01-01&quot;, &quot;1999-12-31&quot;),
+    (&quot;dal 2000 a oggi&quot;, &quot;2000-01-01&quot;, None),
+]
+# Griglia di medie per mostrare come cambia l&#x27;illusione con la velocità della regola
+GRIGLIA_VELOCE = (5, 10, 20, 50, 100)
+GRIGLIA_LENTA = (20, 50, 100, 150, 200, 250, 300)
+CAPITALE = 500.0                 # solo per dare un&#x27;idea: valori lordi, senza commissioni né tasse
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) Con il look-ahead il rendimento annuo è più alto che nella versione onesta per tutte e tre le regole. &quot;
+    &quot;2) L&#x27;illusione cresce con la velocità della regola: è più grande per la regola di un giorno che per la media a 20 giorni, &quot;
+    &quot;e più grande per questa che per le medie 50/200. &quot;
+    &quot;3) Per le medie 50/200 l&#x27;illusione è sotto i due punti percentuali l&#x27;anno in ciascuno dei tre sottoperiodi. &quot;
+    &quot;4) Nel test del ritardo, per ogni regola il calo più grande del rendimento annuo è quello tra ritardo zero e ritardo uno: &quot;
+    &quot;il look-ahead si riconosce perché basta spostare il segnale di un giorno.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/motore_vettoriale.py<small>segnale, posizione con ritardo, valore, rendimento annuo, perdita massima</small></summary><pre><code class="language-python">&quot;&quot;&quot;Motore vettoriale minimo: segnale, posizione, rendimenti. Senza commissioni né tasse, per isolare l&#x27;effetto del look-ahead.
+
+Convenzioni:
+  - rend[t] è il rendimento della seduta t: chiusura di t su chiusura di t-1;
+  - il segnale[t] si calcola con le chiusure fino a t incluse;
+  - posizione(segnale, ritardo): ritardo = 0 usa il segnale di t per il rendimento di t (LOOK-AHEAD: si compra alla
+    chiusura di ieri sapendo la chiusura di oggi); ritardo = 1 usa il segnale di ieri (onesto).
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def rendimenti(close: pd.Series) -&gt; pd.Series:
+    return close.pct_change().fillna(0.0)
+
+
+def segnale_un_giorno(close: pd.Series) -&gt; pd.Series:
+    return close &gt; close.shift(1)
+
+
+def segnale_sopra_media(close: pd.Series, n: int) -&gt; pd.Series:
+    return (close &gt; close.rolling(n).mean()) &amp; close.rolling(n).mean().notna()
+
+
+def segnale_medie(close: pd.Series, veloce: int, lenta: int) -&gt; pd.Series:
+    sl = close.rolling(lenta).mean()
+    return (close.rolling(veloce).mean() &gt; sl) &amp; sl.notna()
+
+
+def posizione(segnale: pd.Series, ritardo: int) -&gt; pd.Series:
+    &quot;&quot;&quot;True se si è investiti nella seduta, dato il ritardo con cui il segnale è noto.&quot;&quot;&quot;
+    if ritardo &lt; 0:
+        raise ValueError(&quot;ritardo negativo: sarebbe usare il futuro&quot;)
+    return segnale.shift(ritardo, fill_value=False).astype(bool)
+
+
+def valore(rend: pd.Series, pos: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Valore di 1 investito, composto giorno per giorno: nei giorni in cassa il rendimento è zero.&quot;&quot;&quot;
+    return (1.0 + rend * pos.astype(float)).cumprod()
+
+
+def cagr(v: pd.Series, anni: float) -&gt; float:
+    return float(v.iloc[-1] ** (1.0 / anni) - 1.0)
+
+
+def perdita_massima(v: pd.Series) -&gt; float:
+    return float((v / v.cummax() - 1.0).min())
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>17 controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli del motore vettoriale su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import motore_vettoriale as m
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+def serie(valori) -&gt; pd.Series:
+    return pd.Series(np.asarray(valori, float), index=pd.bdate_range(&quot;2020-01-01&quot;, periods=len(valori)))
+
+
+# 1. Rendimenti e valore: crescita costante dell&#x27;1% al giorno, sempre investiti
+c = serie(100 * 1.01 ** np.arange(11))
+r = m.rendimenti(c)
+v = m.valore(r, pd.Series(True, index=c.index))
+controlla(&quot;rendimento del primo giorno è zero&quot;, r.iloc[0] == 0.0)
+controlla(&quot;valore dopo dieci giorni di +1% = 1,01^10&quot;, abs(v.iloc[-1] - 1.01 ** 10) &lt; 1e-12)
+
+# 2. In cassa il valore non cambia
+v0 = m.valore(r, pd.Series(False, index=c.index))
+controlla(&quot;in cassa il valore resta 1&quot;, (v0 == 1.0).all())
+
+# 3. Il ritardo: ritardo 0 lascia il segnale com&#x27;è, ritardo 1 lo sposta di un giorno
+s = pd.Series([False, True, True, False, True], index=c.index[:5])
+controlla(&quot;ritardo 0 = segnale&quot;, (m.posizione(s, 0) == s).all())
+controlla(&quot;ritardo 1 = segnale di ieri&quot;, list(m.posizione(s, 1)) == [False, False, True, True, False])
+controlla(&quot;ritardo 2 = segnale di due giorni fa&quot;, list(m.posizione(s, 2)) == [False, False, False, True, True])
+controlla(&quot;la posizione è booleana&quot;, m.posizione(s, 1).dtype == bool)
+try:
+    m.posizione(s, -1)
+    controlla(&quot;ritardo negativo rifiutato&quot;, False)
+except ValueError:
+    controlla(&quot;ritardo negativo rifiutato&quot;, True)
+
+# 4. Nessun look-ahead nella versione onesta: tagliare il futuro non cambia la posizione di oggi
+rng = np.random.default_rng(3)
+close = serie(100 * np.exp(np.cumsum(rng.normal(0.0003, 0.01, 700))))
+sig_pieno = m.segnale_medie(close, 10, 40)
+pos_pieno = m.posizione(sig_pieno, 1)
+ok_taglio = True
+for taglio in (100, 250, 400, 650):
+    sig_t = m.segnale_medie(close.iloc[:taglio], 10, 40)
+    pos_t = m.posizione(sig_t, 1)
+    ok_taglio &amp;= bool((pos_t.values == pos_pieno.iloc[:taglio].values).all())
+controlla(&quot;la posizione onesta non cambia se si taglia il futuro&quot;, ok_taglio)
+
+# 5. Il segnale con ritardo 0 invece guarda la chiusura di oggi: cambiare il prezzo di oggi cambia la posizione di oggi
+close_su, close_giu = close.copy(), close.copy()
+close_su.iloc[-1] = close.iloc[-2] * 1.5       # oggi la chiusura sale
+close_giu.iloc[-1] = close.iloc[-2] * 0.5      # oggi la chiusura scende
+sig_a, sig_b = m.segnale_un_giorno(close_su), m.segnale_un_giorno(close_giu)
+controlla(&quot;segnale e posizione del giorno cambiano se cambia la chiusura di oggi (ritardo 0)&quot;,
+          m.posizione(sig_a, 0).iloc[-1] != m.posizione(sig_b, 0).iloc[-1])
+controlla(&quot;con ritardo 1 la posizione di oggi non dipende dalla chiusura di oggi&quot;,
+          m.posizione(sig_a, 1).iloc[-1] == m.posizione(sig_b, 1).iloc[-1])
+
+# 6. La regola di un giorno con look-ahead è sempre investita nei giorni di rialzo e mai in quelli di ribasso
+rend = m.rendimenti(close)
+pos_cheat = m.posizione(m.segnale_un_giorno(close), 0)
+controlla(&quot;con look-ahead la regola di un giorno guadagna solo nei giorni di rialzo&quot;, bool((rend[pos_cheat] &gt; 0).all()))
+controlla(&quot;con look-ahead non prende mai un giorno di ribasso&quot;, bool((rend[~pos_cheat] &lt;= 0).all()))
+
+# 7. Su dati inventati con andamento a zigzag, il look-ahead vale di più dell&#x27;onesto, e il valore non è mai negativo
+zig = serie(100 + np.array([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1], float))
+rz = m.rendimenti(zig)
+sz = m.segnale_un_giorno(zig)
+vc, vo = m.valore(rz, m.posizione(sz, 0)), m.valore(rz, m.posizione(sz, 1))
+controlla(&quot;con look-ahead sullo zigzag il valore sale, con segnale onesto scende&quot;, vc.iloc[-1] &gt; 1 &gt; vo.iloc[-1])
+
+# 8. CAGR e perdita massima
+v2 = pd.Series([1.0, 1.2, 0.9, 1.5])
+controlla(&quot;perdita massima = 0,9/1,2 - 1&quot;, abs(m.perdita_massima(v2) - (0.9 / 1.2 - 1)) &lt; 1e-12)
+controlla(&quot;CAGR su due anni di un raddoppio&quot;, abs(m.cagr(pd.Series([1.0, 2.0]), 2.0) - (2 ** 0.5 - 1)) &lt; 1e-12)
+
+# 9. Il segnale medie 50/200 non esiste prima di avere duecento chiusure
+s200 = m.segnale_medie(serie(100 + np.arange(300.0)), 50, 200)
+controlla(&quot;nessun segnale prima di avere la media lenta&quot;, not s200.iloc[:199].any())
+
+print(f&quot;\nVerifica del motore: {n_ok} controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>

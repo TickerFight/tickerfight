@@ -1,0 +1,918 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Il filtro sul rendimento passato funziona davvero? Prova fuori campione su 150 titoli · il codice · TickerFight</title>
+<meta name="description" content="il filtro trovato (regola 50/200 solo sui titoli con rendimento passato basso, buy &amp; hold sugli altri) funziona anche fuori campione, cioè in un periodo precedente e su titoli mai usati prima?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a><a href="https://github.com/TickerFight/tickerfight">GitHub</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Il filtro sul rendimento passato funziona davvero? Prova fuori campione su 150 titoli</h1>
+<p class="domanda">Il filtro trovato (regola 50/200 solo sui titoli con rendimento passato basso, buy &amp; hold sugli altri) funziona anche fuori campione, cioè in un periodo precedente e su titoli mai usati prima?</p>
+<div class="btns"><a class="btn p" href="https://ticker-fight.blogspot.com/2026/10/il-filtro-sul-rendimento-passato.html">Leggi l'articolo sul blog →</a><a class="btn" href="il-filtro-sul-rendimento-passato-funziona-davvero-prova-fuori-campione-su-150-titoli.zip" download>⬇ Scarica il codice (.zip)</a><a class="btn" href="https://github.com/TickerFight/tickerfight/tree/main/articoli/il-filtro-sul-rendimento-passato-funziona-davvero-prova-fuori-campione-su-150-titoli">Vedi su GitHub</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Fuori campione due volte:</strong> periodo diverso (i cinque anni fino al 20 ottobre 2021, mentre il filtro è stato trovato sul 2021-2026) e titoli diversi (150 mai usati negli articoli precedenti).</li>
+<li><strong>Strategia:</strong> il primo giorno si ordinano i titoli per rendimento dei dodici mesi precedenti. Sul terzo più basso si applica la regola 50/200, sugli altri si compra e si tiene. Controllo: la metà più bassa.</li>
+<li><strong>Confronti:</strong> buy &amp; hold su tutti, regola su tutti, e una scelta casuale dello stesso numero di titoli su cui applicare la regola (10.000 sorteggi).</li>
+<li><strong>Riferimento:</strong> lo stesso filtro sul periodo 2021-2026, dove però è stato trovato: serve solo come confronto, non come prova.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>il-filtro-sul-rendimento-passato-funziona-davvero-prova-fuori-campione-su-150-titoli/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica cambio e 150 titoli mai usati, fino a ottobre 2021
+    ├── 02_backtest_e_test.py  simulazione dei portafogli, test, scelta casuale, confronto con il 2021-2026
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              parametri, strategia e ipotesi, scritti prima dei risultati
+    ├── simulazione.py         motore: segnale, ordini, commissioni, cambio, tassa e minusvalenze
+    └── verifica_motore.py     19 controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd il-filtro-sul-rendimento-passato-funziona-davvero-prova-fuori-campione-su-150-titoli
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance i titoli nuovi per il test fuori campione.
+
+Si ripete il sorteggio degli articoli precedenti (stesso elenco, stesso seme, stesso ordine) saltando i titoli
+già usati, e si prendono i primi N_TITOLI con dati completi. I prezzi sono tagliati a FINE_TEST.
+
+Salva:
+  dati/titoli/&lt;TICKER&gt;.csv   Date, Open, High, Low, Close, Volume
+  dati/eurusd_giornaliero.csv   cambio, in dollari per un euro, dal 2015
+  dati/selezione.csv         ordine del sorteggio, esito per ogni titolo provato
+  dati/metadati.json         fonte, data del download, versione di yfinance, impronte SHA-256
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str, tentativi: int = 3) -&gt; pd.DataFrame | None:
+    for t in range(tentativi):
+        try:
+            grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, end=&quot;2021-11-10&quot;, auto_adjust=False)
+        except Exception as e:  # noqa: BLE001 - errori di rete: si riprova
+            print(f&quot;  {ticker}: errore {type(e).__name__}, tentativo {t + 1}&quot;)
+            grezzo = None
+        if grezzo is not None and not grezzo.empty:
+            break
+        time.sleep(3)
+    else:
+        return None
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df[df.index &lt;= pd.Timestamp(config.FINE_TEST)].dropna(subset=[&quot;Open&quot;, &quot;Close&quot;])
+    if df.empty or (df[[&quot;Open&quot;, &quot;Close&quot;]] &lt;= 0).any().any():
+        return None
+    return df
+
+
+def main() -&gt; None:
+    config.DATI_TITOLI.mkdir(parents=True, exist_ok=True)
+    comp = pd.read_csv(config.FILE_COMPOSIZIONE)
+    usati = set()
+    for f in (config.FILE_SELEZ_SVIL, config.FILE_SELEZ_VAL):
+        s = pd.read_csv(f)
+        usati |= set(s.loc[s[&quot;esito&quot;] == &quot;preso&quot;, &quot;ticker&quot;])
+    cambio = scarica(config.TICKER_CAMBIO)
+    if cambio is None:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito il cambio euro/dollaro.&quot;)
+    cambio.to_csv(config.FILE_CAMBIO, float_format=&quot;%.6f&quot;)
+    ordine = np.random.default_rng(config.SEME).permutation(len(comp))
+    prese, righe = [], []
+    for pos, k in enumerate(ordine, 1):
+        if len(prese) &gt;= config.N_TITOLI:
+            break
+        r = comp.iloc[k]
+        t = r[&quot;ticker_yahoo&quot;]
+        if t in usati:
+            continue
+        df = scarica(t)
+        esito = &quot;preso&quot;
+        if df is None:
+            esito = &quot;scartato: dati non disponibili&quot;
+        else:
+            fine = df.index[-1]
+            i0 = int(df.index.searchsorted(fine - pd.DateOffset(years=config.ANNI_TEST)))
+            if (pd.Timestamp(config.FINE_TEST) - fine).days &gt; 5:
+                esito = &quot;scartato: nessun dato vicino alla fine del test&quot;
+            elif i0 &lt; config.SEDUTE_MINIME_PRIMA:
+                esito = f&quot;scartato: storia troppo corta ({i0} sedute prima dell&#x27;inizio del test)&quot;
+        if esito == &quot;preso&quot;:
+            df.to_csv(config.DATI_TITOLI / f&quot;{t}.csv&quot;, float_format=&quot;%.6f&quot;)
+            prese.append(t)
+        righe.append({&quot;ordine_sorteggio&quot;: pos, &quot;ticker&quot;: t, &quot;nome&quot;: r[&quot;nome&quot;], &quot;settore&quot;: r[&quot;settore&quot;], &quot;esito&quot;: esito})
+        print(f&quot;{pos:3d} {t:8s} {esito}&quot;)
+    if len(prese) &lt; config.N_TITOLI:
+        raise SystemExit(f&quot;Solo {len(prese)} titoli validi su {config.N_TITOLI} richiesti.&quot;)
+    pd.DataFrame(righe).to_csv(config.FILE_SELEZIONE, index=False)
+
+    def impronta(p):
+        return hashlib.sha256(p.read_bytes()).hexdigest()
+
+    metadati = {
+        &quot;descrizione&quot;: config.DESCRIZIONE_DATI,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;seme&quot;: config.SEME,
+        &quot;titoli_gia_usati&quot;: len(usati),
+        &quot;titoli_provati&quot;: len(righe),
+        &quot;titoli_scartati&quot;: len(righe) - len(prese),
+        &quot;titoli&quot;: prese,
+        &quot;fine_test&quot;: config.FINE_TEST,
+        &quot;colonne_usate&quot;: config.NOTA_COLONNA,
+        &quot;sha256_titoli&quot;: {t: impronta(config.DATI_TITOLI / f&quot;{t}.csv&quot;) for t in prese},
+        &quot;sha256_cambio&quot;: impronta(config.FILE_CAMBIO),
+    }
+    config.FILE_METADATI.write_text(json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;\nScaricati {len(prese)} titoli, {len(righe) - len(prese)} scartati.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>simulazione dei portafogli, test, scelta casuale, confronto con il 2021-2026</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Il filtro sul rendimento passato, provato fuori campione.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json              ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  titoli.csv                 una riga per titolo: rendimento passato, gruppo, risultati di regola, buy &amp; hold e filtro
+  curva_portafoglio.csv      valore giorno per giorno dei portafogli: buy &amp; hold, regola, filtro, filtro sulla metà
+  simulazioni_casuali.csv    valore finale del portafoglio quando la regola è assegnata a caso a un terzo dei titoli
+
+Regole del metodo:
+  - ipotesi, strategia e parametri sono fissati in config.py prima di guardare i risultati;
+  - il rendimento passato è misurato sui dodici mesi PRIMA del primo ordine e l&#x27;ordinamento dei titoli si fa
+    il primo giorno: nessuna informazione dal futuro;
+  - ogni titolo parte con 500 euro, 1 euro a ordine e 26% di tassa in euro: gli stessi conti degli articoli precedenti;
+  - ogni numero dell&#x27;articolo passa da reg(): niente cifre scritte a mano nel testo.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import simulazione as s
+
+RIS: dict = {}
+
+
+def reg(chiave, valore, formato, descrizione, origine):
+    &quot;&quot;&quot;Registra un numero con la sua giustificazione (finisce nelle note dell&#x27;articolo).&quot;&quot;&quot;
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def spearman(x, y) -&gt; float:
+    return float(np.corrcoef(pd.Series(x).rank().to_numpy(), pd.Series(y).rank().to_numpy())[0, 1])
+
+
+def test_correlazione(x, y, rng):
+    &quot;&quot;&quot;Spearman, p-value di permutazione a una coda (ipotesi: correlazione negativa), IC bootstrap al 95%.&quot;&quot;&quot;
+    n = len(x)
+    rho = spearman(x, y)
+    rx = pd.Series(x).rank().to_numpy()
+    ry = pd.Series(y).rank().to_numpy()
+    rxc = (rx - rx.mean()) / np.linalg.norm(rx - rx.mean())
+    ryc = ry - ry.mean()
+    idx = rng.random((config.N_PERMUTAZIONI, n)).argsort(axis=1)
+    rho_perm = (ryc[idx] * rxc).sum(axis=1) / np.linalg.norm(ryc)
+    p = (int((rho_perm &lt;= rho).sum()) + 1) / (config.N_PERMUTAZIONI + 1)
+    ib = rng.integers(0, n, (config.N_BOOTSTRAP, n))
+    a = pd.DataFrame(np.asarray(x)[ib]).rank(axis=1).to_numpy()
+    b = pd.DataFrame(np.asarray(y)[ib]).rank(axis=1).to_numpy()
+    a, b = a - a.mean(axis=1, keepdims=True), b - b.mean(axis=1, keepdims=True)
+    boot = (a * b).sum(axis=1) / np.sqrt((a ** 2).sum(axis=1) * (b ** 2).sum(axis=1))
+    lo, hi = np.percentile(boot, [2.5, 97.5])
+    return rho, p, float(lo), float(hi)
+
+
+def maxdd(v) -&gt; float:
+    v = np.asarray(v)
+    return float(-(v / np.maximum.accumulate(v) - 1).min())
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    meta = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    comp = pd.read_csv(config.FILE_COMPOSIZIONE).set_index(&quot;ticker_yahoo&quot;)
+    cambio = s.carica_csv(config.FILE_CAMBIO)
+    rng = np.random.default_rng(config.SEME_STAT)
+
+    righe, eq_mm, eq_bh, fine_set, inizio_set = [], {}, {}, set(), set()
+    for t in meta[&quot;titoli&quot;]:
+        df = s.prepara(s.carica_csv(config.DATI_TITOLI / f&quot;{t}.csv&quot;), cambio, config.SMA_VELOCE, config.SMA_LENTA)
+        df = df[df.index &lt;= pd.Timestamp(config.FINE_TEST)]
+        i0 = s.indice_data(df, df.index[-1] - pd.DateOffset(years=config.ANNI_TEST))
+        if i0 &lt; config.SEDUTE_MINIME_PRIMA:
+            raise SystemExit(f&quot;{t}: storia troppo corta.&quot;)
+        if df[&quot;fx&quot;].iloc[i0 - 1:].isna().any():
+            raise SystemExit(f&quot;{t}: cambio mancante nel periodo del test.&quot;)
+        fine_set.add(df.index[-1])
+        inizio_set.add(df.index[i0])
+        C = df[&quot;Close&quot;].to_numpy()
+        ret = float(C[i0 - 1] / C[i0 - 1 - config.FINESTRA_RENDIMENTO] - 1)
+        mm = s.simula(df, i0, config.CAPITALE, config.COMMISSIONE, config.ALIQUOTA, config.MODO_PRINCIPALE, True)
+        bh = s.simula(df, i0, config.CAPITALE, config.COMMISSIONE, config.ALIQUOTA, config.MODO_PRINCIPALE, False)
+        righe.append({&quot;ticker&quot;: t, &quot;nome&quot;: comp.loc[t, &quot;nome&quot;], &quot;settore&quot;: comp.loc[t, &quot;settore&quot;], &quot;ret&quot;: ret,
+                      &quot;finale_mm&quot;: mm[&quot;valore_finale_eur&quot;], &quot;finale_bh&quot;: bh[&quot;valore_finale_eur&quot;],
+                      &quot;differenza&quot;: mm[&quot;valore_finale_eur&quot;] - bh[&quot;valore_finale_eur&quot;],
+                      &quot;rend_bh&quot;: bh[&quot;rendimento_totale&quot;], &quot;rend_mm&quot;: mm[&quot;rendimento_totale&quot;]})
+        d = df.index[i0:]
+        eq_mm[t] = pd.Series(mm[&quot;equity&quot;], index=d)
+        eq_bh[t] = pd.Series(bh[&quot;equity&quot;], index=d)
+    if max(fine_set) - min(fine_set) &gt; pd.Timedelta(days=5) or max(inizio_set) - min(inizio_set) &gt; pd.Timedelta(days=5):
+        raise SystemExit(&quot;I titoli non coprono lo stesso periodo di test.&quot;)
+
+    tab = pd.DataFrame(righe)
+    n = len(tab)
+    ordine = tab[&quot;ret&quot;].rank(method=&quot;first&quot;).astype(int)       # 1 = rendimento passato più basso
+    nt, nm = int(n * config.QUOTA_FILTRO), int(n * config.QUOTA_CONTROLLO)
+    tab[&quot;gruppo&quot;] = np.where(ordine &lt;= nt, &quot;basso&quot;, np.where(ordine &gt; n - nt, &quot;alto&quot;, &quot;medio&quot;))
+    tab[&quot;filtro&quot;] = ordine &lt;= nt
+    tab[&quot;filtro_meta&quot;] = ordine &lt;= nm
+    tab[&quot;finale_filtro&quot;] = np.where(tab[&quot;filtro&quot;], tab[&quot;finale_mm&quot;], tab[&quot;finale_bh&quot;])
+    tab[&quot;finale_filtro_meta&quot;] = np.where(tab[&quot;filtro_meta&quot;], tab[&quot;finale_mm&quot;], tab[&quot;finale_bh&quot;])
+    tab[&quot;vince&quot;] = tab[&quot;differenza&quot;] &gt; 0
+    tab.to_csv(config.RISULTATI / &quot;titoli.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    ok = pd.DataFrame(eq_mm).notna().all(axis=1) &amp; pd.DataFrame(eq_bh).notna().all(axis=1)
+    EM, EB = pd.DataFrame(eq_mm)[ok], pd.DataFrame(eq_bh)[ok]
+    f_set = list(tab.loc[tab[&quot;filtro&quot;], &quot;ticker&quot;])
+    m_set = list(tab.loc[tab[&quot;filtro_meta&quot;], &quot;ticker&quot;])
+    curva = pd.DataFrame({
+        &quot;data&quot;: EM.index,
+        &quot;valore_bh&quot;: EB.sum(axis=1).to_numpy(), &quot;valore_regola&quot;: EM.sum(axis=1).to_numpy(),
+        &quot;valore_filtro&quot;: (EM[f_set].sum(axis=1) + EB.drop(columns=f_set).sum(axis=1)).to_numpy(),
+        &quot;valore_filtro_meta&quot;: (EM[m_set].sum(axis=1) + EB.drop(columns=m_set).sum(axis=1)).to_numpy(),
+    })
+    curva.to_csv(config.RISULTATI / &quot;curva_portafoglio.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    cap = config.CAPITALE * n
+    F = {&quot;bh&quot;: tab[&quot;finale_bh&quot;].sum(), &quot;mm&quot;: tab[&quot;finale_mm&quot;].sum(), &quot;fl&quot;: tab[&quot;finale_filtro&quot;].sum(),
+         &quot;fm&quot;: tab[&quot;finale_filtro_meta&quot;].sum()}
+    tl = &quot;titoli.csv&quot;
+    origine_dati = f&quot;dati/ ({meta[&#x27;fonte&#x27;]}, scaricati il {meta[&#x27;scaricato_il_utc&#x27;][:10]})&quot;
+
+    # --- Parametri e campione -------------------------------------------------------------------------------
+    reg(&quot;capitale&quot;, config.CAPITALE, &quot;int&quot;, &quot;Capitale iniziale per ogni titolo, in euro&quot;, &quot;config.py, CAPITALE&quot;)
+    reg(&quot;capitale_totale&quot;, cap, &quot;int&quot;, &quot;Capitale iniziale complessivo, in euro&quot;, &quot;config.py: CAPITALE per numero di titoli&quot;)
+    reg(&quot;commissione&quot;, config.COMMISSIONE, &quot;num2&quot;, &quot;Commissione fissa per ogni ordine, in euro&quot;, &quot;config.py, COMMISSIONE&quot;)
+    reg(&quot;aliquota&quot;, config.ALIQUOTA, &quot;pct0&quot;, &quot;Aliquota sulle plusvalenze&quot;, &quot;config.py, ALIQUOTA&quot;)
+    reg(&quot;sma_veloce&quot;, config.SMA_VELOCE, &quot;annonum&quot;, &quot;Giorni della media veloce&quot;, &quot;config.py, SMA_VELOCE&quot;)
+    reg(&quot;sma_lenta&quot;, config.SMA_LENTA, &quot;annonum&quot;, &quot;Giorni della media lenta&quot;, &quot;config.py, SMA_LENTA&quot;)
+    reg(&quot;n_permutazioni&quot;, config.N_PERMUTAZIONI, &quot;int&quot;, &quot;Permutazioni per i p-value&quot;, &quot;config.py, N_PERMUTAZIONI&quot;)
+    reg(&quot;n_bootstrap&quot;, config.N_BOOTSTRAP, &quot;int&quot;, &quot;Ricampionamenti bootstrap&quot;, &quot;config.py, N_BOOTSTRAP&quot;)
+    reg(&quot;livello_ic&quot;, 0.95, &quot;pct0&quot;, &quot;Livello degli intervalli di confidenza e percentile alto usato per la distribuzione casuale&quot;, &quot;02_backtest_e_test.py, percentili 2,5 e 97,5 del bootstrap; 95° percentile&quot;)
+    reg(&quot;seme&quot;, config.SEME, &quot;annonum&quot;, &quot;Seme del sorteggio dei titoli&quot;, &quot;config.py, SEME&quot;)
+    reg(&quot;data_inizio&quot;, str(min(inizio_set).date()), &quot;data_lunga&quot;, &quot;Prima seduta del test&quot;, origine_dati)
+    reg(&quot;data_fine&quot;, str(max(fine_set).date()), &quot;data_lunga&quot;, &quot;Ultima seduta del test&quot;, origine_dati)
+    reg(&quot;data_scarico&quot;, meta[&quot;scaricato_il_utc&quot;][:10], &quot;data&quot;, &quot;Data del download dei dati&quot;, &quot;dati/metadati.json&quot;)
+    reg(&quot;n_titoli&quot;, n, &quot;int&quot;, &quot;Titoli del campione fuori campione&quot;, f&quot;{tl}&quot;)
+    reg(&quot;n_gia_usati&quot;, meta[&quot;titoli_gia_usati&quot;], &quot;int&quot;, &quot;Titoli già usati negli articoli precedenti, esclusi dal sorteggio&quot;, &quot;dati/metadati.json&quot;)
+    reg(&quot;n_provati&quot;, meta[&quot;titoli_provati&quot;], &quot;int&quot;, &quot;Titoli provati per ottenerne il numero richiesto&quot;, &quot;dati/metadati.json&quot;)
+    reg(&quot;n_scartati&quot;, meta[&quot;titoli_scartati&quot;], &quot;int&quot;, &quot;Titoli scartati per dati assenti o storia troppo corta&quot;, &quot;dati/metadati.json&quot;)
+    reg(&quot;n_filtro&quot;, nt, &quot;int&quot;, &quot;Titoli nel gruppo con il rendimento passato più basso (a cui si applica la regola)&quot;, f&quot;{tl}: un terzo di n&quot;)
+    reg(&quot;n_filtro_meta&quot;, nm, &quot;int&quot;, &quot;Titoli nel gruppo di controllo (metà più bassa)&quot;, f&quot;{tl}: metà di n&quot;)
+    reg(&quot;soglia_ret&quot;, float(tab.loc[tab[&quot;filtro&quot;], &quot;ret&quot;].max()), &quot;pct0&quot;,
+        &quot;Rendimento passato più alto tra i titoli del terzo più basso (soglia del filtro)&quot;, f&quot;{tl}&quot;)
+
+    # --- 1) La relazione si ripete? ---------------------------------------------------------------------------
+    rho, p, lo, hi = test_correlazione(tab[&quot;ret&quot;].to_numpy(), tab[&quot;differenza&quot;].to_numpy(), rng)
+    reg(&quot;rho&quot;, rho, &quot;num2&quot;, &quot;Correlazione di rango tra rendimento passato e differenza regola meno buy &amp; hold, fuori campione&quot;, f&quot;{tl}: Spearman&quot;)
+    reg(&quot;rho_lo&quot;, lo, &quot;num2&quot;, &quot;Estremo inferiore dell&#x27;intervallo di confidenza al 95%&quot;, &quot;bootstrap sui titoli&quot;)
+    reg(&quot;rho_hi&quot;, hi, &quot;num2&quot;, &quot;Estremo superiore dell&#x27;intervallo di confidenza al 95%&quot;, &quot;bootstrap sui titoli&quot;)
+    reg(&quot;rho_p&quot;, p, &quot;pval&quot;, &quot;p-value di permutazione a una coda (ipotesi: correlazione negativa)&quot;, &quot;permutazione&quot;)
+    reg(&quot;quota_vince&quot;, float(tab[&quot;vince&quot;].mean()), &quot;pct0&quot;, &quot;Quota di titoli su cui la regola batte il buy &amp; hold, fuori campione&quot;, f&quot;{tl}: differenza &gt; 0&quot;)
+    reg(&quot;n_vince&quot;, int(tab[&quot;vince&quot;].sum()), &quot;int&quot;, &quot;Titoli su cui la regola batte il buy &amp; hold&quot;, f&quot;{tl}: differenza &gt; 0&quot;)
+    reg(&quot;mediana_diff&quot;, float(tab[&quot;differenza&quot;].median()), &quot;num2&quot;, &quot;Differenza mediana in euro, regola meno buy &amp; hold&quot;, f&quot;{tl}&quot;)
+    for g in (&quot;basso&quot;, &quot;medio&quot;, &quot;alto&quot;):
+        d = tab[tab[&quot;gruppo&quot;] == g]
+        reg(f&quot;g_{g}_vince&quot;, float(d[&quot;vince&quot;].mean()), &quot;pct0&quot;, f&quot;Quota di titoli su cui vince la regola nel gruppo con rendimento passato {g}&quot;, f&quot;{tl}&quot;)
+        reg(f&quot;g_{g}_ret&quot;, float(d[&quot;ret&quot;].median()), &quot;pct0&quot;, f&quot;Rendimento passato mediano del gruppo {g}&quot;, f&quot;{tl}&quot;)
+        reg(f&quot;g_{g}_rbh&quot;, float(d[&quot;rend_bh&quot;].median()), &quot;pct0&quot;, f&quot;Rendimento mediano del buy &amp; hold nei cinque anni, gruppo {g}&quot;, f&quot;{tl}&quot;)
+        reg(f&quot;g_{g}_diff&quot;, float(d[&quot;differenza&quot;].median()), &quot;num2&quot;, f&quot;Differenza mediana in euro, gruppo {g}&quot;, f&quot;{tl}&quot;)
+    reg(&quot;rho_diff_rbh&quot;, spearman(tab[&quot;rend_bh&quot;].to_numpy(), tab[&quot;differenza&quot;].to_numpy()), &quot;num2&quot;,
+        &quot;Correlazione di rango tra rendimento del buy &amp; hold e differenza&quot;, f&quot;{tl}: Spearman&quot;)
+    reg(&quot;rho_ret_rbh&quot;, spearman(tab[&quot;ret&quot;].to_numpy(), tab[&quot;rend_bh&quot;].to_numpy()), &quot;num2&quot;,
+        &quot;Correlazione di rango tra rendimento passato e rendimento del buy &amp; hold nei cinque anni&quot;, f&quot;{tl}: Spearman&quot;)
+
+    # --- 2) e 3) Portafogli ------------------------------------------------------------------------------------
+    nomi = {&quot;bh&quot;: &quot;buy &amp; hold su tutti i titoli&quot;, &quot;mm&quot;: &quot;regola su tutti i titoli&quot;,
+            &quot;fl&quot;: &quot;regola sul terzo con rendimento passato più basso, buy &amp; hold sugli altri&quot;,
+            &quot;fm&quot;: &quot;regola sulla metà con rendimento passato più basso, buy &amp; hold sugli altri&quot;}
+    for k, v in F.items():
+        reg(f&quot;finale_{k}&quot;, float(v), &quot;num2&quot;, f&quot;Valore finale netto in euro del portafoglio: {nomi[k]}&quot;, f&quot;{tl}: somma dei valori finali&quot;)
+        reg(f&quot;rend_{k}&quot;, float(v / cap - 1), &quot;pct0&quot;, f&quot;Rendimento totale netto del portafoglio: {nomi[k]}&quot;, &quot;finale / capitale_totale - 1&quot;)
+    for k, col in ((&quot;bh&quot;, &quot;valore_bh&quot;), (&quot;mm&quot;, &quot;valore_regola&quot;), (&quot;fl&quot;, &quot;valore_filtro&quot;), (&quot;fm&quot;, &quot;valore_filtro_meta&quot;)):
+        reg(f&quot;maxdd_{k}&quot;, maxdd(curva[col]), &quot;pct0&quot;, f&quot;Perdita massima dal picco del portafoglio: {nomi[k]}&quot;, &quot;curva_portafoglio.csv&quot;)
+    reg(&quot;diff_fl_bh&quot;, float(F[&quot;fl&quot;] - F[&quot;bh&quot;]), &quot;num2&quot;, &quot;Filtro meno buy &amp; hold, in euro (segno: + vantaggio del filtro)&quot;, &quot;finale_fl - finale_bh&quot;)
+    reg(&quot;diff_fl_bh_abs&quot;, float(abs(F[&quot;fl&quot;] - F[&quot;bh&quot;])), &quot;num2&quot;, &quot;Distanza in euro tra filtro e buy &amp; hold&quot;, &quot;|finale_fl - finale_bh|&quot;)
+    reg(&quot;diff_fl_bh_pct_abs&quot;, float(abs(F[&quot;fl&quot;] / F[&quot;bh&quot;] - 1)), &quot;pct1&quot;, &quot;Distanza tra filtro e buy &amp; hold in percentuale del valore finale del buy &amp; hold&quot;, &quot;|finale_fl / finale_bh - 1|&quot;)
+    reg(&quot;diff_fl_mm&quot;, float(F[&quot;fl&quot;] - F[&quot;mm&quot;]), &quot;num2&quot;, &quot;Filtro meno regola su tutti i titoli, in euro&quot;, &quot;finale_fl - finale_mm&quot;)
+    reg(&quot;diff_mm_bh_abs&quot;, float(abs(F[&quot;mm&quot;] - F[&quot;bh&quot;])), &quot;num2&quot;, &quot;Distanza in euro tra regola su tutti i titoli e buy &amp; hold&quot;, &quot;|finale_mm - finale_bh|&quot;)
+    reg(&quot;diff_fm_bh&quot;, float(F[&quot;fm&quot;] - F[&quot;bh&quot;]), &quot;num2&quot;, &quot;Controllo: filtro sulla metà meno buy &amp; hold, in euro&quot;, &quot;finale_fm - finale_bh&quot;)
+    d_stock = (tab[&quot;finale_filtro&quot;] - tab[&quot;finale_bh&quot;]).to_numpy()
+    ib = rng.integers(0, n, (config.N_BOOTSTRAP, n))
+    medie = d_stock[ib].mean(axis=1)
+    lo_b, hi_b = np.percentile(medie, [2.5, 97.5])
+    reg(&quot;fl_bh_medio&quot;, float(d_stock.mean()), &quot;num2&quot;, &quot;Differenza media per titolo, filtro meno buy &amp; hold, in euro&quot;, f&quot;{tl}&quot;)
+    reg(&quot;fl_bh_lo&quot;, float(lo_b), &quot;num2&quot;, &quot;Estremo inferiore IC 95% della differenza media per titolo&quot;, &quot;bootstrap sui titoli&quot;)
+    reg(&quot;fl_bh_hi&quot;, float(hi_b), &quot;num2&quot;, &quot;Estremo superiore IC 95% della differenza media per titolo&quot;, &quot;bootstrap sui titoli&quot;)
+
+    # --- Scelta casuale dello stesso numero di titoli -------------------------------------------------------------
+    mm_v, bh_v = tab[&quot;finale_mm&quot;].to_numpy(), tab[&quot;finale_bh&quot;].to_numpy()
+    idx = rng.random((config.N_PERMUTAZIONI, n)).argsort(axis=1)[:, :nt]
+    scelta = np.zeros((config.N_PERMUTAZIONI, n), dtype=bool)
+    np.put_along_axis(scelta, idx, True, axis=1)
+    casuali = np.where(scelta, mm_v, bh_v).sum(axis=1)
+    pd.DataFrame({&quot;finale_portafoglio&quot;: casuali}).to_csv(config.RISULTATI / &quot;simulazioni_casuali.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+    reg(&quot;cas_mediana&quot;, float(np.median(casuali)), &quot;num2&quot;, &quot;Valore finale mediano quando la regola è assegnata a caso a un terzo dei titoli, in euro&quot;, &quot;simulazioni_casuali.csv&quot;)
+    reg(&quot;cas_p95&quot;, float(np.percentile(casuali, 95)), &quot;num2&quot;, &quot;95° percentile del valore finale con assegnazione casuale, in euro&quot;, &quot;simulazioni_casuali.csv&quot;)
+    reg(&quot;cas_quota&quot;, (int((casuali &gt;= F[&quot;fl&quot;]).sum()) + 1) / (config.N_PERMUTAZIONI + 1), &quot;pct0&quot;,
+        &quot;Stessa quota, in percentuale&quot;, &quot;simulazioni_casuali.csv&quot;)
+    reg(&quot;cas_p&quot;, (int((casuali &gt;= F[&quot;fl&quot;]).sum()) + 1) / (config.N_PERMUTAZIONI + 1), &quot;pval&quot;,
+        &quot;Quota di assegnazioni casuali che fanno almeno quanto il filtro (p-value a una coda)&quot;, &quot;simulazioni_casuali.csv&quot;)
+
+    # --- Riferimento: lo stesso filtro sul periodo 2021-2026 (dentro il campione: serve solo come confronto) ---------
+    rif = pd.read_csv(config.FILE_RIFERIMENTO)
+    nr = len(rif)
+    ntr = int(nr * config.QUOTA_FILTRO)
+    basso = rif[&quot;ret&quot;].rank(method=&quot;first&quot;) &lt;= ntr
+    fr_mm, fr_bh = float(rif[&quot;finale_mm_netto&quot;].sum()), float(rif[&quot;finale_bh_netto&quot;].sum())
+    fr_fl = float(np.where(basso, rif[&quot;finale_mm_netto&quot;], rif[&quot;finale_bh_netto&quot;]).sum())
+    src_r = &quot;riferimento_2021_2026.csv (articolo precedente)&quot;
+    reg(&quot;rif_n&quot;, nr, &quot;int&quot;, &quot;Titoli del periodo di riferimento 2021-2026&quot;, src_r)
+    reg(&quot;rif_finale_bh&quot;, fr_bh, &quot;num2&quot;, &quot;Riferimento: valore finale netto del buy &amp; hold su tutti i titoli, in euro&quot;, src_r)
+    reg(&quot;rif_finale_mm&quot;, fr_mm, &quot;num2&quot;, &quot;Riferimento: valore finale netto della regola su tutti i titoli, in euro&quot;, src_r)
+    reg(&quot;rif_finale_fl&quot;, fr_fl, &quot;num2&quot;, &quot;Riferimento: valore finale netto con il filtro, in euro&quot;, src_r)
+    reg(&quot;rif_diff_fl_bh_abs&quot;, abs(fr_fl - fr_bh), &quot;num2&quot;, &quot;Riferimento: distanza in euro tra filtro e buy &amp; hold&quot;, src_r)
+    reg(&quot;rif_diff_fl_bh_pct_abs&quot;, abs(fr_fl / fr_bh - 1), &quot;pct1&quot;, &quot;Riferimento: distanza tra filtro e buy &amp; hold in percentuale del valore finale del buy &amp; hold&quot;, src_r)
+    reg(&quot;rif_diff_fl_mm&quot;, fr_fl - fr_mm, &quot;num2&quot;, &quot;Riferimento: filtro meno regola su tutti i titoli, in euro&quot;, src_r)
+    reg(&quot;rif_rho&quot;, spearman(rif[&quot;ret&quot;].to_numpy(), rif[&quot;differenza&quot;].to_numpy()), &quot;num2&quot;, &quot;Riferimento: correlazione di rango tra rendimento passato e differenza&quot;, src_r)
+
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+           &quot;python&quot;: platform.python_version(), &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri in risultati/metriche.json&quot;)
+    print(f&quot;Periodo {min(inizio_set).date()} -&gt; {max(fine_set).date()}, {n} titoli&quot;)
+    print(f&quot;rho={rho:+.2f} IC[{lo:+.2f},{hi:+.2f}] p={p:.4f}; la regola vince su {int(tab[&#x27;vince&#x27;].sum())}/{n}&quot;)
+    for g in (&quot;basso&quot;, &quot;medio&quot;, &quot;alto&quot;):
+        d = tab[tab[&#x27;gruppo&#x27;] == g]
+        print(f&quot;  gruppo {g:6s} n={len(d)} vince={d[&#x27;vince&#x27;].mean():.0%} diff mediana={d[&#x27;differenza&#x27;].median():+.1f}&quot;)
+    print(f&quot;portafogli: bh {F[&#x27;bh&#x27;]:.0f}  regola {F[&#x27;mm&#x27;]:.0f}  filtro {F[&#x27;fl&#x27;]:.0f}  filtro meta {F[&#x27;fm&#x27;]:.0f}&quot;)
+    print(f&quot;casuale: mediana {np.median(casuali):.0f}  p95 {np.percentile(casuali, 95):.0f}  filtro {F[&#x27;fl&#x27;]:.0f}&quot;)
+    print(f&quot;riferimento 2021-26: bh {fr_bh:.0f}  regola {fr_mm:.0f}  filtro {fr_fl:.0f}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e dati/ e salva i PNG in figure/.
+
+  fig1_portafogli.png        valore giorno per giorno: buy &amp; hold, regola su tutti, strategia con il filtro
+  fig2_gruppi.png            quota di titoli su cui la regola batte il buy &amp; hold, per gruppo di rendimento passato
+  fig3_valori_finali.png     valore finale dei tre portafogli, fuori campione e nel periodo di riferimento
+  fig4_scelta_casuale.png    valore finale con la regola assegnata a caso a un terzo dei titoli, contro il filtro
+&quot;&quot;&quot;
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.dates as mdates  # noqa: E402
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO, VERDE = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;, &quot;#2a7f3f&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+
+
+def euro(x, _=None):
+    return f&quot;{x:,.0f}&quot;.replace(&quot;,&quot;, &quot;.&quot;) + &quot; €&quot;
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    R = config.RISULTATI
+    tab = pd.read_csv(R / &quot;titoli.csv&quot;)
+    cur = pd.read_csv(R / &quot;curva_portafoglio.csv&quot;, parse_dates=[&quot;data&quot;])
+    cas = pd.read_csv(R / &quot;simulazioni_casuali.csv&quot;)[&quot;finale_portafoglio&quot;].to_numpy()
+    rif = pd.read_csv(config.FILE_RIFERIMENTO)
+    n = len(tab)
+
+    # --- Figura 1: portafogli ---------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(11, 5.5))
+    ax.axhline(config.CAPITALE * n, color=GRIGIO, lw=1, ls=&quot;:&quot;)
+    ax.plot(cur[&quot;data&quot;], cur[&quot;valore_bh&quot;], color=ARANCIO, lw=2.0, ls=&quot;--&quot;, label=&quot;buy &amp; hold su tutti&quot;)
+    ax.plot(cur[&quot;data&quot;], cur[&quot;valore_regola&quot;], color=BLU, lw=1.8, label=f&quot;regola {config.SMA_VELOCE}/{config.SMA_LENTA} su tutti&quot;)
+    ax.plot(cur[&quot;data&quot;], cur[&quot;valore_filtro&quot;], color=VERDE, lw=2.2, label=&quot;filtro: regola solo sul terzo con rendimento passato basso&quot;)
+    ax.yaxis.set_major_formatter(euro)
+    ax.xaxis.set_major_locator(mdates.YearLocator())
+    ax.xaxis.set_major_formatter(mdates.DateFormatter(&quot;%Y&quot;))
+    ax.set_ylabel(f&quot;valore dei {n} titoli&quot;)
+    ax.legend(ncol=1, loc=&quot;upper left&quot;, fontsize=11)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_portafogli.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 2: gruppi per rendimento passato --------------------------------------------------------
+    nr = len(rif)
+    ordine_r = rif[&quot;ret&quot;].rank(method=&quot;first&quot;).astype(int)
+    ntr = nr // 3
+    rif[&quot;gruppo&quot;] = np.where(ordine_r &lt;= ntr, &quot;basso&quot;, np.where(ordine_r &gt; nr - ntr, &quot;alto&quot;, &quot;medio&quot;))
+    rif[&quot;vince&quot;] = rif[&quot;differenza&quot;] &gt; 0
+    fig, ax = plt.subplots(figsize=(10, 5.5))
+    periodi = [(&quot;fuori campione\n(fino a ottobre 2021)&quot;, tab), (&quot;periodo di riferimento\n(2021-2026)&quot;, rif)]
+    x = np.arange(2)
+    larg = 0.26
+    for k, (g, col, hatch, nome) in enumerate(((&quot;basso&quot;, BLU, &quot;&quot;, &quot;rendimento passato basso&quot;),
+                                              (&quot;medio&quot;, GRIGIO, &quot;&quot;, &quot;medio&quot;),
+                                              (&quot;alto&quot;, ARANCIO, &quot;//&quot;, &quot;rendimento passato alto&quot;))):
+        val = [float(d[d[&quot;gruppo&quot;] == g][&quot;vince&quot;].mean()) * 100 for _, d in periodi]
+        barre = ax.bar(x + (k - 1) * larg, val, larg, color=col, alpha=0.8, hatch=hatch, edgecolor=&quot;white&quot;, label=nome)
+        for b, v in zip(barre, val):
+            ax.text(b.get_x() + b.get_width() / 2, v + 0.8, f&quot;{v:.0f}%&quot;, ha=&quot;center&quot;, fontsize=11)
+    ax.set_xticks(x, [p for p, _ in periodi])
+    ax.set_ylabel(&quot;titoli su cui la regola batte il buy &amp; hold&quot;)
+    ax.yaxis.set_major_formatter(lambda v, _: f&quot;{v:.0f}%&quot;)
+    ax.grid(axis=&quot;x&quot;, visible=False)
+    ax.legend(ncol=3, loc=&quot;lower left&quot;, bbox_to_anchor=(0, 1.0))
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig2_gruppi.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 3: valori finali ------------------------------------------------------------------------
+    fr_bh, fr_mm = rif[&quot;finale_bh_netto&quot;].sum(), rif[&quot;finale_mm_netto&quot;].sum()
+    fr_fl = np.where(rif[&quot;gruppo&quot;] == &quot;basso&quot;, rif[&quot;finale_mm_netto&quot;], rif[&quot;finale_bh_netto&quot;]).sum()
+    fig, assi = plt.subplots(1, 2, figsize=(13, 5.5))
+    dati = [(&quot;fuori campione (fino a ottobre 2021)&quot;, n, tab[&quot;finale_bh&quot;].sum(), tab[&quot;finale_mm&quot;].sum(), tab[&quot;finale_filtro&quot;].sum()),
+            (&quot;periodo di riferimento (2021-2026)&quot;, nr, fr_bh, fr_mm, fr_fl)]
+    for ax, (titolo, nn, bh, mm, fl) in zip(assi, dati):
+        vals = [bh, mm, fl]
+        barre = ax.bar([0, 1, 2], vals, color=[ARANCIO, BLU, VERDE], alpha=0.85, edgecolor=&quot;white&quot;)
+        barre[0].set_hatch(&quot;//&quot;)
+        for b, v in zip(barre, vals):
+            ax.text(b.get_x() + b.get_width() / 2, v + max(vals) * 0.01, f&quot;{v:,.0f}&quot;.replace(&quot;,&quot;, &quot;.&quot;), ha=&quot;center&quot;, fontsize=11)
+        ax.axhline(config.CAPITALE * nn, color=GRIGIO, lw=1, ls=&quot;:&quot;)
+        ax.set_xticks([0, 1, 2], [&quot;buy &amp; hold\nsu tutti&quot;, &quot;regola\nsu tutti&quot;, &quot;filtro&quot;])
+        ax.set_title(titolo, fontsize=12)
+        ax.yaxis.set_major_formatter(euro)
+        ax.grid(axis=&quot;x&quot;, visible=False)
+        ax.set_ylim(0, max(vals) * 1.12)
+    assi[0].set_ylabel(&quot;valore finale netto&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_valori_finali.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 4: scelta casuale ----------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(10, 5.2))
+    ax.hist(cas, bins=40, color=GRIGIO, alpha=0.6, edgecolor=&quot;white&quot;)
+    ax.axvline(tab[&quot;finale_filtro&quot;].sum(), color=VERDE, lw=2.5, label=&quot;filtro (terzo con rendimento passato basso)&quot;)
+    ax.axvline(tab[&quot;finale_bh&quot;].sum(), color=ARANCIO, lw=2, ls=&quot;--&quot;, label=&quot;buy &amp; hold su tutti&quot;)
+    ax.axvline(tab[&quot;finale_mm&quot;].sum(), color=BLU, lw=2, label=&quot;regola su tutti&quot;)
+    ax.xaxis.set_major_formatter(euro)
+    ax.set_xlabel(&quot;valore finale con la regola assegnata a caso a un terzo dei titoli&quot;)
+    ax.set_ylabel(&quot;numero di sorteggi&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig4_scelta_casuale.png&quot;)
+    plt.close(fig)
+    print(&quot;Grafici salvati in figure/&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri, strategia e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo bonus - &quot;Applichiamo il filtro sul rendimento passato&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni
+numero dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+L&#x27;articolo è fuori programmazione e fuori catalogo: per questo la cartella si chiama &quot;bonus&quot; e non ha numero.
+
+Idea: nell&#x27;articolo precedente, sui titoli del 2021-2026, la regola 50/200 andava meglio quando il rendimento
+dei dodici mesi precedenti era basso. Qui si applica quel filtro come strategia - regola sui titoli con
+rendimento passato basso, buy &amp; hold sugli altri - e la si prova FUORI CAMPIONE: in un periodo precedente
+(cinque anni fino a ottobre 2021) e su titoli mai usati negli articoli precedenti.
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+DATI_TITOLI = DATI / &quot;titoli&quot;                 # titoli nuovi, scaricati dal passo 1
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati ---------------------------------------------------------------
+TICKER_CAMBIO = &quot;EURUSD=X&quot;
+INIZIO_DOWNLOAD = &quot;2015-01-01&quot;        # serve storia per i 12 mesi di rendimento passato e per la media a 200 giorni
+FINE_TEST = &quot;2021-10-20&quot;              # il periodo del test finisce dove cominciava quello dell&#x27;articolo precedente
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_COMPOSIZIONE = DATI / &quot;sp500_composizione.csv&quot;          # stesso elenco e stesso ordine di sorteggio degli articoli precedenti
+FILE_CAMBIO = DATI / &quot;eurusd_giornaliero.csv&quot;                # scaricato dal passo 1
+FILE_SELEZ_SVIL = DATI / &quot;selezione_sviluppo.csv&quot;            # titoli già usati negli articoli precedenti
+FILE_SELEZ_VAL = DATI / &quot;selezione_validazione.csv&quot;
+FILE_RIFERIMENTO = DATI / &quot;riferimento_2021_2026.csv&quot;        # risultati dell&#x27;articolo precedente (2021-2026), solo come confronto
+FILE_SELEZIONE = DATI / &quot;selezione.csv&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;chiusure e aperture giornaliere di 150 titoli dell&#x27;S&amp;P 500 mai usati prima e cambio euro/dollaro&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+NOTA_COLONNA = (&quot;Open e Close non corretti per i dividendi (già corretti per gli split): &quot;
+                &quot;i dividendi non sono considerati, né per la regola né per il buy &amp; hold&quot;)
+
+# --- Campione -----------------------------------------------------------
+# Stesso sorteggio degli articoli precedenti (stesso elenco, seme e ordine), saltando i titoli già usati: si
+# prendono i primi N_TITOLI con dati completi (dodici mesi più duecento giorni prima dell&#x27;inizio del test).
+N_TITOLI = 150
+SEME = 2026
+SEDUTE_MINIME_PRIMA = 420
+
+# --- Scenario dell&#x27;investitore (identico agli articoli precedenti) ----------
+CAPITALE = 500.0
+COMMISSIONE = 1.0
+ALIQUOTA = 0.26
+ANNI_TEST = 5
+SMA_VELOCE = 50
+SMA_LENTA = 200
+MODO_PRINCIPALE = &quot;apertura&quot;
+FINESTRA_RENDIMENTO = 252
+
+# --- La strategia con il filtro, fissata prima di guardare i risultati --------------------
+# Il primo giorno del test si ordinano i titoli del campione per rendimento dei dodici mesi precedenti.
+# Principale: sul terzo con il rendimento più basso si applica la regola 50/200, sugli altri si compra e si tiene.
+# Controllo: lo stesso con la metà più bassa.
+QUOTA_FILTRO = 1 / 3
+QUOTA_CONTROLLO = 1 / 2
+
+# --- Statistica ----------------------------------------------------------
+N_PERMUTAZIONI = 10000
+N_BOOTSTRAP = 2000
+SEME_STAT = 11
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) Fuori campione la relazione si ripete: tra rendimento passato e differenza regola meno buy &amp; hold la &quot;
+    &quot;correlazione di rango è negativa. &quot;
+    &quot;2) La strategia con il filtro chiude sopra la regola applicata a tutti i titoli e sopra una scelta casuale &quot;
+    &quot;dello stesso numero di titoli su cui applicare la regola. &quot;
+    &quot;3) La strategia con il filtro NON batte il buy &amp; hold applicato a tutti i titoli: anche nel terzo più favorevole &quot;
+    &quot;la regola vinceva solo in una minoranza di casi.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/simulazione.py<small>motore: segnale, ordini, commissioni, cambio, tassa e minusvalenze</small></summary><pre><code class="language-python">&quot;&quot;&quot;Motore di simulazione in euro di una regola a medie mobili su un singolo titolo.
+
+Regole (da dichiarare nell&#x27;articolo):
+  - segnale: investito se la media mobile veloce è sopra la lenta, calcolate sulle chiusure;
+  - il segnale a fine seduta t decide l&#x27;operazione della seduta t+1 (nessun look-ahead);
+  - esecuzione &quot;apertura&quot;: prezzo di apertura di t+1, cambio dell&#x27;ultima chiusura nota (t);
+    esecuzione &quot;chiusura&quot;: prezzo di chiusura di t+1, cambio di t+1 (controllo di robustezza);
+  - azioni frazionate, si investe tutta la cassa; commissione fissa per ogni ordine, acquisto o vendita;
+  - la cassa non rende nulla; i dividendi non sono considerati;
+  - tassa sulle plusvalenze calcolate in euro (cambio incluso), pagata a ogni vendita come nel regime
+    amministrato; la commissione si somma al costo di acquisto e si sottrae dall&#x27;incasso; le minusvalenze
+    compensano le plusvalenze successive fino al quarto anno seguente;
+  - a fine periodo si vende tutto, con commissione e tassa, per confrontare cifre nette.
+Non modellati: imposta di bollo, ritenuta sui dividendi, spread di cambio.
+&quot;&quot;&quot;
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+
+class Zaino:
+    &quot;&quot;&quot;Minusvalenze compensabili con le plusvalenze successive, fino al 4° anno seguente.&quot;&quot;&quot;
+
+    def __init__(self, aliquota: float):
+        self.aliquota = aliquota
+        self.voci: list[list[float]] = []   # [ultimo anno utilizzabile, importo residuo]
+
+    def tassa(self, anno: int, guadagno: float) -&gt; float:
+        if guadagno &lt; 0:
+            self.voci.append([anno + 4, -guadagno])
+            return 0.0
+        residuo = guadagno
+        for voce in sorted(self.voci, key=lambda v: v[0]):      # prima le più vecchie
+            if voce[0] &lt; anno or voce[1] &lt;= 0:
+                continue
+            usa = min(voce[1], residuo)
+            voce[1] -= usa
+            residuo -= usa
+            if residuo &lt;= 0:
+                break
+        return self.aliquota * residuo
+
+
+def carica_csv(percorso: Path) -&gt; pd.DataFrame:
+    df = pd.read_csv(percorso, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    if (df[&quot;Close&quot;] &lt;= 0).any() or df[&quot;Close&quot;].isna().any():
+        raise SystemExit(f&quot;{percorso}: chiusure mancanti o non positive.&quot;)
+    return df
+
+
+def prepara(titolo: pd.DataFrame, cambio: pd.DataFrame, veloce: int, lenta: int) -&gt; pd.DataFrame:
+    df = titolo[[&quot;Open&quot;, &quot;Close&quot;]].astype(float).copy()
+    fx = cambio[&quot;Close&quot;].astype(float)
+    df[&quot;fx&quot;] = fx.reindex(df.index.union(fx.index)).ffill().reindex(df.index)
+    df[&quot;sma_v&quot;] = df[&quot;Close&quot;].rolling(veloce).mean()
+    df[&quot;sma_l&quot;] = df[&quot;Close&quot;].rolling(lenta).mean()
+    df[&quot;segnale&quot;] = (df[&quot;sma_v&quot;] &gt; df[&quot;sma_l&quot;]) &amp; df[&quot;sma_l&quot;].notna()
+    return df
+
+
+def indice_data(df: pd.DataFrame, data) -&gt; int:
+    &quot;&quot;&quot;Posizione della prima seduta con data uguale o successiva a quella indicata.&quot;&quot;&quot;
+    return int(np.searchsorted(df.index.values, np.datetime64(data)))
+
+
+def simula(df: pd.DataFrame, i0: int, capitale: float, commissione: float, aliquota: float,
+           modo: str, strategia: bool) -&gt; dict:
+    &quot;&quot;&quot;strategia=True: regola a medie mobili; False: buy &amp; hold (compra a i0, vende alla fine).&quot;&quot;&quot;
+    O, C, FX = (df[c].to_numpy(float) for c in (&quot;Open&quot;, &quot;Close&quot;, &quot;fx&quot;))
+    SEG = df[&quot;segnale&quot;].to_numpy(bool)
+    date = df.index
+    n = len(df)
+    cassa, azioni, base = float(capitale), 0.0, 0.0
+    zaino = Zaino(aliquota)
+    log: list[dict] = []
+    tot = {&quot;commissioni&quot;: 0.0, &quot;tasse&quot;: 0.0}
+    equity = np.empty(n - i0)
+    in_posizione = np.zeros(n - i0, dtype=bool)
+
+    def compra(i, px_usd, fx, etichetta):
+        nonlocal cassa, azioni, base
+        investito = cassa - commissione
+        if investito &lt;= 0:
+            return
+        px_eur = px_usd / fx
+        spesa = cassa
+        azioni = investito / px_eur
+        base = spesa
+        tot[&quot;commissioni&quot;] += commissione
+        log.append(dict(data=str(date[i].date()), lato=&quot;acquisto&quot;, motivo=etichetta, prezzo_usd=px_usd, cambio=fx,
+                        prezzo_eur=px_eur, azioni=azioni, commissione=commissione, spesa_eur=spesa,
+                        incasso_netto_eur=0.0, plusvalenza_eur=0.0, tassa_eur=0.0))
+        cassa = 0.0
+
+    def vendi(i, px_usd, fx, etichetta):
+        nonlocal cassa, azioni, base
+        px_eur = px_usd / fx
+        lordo = azioni * px_eur
+        netto = lordo - commissione
+        guadagno = netto - base
+        tassa = zaino.tassa(int(date[i].year), guadagno)
+        tot[&quot;commissioni&quot;] += commissione
+        tot[&quot;tasse&quot;] += tassa
+        log.append(dict(data=str(date[i].date()), lato=&quot;vendita&quot;, motivo=etichetta, prezzo_usd=px_usd, cambio=fx,
+                        prezzo_eur=px_eur, azioni=azioni, commissione=commissione, spesa_eur=0.0,
+                        incasso_netto_eur=netto, plusvalenza_eur=guadagno, tassa_eur=tassa))
+        cassa = netto - tassa
+        azioni, base = 0.0, 0.0
+
+    for i in range(i0, n):
+        voglio = bool(SEG[i - 1]) if strategia else True
+        px, fx = (O[i], FX[i - 1]) if modo == &quot;apertura&quot; else (C[i], FX[i])
+        if voglio and azioni == 0.0:
+            compra(i, px, fx, &quot;segnale&quot; if strategia else &quot;acquisto iniziale&quot;)
+        elif (not voglio) and azioni &gt; 0.0:
+            vendi(i, px, fx, &quot;segnale&quot;)
+        equity[i - i0] = cassa + azioni * C[i] / FX[i]
+        in_posizione[i - i0] = azioni &gt; 0.0
+    if azioni &gt; 0.0:
+        vendi(n - 1, C[n - 1], FX[n - 1], &quot;liquidazione finale&quot;)
+
+    picco = np.maximum.accumulate(equity)
+    anni = (date[-1] - date[i0]).days / 365.25
+    finale = cassa
+    return {
+        &quot;valore_finale_eur&quot;: finale,
+        &quot;rendimento_totale&quot;: finale / capitale - 1,
+        &quot;cagr&quot;: (finale / capitale) ** (1 / anni) - 1 if finale &gt; 0 else float(&quot;nan&quot;),
+        &quot;anni&quot;: anni,
+        &quot;n_acquisti&quot;: sum(1 for r in log if r[&quot;lato&quot;] == &quot;acquisto&quot;),
+        &quot;n_vendite&quot;: sum(1 for r in log if r[&quot;lato&quot;] == &quot;vendita&quot;),
+        &quot;commissioni_eur&quot;: tot[&quot;commissioni&quot;],
+        &quot;tasse_eur&quot;: tot[&quot;tasse&quot;],
+        &quot;quota_giorni_investito&quot;: float(in_posizione.mean()),
+        &quot;perdita_massima&quot;: float((equity / picco - 1).min()),
+        &quot;operazioni&quot;: log,
+        &quot;equity&quot;: equity,
+        &quot;in_posizione&quot;: in_posizione,
+    }
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>19 controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli del motore di simulazione. Usa SOLO dati inventati: nessun numero qui è un risultato.
+
+Si esegue prima del backtest (lo fa anche il flusso su GitHub): se un controllo fallisce, il flusso si ferma.
+  1. conti fatti a mano (guadagno, perdita, cambio, compensazione delle minusvalenze);
+  2. confronto con una formula indipendente;
+  3. coerenza del registro delle operazioni con i prezzi grezzi.
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import simulazione as s
+
+ok = 0
+
+
+def verifica(nome, condizione, dettaglio=&quot;&quot;):
+    global ok
+    if not condizione:
+        raise SystemExit(f&quot;FALLITO: {nome} {dettaglio}&quot;)
+    ok += 1
+    print(f&quot;  ok  {nome}&quot;)
+
+
+def uguali(a, b, tol=1e-9):
+    return abs(a - b) &lt;= tol * max(1.0, abs(a), abs(b))
+
+
+print(&quot;1. Conti a mano&quot;)
+# Guadagno: compro a 100, vendo a 120, cambio 1. Azioni = 499/100 = 4,99; incasso 598,8; netto 597,8;
+# plusvalenza 97,8; tassa 25,428; cassa finale 572,372.
+piccolo = pd.DataFrame({&quot;Open&quot;: [100, 100, 100, 120, 120, 120.0], &quot;Close&quot;: [100, 100, 110, 120, 120, 120.0],
+                        &quot;fx&quot;: 1.0, &quot;segnale&quot;: [False, True, True, False, False, False]},
+                       index=pd.bdate_range(&quot;2022-03-01&quot;, periods=6))
+r = s.simula(piccolo, 1, 500, 1.0, 0.26, &quot;apertura&quot;, True)
+verifica(&quot;guadagno: cassa finale 572,372&quot;, uguali(r[&quot;valore_finale_eur&quot;], 572.372), r[&quot;valore_finale_eur&quot;])
+verifica(&quot;guadagno: tassa 25,428&quot;, uguali(r[&quot;tasse_eur&quot;], 25.428))
+verifica(&quot;guadagno: 2 commissioni&quot;, uguali(r[&quot;commissioni_eur&quot;], 2.0))
+
+perdita = piccolo.copy()
+perdita[&quot;Open&quot;] = [100, 100, 110, 110, 90, 90.0]
+perdita[&quot;Close&quot;] = [100, 100, 110, 100, 90, 90.0]
+r = s.simula(perdita, 1, 500, 1.0, 0.26, &quot;apertura&quot;, True)
+verifica(&quot;perdita: cassa finale = 499/110*90-1&quot;, uguali(r[&quot;valore_finale_eur&quot;], 499 / 110 * 90 - 1), r[&quot;valore_finale_eur&quot;])
+verifica(&quot;perdita: nessuna tassa&quot;, r[&quot;tasse_eur&quot;] == 0.0)
+
+cambio = piccolo.copy()
+cambio[&quot;fx&quot;] = 1.25
+r = s.simula(cambio, 1, 500, 1.0, 0.26, &quot;apertura&quot;, True)
+verifica(&quot;cambio costante: stesso risultato in euro&quot;, uguali(r[&quot;valore_finale_eur&quot;], 572.372))
+
+# Con il cambio che cambia tra acquisto e vendita la plusvalenza in euro cambia: compro con cambio 1,00,
+# vendo con cambio 1,25 (dollaro più debole -&gt; meno euro): 4,99 azioni * 120 / 1,25 = 479,04; netto 478,04.
+cambio_var = piccolo.copy()
+cambio_var[&quot;fx&quot;] = [1.0, 1.0, 1.0, 1.0, 1.25, 1.25]   # acquisto all&#x27;apertura di i=2 con fx[1]=1,00; vendita i=4 con fx[3]=1,00
+r = s.simula(cambio_var, 1, 500, 1.0, 0.26, &quot;apertura&quot;, True)
+verifica(&quot;cambio: ordini con il cambio dell&#x27;ultima chiusura nota&quot;, uguali(r[&quot;valore_finale_eur&quot;], 572.372), r[&quot;valore_finale_eur&quot;])
+cambio_var[&quot;fx&quot;] = [1.0, 1.0, 1.0, 1.25, 1.25, 1.25]  # vendita i=4 con fx[3]=1,25
+r = s.simula(cambio_var, 1, 500, 1.0, 0.26, &quot;apertura&quot;, True)
+netto_atteso = 4.99 * 120 / 1.25 - 1                  # 478,04 euro, sotto i 500 spesi: perdita, nessuna tassa
+verifica(&quot;cambio: perdita da cambio, nessuna tassa&quot;, uguali(r[&quot;valore_finale_eur&quot;], netto_atteso) and r[&quot;tasse_eur&quot;] == 0.0,
+         r[&quot;valore_finale_eur&quot;])
+
+z = s.Zaino(0.26)
+verifica(&quot;zaino: perdita non tassata&quot;, z.tassa(2022, -100) == 0.0)
+verifica(&quot;zaino: guadagno 150 dopo perdita 100 -&gt; tassa su 50&quot;, uguali(z.tassa(2023, 150), 13.0))
+z = s.Zaino(0.26)
+z.tassa(2023, -10)
+verifica(&quot;zaino: perdita scaduta (2023 -&gt; usabile fino al 2027)&quot;, uguali(z.tassa(2028, 100), 26.0))
+z = s.Zaino(0.26)
+z.tassa(2023, -10)
+verifica(&quot;zaino: perdita ancora valida nel 2027&quot;, uguali(z.tassa(2027, 100), 0.26 * 90))
+
+print(&quot;2. Confronto con una formula indipendente (dati inventati, cambio 1, senza costi)&quot;)
+rng = np.random.default_rng(7)
+date = pd.bdate_range(&quot;2020-01-01&quot;, &quot;2026-10-20&quot;)
+n = len(date)
+chiusura = 100 * np.exp(np.cumsum(rng.normal(0.0004, 0.018, n)))
+apertura = np.r_[chiusura[0], chiusura[:-1]] * (1 + rng.normal(0, 0.004, n))
+fx_var = 1.1 * np.exp(np.cumsum(rng.normal(0, 0.003, n)))
+titolo = pd.DataFrame({&quot;Open&quot;: apertura, &quot;Close&quot;: chiusura}, index=pd.Index(date, name=&quot;Date&quot;))
+cambio_df = pd.DataFrame({&quot;Close&quot;: fx_var}, index=pd.Index(date, name=&quot;Date&quot;))
+piatto = pd.DataFrame({&quot;Close&quot;: 1.0}, index=cambio_df.index)
+df = s.prepara(titolo, piatto, 50, 200)
+i0 = s.indice_data(df, df.index[-1] - pd.DateOffset(years=5))
+SEG = df[&quot;segnale&quot;].to_numpy(bool)
+C = df[&quot;Close&quot;].to_numpy()
+formula = 500 * np.prod([(C[i + 1] / C[i]) ** SEG[i - 1] for i in range(i0, len(df) - 1)])
+r = s.simula(df, i0, 500, 0.0, 0.0, &quot;chiusura&quot;, True)
+verifica(&quot;regola, esecuzione alla chiusura, lordo = prodotto dei rendimenti&quot;, uguali(r[&quot;valore_finale_eur&quot;], formula),
+         f&quot;{r[&#x27;valore_finale_eur&#x27;]} contro {formula}&quot;)
+bh = s.simula(df, i0, 500, 0.0, 0.0, &quot;chiusura&quot;, False)
+verifica(&quot;buy &amp; hold lordo = chiusura finale / chiusura iniziale&quot;, uguali(bh[&quot;valore_finale_eur&quot;], 500 * C[-1] / C[i0]))
+bh_a = s.simula(df, i0, 500, 0.0, 0.0, &quot;apertura&quot;, False)
+verifica(&quot;buy &amp; hold, esecuzione all&#x27;apertura = ultima chiusura / prima apertura&quot;,
+         uguali(bh_a[&quot;valore_finale_eur&quot;], 500 * C[-1] / df[&quot;Open&quot;].iloc[i0]))
+con = s.simula(df, i0, 500, 1.0, 0.0, &quot;apertura&quot;, True)
+verifica(&quot;commissioni = 1 euro per ogni ordine&quot;, uguali(con[&quot;commissioni_eur&quot;], len(con[&quot;operazioni&quot;]) * 1.0))
+netto = s.simula(df, i0, 500, 1.0, 0.26, &quot;apertura&quot;, True)
+verifica(&quot;con la tassa non si finisce mai sopra il caso senza tassa&quot;,
+         netto[&quot;valore_finale_eur&quot;] &lt;= con[&quot;valore_finale_eur&quot;] + 1e-9)
+verifica(&quot;il registro delle operazioni quadra con la cassa finale&quot;,
+         uguali(500 - sum(o[&quot;spesa_eur&quot;] for o in netto[&quot;operazioni&quot;]) +
+                sum(o[&quot;incasso_netto_eur&quot;] - o[&quot;tassa_eur&quot;] for o in netto[&quot;operazioni&quot;]), netto[&quot;valore_finale_eur&quot;]))
+
+print(&quot;3. Il registro delle operazioni contro i prezzi grezzi (ricerca per data, senza gli array del motore)&quot;)
+dfv = s.prepara(titolo, cambio_df, 50, 200)
+i0v = s.indice_data(dfv, dfv.index[-1] - pd.DateOffset(years=5))
+rv = s.simula(dfv, i0v, 500, 1.0, 0.26, &quot;apertura&quot;, True)
+errori = 0
+for o in rv[&quot;operazioni&quot;]:
+    d = pd.Timestamp(o[&quot;data&quot;])
+    if o[&quot;motivo&quot;] == &quot;liquidazione finale&quot;:
+        px, fx = titolo.loc[d, &quot;Close&quot;], cambio_df.loc[d, &quot;Close&quot;]
+    else:
+        prec = cambio_df.index[cambio_df.index.get_loc(d) - 1]
+        px, fx = titolo.loc[d, &quot;Open&quot;], cambio_df.loc[prec, &quot;Close&quot;]
+    if not (uguali(o[&quot;prezzo_usd&quot;], px) and uguali(o[&quot;cambio&quot;], fx) and uguali(o[&quot;prezzo_eur&quot;], px / fx)):
+        errori += 1
+verifica(f&quot;{len(rv[&#x27;operazioni&#x27;])} operazioni con prezzo e cambio corretti&quot;, errori == 0, f&quot;{errori} errori&quot;)
+
+print(f&quot;\nTutti i {ok} controlli superati (dati inventati: nessuno di questi numeri è un risultato).&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>

@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sharpe, Sortino o Calmar: quale metrica ti inganna meno? · il codice · TickerFight</title>
+<meta name="description" content="la stessa regola di investimento, misurata con tre metriche diverse, porta a conclusioni diverse? E quale delle tre metriche è la meno fragile?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a><a href="https://github.com/TickerFight/tickerfight">GitHub</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Sharpe, Sortino o Calmar: quale metrica ti inganna meno?</h1>
+<p class="domanda">La stessa regola di investimento, misurata con tre metriche diverse, porta a conclusioni diverse? E quale delle tre metriche è la meno fragile?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="sharpe-sortino-o-calmar-quale-metrica-ti-inganna-meno.zip" download>⬇ Scarica il codice (.zip)</a><a class="btn" href="https://github.com/TickerFight/tickerfight/tree/main/articoli/sharpe-sortino-o-calmar-quale-metrica-ti-inganna-meno">Vedi su GitHub</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Otto regole fisse, nessuna ottimizzata:</strong> buy &amp; hold; prezzo sopra la media a 50, 100, 200 giorni; incrocio 50/200; momentum a 12 mesi; investito solo a mercato calmo (volatilità a 20 giorni sotto il 20%); ritorno alla media nel trend (sotto la media a 5 giorni ma sopra quella a 200). Segnale ritardato di un giorno, costo 0,1% a ogni cambio, nessuna tassa, cassa a rendimento zero.</li>
+<li><strong>Metriche</strong> sui rendimenti giornalieri netti: Sharpe (tasso senza rischio zero, 252 sedute), Sortino (obiettivo zero), Calmar (rendimento annuo composto diviso la perdita massima).</li>
+<li><strong>Prove:</strong> classifiche sull'intero periodo; blocchi non sovrapposti di dieci anni (accordo tra le metriche e persistenza da un decennio al successivo); bootstrap a blocchi circolari di un mese (quanto resta la regola vincitrice); scimmie (regole casuali con lo stesso tempo investito e lo stesso numero di cambi del filtro a 200 giorni); buy &amp; hold dimezzato come strumento di prova.</li>
+<li><strong>Sei ipotesi</strong> scritte in <code>config.py</code> prima di guardare i dati.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>sharpe-sortino-o-calmar-quale-metrica-ti-inganna-meno/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica l'S&amp;P 500 dal 1927
+    ├── 02_backtest_e_test.py  classifiche, blocchi di dieci anni, bootstrap, scimmie
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              regole, parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            regole, metriche, correlazioni di rango, bootstrap, scimmie
+    ├── motore_vettoriale.py   segnale, posizione con ritardo, valore (dall'articolo 4)
+    └── verifica_motore.py     controlli su dati inventati (formule a mano, assenza di look-ahead)
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd sharpe-sortino-o-calmar-quale-metrica-ti-inganna-meno
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>classifiche, blocchi di dieci anni, bootstrap, scimmie</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Sharpe, Sortino, Calmar: otto regole, tre metriche, quattro prove.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json              ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  strategie_campione.csv     per ogni regola, sull&#x27;intero periodo: rendimento, rischio, metriche e posti in classifica
+  blocchi.csv                metriche e posti di ogni regola in ogni blocco di dieci anni
+  correlazioni_blocchi.csv   per ogni blocco, i tau di Kendall tra le tre metriche; per ogni coppia di blocchi, lo Spearman di ciascuna metrica
+  bootstrap_vincitori.csv    per ogni metrica, la quota di serie ricampionate in cui vince la stessa regola dell&#x27;intero periodo
+  scimmie.csv                le tre metriche di ogni scimmia (regola casuale con lo stesso tempo investito e gli stessi cambi del filtro a 200 giorni)
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+METRICHE = (&quot;sharpe&quot;, &quot;sortino&quot;, &quot;calmar&quot;)
+NOME_METRICA = {&quot;sharpe&quot;: &quot;Sharpe&quot;, &quot;sortino&quot;: &quot;Sortino&quot;, &quot;calmar&quot;: &quot;Calmar&quot;}
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def tutte(R: np.ndarray, anni: float) -&gt; dict[str, np.ndarray]:
+    return {&quot;sharpe&quot;: fx.sharpe(R, config.SEDUTE_ANNO, config.TASSO_SENZA_RISCHIO),
+            &quot;sortino&quot;: fx.sortino(R, config.SEDUTE_ANNO, config.OBIETTIVO_SORTINO),
+            &quot;calmar&quot;: fx.calmar(R, anni)}
+
+
+def media_nan(x) -&gt; float:
+    x = np.asarray(x, dtype=float)
+    return float(np.nanmean(x)) if np.isfinite(x).any() else float(&quot;nan&quot;)
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    date = close.index
+    S0 = config.INIZIO_TEST_SEDUTE
+    ids = list(config.STRATEGIE)
+    K = len(ids)
+    rng = np.random.default_rng(config.SEME)
+
+    # --- Posizioni e rendimenti netti di tutte le regole (segnale ritardato di un giorno) ----------------------------------
+    pos = {i: fx.posizione_regola(close, config.STRATEGIE[i][1]) for i in ids}
+    pos_meta = fx.posizione_regola(close, config.META)
+    R_all = {i: fx.rendimenti_netti(close, pos[i], config.COSTO_CAMBIO) for i in ids}
+    R = np.vstack([R_all[i].to_numpy()[S0:] for i in ids])
+    R_meta = fx.rendimenti_netti(close, pos_meta, config.COSTO_CAMBIO).to_numpy()[S0:]
+    T = R.shape[1]
+    anni = (date[-1] - date[S0 - 1]).days / 365.25
+    if T &lt; 2 * config.SEDUTE_BLOCCO:
+        raise SystemExit(&quot;Troppo pochi dati per i blocchi.&quot;)
+
+    # --- Intero periodo ---------------------------------------------------------------------------------------------------
+    M = tutte(R, anni)
+    cg, mdd = fx.cagr(R, anni), fx.perdita_massima(R)
+    vol = R.std(axis=1, ddof=1) * np.sqrt(config.SEDUTE_ANNO)
+    quota = np.array([pos[i].to_numpy()[S0:].mean() for i in ids])
+    cambi = np.array([pos[i].diff().abs().fillna(0).to_numpy()[S0:].sum() for i in ids])
+    P = {k: fx.posti(M[k]) for k in METRICHE}
+    win = {k: fx.vincitore(M[k]) for k in METRICHE}
+    Mm = tutte(R_meta[None, :], anni)
+
+    tab = pd.DataFrame({&quot;id&quot;: ids, &quot;nome&quot;: [config.STRATEGIE[i][0] for i in ids], &quot;cagr&quot;: cg, &quot;volatilita&quot;: vol, &quot;perdita_massima&quot;: mdd,
+                        &quot;quota_investito&quot;: quota, &quot;cambi&quot;: cambi,
+                        **{k: M[k] for k in METRICHE}, **{f&quot;posto_{k}&quot;: P[k] for k in METRICHE}})
+    tab.to_csv(config.RISULTATI / &quot;strategie_campione.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    reg(&quot;prima_data&quot;, str(date[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;data_inizio&quot;, str(date[S0].date()), &quot;data_lunga&quot;, &quot;Prima seduta in cui si misurano tutte le regole&quot;, &quot;dati/ e config.py&quot;)
+    reg(&quot;data_ultima&quot;, str(date[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_campione&quot;, anni, &quot;num1&quot;, &quot;Anni dell&#x27;intero periodo misurato&quot;, &quot;dati/&quot;)
+    reg(&quot;w_breve&quot;, config.STRATEGIE[&quot;sma50&quot;][1][1], &quot;annonum&quot;, &quot;Giorni della media mobile più corta tra le regole sopra la media&quot;, &quot;config.py, STRATEGIE&quot;)
+    reg(&quot;w_media&quot;, config.STRATEGIE[&quot;sma100&quot;][1][1], &quot;annonum&quot;, &quot;Giorni della media mobile intermedia tra le regole sopra la media&quot;, &quot;config.py, STRATEGIE&quot;)
+    reg(&quot;w_lunga&quot;, config.STRATEGIE[&quot;sma200&quot;][1][1], &quot;annonum&quot;, &quot;Giorni della media mobile più lunga (usata anche dal filtro a lungo termine e dall&#x27;incrocio)&quot;, &quot;config.py, STRATEGIE&quot;)
+    reg(&quot;mom_mesi&quot;, config.STRATEGIE[&quot;mom&quot;][1][1] / 21, &quot;annonum&quot;, &quot;Mesi di storia usati dal momentum (252 sedute, 21 sedute per mese)&quot;, &quot;config.py, STRATEGIE&quot;)
+    reg(&quot;n_regole&quot;, K, &quot;int&quot;, &quot;Regole confrontate nelle classifiche&quot;, &quot;config.py, STRATEGIE&quot;)
+    reg(&quot;costo&quot;, config.COSTO_CAMBIO, &quot;pct1&quot;, &quot;Costo per ogni cambio di posizione, quota del valore&quot;, &quot;config.py, COSTO_CAMBIO&quot;)
+    reg(&quot;tasso_zero&quot;, config.TASSO_SENZA_RISCHIO, &quot;pct0&quot;, &quot;Tasso senza rischio usato nello Sharpe (la cassa non rende)&quot;, &quot;config.py, TASSO_SENZA_RISCHIO&quot;)
+    reg(&quot;sedute_anno&quot;, config.SEDUTE_ANNO, &quot;int&quot;, &quot;Sedute di borsa per anno, usate per annualizzare Sharpe e Sortino&quot;, &quot;config.py, SEDUTE_ANNO&quot;)
+    reg(&quot;n_bootstrap&quot;, config.N_BOOTSTRAP, &quot;int&quot;, &quot;Serie ricampionate nel bootstrap&quot;, &quot;config.py&quot;)
+    reg(&quot;lung_blocco_boot&quot;, config.LUNGHEZZA_BLOCCO_BOOT, &quot;int&quot;, &quot;Lunghezza in sedute dei blocchi del bootstrap&quot;, &quot;config.py&quot;)
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Scimmie (regole casuali) estratte&quot;, &quot;config.py&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello degli intervalli di confidenza&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_scimmie&quot;, config.SOGLIA_SCIMMIE, &quot;pct0&quot;, &quot;Quota di scimmie che il filtro deve battere&quot;, &quot;config.py&quot;)
+    reg(&quot;tolleranza_uguali&quot;, config.TOLLERANZA_UGUALI, &quot;num2&quot;, &quot;Differenza sotto la quale due Sharpe o due Sortino sono considerati uguali&quot;, &quot;config.py&quot;)
+    reg(&quot;diff_rel_calmar&quot;, config.DIFFERENZA_RELATIVA_CALMAR, &quot;pct0&quot;, &quot;Differenza relativa minima con cui il Calmar distingue due regole&quot;, &quot;config.py&quot;)
+    for k, i in enumerate(ids):
+        reg(f&quot;cagr_{i}&quot;, cg[k], &quot;pct1&quot;, f&quot;Rendimento annuo composto netto: {config.STRATEGIE[i][0]}&quot;, &quot;strategie_campione.csv&quot;)
+        reg(f&quot;vol_{i}&quot;, vol[k], &quot;pct1&quot;, f&quot;Volatilità annua: {config.STRATEGIE[i][0]}&quot;, &quot;strategie_campione.csv&quot;)
+        reg(f&quot;mdd_{i}&quot;, -mdd[k], &quot;pct0&quot;, f&quot;Perdita massima dal massimo (in valore assoluto): {config.STRATEGIE[i][0]}&quot;, &quot;strategie_campione.csv&quot;)
+        reg(f&quot;quota_{i}&quot;, quota[k], &quot;pct0&quot;, f&quot;Quota delle sedute investite: {config.STRATEGIE[i][0]}&quot;, &quot;strategie_campione.csv&quot;)
+        reg(f&quot;cambi_{i}&quot;, cambi[k], &quot;int&quot;, f&quot;Numero di cambi di posizione: {config.STRATEGIE[i][0]}&quot;, &quot;strategie_campione.csv&quot;)
+        for km in METRICHE:
+            reg(f&quot;{km}_{i}&quot;, M[km][k], &quot;num3&quot; if km == &quot;calmar&quot; else &quot;num2&quot;, f&quot;{NOME_METRICA[km]} sull&#x27;intero periodo: {config.STRATEGIE[i][0]}&quot;, &quot;strategie_campione.csv&quot;)
+            reg(f&quot;posto_{km}_{i}&quot;, P[km][k], &quot;int&quot;, f&quot;Posto per {NOME_METRICA[km]} sull&#x27;intero periodo: {config.STRATEGIE[i][0]}&quot;, &quot;strategie_campione.csv&quot;)
+
+    # --- Ipotesi 1: i vincitori ----------------------------------------------------------------------------------------------
+    for km in METRICHE:
+        reg(f&quot;vinc_{km}&quot;, config.STRATEGIE[ids[win[km]]][0], &quot;testo&quot;, f&quot;Regola prima in classifica per {NOME_METRICA[km]}, intero periodo&quot;, &quot;strategie_campione.csv&quot;)
+    reg(&quot;n_vincitori_diversi&quot;, len(set(win.values())), &quot;int&quot;, &quot;Regole diverse che vincono per almeno una delle tre metriche, intero periodo&quot;, &quot;strategie_campione.csv&quot;)
+    spread = np.max([P[k] for k in METRICHE], axis=0) - np.min([P[k] for k in METRICHE], axis=0)
+    k_sp = int(np.argmax(spread))
+    reg(&quot;regola_spread&quot;, config.STRATEGIE[ids[k_sp]][0], &quot;testo&quot;, &quot;Regola con la maggior distanza tra il posto migliore e il peggiore nelle tre classifiche&quot;, &quot;strategie_campione.csv&quot;)
+    reg(&quot;spread_posti&quot;, float(spread[k_sp]), &quot;int&quot;, &quot;Distanza in posti tra il posto migliore e il peggiore di quella regola&quot;, &quot;strategie_campione.csv&quot;)
+    reg(&quot;posto_max_spread&quot;, float(np.min([P[k][k_sp] for k in METRICHE])), &quot;int&quot;, &quot;Il posto migliore di quella regola nelle tre classifiche&quot;, &quot;strategie_campione.csv&quot;)
+    reg(&quot;posto_min_spread&quot;, float(np.max([P[k][k_sp] for k in METRICHE])), &quot;int&quot;, &quot;Il posto peggiore di quella regola nelle tre classifiche&quot;, &quot;strategie_campione.csv&quot;)
+    tau_sr_so, tau_sr_ca, tau_so_ca = (fx.kendall(M[&quot;sharpe&quot;], M[&quot;sortino&quot;]), fx.kendall(M[&quot;sharpe&quot;], M[&quot;calmar&quot;]), fx.kendall(M[&quot;sortino&quot;], M[&quot;calmar&quot;]))
+    reg(&quot;tau_campione_sh_so&quot;, tau_sr_so, &quot;num2&quot;, &quot;Tau di Kendall tra le classifiche Sharpe e Sortino, intero periodo&quot;, &quot;strategie_campione.csv&quot;)
+    reg(&quot;tau_campione_sh_ca&quot;, tau_sr_ca, &quot;num2&quot;, &quot;Tau di Kendall tra le classifiche Sharpe e Calmar, intero periodo&quot;, &quot;strategie_campione.csv&quot;)
+    reg(&quot;tau_campione_so_ca&quot;, tau_so_ca, &quot;num2&quot;, &quot;Tau di Kendall tra le classifiche Sortino e Calmar, intero periodo&quot;, &quot;strategie_campione.csv&quot;)
+
+    # --- Blocchi di dieci anni ---------------------------------------------------------------------------------------------------
+    bl = fx.blocchi(T, config.SEDUTE_BLOCCO)
+    nb = len(bl)
+    Rb = {}
+    righe_b, MB, PB = [], {k: np.zeros((nb, K)) for k in METRICHE}, {k: np.zeros((nb, K)) for k in METRICHE}
+    n_non_definiti = 0
+    for b, (a, e) in enumerate(bl):
+        anni_b = (date[S0 + e - 1] - date[S0 + a - 1]).days / 365.25
+        mb = tutte(R[:, a:e], anni_b)
+        for km in METRICHE:
+            MB[km][b] = mb[km]
+            PB[km][b] = fx.posti(mb[km])
+            n_non_definiti += int(np.isnan(mb[km]).sum())
+        for k, i in enumerate(ids):
+            righe_b.append({&quot;blocco&quot;: b + 1, &quot;inizio&quot;: date[S0 + a].date(), &quot;fine&quot;: date[S0 + e - 1].date(), &quot;id&quot;: i,
+                            **{km: mb[km][k] for km in METRICHE}, **{f&quot;posto_{km}&quot;: PB[km][b][k] for km in METRICHE}})
+    pd.DataFrame(righe_b).to_csv(config.RISULTATI / &quot;blocchi.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    reg(&quot;n_blocchi&quot;, nb, &quot;int&quot;, &quot;Blocchi di dieci anni non sovrapposti dentro il periodo&quot;, &quot;blocchi.csv&quot;)
+    reg(&quot;anni_blocco&quot;, config.SEDUTE_BLOCCO / config.SEDUTE_ANNO, &quot;annonum&quot;, &quot;Anni di ogni blocco&quot;, &quot;config.py, SEDUTE_BLOCCO&quot;)
+    reg(&quot;n_non_definiti&quot;, n_non_definiti, &quot;int&quot;, &quot;Valori di metrica non definiti nei blocchi (rischio zero o nessuna perdita)&quot;, &quot;blocchi.csv&quot;)
+    vinc_uguali = sum(1 for b in range(nb) if len({fx.vincitore(MB[km][b]) for km in METRICHE}) == 1)
+    reg(&quot;n_blocchi_stesso_vincitore&quot;, vinc_uguali, &quot;int&quot;, &quot;Blocchi in cui le tre metriche indicano la stessa regola come prima&quot;, &quot;blocchi.csv&quot;)
+    n_vinc_blocchi = {km: len({fx.vincitore(MB[km][b]) for b in range(nb)}) for km in METRICHE}
+    for km in METRICHE:
+        reg(f&quot;n_vinc_blocchi_{km}&quot;, n_vinc_blocchi[km], &quot;int&quot;, f&quot;Regole diverse che vincono almeno un blocco per {NOME_METRICA[km]}&quot;, &quot;blocchi.csv&quot;)
+    # fascia di classifica: il buy &amp; hold è mai primo?
+    ib = ids.index(config.ID_BH)
+    isf = ids.index(config.ID_FILTRO)
+    for km in METRICHE:
+        reg(f&quot;n_filtro_batte_bh_{km}&quot;, int((MB[km][:, isf] &gt; MB[km][:, ib]).sum()), &quot;int&quot;,
+            f&quot;Blocchi in cui il filtro a 200 giorni ha un {NOME_METRICA[km]} più alto del buy &amp; hold&quot;, &quot;blocchi.csv&quot;)
+    for km in METRICHE:
+        reg(f&quot;n_bh_primo_{km}&quot;, int((PB[km][:, ib] == 1).sum()), &quot;int&quot;, f&quot;Blocchi in cui il buy &amp; hold è primo per {NOME_METRICA[km]}&quot;, &quot;blocchi.csv&quot;)
+
+    # --- Ipotesi 2: chi si discosta di più -----------------------------------------------------------------------------------------
+    righe_c = []
+    taus = {&quot;sh_so&quot;: [], &quot;sh_ca&quot;: [], &quot;so_ca&quot;: []}
+    for b in range(nb):
+        t = {&quot;sh_so&quot;: fx.kendall(MB[&quot;sharpe&quot;][b], MB[&quot;sortino&quot;][b]), &quot;sh_ca&quot;: fx.kendall(MB[&quot;sharpe&quot;][b], MB[&quot;calmar&quot;][b]),
+             &quot;so_ca&quot;: fx.kendall(MB[&quot;sortino&quot;][b], MB[&quot;calmar&quot;][b])}
+        for kk, v in t.items():
+            taus[kk].append(v)
+        righe_c.append({&quot;tipo&quot;: &quot;tau_blocco&quot;, &quot;blocco&quot;: b + 1, &quot;coppia&quot;: &quot;&quot;, **{f&quot;tau_{kk}&quot;: v for kk, v in t.items()}})
+    tm = {kk: media_nan(v) for kk, v in taus.items()}
+    media_tau = {&quot;sharpe&quot;: (tm[&quot;sh_so&quot;] + tm[&quot;sh_ca&quot;]) / 2, &quot;sortino&quot;: (tm[&quot;sh_so&quot;] + tm[&quot;so_ca&quot;]) / 2, &quot;calmar&quot;: (tm[&quot;sh_ca&quot;] + tm[&quot;so_ca&quot;]) / 2}
+    for kk in tm:
+        reg(f&quot;tau_blocchi_{kk}&quot;, tm[kk], &quot;num2&quot;, f&quot;Tau di Kendall medio sui blocchi: coppia {kk.replace(&#x27;_&#x27;, &#x27;/&#x27;)}&quot;, &quot;correlazioni_blocchi.csv&quot;)
+    for km in METRICHE:
+        reg(f&quot;tau_medio_{km}&quot;, media_tau[km], &quot;num2&quot;, f&quot;Tau medio di {NOME_METRICA[km]} con le altre due metriche, sui blocchi&quot;, &quot;correlazioni_blocchi.csv&quot;)
+    reg(&quot;metrica_piu_diversa&quot;, NOME_METRICA[min(media_tau, key=media_tau.get)], &quot;testo&quot;, &quot;Metrica con il tau medio più basso&quot;, &quot;correlazioni_blocchi.csv&quot;)
+    reg(&quot;tau_min_blocchi&quot;, float(np.nanmin(np.concatenate([np.asarray(v, dtype=float) for v in taus.values()]))), &quot;num2&quot;, &quot;Il tau più basso tra tutte le coppie di metriche e tutti i blocchi&quot;, &quot;correlazioni_blocchi.csv&quot;)
+
+    # --- Ipotesi 3: persistenza tra decenni consecutivi ----------------------------------------------------------------------
+    pers = {km: [fx.spearman(MB[km][b], MB[km][b + 1]) for b in range(nb - 1)] for km in METRICHE}
+    for km in METRICHE:
+        for b, v in enumerate(pers[km]):
+            righe_c.append({&quot;tipo&quot;: &quot;spearman_consecutivi&quot;, &quot;blocco&quot;: b + 1, &quot;coppia&quot;: km, &quot;tau_sh_so&quot;: v, &quot;tau_sh_ca&quot;: np.nan, &quot;tau_so_ca&quot;: np.nan})
+    pd.DataFrame(righe_c).to_csv(config.RISULTATI / &quot;correlazioni_blocchi.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    pm = {km: media_nan(pers[km]) for km in METRICHE}
+    reg(&quot;n_coppie_blocchi&quot;, nb - 1, &quot;int&quot;, &quot;Coppie di blocchi consecutivi&quot;, &quot;correlazioni_blocchi.csv&quot;)
+    for km in METRICHE:
+        reg(f&quot;pers_{km}&quot;, pm[km], &quot;num2&quot;, f&quot;Correlazione di rango (Spearman) media tra un decennio e il successivo: {NOME_METRICA[km]}&quot;, &quot;correlazioni_blocchi.csv&quot;)
+        reg(f&quot;pers_neg_{km}&quot;, int(np.nansum(np.asarray(pers[km]) &lt; 0)), &quot;int&quot;, f&quot;Coppie di decenni con correlazione di rango negativa: {NOME_METRICA[km]}&quot;, &quot;correlazioni_blocchi.csv&quot;)
+    for km in (&quot;sharpe&quot;, &quot;sortino&quot;):
+        reg(f&quot;n_pers_calmar_sopra_{km}&quot;, int(sum(1 for c, o in zip(pers[&quot;calmar&quot;], pers[km]) if c &gt; o)), &quot;int&quot;,
+            f&quot;Coppie di decenni in cui il Calmar è più persistente di {NOME_METRICA[km]}&quot;, &quot;correlazioni_blocchi.csv&quot;)
+    reg(&quot;metrica_meno_persistente&quot;, NOME_METRICA[min(pm, key=pm.get)], &quot;testo&quot;, &quot;Metrica con la persistenza media più bassa&quot;, &quot;correlazioni_blocchi.csv&quot;)
+
+    # --- Ipotesi 4: bootstrap a blocchi circolari -----------------------------------------------------------------------------------------
+    idx = fx.indici_blocchi_circolari(T, config.LUNGHEZZA_BLOCCO_BOOT, config.N_BOOTSTRAP, rng)
+    wb = {km: np.zeros(config.N_BOOTSTRAP, dtype=int) for km in METRICHE}
+    ic_dati = {km: np.zeros((config.N_BOOTSTRAP, K)) for km in METRICHE}
+    for r in range(config.N_BOOTSTRAP):
+        mr = tutte(R[:, idx[r]], anni)
+        for km in METRICHE:
+            wb[km][r] = fx.vincitore(mr[km])
+            ic_dati[km][r] = mr[km]
+    quote = {km: float((wb[km] == win[km]).mean()) for km in METRICHE}
+    tre_uguali = float(np.mean([len({wb[km][r] for km in METRICHE}) == 1 for r in range(config.N_BOOTSTRAP)]))
+    pd.DataFrame({&quot;metrica&quot;: [NOME_METRICA[k] for k in METRICHE], &quot;vincitore_campione&quot;: [ids[win[k]] for k in METRICHE],
+                  &quot;quota_stesso_vincitore&quot;: [quote[k] for k in METRICHE],
+                  &quot;regole_diverse_vincenti&quot;: [len(set(wb[k])) for k in METRICHE]}).to_csv(config.RISULTATI / &quot;bootstrap_vincitori.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    for km in METRICHE:
+        reg(f&quot;boot_quota_{km}&quot;, quote[km], &quot;pct0&quot;, f&quot;Quota di serie ricampionate in cui vince la stessa regola dell&#x27;intero periodo: {NOME_METRICA[km]}&quot;, &quot;bootstrap_vincitori.csv&quot;)
+        reg(f&quot;boot_n_vincenti_{km}&quot;, len(set(wb[km])), &quot;int&quot;, f&quot;Regole diverse che vincono almeno una serie ricampionata: {NOME_METRICA[km]}&quot;, &quot;bootstrap_vincitori.csv&quot;)
+    reg(&quot;boot_tre_uguali&quot;, tre_uguali, &quot;pct0&quot;, &quot;Quota di serie ricampionate in cui le tre metriche indicano la stessa regola come prima&quot;, &quot;bootstrap_vincitori.csv&quot;)
+    reg(&quot;metrica_piu_fragile&quot;, NOME_METRICA[min(quote, key=quote.get)], &quot;testo&quot;, &quot;Metrica con la quota più bassa di vincitore confermato&quot;, &quot;bootstrap_vincitori.csv&quot;)
+    a_ic = (1 - config.LIVELLO_CONFIDENZA) / 2
+    iq = ids.index(config.ID_FILTRO)
+    for km in METRICHE:
+        for nome, k in ((&quot;bh&quot;, ib), (&quot;filtro&quot;, iq)):
+            lo, hi = np.quantile(ic_dati[km][:, k], [a_ic, 1 - a_ic])
+            f = &quot;num3&quot; if km == &quot;calmar&quot; else &quot;num2&quot;
+            reg(f&quot;ic_lo_{km}_{nome}&quot;, float(lo), f, f&quot;Estremo inferiore dell&#x27;intervallo bootstrap di {NOME_METRICA[km]}: {config.STRATEGIE[config.ID_BH if nome == &#x27;bh&#x27; else config.ID_FILTRO][0]}&quot;, &quot;bootstrap a blocchi&quot;)
+            reg(f&quot;ic_hi_{km}_{nome}&quot;, float(hi), f, f&quot;Estremo superiore dell&#x27;intervallo bootstrap di {NOME_METRICA[km]}: {config.STRATEGIE[config.ID_BH if nome == &#x27;bh&#x27; else config.ID_FILTRO][0]}&quot;, &quot;bootstrap a blocchi&quot;)
+        v = M[km][iq]
+        lo, hi = np.quantile(ic_dati[km][:, iq], [a_ic, 1 - a_ic])
+        reg(f&quot;ic_ampiezza_rel_{km}&quot;, float((hi - lo) / abs(v)), &quot;pct0&quot;, f&quot;Ampiezza dell&#x27;intervallo bootstrap rispetto al valore, {NOME_METRICA[km]} del filtro a 200 giorni&quot;, &quot;bootstrap a blocchi&quot;)
+
+    # --- Ipotesi 5: buy &amp; hold dimezzato ------------------------------------------------------------------------------------------------------
+    d_sh = abs(float(Mm[&quot;sharpe&quot;][0]) - float(M[&quot;sharpe&quot;][ib]))
+    d_so = abs(float(Mm[&quot;sortino&quot;][0]) - float(M[&quot;sortino&quot;][ib]))
+    d_ca_rel = abs(float(Mm[&quot;calmar&quot;][0]) - float(M[&quot;calmar&quot;][ib])) / abs(float(M[&quot;calmar&quot;][ib]))
+    reg(&quot;meta_sharpe&quot;, float(Mm[&quot;sharpe&quot;][0]), &quot;num2&quot;, &quot;Sharpe del buy &amp; hold dimezzato&quot;, &quot;02_backtest_e_test.py con funzioni.py&quot;)
+    reg(&quot;meta_sortino&quot;, float(Mm[&quot;sortino&quot;][0]), &quot;num2&quot;, &quot;Sortino del buy &amp; hold dimezzato&quot;, &quot;02_backtest_e_test.py con funzioni.py&quot;)
+    reg(&quot;meta_calmar&quot;, float(Mm[&quot;calmar&quot;][0]), &quot;num3&quot;, &quot;Calmar del buy &amp; hold dimezzato&quot;, &quot;02_backtest_e_test.py con funzioni.py&quot;)
+    reg(&quot;meta_cagr&quot;, float(fx.cagr(R_meta, anni)), &quot;pct1&quot;, &quot;Rendimento annuo del buy &amp; hold dimezzato&quot;, &quot;02_backtest_e_test.py con funzioni.py&quot;)
+    reg(&quot;meta_mdd&quot;, float(-fx.perdita_massima(R_meta)), &quot;pct0&quot;, &quot;Perdita massima del buy &amp; hold dimezzato (in valore assoluto)&quot;, &quot;02_backtest_e_test.py con funzioni.py&quot;)
+    reg(&quot;diff_meta_sharpe&quot;, d_sh, &quot;num3&quot;, &quot;Differenza assoluta di Sharpe tra buy &amp; hold e buy &amp; hold dimezzato&quot;, &quot;02_backtest_e_test.py&quot;)
+    reg(&quot;diff_meta_sortino&quot;, d_so, &quot;num3&quot;, &quot;Differenza assoluta di Sortino tra buy &amp; hold e buy &amp; hold dimezzato&quot;, &quot;02_backtest_e_test.py&quot;)
+    reg(&quot;diff_meta_calmar_rel&quot;, d_ca_rel, &quot;pct0&quot;, &quot;Differenza relativa di Calmar tra buy &amp; hold dimezzato e buy &amp; hold&quot;, &quot;02_backtest_e_test.py&quot;)
+
+    # --- Ipotesi 6: il filtro a 200 giorni contro le scimmie --------------------------------------------------------------------------------------
+    val, lun = fx.sequenze(pos[config.ID_FILTRO].to_numpy()[S0:] &gt; 0)
+    ret_mercato = close.pct_change().fillna(0.0).to_numpy()[S0:]
+    scim = np.empty((config.N_SCIMMIE, T))
+    for s in range(config.N_SCIMMIE):
+        p = fx.scimmia(val, lun, rng).astype(float)
+        cmb = np.abs(np.diff(p, prepend=p[0]))
+        scim[s] = ret_mercato * p - config.COSTO_CAMBIO * cmb
+    MS = tutte(scim, anni)
+    pd.DataFrame({k: MS[k] for k in METRICHE}).to_csv(config.RISULTATI / &quot;scimmie.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    perc = {km: float((MS[km] &lt; M[km][iq]).mean()) for km in METRICHE}
+    for km in METRICHE:
+        reg(f&quot;scim_perc_{km}&quot;, perc[km], &quot;pct1&quot;, f&quot;Quota di scimmie che fanno peggio del filtro a 200 giorni: {NOME_METRICA[km]}&quot;, &quot;scimmie.csv&quot;)
+        f = &quot;num3&quot; if km == &quot;calmar&quot; else &quot;num2&quot;
+        reg(f&quot;scim_mediana_{km}&quot;, float(np.median(MS[km])), f, f&quot;Valore mediano di {NOME_METRICA[km]} tra le scimmie&quot;, &quot;scimmie.csv&quot;)
+        reg(f&quot;scim_max_{km}&quot;, float(np.max(MS[km])), f, f&quot;Valore massimo di {NOME_METRICA[km]} tra le scimmie&quot;, &quot;scimmie.csv&quot;)
+    reg(&quot;scim_cambi&quot;, float((np.abs(np.diff(val.astype(int))) &gt; 0).sum()), &quot;int&quot;, &quot;Cambi di posizione di ogni scimmia (uguali a quelli del filtro a 200 giorni)&quot;, &quot;scimmie.csv&quot;)
+    reg(&quot;scim_quota&quot;, float(lun[val].sum() / lun.sum()), &quot;pct0&quot;, &quot;Quota di sedute investite di ogni scimmia (uguale a quella del filtro a 200 giorni)&quot;, &quot;scimmie.csv&quot;)
+
+    # --- Verdetti calcolati (1 = ipotesi confermata) ---------------------------------------------------------------------------------------------------
+    h = {1: len(set(win.values())) &gt;= 2,
+         2: min(media_tau, key=media_tau.get) == &quot;calmar&quot;,
+         3: min(pm, key=pm.get) == &quot;calmar&quot;,
+         4: quote[&quot;calmar&quot;] &lt; quote[&quot;sharpe&quot;],
+         5: d_sh &lt; config.TOLLERANZA_UGUALI and d_so &lt; config.TOLLERANZA_UGUALI and d_ca_rel &gt;= config.DIFFERENZA_RELATIVA_CALMAR,
+         6: all(perc[km] &gt;= config.SOGLIA_SCIMMIE for km in METRICHE)}
+    for n, ok in h.items():
+        reg(f&quot;h{n}_ok&quot;, int(ok), &quot;int&quot;, f&quot;1 se l&#x27;ipotesi {n} è confermata, 0 se smentita&quot;, &quot;02_backtest_e_test.py&quot;)
+
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri; {nb} blocchi; {T} sedute&quot;)
+    print(&quot;vincitori:&quot;, {k: ids[win[k]] for k in METRICHE})
+    print(&quot;ipotesi:&quot;, {n: int(ok) for n, ok in h.items()})
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_classifiche.png      il posto di ogni regola nelle tre classifiche (Sharpe, Sortino, Calmar), intero periodo
+  fig2_persistenza.png      correlazione di rango tra la classifica di un decennio e quella del successivo, per metrica
+  fig3_bootstrap.png        quota di serie ricampionate in cui vince la stessa regola dell&#x27;intero periodo
+  fig4_scimmie.png          le tre metriche delle scimmie (regole casuali) e il filtro a 200 giorni
+&quot;&quot;&quot;
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+METRICHE = (&quot;sharpe&quot;, &quot;sortino&quot;, &quot;calmar&quot;)
+NOMI = {&quot;sharpe&quot;: &quot;Sharpe&quot;, &quot;sortino&quot;: &quot;Sortino&quot;, &quot;calmar&quot;: &quot;Calmar&quot;}
+COL = {&quot;sharpe&quot;: BLU, &quot;sortino&quot;: GRIGIO, &quot;calmar&quot;: ARANCIO}
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    S = pd.read_csv(R / &quot;strategie_campione.csv&quot;)
+    C = pd.read_csv(R / &quot;correlazioni_blocchi.csv&quot;)
+    B = pd.read_csv(R / &quot;bootstrap_vincitori.csv&quot;)
+    M = pd.read_csv(R / &quot;scimmie.csv&quot;)
+
+    # --- Figura 1: la stessa regola, tre posti ------------------------------------------------------------------
+    posti = S[[f&quot;posto_{k}&quot; for k in METRICHE]].to_numpy()
+    spread = posti.max(axis=1) - posti.min(axis=1)
+    k_sp = int(np.argmax(spread))
+    k_bh = int(S.index[S[&quot;id&quot;] == config.ID_BH][0])
+    fig, ax = plt.subplots(figsize=(11, 6.2))
+    for k in range(len(S)):
+        if k == k_bh:
+            col, lw, z = BLU, 3.2, 3
+        elif k == k_sp and spread[k_sp] &gt; 0:
+            col, lw, z = ARANCIO, 3.2, 3
+        else:
+            col, lw, z = GRIGIO, 1.5, 1
+        ax.plot([0, 1, 2], posti[k], color=col, lw=lw, marker=&quot;o&quot;, zorder=z, ls=&quot;--&quot; if col == ARANCIO else &quot;-&quot;)
+        ax.text(-0.06, posti[k][0], f&quot;{S[&#x27;nome&#x27;][k]}  {posti[k][0]:.0f}&quot;, ha=&quot;right&quot;, va=&quot;center&quot;, fontsize=9.5, color=col if col != GRIGIO else &quot;#444&quot;)
+        ax.text(2.06, posti[k][2], f&quot;{posti[k][2]:.0f}  {S[&#x27;nome&#x27;][k]}&quot;, ha=&quot;left&quot;, va=&quot;center&quot;, fontsize=9.5, color=col if col != GRIGIO else &quot;#444&quot;)
+    ax.set_ylim(len(S) + 0.5, 0.5)
+    ax.set_xlim(-0.05, 2.05)
+    ax.set_xticks([0, 1, 2], [&quot;Sharpe&quot;, &quot;Sortino&quot;, &quot;Calmar&quot;], fontsize=13)
+    ax.xaxis.tick_top()
+    ax.set_yticks([])
+    ax.grid(axis=&quot;x&quot;, visible=False)
+    ax.spines[&quot;left&quot;].set_visible(False)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_classifiche.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 2: persistenza tra decenni consecutivi --------------------------------------------------------------
+    P = C[C[&quot;tipo&quot;] == &quot;spearman_consecutivi&quot;]
+    fig, ax = plt.subplots(figsize=(9, 5.2))
+    rng = np.random.default_rng(0)
+    for x, km in enumerate(METRICHE):
+        v = P.loc[P[&quot;coppia&quot;] == km, &quot;tau_sh_so&quot;].to_numpy()
+        ax.bar(x, np.nanmean(v), color=COL[km], width=0.55, alpha=0.9, zorder=2)
+        ax.scatter(x + rng.uniform(-0.15, 0.15, len(v)), v, color=&quot;white&quot;, edgecolor=&quot;#333&quot;, s=34, zorder=3)
+    ax.axhline(0, color=&quot;#555&quot;, lw=1.2)
+    ax.set_xticks(range(3), [NOMI[k] for k in METRICHE])
+    ax.set_ylabel(&quot;correlazione di rango tra un decennio e il successivo&quot;)
+    ax.set_ylim(-1, 1)
+    ax.grid(axis=&quot;x&quot;, visible=False)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig2_persistenza.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 3: bootstrap --------------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(9, 5.0))
+    q = B[&quot;quota_stesso_vincitore&quot;].to_numpy() * 100
+    ax.bar(range(3), q, color=[COL[k] for k in METRICHE], width=0.55)
+    for x, v in enumerate(q):
+        ax.text(x, v + 1.5, f&quot;{v:.0f}%&quot;, ha=&quot;center&quot;, fontsize=12)
+    ax.set_xticks(range(3), [NOMI[k] for k in METRICHE])
+    ax.set_ylim(0, 105)
+    ax.yaxis.set_major_formatter(lambda x, _: f&quot;{x:.0f}%&quot;)
+    ax.set_ylabel(&quot;serie ricampionate in cui vince la stessa regola&quot;)
+    ax.grid(axis=&quot;x&quot;, visible=False)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_bootstrap.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 4: le scimmie ---------------------------------------------------------------------------------------------
+    iq = int(S.index[S[&quot;id&quot;] == config.ID_FILTRO][0])
+    fig, axs = plt.subplots(1, 3, figsize=(12, 4.4))
+    for ax, km in zip(axs, METRICHE):
+        ax.hist(M[km], bins=30, color=GRIGIO, alpha=0.8)
+        ax.axvline(S[km][iq], color=ARANCIO, lw=2.6, ls=&quot;--&quot;)
+        perc = (M[km] &lt; S[km][iq]).mean() * 100
+        ax.set_title(f&quot;{NOMI[km]}: il filtro batte il {perc:.1f}% delle scimmie&quot;.replace(&quot;.&quot;, &quot;,&quot;), fontsize=10.5)
+        ax.set_yticks([])
+        ax.grid(False)
+        ax.spines[&quot;left&quot;].set_visible(False)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig4_scimmie.png&quot;)
+    plt.close(fig)
+    print(&quot;Grafici salvati in figure/&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>regole, parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 61 - &quot;Sharpe, Sortino, Calmar: quale ti inganna meno?&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Idea: si prendono otto regole di investimento fisse, decise a priori (nessuna ottimizzata), e si misurano con tre metriche
+(Sharpe, Sortino, Calmar). Si guarda se le tre metriche danno la stessa classifica, quanto la classifica resta uguale
+da un decennio al successivo, quanto è fragile al rumore dei dati (bootstrap) e che cosa dicono di regole decise dal caso.
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati ---------------------------------------------------------------
+TICKER = &quot;^GSPC&quot;                  # S&amp;P 500, indice di prezzo (senza dividendi), dal 1927
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+
+# --- Le otto regole (long o cash) -----------------------------------------------------------------
+# Il segnale della chiusura di ieri decide la posizione di oggi (nessun look-ahead, come nell&#x27;articolo 4).
+# Nessuna regola è ottimizzata: sono le versioni &quot;da manuale&quot;. Ordine = ordine delle tabelle dell&#x27;articolo.
+STRATEGIE = {
+    &quot;bh&quot;: (&quot;Buy &amp; hold&quot;, (&quot;bh&quot;,)),
+    &quot;sma50&quot;: (&quot;Prezzo sopra la media a 50 giorni&quot;, (&quot;sopra_media&quot;, 50)),
+    &quot;sma100&quot;: (&quot;Prezzo sopra la media a 100 giorni&quot;, (&quot;sopra_media&quot;, 100)),
+    &quot;sma200&quot;: (&quot;Prezzo sopra la media a 200 giorni&quot;, (&quot;sopra_media&quot;, 200)),
+    &quot;cross&quot;: (&quot;Incrocio 50/200&quot;, (&quot;incrocio&quot;, 50, 200)),
+    &quot;mom&quot;: (&quot;Momentum a 12 mesi&quot;, (&quot;momentum&quot;, 252)),
+    &quot;calma&quot;: (&quot;Solo a mercato calmo&quot;, (&quot;calma&quot;, 20, 0.20)),       # investito se la volatilità a 20 giorni è sotto il 20% annuo
+    &quot;ritorno&quot;: (&quot;Ritorno alla media nel trend&quot;, (&quot;ritorno_media&quot;, 5, 200)),  # investito se sotto la media a 5 giorni ma sopra quella a 200
+}
+# Strumento di prova, fuori dalle classifiche: metà del capitale nel buy &amp; hold e metà in cassa, sempre.
+META = (&quot;meta&quot;, &quot;Metà buy &amp; hold, metà cassa&quot;)
+ID_BH, ID_FILTRO = &quot;bh&quot;, &quot;sma200&quot;  # i due protagonisti dei confronti con il caso
+
+# --- Metriche (tutte sui rendimenti giornalieri netti dei costi) ------------------------------------------
+SEDUTE_ANNO = 252                 # per annualizzare Sharpe e Sortino
+TASSO_SENZA_RISCHIO = 0.0         # la cassa non rende nella simulazione, quindi lo Sharpe usa zero come tasso senza rischio
+OBIETTIVO_SORTINO = 0.0           # il Sortino penalizza solo i rendimenti giornalieri sotto zero
+COSTO_CAMBIO = 0.001              # 0,1% del valore a ogni acquisto o vendita; nessuna tassa
+
+# --- Finestre -----------------------------------------------------------------------------------------------
+INIZIO_TEST_SEDUTE = 260          # le prime sedute servono per il momentum a 252 giorni: tutte le regole partono dallo stesso giorno
+SEDUTE_BLOCCO = 2520              # blocchi non sovrapposti di dieci anni di borsa
+
+# --- Bootstrap e scimmie --------------------------------------------------------------------------------------
+SEME = 20261022
+N_BOOTSTRAP = 1000                # serie ricampionate a blocchi circolari
+LUNGHEZZA_BLOCCO_BOOT = 21        # un mese di borsa
+LIVELLO_CONFIDENZA = 0.95
+N_SCIMMIE = 1000                  # regole casuali con lo stesso tempo investito e lo stesso numero di cambi del filtro a 200 giorni
+SOGLIA_SCIMMIE = 0.90             # quota di scimmie che il filtro deve battere per dire che &quot;batte il caso&quot;
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------
+TOLLERANZA_UGUALI = 0.01          # due valori di Sharpe o Sortino sono &quot;uguali&quot; se differiscono meno di questo
+DIFFERENZA_RELATIVA_CALMAR = 0.10 # il Calmar &quot;distingue&quot; due regole se differisce di almeno il 10% in valore relativo
+
+NOMI_ESENTI = tuple(v[0] for v in STRATEGIE.values()) + (META[1], &quot;Incrocio 50/200&quot;, &quot;50/200&quot;)
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) Sull&#x27;intero periodo le tre metriche non indicano la stessa regola come migliore: i vincitori sono almeno due diversi. &quot;
+    &quot;2) Il Calmar è la metrica che si discosta di più dalle altre: la media delle correlazioni di rango (tau di Kendall) del Calmar con Sharpe e Sortino, &quot;
+    &quot;calcolata sui blocchi di dieci anni, è la più bassa delle tre. &quot;
+    &quot;3) Il Calmar è la metrica meno persistente: la correlazione di rango media (Spearman) tra la classifica di un decennio e quella del successivo &quot;
+    &quot;è la più bassa delle tre. &quot;
+    &quot;4) Il Calmar è il più fragile al rumore dei dati: nel bootstrap la regola vincitrice sull&#x27;intero periodo resta prima in una quota di serie &quot;
+    &quot;più bassa che per lo Sharpe. &quot;
+    &quot;5) Lo Sharpe e il Sortino danno al buy &amp; hold dimezzato lo stesso voto del buy &amp; hold intero (differenza sotto 0,01), mentre il Calmar li &quot;
+    &quot;distingue (differenza relativa di almeno il 10%). &quot;
+    &quot;6) Il filtro a 200 giorni batte almeno il 90% delle scimmie (regole casuali con lo stesso tempo investito e lo stesso numero di cambi) in tutte e tre le metriche.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>regole, metriche, correlazioni di rango, bootstrap, scimmie</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 61: regole, metriche, correlazioni di rango, bootstrap e scimmie.
+Separate dal flusso perché si possano controllare su dati inventati (verifica_motore.py).&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import motore_vettoriale as m
+
+
+# --- Regole -------------------------------------------------------------------------------------------------
+def segnale(close: pd.Series, spec: tuple) -&gt; pd.Series:
+    &quot;&quot;&quot;True se la regola è &#x27;investito&#x27;, calcolato con le chiusure fino a t incluse.&quot;&quot;&quot;
+    tipo = spec[0]
+    if tipo == &quot;bh&quot;:
+        return pd.Series(True, index=close.index)
+    if tipo == &quot;sopra_media&quot;:
+        return m.segnale_sopra_media(close, spec[1])
+    if tipo == &quot;incrocio&quot;:
+        return m.segnale_medie(close, spec[1], spec[2])
+    if tipo == &quot;momentum&quot;:
+        passato = close.shift(spec[1])
+        return (close &gt; passato) &amp; passato.notna()
+    if tipo == &quot;calma&quot;:
+        vol = m.rendimenti(close).rolling(spec[1]).std() * np.sqrt(252)
+        return (vol &lt; spec[2]) &amp; vol.notna()
+    if tipo == &quot;ritorno_media&quot;:
+        lenta = close.rolling(spec[2]).mean()
+        return (close &lt; close.rolling(spec[1]).mean()) &amp; (close &gt; lenta) &amp; lenta.notna()
+    raise ValueError(f&quot;regola sconosciuta: {tipo}&quot;)
+
+
+def posizione_regola(close: pd.Series, spec: tuple) -&gt; pd.Series:
+    &quot;&quot;&quot;Quota investita (0, 1 o 0,5) nella seduta; il segnale di ieri decide la posizione di oggi.&quot;&quot;&quot;
+    if spec[0] == &quot;meta&quot;:
+        return pd.Series(0.5, index=close.index)
+    return m.posizione(segnale(close, spec), 1).astype(float)
+
+
+def rendimenti_netti(close: pd.Series, pos: pd.Series, costo: float) -&gt; pd.Series:
+    &quot;&quot;&quot;Rendimento giornaliero della regola, meno il costo su ogni variazione della quota investita.&quot;&quot;&quot;
+    cambi = pos.diff().abs().fillna(0.0)
+    return m.rendimenti(close) * pos - costo * cambi
+
+
+# --- Metriche (lavorano sull&#x27;ultimo asse: una riga per regola) ----------------------------------------------------
+def _nan_se(cond_ok, valori):
+    return np.where(cond_ok, valori, np.nan)
+
+
+def sharpe(R: np.ndarray, sedute_anno: int = 252, tasso: float = 0.0) -&gt; np.ndarray:
+    R = np.asarray(R, dtype=float)
+    sd = R.std(axis=-1, ddof=1)
+    with np.errstate(divide=&quot;ignore&quot;, invalid=&quot;ignore&quot;):
+        v = (R.mean(axis=-1) - tasso / sedute_anno) / sd * np.sqrt(sedute_anno)
+    return _nan_se(sd &gt; 0, v)
+
+
+def sortino(R: np.ndarray, sedute_anno: int = 252, obiettivo: float = 0.0) -&gt; np.ndarray:
+    R = np.asarray(R, dtype=float)
+    dd = np.sqrt((np.minimum(R - obiettivo / sedute_anno, 0.0) ** 2).mean(axis=-1))
+    with np.errstate(divide=&quot;ignore&quot;, invalid=&quot;ignore&quot;):
+        v = (R.mean(axis=-1) - obiettivo / sedute_anno) / dd * np.sqrt(sedute_anno)
+    return _nan_se(dd &gt; 0, v)
+
+
+def cagr(R: np.ndarray, anni: float) -&gt; np.ndarray:
+    R = np.asarray(R, dtype=float)
+    return np.exp(np.log1p(R).sum(axis=-1) / anni) - 1.0
+
+
+def perdita_massima(R: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Perdita massima dal massimo precedente (numero negativo o zero), partendo da un valore iniziale 1.&quot;&quot;&quot;
+    R = np.asarray(R, dtype=float)
+    v = np.cumprod(1.0 + R, axis=-1)
+    v = np.concatenate([np.ones(v.shape[:-1] + (1,)), v], axis=-1)
+    return (v / np.maximum.accumulate(v, axis=-1) - 1.0).min(axis=-1)
+
+
+def calmar(R: np.ndarray, anni: float) -&gt; np.ndarray:
+    mdd = perdita_massima(R)
+    with np.errstate(divide=&quot;ignore&quot;, invalid=&quot;ignore&quot;):
+        v = cagr(R, anni) / (-mdd)
+    return _nan_se(mdd &lt; 0, v)
+
+
+# --- Classifiche e correlazioni di rango ---------------------------------------------------------------------------
+def posti(valori) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posto in classifica, 1 = valore più alto; parità = posto medio; valori non definiti = ultimi.&quot;&quot;&quot;
+    v = np.where(np.isnan(np.asarray(valori, dtype=float)), -np.inf, valori)
+    return pd.Series(v).rank(ascending=False, method=&quot;average&quot;).to_numpy()
+
+
+def vincitore(valori) -&gt; int:
+    v = np.where(np.isnan(np.asarray(valori, dtype=float)), -np.inf, valori)
+    return int(np.argmax(v))
+
+
+def spearman(a, b) -&gt; float:
+    pa, pb = posti(a), posti(b)
+    if pa.std() == 0 or pb.std() == 0:
+        return float(&quot;nan&quot;)
+    return float(np.corrcoef(pa, pb)[0, 1])
+
+
+def kendall(a, b) -&gt; float:
+    &quot;&quot;&quot;Tau-b di Kendall tra due vettori.&quot;&quot;&quot;
+    a, b = np.asarray(a, dtype=float), np.asarray(b, dtype=float)
+    da, db = np.sign(a[:, None] - a[None, :]), np.sign(b[:, None] - b[None, :])
+    iu = np.triu_indices(len(a), 1)
+    x, y = da[iu], db[iu]
+    den = np.sqrt((x != 0).sum() * (y != 0).sum())
+    return float((x * y).sum() / den) if den &gt; 0 else float(&quot;nan&quot;)
+
+
+# --- Blocchi, bootstrap, scimmie ---------------------------------------------------------------------------------------
+def blocchi(n: int, lunghezza: int) -&gt; list[tuple[int, int]]:
+    &quot;&quot;&quot;Intervalli [a, b) di blocchi consecutivi non sovrapposti che stanno dentro n sedute.&quot;&quot;&quot;
+    return [(k * lunghezza, (k + 1) * lunghezza) for k in range(n // lunghezza)]
+
+
+def indici_blocchi_circolari(n: int, lunghezza: int, ripetizioni: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Indici (ripetizioni x n) di un bootstrap a blocchi circolari: blocchi di sedute consecutive, estratti con reinserimento.&quot;&quot;&quot;
+    nb = -(-n // lunghezza)
+    inizi = rng.integers(0, n, size=(ripetizioni, nb))
+    idx = (inizi[:, :, None] + np.arange(lunghezza)[None, None, :]) % n
+    return idx.reshape(ripetizioni, nb * lunghezza)[:, :n]
+
+
+def sequenze(pos_investito: np.ndarray) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Valori (True investito / False cassa) e lunghezze delle sequenze consecutive.&quot;&quot;&quot;
+    b = np.asarray(pos_investito, dtype=bool)
+    inizi = np.r_[0, np.flatnonzero(b[1:] != b[:-1]) + 1]
+    return b[inizi], np.diff(np.r_[inizi, len(b)])
+
+
+def scimmia(valori: np.ndarray, lunghezze: np.ndarray, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posizione casuale con lo stesso numero di cambi e lo stesso tempo investito: si rimescolano le lunghezze delle sequenze
+    investite tra le sequenze investite e quelle in cassa tra le sequenze in cassa; la prima sequenza resta del suo tipo.&quot;&quot;&quot;
+    l = lunghezze.copy()
+    for stato in (True, False):
+        mask = valori == stato
+        l[mask] = rng.permutation(l[mask])
+    return np.repeat(valori, l)
+</code></pre></details>
+<details><summary>flusso/motore_vettoriale.py<small>segnale, posizione con ritardo, valore (dall&#x27;articolo 4)</small></summary><pre><code class="language-python">&quot;&quot;&quot;Motore vettoriale minimo: segnale, posizione, rendimenti. Senza commissioni né tasse, per isolare l&#x27;effetto del look-ahead.
+
+Convenzioni:
+  - rend[t] è il rendimento della seduta t: chiusura di t su chiusura di t-1;
+  - il segnale[t] si calcola con le chiusure fino a t incluse;
+  - posizione(segnale, ritardo): ritardo = 0 usa il segnale di t per il rendimento di t (LOOK-AHEAD: si compra alla
+    chiusura di ieri sapendo la chiusura di oggi); ritardo = 1 usa il segnale di ieri (onesto).
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def rendimenti(close: pd.Series) -&gt; pd.Series:
+    return close.pct_change().fillna(0.0)
+
+
+def segnale_un_giorno(close: pd.Series) -&gt; pd.Series:
+    return close &gt; close.shift(1)
+
+
+def segnale_sopra_media(close: pd.Series, n: int) -&gt; pd.Series:
+    return (close &gt; close.rolling(n).mean()) &amp; close.rolling(n).mean().notna()
+
+
+def segnale_medie(close: pd.Series, veloce: int, lenta: int) -&gt; pd.Series:
+    sl = close.rolling(lenta).mean()
+    return (close.rolling(veloce).mean() &gt; sl) &amp; sl.notna()
+
+
+def posizione(segnale: pd.Series, ritardo: int) -&gt; pd.Series:
+    &quot;&quot;&quot;True se si è investiti nella seduta, dato il ritardo con cui il segnale è noto.&quot;&quot;&quot;
+    if ritardo &lt; 0:
+        raise ValueError(&quot;ritardo negativo: sarebbe usare il futuro&quot;)
+    return segnale.shift(ritardo, fill_value=False).astype(bool)
+
+
+def valore(rend: pd.Series, pos: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Valore di 1 investito, composto giorno per giorno: nei giorni in cassa il rendimento è zero.&quot;&quot;&quot;
+    return (1.0 + rend * pos.astype(float)).cumprod()
+
+
+def cagr(v: pd.Series, anni: float) -&gt; float:
+    return float(v.iloc[-1] ** (1.0 / anni) - 1.0)
+
+
+def perdita_massima(v: pd.Series) -&gt; float:
+    return float((v / v.cummax() - 1.0).min())
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati (formule a mano, assenza di look-ahead)</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni dell&#x27;articolo 61 su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+def serie(valori, inizio=&quot;2000-01-03&quot;) -&gt; pd.Series:
+    return pd.Series(np.asarray(valori, float), index=pd.bdate_range(inizio, periods=len(valori)))
+
+
+rng = np.random.default_rng(1)
+r = rng.normal(0.0004, 0.01, size=(3, 3000))
+
+# --- Metriche ---
+controlla(&quot;lo Sharpe non cambia se si dimezzano i rendimenti&quot;, np.allclose(fx.sharpe(r), fx.sharpe(r * 0.5)))
+controlla(&quot;il Sortino non cambia se si dimezzano i rendimenti&quot;, np.allclose(fx.sortino(r), fx.sortino(r * 0.5)))
+y = np.array([0.01, -0.01, 0.02, 0.0])
+controlla(&quot;Sharpe a mano su una serie piccola&quot;, abs(float(fx.sharpe(y)) - y.mean() / y.std(ddof=1) * np.sqrt(252)) &lt; 1e-9)
+x = np.array([0.02, -0.01, 0.03, -0.02])
+dd = np.sqrt(np.mean(np.minimum(x, 0) ** 2))
+controlla(&quot;Sortino a mano: media / radice della media dei quadrati delle perdite&quot;, abs(float(fx.sortino(x)) - x.mean() / dd * np.sqrt(252)) &lt; 1e-9)
+controlla(&quot;Sortino non definito se non ci sono mai perdite&quot;, np.isnan(fx.sortino(np.array([0.01, 0.02, 0.0]))))
+controlla(&quot;Sharpe non definito con rischio zero&quot;, np.isnan(fx.sharpe(np.array([0.0, 0.0, 0.0]))))
+p = np.array([0.0, 1.0, -0.5, 0.0])        # valore: 1 -&gt; 2 -&gt; 1 -&gt; 1 : perdita massima -50%
+controlla(&quot;perdita massima: da 2 a 1 vale -50%&quot;, abs(float(fx.perdita_massima(p)) + 0.5) &lt; 1e-12)
+controlla(&quot;perdita massima nulla se il valore sale sempre&quot;, float(fx.perdita_massima(np.array([0.01, 0.01]))) == 0.0)
+controlla(&quot;Calmar non definito senza perdite&quot;, np.isnan(fx.calmar(np.array([0.01, 0.01]), 1.0)))
+q = np.array([0.1, -0.1, 0.1])             # valore finale 1,1*0,9*1,1 = 1,089 in 2 anni; perdita massima -10%
+controlla(&quot;rendimento annuo composto a mano&quot;, abs(float(fx.cagr(q, 2.0)) - (1.089 ** 0.5 - 1)) &lt; 1e-12)
+controlla(&quot;Calmar a mano&quot;, abs(float(fx.calmar(q, 2.0)) - (1.089 ** 0.5 - 1) / 0.1) &lt; 1e-12)
+
+# --- Classifiche e correlazioni di rango ---
+a = np.array([3.0, 1.0, 2.0, 5.0])
+controlla(&quot;posti: il valore più alto è primo&quot;, list(fx.posti(a)) == [2.0, 4.0, 3.0, 1.0])
+controlla(&quot;posti: parità = posto medio&quot;, list(fx.posti([1.0, 1.0, 3.0])) == [2.5, 2.5, 1.0])
+controlla(&quot;posti: non definito = ultimo&quot;, list(fx.posti([1.0, np.nan, 3.0])) == [2.0, 3.0, 1.0])
+controlla(&quot;Spearman di due classifiche uguali = 1&quot;, abs(fx.spearman(a, a * 2) - 1) &lt; 1e-12)
+controlla(&quot;Spearman di due classifiche opposte = -1&quot;, abs(fx.spearman(a, -a) + 1) &lt; 1e-12)
+controlla(&quot;Kendall di due classifiche uguali = 1&quot;, abs(fx.kendall(a, a ** 2) - 1) &lt; 1e-12)
+controlla(&quot;Kendall di due classifiche opposte = -1&quot;, abs(fx.kendall(a, -a) + 1) &lt; 1e-12)
+controlla(&quot;Kendall a mano: [1,2,3] contro [1,3,2] = 1/3&quot;, abs(fx.kendall([1, 2, 3], [1, 3, 2]) - 1 / 3) &lt; 1e-12)
+controlla(&quot;vincitore ignora i non definiti&quot;, fx.vincitore([np.nan, 1.0, 2.0]) == 2)
+
+# --- Regole: nessun look-ahead ---
+close = serie(100 * np.exp(np.cumsum(rng.normal(0.0003, 0.012, 1200))))
+for i, (nome, spec) in config.STRATEGIE.items():
+    completa = fx.posizione_regola(close, spec)
+    tronca = fx.posizione_regola(close.iloc[:800], spec)
+    controlla(f&quot;{i}: cambiare il futuro non cambia la posizione passata&quot;, np.array_equal(completa.iloc[:800].to_numpy(), tronca.to_numpy()))
+    alt = close.copy()
+    alt.iloc[900:] *= 3.0
+    controlla(f&quot;{i}: la posizione fino al giorno 900 non dipende dai prezzi dopo&quot;, np.array_equal(completa.iloc[:901].to_numpy(), fx.posizione_regola(alt, spec).iloc[:901].to_numpy()))
+controlla(&quot;buy &amp; hold è sempre investito dal secondo giorno&quot;, bool((fx.posizione_regola(close, config.STRATEGIE[&quot;bh&quot;][1]).iloc[1:] == 1.0).all()))
+controlla(&quot;la regola a 200 giorni è in cassa nei primi 200 giorni&quot;, bool((fx.posizione_regola(close, config.STRATEGIE[&quot;sma200&quot;][1]).iloc[:200] == 0.0).all()))
+controlla(&quot;la quota dimezzata vale sempre 0,5&quot;, bool((fx.posizione_regola(close, config.META) == 0.5).all()))
+
+# --- Rendimenti netti ---
+pos = pd.Series([0, 0, 1, 1, 0, 0], index=close.index[:6], dtype=float)
+cl = serie([100, 100, 110, 121, 121, 121])
+rn = fx.rendimenti_netti(cl, pos, 0.01)
+controlla(&quot;il costo si paga a ogni cambio di quota (due cambi): lordo 0,20 meno 0,02&quot;, abs(float(rn.sum()) - 0.18) &lt; 1e-12)
+controlla(&quot;buy &amp; hold dimezzato rende metà del rendimento giornaliero&quot;, np.allclose(fx.rendimenti_netti(close, fx.posizione_regola(close, config.META), 0.0).iloc[1:], 0.5 * close.pct_change().iloc[1:]))
+
+# --- Blocchi, bootstrap, scimmie ---
+controlla(&quot;blocchi non sovrapposti dentro i dati&quot;, fx.blocchi(10, 3) == [(0, 3), (3, 6), (6, 9)])
+idx = fx.indici_blocchi_circolari(100, 21, 50, np.random.default_rng(2))
+controlla(&quot;bootstrap: forma e intervallo degli indici&quot;, idx.shape == (50, 100) and idx.min() &gt;= 0 and idx.max() &lt; 100)
+controlla(&quot;bootstrap: dentro un blocco gli indici sono consecutivi (circolari)&quot;, bool((np.diff(idx[:, :21], axis=1) % 100 == 1).all()))
+pi = np.array([1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0], dtype=bool)
+val, lun = fx.sequenze(pi)
+controlla(&quot;sequenze: valori e lunghezze&quot;, list(val) == [True, False, True, False, True, False] and list(lun) == [2, 3, 1, 1, 3, 2])
+ok = True
+for s in range(200):
+    sc = fx.scimmia(val, lun, np.random.default_rng(s))
+    ok &amp;= len(sc) == len(pi) and sc.sum() == pi.sum() and (np.diff(sc.astype(int)) != 0).sum() == (np.diff(pi.astype(int)) != 0).sum() and sc[0] == pi[0]
+controlla(&quot;scimmie: stessa lunghezza, stesso tempo investito, stessi cambi, stesso stato iniziale&quot;, bool(ok))
+diverse = {tuple(fx.scimmia(val, lun, np.random.default_rng(s))) for s in range(200)}
+controlla(&quot;scimmie: le sequenze rimescolate non sono tutte uguali&quot;, len(diverse) &gt; 1)
+
+print(f&quot;{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>

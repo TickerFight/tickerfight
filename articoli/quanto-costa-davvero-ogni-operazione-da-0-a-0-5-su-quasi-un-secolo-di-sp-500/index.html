@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quanto costa davvero ogni operazione? Da 0 a 0,5% su quasi un secolo di S&amp;P 500 · il codice · TickerFight</title>
+<meta name="description" content="quanto pesano davvero i costi per operazione, facendoli variare da 0 a 0,5% del valore scambiato? Pesano in proporzione ai cambi di posizione? Cambiano la classifica delle regole? Quanto costa ribilanciare un portafoglio? E che cosa succede a chi cambia posizione a caso e spesso?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a><a href="https://github.com/TickerFight/tickerfight">GitHub</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Quanto costa davvero ogni operazione? Da 0 a 0,5% su quasi un secolo di S&amp;P 500</h1>
+<p class="domanda">Quanto pesano davvero i costi per operazione, facendoli variare da 0 a 0,5% del valore scambiato? Pesano in proporzione ai cambi di posizione? Cambiano la classifica delle regole? Quanto costa ribilanciare un portafoglio? E che cosa succede a chi cambia posizione a caso e spesso?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="quanto-costa-davvero-ogni-operazione-da-0-a-0-5-su-quasi-un-secolo-di-sp-500.zip" download>⬇ Scarica il codice (.zip)</a><a class="btn" href="https://github.com/TickerFight/tickerfight/tree/main/articoli/quanto-costa-davvero-ogni-operazione-da-0-a-0-5-su-quasi-un-secolo-di-sp-500">Vedi su GitHub</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Otto regole fisse (le stesse dell'articolo 61), nessuna ottimizzata:</strong> buy &amp; hold; prezzo sopra la media a 50, 100, 200 giorni; incrocio 50/200; momentum a 12 mesi; investito solo a mercato calmo; ritorno alla media nel trend. Il segnale della chiusura di ieri decide la posizione di oggi. Un cambio è un acquisto o una vendita dell'intera posizione; l'ingresso iniziale dalla cassa si paga.</li>
+<li><strong>Sei livelli di costo:</strong> 0, 0,05, 0,10, 0,20, 0,30, 0,50% del valore scambiato (commissione, spread e slippage insieme). Nessuna tassa, cassa a rendimento zero.</li>
+<li><strong>Ribilanciamento:</strong> portafoglio 50% S&amp;P 500 e 50% cassa, riportato al 50/50 ogni seduta, ogni 21 sedute, ogni 252 sedute.</li>
+<li><strong>Scimmie:</strong> 300 posizioni casuali per ognuna di cinque probabilità giornaliere di cambiare stato (1, 5, 10, 20, 50%).</li>
+<li><strong>Sei ipotesi</strong> scritte in <code>config.py</code> prima di guardare i dati.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>quanto-costa-davvero-ogni-operazione-da-0-a-0-5-su-quasi-un-secolo-di-sp-500/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica l'S&amp;P 500 dal 1927
+    ├── 02_backtest_e_test.py  costi, ribilanciamento, scimmie, verdetti
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              regole, parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            regole, rendimenti netti dei costi, ribilanciamento, scimmie
+    ├── motore_vettoriale.py   segnale, posizione con ritardo, valore (dall'articolo 4)
+    └── verifica_motore.py     controlli su dati inventati (formule a mano, assenza di look-ahead)
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd quanto-costa-davvero-ogni-operazione-da-0-a-0-5-su-quasi-un-secolo-di-sp-500
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>costi, ribilanciamento, scimmie, verdetti</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Il costo nascosto: otto regole, sei livelli di costo, ribilanciamento e scimmie.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json              ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  costi_regole.csv           per ogni regola e livello di costo: rendimento annuo, Sharpe, cambi all&#x27;anno, posto per Sharpe
+  ribilanciamento.csv        per ogni frequenza di ribilanciamento e livello di costo: rendimento annuo e Sharpe del 50/50
+  scimmie.csv                per ogni probabilità di cambio e livello di costo: rendimento annuo mediano e quota di scimmie in perdita
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    date = close.index
+    S0 = config.INIZIO_TEST_SEDUTE
+    ids = list(config.STRATEGIE)
+    K, C = len(ids), len(config.COSTI)
+    rng = np.random.default_rng(config.SEME)
+    ret = close.pct_change().fillna(0.0)
+    T = len(close) - S0
+    anni = (date[-1] - date[S0 - 1]).days / 365.25
+    nome = {i: config.STRATEGIE[i][0] for i in ids}
+
+    # --- Posizioni (segnale di ieri decide oggi) e rendimenti netti a ogni livello di costo ------------------------------------
+    pos = {i: fx.posizione_regola(close, config.STRATEGIE[i][1]).iloc[S0:] for i in ids}
+    ret_s = ret.iloc[S0:]
+    cambi = {i: float((pos[i].diff().abs().fillna(0.0).sum() + abs(pos[i].iloc[0]))) for i in ids}
+    cambi_anno = {i: cambi[i] / anni for i in ids}
+    CG = np.zeros((K, C))
+    SH = np.zeros((K, C))
+    for k, i in enumerate(ids):
+        for c, costo in enumerate(config.COSTI):
+            R = fx.rendimenti_netti(ret_s, pos[i], costo).to_numpy()
+            CG[k, c] = fx.cagr(R, anni)
+            SH[k, c] = fx.sharpe(R, config.SEDUTE_ANNO)
+    PS = np.vstack([fx.posti(SH[:, c]) for c in range(C)]).T       # posti per Sharpe, per ogni costo
+    righe = []
+    for k, i in enumerate(ids):
+        for c, costo in enumerate(config.COSTI):
+            righe.append({&quot;id&quot;: i, &quot;nome&quot;: nome[i], &quot;costo&quot;: costo, &quot;cagr&quot;: CG[k, c], &quot;sharpe&quot;: SH[k, c],
+                          &quot;posto_sharpe&quot;: PS[k, c], &quot;cambi_anno&quot;: cambi_anno[i]})
+    pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;costi_regole.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    ib, isf, isv = ids.index(config.ID_BH), ids.index(config.ID_FILTRO), ids.index(config.ID_VELOCE)
+    c0, cm = 0, C - 1
+    cp = list(config.COSTI).index(config.COSTO_PROVA)
+
+    # --- Parametri e dati ---------------------------------------------------------------------------------------------------------
+    reg(&quot;prima_data&quot;, str(date[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;data_inizio&quot;, str(date[S0].date()), &quot;data_lunga&quot;, &quot;Prima seduta in cui si misurano tutte le regole&quot;, &quot;dati/ e config.py&quot;)
+    reg(&quot;data_ultima&quot;, str(date[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_campione&quot;, anni, &quot;num1&quot;, &quot;Anni dell&#x27;intero periodo misurato&quot;, &quot;dati/&quot;)
+    reg(&quot;w_breve&quot;, config.STRATEGIE[&quot;sma50&quot;][1][1], &quot;annonum&quot;, &quot;Giorni della media mobile più corta&quot;, &quot;config.py, STRATEGIE&quot;)
+    reg(&quot;w_media&quot;, config.STRATEGIE[&quot;sma100&quot;][1][1], &quot;annonum&quot;, &quot;Giorni della media mobile intermedia&quot;, &quot;config.py, STRATEGIE&quot;)
+    reg(&quot;w_lunga&quot;, config.STRATEGIE[&quot;sma200&quot;][1][1], &quot;annonum&quot;, &quot;Giorni della media mobile più lunga&quot;, &quot;config.py, STRATEGIE&quot;)
+    reg(&quot;mom_mesi&quot;, config.STRATEGIE[&quot;mom&quot;][1][1] / 21, &quot;annonum&quot;, &quot;Mesi di storia usati dal momentum (252 sedute, 21 per mese)&quot;, &quot;config.py, STRATEGIE&quot;)
+    reg(&quot;n_regole&quot;, K, &quot;int&quot;, &quot;Regole confrontate&quot;, &quot;config.py, STRATEGIE&quot;)
+    reg(&quot;n_costi&quot;, C, &quot;int&quot;, &quot;Livelli di costo provati&quot;, &quot;config.py, COSTI&quot;)
+    for c, costo in enumerate(config.COSTI):
+        reg(f&quot;costo_{c}&quot;, costo, &quot;pct2&quot;, f&quot;Livello di costo numero {c + 1} della griglia, quota del valore scambiato&quot;, &quot;config.py, COSTI&quot;)
+    reg(&quot;costo_max&quot;, config.COSTO_MAX, &quot;pct1&quot;, &quot;Costo più alto della griglia&quot;, &quot;config.py, COSTI&quot;)
+    reg(&quot;costo_prova&quot;, config.COSTO_PROVA, &quot;pct1&quot;, &quot;Costo tipico citato nel testo&quot;, &quot;config.py, COSTO_PROVA&quot;)
+    reg(&quot;sedute_anno&quot;, config.SEDUTE_ANNO, &quot;int&quot;, &quot;Sedute di borsa per anno&quot;, &quot;config.py&quot;)
+    reg(&quot;quota_azioni&quot;, config.QUOTA_AZIONI, &quot;pct0&quot;, &quot;Quota in azioni del portafoglio ribilanciato&quot;, &quot;config.py, QUOTA_AZIONI&quot;)
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Scimmie estratte per ogni probabilità di cambio&quot;, &quot;config.py&quot;)
+    reg(&quot;cambi_min_anno&quot;, config.CAMBI_MIN_ANNO, &quot;annonum&quot;, &quot;Cambi all&#x27;anno minimi per entrare nella prova di proporzionalità&quot;, &quot;config.py&quot;)
+    reg(&quot;banda_lo&quot;, config.BANDA_PROPORZIONALITA[0], &quot;num1&quot;, &quot;Estremo basso della banda di proporzionalità&quot;, &quot;config.py&quot;)
+    reg(&quot;banda_hi&quot;, config.BANDA_PROPORZIONALITA[1], &quot;num1&quot;, &quot;Estremo alto della banda di proporzionalità&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_bh_pp&quot;, config.SOGLIA_BH, &quot;pp2&quot;, &quot;Perdita massima ammessa per il buy &amp; hold, in punti percentuali di rendimento annuo&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_prob_scimmie&quot;, config.SOGLIA_PROB_SCIMMIE, &quot;pct0&quot;, &quot;Probabilità giornaliera di cambio da cui si valuta l&#x27;ipotesi sulle scimmie&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_ribil_pp&quot;, config.SOGLIA_RIBIL, &quot;pp2&quot;, &quot;Perdita massima ammessa con ribilanciamento annuale, in punti percentuali&quot;, &quot;config.py, ipotesi 5&quot;)
+
+    # --- Rendimenti, Sharpe e cambi per regola ---------------------------------------------------------------------------------------
+    for k, i in enumerate(ids):
+        reg(f&quot;cambi_anno_{i}&quot;, cambi_anno[i], &quot;num1&quot;, f&quot;Cambi di posizione all&#x27;anno: {nome[i]}&quot;, &quot;posizioni sul periodo misurato&quot;)
+        reg(f&quot;cagr_{i}_lordo&quot;, CG[k, c0], &quot;pct1&quot;, f&quot;Rendimento annuo composto senza costi: {nome[i]}&quot;, &quot;costi_regole.csv&quot;)
+        reg(f&quot;cagr_{i}_prova&quot;, CG[k, cp], &quot;pct1&quot;, f&quot;Rendimento annuo composto con costo {config.COSTO_PROVA:.1%}: {nome[i]}&quot;, &quot;costi_regole.csv&quot;)
+        reg(f&quot;cagr_{i}_max&quot;, CG[k, cm], &quot;pct1&quot;, f&quot;Rendimento annuo composto con costo {config.COSTO_MAX:.1%}: {nome[i]}&quot;, &quot;costi_regole.csv&quot;)
+        reg(f&quot;perdita_{i}&quot;, CG[k, c0] - CG[k, cm], &quot;pp2&quot;, f&quot;Perdita di rendimento annuo (punti percentuali) tra costo zero e costo massimo: {nome[i]}&quot;, &quot;costi_regole.csv&quot;)
+        reg(f&quot;sharpe_{i}_lordo&quot;, SH[k, c0], &quot;num2&quot;, f&quot;Sharpe senza costi: {nome[i]}&quot;, &quot;costi_regole.csv&quot;)
+        reg(f&quot;sharpe_{i}_prova&quot;, SH[k, cp], &quot;num2&quot;, f&quot;Sharpe con costo {config.COSTO_PROVA:.1%}: {nome[i]}&quot;, &quot;costi_regole.csv&quot;)
+        reg(f&quot;sharpe_{i}_max&quot;, SH[k, cm], &quot;num2&quot;, f&quot;Sharpe con costo {config.COSTO_MAX:.1%}: {nome[i]}&quot;, &quot;costi_regole.csv&quot;)
+        reg(f&quot;posto_{i}_lordo&quot;, PS[k, c0], &quot;int&quot;, f&quot;Posto per Sharpe senza costi: {nome[i]}&quot;, &quot;costi_regole.csv&quot;)
+        reg(f&quot;posto_{i}_max&quot;, PS[k, cm], &quot;int&quot;, f&quot;Posto per Sharpe con costo massimo: {nome[i]}&quot;, &quot;costi_regole.csv&quot;)
+
+    # --- Ipotesi 1: proporzionalità ------------------------------------------------------------------------------------------------------
+    elig = [i for i in ids if cambi_anno[i] &gt;= config.CAMBI_MIN_ANNO]
+    rapp = {i: (CG[ids.index(i), c0] - CG[ids.index(i), cm]) / (cambi_anno[i] * config.COSTO_MAX) for i in elig}
+    for i in elig:
+        reg(f&quot;rapporto_{i}&quot;, rapp[i], &quot;num2&quot;, f&quot;Perdita osservata divisa per (cambi all&#x27;anno x costo massimo): {nome[i]}&quot;, &quot;costi_regole.csv&quot;)
+    in_banda = [i for i in elig if config.BANDA_PROPORZIONALITA[0] &lt;= rapp[i] &lt;= config.BANDA_PROPORZIONALITA[1]]
+    reg(&quot;n_eleggibili&quot;, len(elig), &quot;int&quot;, &quot;Regole con almeno un cambio all&#x27;anno&quot;, &quot;posizioni&quot;)
+    reg(&quot;n_in_banda&quot;, len(in_banda), &quot;int&quot;, &quot;Regole eleggibili con rapporto dentro la banda di proporzionalità&quot;, &quot;costi_regole.csv&quot;)
+    reg(&quot;rapporto_min&quot;, min(rapp.values()), &quot;num2&quot;, &quot;Rapporto più basso tra le regole eleggibili&quot;, &quot;costi_regole.csv&quot;)
+    reg(&quot;rapporto_max&quot;, max(rapp.values()), &quot;num2&quot;, &quot;Rapporto più alto tra le regole eleggibili&quot;, &quot;costi_regole.csv&quot;)
+    k_max_cambi = max(ids, key=lambda i: cambi_anno[i])
+    reg(&quot;regola_piu_attiva&quot;, nome[k_max_cambi], &quot;testo&quot;, &quot;Regola con più cambi all&#x27;anno&quot;, &quot;posizioni&quot;)
+    reg(&quot;perdita_piu_attiva&quot;, CG[ids.index(k_max_cambi), c0] - CG[ids.index(k_max_cambi), cm], &quot;pp2&quot;,
+        &quot;Perdita di rendimento annuo (punti percentuali) della regola più attiva, costo zero contro costo massimo&quot;, &quot;costi_regole.csv&quot;)
+
+    # --- Ipotesi 2: buy &amp; hold ---------------------------------------------------------------------------------------------------------
+    perdita_bh = CG[ib, c0] - CG[ib, cm]
+    reg(&quot;perdita_bh_fine&quot;, perdita_bh, &quot;pp3&quot;, &quot;Perdita di rendimento annuo del buy &amp; hold (punti percentuali, tre decimali) tra costo zero e costo massimo&quot;, &quot;costi_regole.csv&quot;)
+
+    # --- Ipotesi 3 e 4: Sharpe contro buy &amp; hold --------------------------------------------------------------------------------------------
+    altre = [k for k in range(K) if k != ib]
+    n_sh = {c: int(sum(SH[k, c] &gt; SH[ib, c] for k in altre)) for c in range(C)}
+    n_cg = {c: int(sum(CG[k, c] &gt; CG[ib, c] for k in altre)) for c in range(C)}
+    for c, tag in ((c0, &quot;lordo&quot;), (cp, &quot;prova&quot;), (cm, &quot;max&quot;)):
+        reg(f&quot;n_sharpe_sopra_bh_{tag}&quot;, n_sh[c], &quot;int&quot;, f&quot;Regole (escluso il buy &amp; hold) con Sharpe più alto del buy &amp; hold, costo livello {tag}&quot;, &quot;costi_regole.csv&quot;)
+        reg(f&quot;n_cagr_sopra_bh_{tag}&quot;, n_cg[c], &quot;int&quot;, f&quot;Regole (escluso il buy &amp; hold) con rendimento annuo più alto del buy &amp; hold, costo livello {tag}&quot;, &quot;costi_regole.csv&quot;)
+    reg(&quot;n_altre_regole&quot;, len(altre), &quot;int&quot;, &quot;Regole diverse dal buy &amp; hold&quot;, &quot;config.py&quot;)
+    n_neg = int((CG[:, cm] &lt; 0).sum())
+    reg(&quot;n_cagr_negativo_max&quot;, n_neg, &quot;int&quot;, &quot;Regole con rendimento annuo negativo al costo massimo&quot;, &quot;costi_regole.csv&quot;)
+    reg(&quot;tau_classifica&quot;, fx.kendall(SH[:, c0], SH[:, cm]), &quot;num2&quot;, &quot;Tau di Kendall tra la classifica per Sharpe senza costi e quella con costo massimo&quot;, &quot;costi_regole.csv&quot;)
+    reg(&quot;n_cambiano_posto&quot;, int((PS[:, c0] != PS[:, cm]).sum()), &quot;int&quot;, &quot;Regole che cambiano posto nella classifica per Sharpe tra costo zero e costo massimo&quot;, &quot;costi_regole.csv&quot;)
+    vinc0, vincm = ids[int(np.nanargmax(SH[:, c0]))], ids[int(np.nanargmax(SH[:, cm]))]
+    reg(&quot;vinc_lordo&quot;, nome[vinc0], &quot;testo&quot;, &quot;Regola prima per Sharpe senza costi&quot;, &quot;costi_regole.csv&quot;)
+    reg(&quot;vinc_max&quot;, nome[vincm], &quot;testo&quot;, &quot;Regola prima per Sharpe con costo massimo&quot;, &quot;costi_regole.csv&quot;)
+    reg(&quot;filtro_meno_bh_max&quot;, SH[isf, cm] - SH[ib, cm], &quot;num2&quot;, &quot;Sharpe del filtro a 200 giorni meno Sharpe del buy &amp; hold, costo massimo&quot;, &quot;costi_regole.csv&quot;)
+
+    # --- Ipotesi 5: ribilanciamento -----------------------------------------------------------------------------------------------------------
+    righe_r = []
+    RB = {}
+    ret_a = ret_s.to_numpy()
+    for nome_f, ogni in config.RIBILANCIAMENTI.items():
+        for c, costo in enumerate(config.COSTI):
+            R = fx.mix_ribilanciato(ret_a, config.QUOTA_AZIONI, ogni, costo)
+            RB[(nome_f, c)] = (float(fx.cagr(R, anni)), float(fx.sharpe(R, config.SEDUTE_ANNO)))
+            righe_r.append({&quot;frequenza&quot;: nome_f, &quot;ogni_sedute&quot;: ogni, &quot;costo&quot;: costo, &quot;cagr&quot;: RB[(nome_f, c)][0], &quot;sharpe&quot;: RB[(nome_f, c)][1]})
+    pd.DataFrame(righe_r).to_csv(config.RISULTATI / &quot;ribilanciamento.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    perdite_rb = {}
+    for nome_f, ogni in config.RIBILANCIAMENTI.items():
+        perdite_rb[nome_f] = RB[(nome_f, c0)][0] - RB[(nome_f, cm)][0]
+        reg(f&quot;ribil_ogni_{nome_f}&quot;, ogni, &quot;int&quot;, f&quot;Sedute tra un ribilanciamento e l&#x27;altro: {nome_f}&quot;, &quot;config.py, RIBILANCIAMENTI&quot;)
+        reg(f&quot;ribil_n_{nome_f}&quot;, len(ret_a) // ogni, &quot;int&quot;, f&quot;Ribilanciamenti eseguiti nel periodo: {nome_f}&quot;, &quot;ribilanciamento.csv&quot;)
+        reg(f&quot;ribil_lordo_{nome_f}&quot;, RB[(nome_f, c0)][0], &quot;pct2&quot;, f&quot;Rendimento annuo del 50/50 senza costi: {nome_f}&quot;, &quot;ribilanciamento.csv&quot;)
+        reg(f&quot;ribil_prova_{nome_f}&quot;, RB[(nome_f, cp)][0], &quot;pct2&quot;, f&quot;Rendimento annuo del 50/50 con costo {config.COSTO_PROVA:.1%}: {nome_f}&quot;, &quot;ribilanciamento.csv&quot;)
+        reg(f&quot;ribil_max_{nome_f}&quot;, RB[(nome_f, cm)][0], &quot;pct2&quot;, f&quot;Rendimento annuo del 50/50 con costo massimo: {nome_f}&quot;, &quot;ribilanciamento.csv&quot;)
+        reg(f&quot;ribil_perdita_{nome_f}&quot;, perdite_rb[nome_f], &quot;pp2&quot;, f&quot;Perdita di rendimento annuo (punti percentuali) tra costo zero e costo massimo: 50/50 {nome_f}&quot;, &quot;ribilanciamento.csv&quot;)
+        reg(f&quot;ribil_perdita_prova_{nome_f}&quot;, RB[(nome_f, c0)][0] - RB[(nome_f, cp)][0], &quot;pp2&quot;, f&quot;Perdita di rendimento annuo (punti percentuali) tra costo zero e costo tipico: 50/50 {nome_f}&quot;, &quot;ribilanciamento.csv&quot;)
+    gnames = list(config.RIBILANCIAMENTI)
+    reg(&quot;ribil_vantaggio_lordo_giorn_ann&quot;, RB[(&quot;giornaliero&quot;, c0)][0] - RB[(&quot;annuale&quot;, c0)][0], &quot;pp2&quot;,
+        &quot;Rendimento annuo senza costi del 50/50 giornaliero meno quello annuale, in punti percentuali (positivo = il ribilanciamento frequente rende di più prima dei costi)&quot;, &quot;ribilanciamento.csv&quot;)
+
+    # --- Ipotesi 6: scimmie ---------------------------------------------------------------------------------------------------------------------
+    righe_s = []
+    SC = {}
+    for j, p in enumerate(config.PROB_CAMBIO):
+        pos_s = fx.posizioni_scimmie(config.N_SCIMMIE, T, p, rng)
+        cambi_s = float((np.abs(np.diff(pos_s, axis=1, prepend=np.zeros((config.N_SCIMMIE, 1)))).sum(axis=1)).mean() / anni)
+        reg(f&quot;scim_prob_{j}&quot;, p, &quot;pct0&quot;, f&quot;Probabilità giornaliera di cambiare stato, gruppo di scimmie numero {j + 1}&quot;, &quot;config.py, PROB_CAMBIO&quot;)
+        reg(f&quot;scim_cambi_anno_{j}&quot;, cambi_s, &quot;num1&quot;, f&quot;Cambi all&#x27;anno medi delle scimmie del gruppo {j + 1}&quot;, &quot;scimmie.csv&quot;)
+        for c, costo in enumerate(config.COSTI):
+            R = fx.rendimenti_scimmie(ret_a, pos_s, costo)
+            cg = fx.cagr(R, anni)
+            SC[(j, c)] = (float(np.median(cg)), float((cg &lt; 0).mean()))
+            righe_s.append({&quot;prob_cambio&quot;: p, &quot;costo&quot;: costo, &quot;cagr_mediano&quot;: SC[(j, c)][0], &quot;quota_in_perdita&quot;: SC[(j, c)][1], &quot;cambi_anno&quot;: cambi_s})
+        reg(f&quot;scim_med_lordo_{j}&quot;, SC[(j, c0)][0], &quot;pct1&quot;, f&quot;Rendimento annuo mediano senza costi, scimmie del gruppo {j + 1}&quot;, &quot;scimmie.csv&quot;)
+        reg(f&quot;scim_med_prova_{j}&quot;, SC[(j, cp)][0], &quot;pct1&quot;, f&quot;Rendimento annuo mediano con costo {config.COSTO_PROVA:.1%}, scimmie del gruppo {j + 1}&quot;, &quot;scimmie.csv&quot;)
+        reg(f&quot;scim_med_max_{j}&quot;, SC[(j, cm)][0], &quot;pct1&quot;, f&quot;Rendimento annuo mediano con costo massimo, scimmie del gruppo {j + 1}&quot;, &quot;scimmie.csv&quot;)
+        reg(f&quot;scim_perdita_max_{j}&quot;, SC[(j, cm)][1], &quot;pct0&quot;, f&quot;Quota di scimmie in perdita (rendimento annuo negativo) con costo massimo, gruppo {j + 1}&quot;, &quot;scimmie.csv&quot;)
+    pd.DataFrame(righe_s).to_csv(config.RISULTATI / &quot;scimmie.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    reg(&quot;n_gruppi_scimmie&quot;, len(config.PROB_CAMBIO), &quot;int&quot;, &quot;Gruppi di scimmie (probabilità di cambio diverse)&quot;, &quot;config.py&quot;)
+    reg(&quot;bh_lordo_confronto&quot;, CG[ib, c0], &quot;pct1&quot;, &quot;Rendimento annuo del buy &amp; hold senza costi (riferimento per le scimmie)&quot;, &quot;costi_regole.csv&quot;)
+
+    gruppi_h6 = [j for j, p in enumerate(config.PROB_CAMBIO) if p &gt;= config.SOGLIA_PROB_SCIMMIE]
+    reg(&quot;n_gruppi_h6&quot;, len(gruppi_h6), &quot;int&quot;, &quot;Gruppi di scimmie con probabilità di cambio alta (ipotesi 6)&quot;, &quot;config.py&quot;)
+    reg(&quot;n_gruppi_h6_ok&quot;, int(sum(1 for j in gruppi_h6 if SC[(j, c0)][0] &gt; 0 and SC[(j, cm)][0] &lt; 0)), &quot;int&quot;,
+        &quot;Gruppi ad alta probabilità di cambio con mediana positiva a costo zero e negativa a costo massimo&quot;, &quot;scimmie.csv&quot;)
+
+    # --- Verdetti calcolati (1 = ipotesi confermata) ---------------------------------------------------------------------------------------------
+    h = {1: len(in_banda) == len(elig),
+         2: perdita_bh &lt; config.SOGLIA_BH,
+         3: n_sh[cm] &lt; n_sh[c0],
+         4: SH[isf, cm] &gt; SH[ib, cm],
+         5: perdite_rb[&quot;giornaliero&quot;] &gt; perdite_rb[&quot;mensile&quot;] &gt; perdite_rb[&quot;annuale&quot;] and perdite_rb[&quot;annuale&quot;] &lt; config.SOGLIA_RIBIL,
+         6: RIS[&quot;n_gruppi_h6_ok&quot;][&quot;valore&quot;] == len(gruppi_h6)}
+    for n, ok in h.items():
+        reg(f&quot;h{n}_ok&quot;, int(ok), &quot;int&quot;, f&quot;1 se l&#x27;ipotesi {n} è confermata, 0 se smentita&quot;, &quot;02_backtest_e_test.py&quot;)
+
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri; {T} sedute&quot;)
+    print(&quot;ipotesi:&quot;, {n: int(ok) for n, ok in h.items()})
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_costi_regole.png     rendimento annuo di ogni regola al crescere del costo per operazione
+  fig2_proporzionalita.png  perdita osservata contro cambi all&#x27;anno x costo massimo (la diagonale è la proporzionalità perfetta)
+  fig3_ribilanciamento.png  perdita di rendimento annuo del 50/50 per frequenza di ribilanciamento, costo massimo
+  fig4_scimmie.png          rendimento annuo mediano delle scimmie al crescere della frequenza di cambio, per costo
+&quot;&quot;&quot;
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def pct(x, _=None):
+    return f&quot;{x:.0f}%&quot;.replace(&quot;.&quot;, &quot;,&quot;)
+
+
+def spaziatura(valori: dict, gap: float) -&gt; dict:
+    &quot;&quot;&quot;Posizioni verticali delle etichette: stesso ordine dei valori, distanza minima `gap` (solo per leggibilità).&quot;&quot;&quot;
+    ordine = sorted(valori, key=valori.get)
+    pos = {}
+    ultimo = -1e9
+    for k in ordine:
+        ultimo = max(valori[k], ultimo + gap)
+        pos[k] = ultimo
+    return pos
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    S = pd.read_csv(R / &quot;costi_regole.csv&quot;)
+    RB = pd.read_csv(R / &quot;ribilanciamento.csv&quot;)
+    SC = pd.read_csv(R / &quot;scimmie.csv&quot;)
+
+    # --- Figura 1: il rendimento al crescere del costo ---------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(10, 6))
+    fine = {i: S[S[&quot;id&quot;] == i][&quot;cagr&quot;].iloc[-1] * 100 for i in config.STRATEGIE}
+    et = spaziatura(fine, 0.75)
+    for i, (nome, _) in config.STRATEGIE.items():
+        d = S[S[&quot;id&quot;] == i]
+        if i == config.ID_BH:
+            col, lw, ls, z = BLU, 3.2, &quot;-&quot;, 3
+        elif i == &quot;ritorno&quot;:
+            col, lw, ls, z = ARANCIO, 3.2, &quot;--&quot;, 3
+        else:
+            col, lw, ls, z = GRIGIO, 1.6, &quot;-&quot;, 1
+        ax.plot(d[&quot;costo&quot;] * 100, d[&quot;cagr&quot;] * 100, color=col, lw=lw, ls=ls, marker=&quot;o&quot;, ms=4, zorder=z)
+        ax.text(d[&quot;costo&quot;].max() * 100 + 0.02, et[i], nome, va=&quot;center&quot;, fontsize=9.5, color=col if col != GRIGIO else &quot;#444&quot;)
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_xlim(-0.01, config.COSTO_MAX * 100 + 0.40)
+    ax.set_xticks([c * 100 for c in config.COSTI], [f&quot;{c * 100:g}&quot;.replace(&quot;.&quot;, &quot;,&quot;) for c in config.COSTI])
+    ax.set_xlabel(&quot;costo per ogni acquisto o vendita (% del valore scambiato)&quot;)
+    ax.set_ylabel(&quot;rendimento annuo composto&quot;)
+    ax.yaxis.set_major_formatter(pct)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_costi_regole.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 2: perdita contro cambi x costo ---------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(7.5, 6))
+    lo = S[S[&quot;costo&quot;] == 0].set_index(&quot;id&quot;)
+    hi = S[S[&quot;costo&quot;] == config.COSTO_MAX].set_index(&quot;id&quot;)
+    x = (lo[&quot;cambi_anno&quot;] * config.COSTO_MAX * 100).reindex(list(config.STRATEGIE))
+    y = ((lo[&quot;cagr&quot;] - hi[&quot;cagr&quot;]) * 100).reindex(list(config.STRATEGIE))
+    m = max(x.max(), y.max()) * 1.08
+    ax.plot([0, m], [0, m], color=ARANCIO, lw=2.2, ls=&quot;--&quot;, zorder=1)
+    ax.scatter(x, y, color=BLU, s=60, zorder=3)
+    et2 = spaziatura(y.to_dict(), m * 0.045)
+    for i in x.index:
+        ax.annotate(config.STRATEGIE[i][0].replace(&quot;Prezzo sopra la &quot;, &quot;Sopra la &quot;), (x[i], y[i]), xytext=(x[i] + m * 0.06, et2[i]), textcoords=&quot;data&quot;,
+                    fontsize=8.5, color=&quot;#333&quot;, va=&quot;center&quot;, arrowprops=dict(arrowstyle=&quot;-&quot;, color=GRIGIO, lw=0.8, shrinkA=0, shrinkB=3))
+    ax.set_xlabel(&quot;cambi all&#x27;anno × costo massimo (punti percentuali)&quot;)
+    ax.set_ylabel(&quot;perdita di rendimento annuo osservata (punti percentuali)&quot;)
+    ax.set_xlim(0, m)
+    ax.set_ylim(0, m)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig2_proporzionalita.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 3: ribilanciamento -----------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(8, 5))
+    nomi = list(config.RIBILANCIAMENTI)
+    perd = []
+    for f in nomi:
+        d = RB[RB[&quot;frequenza&quot;] == f].set_index(&quot;costo&quot;)[&quot;cagr&quot;]
+        perd.append((d.loc[0.0] - d.loc[config.COSTO_MAX]) * 100)
+    ax.bar(range(len(nomi)), perd, color=[ARANCIO, GRIGIO, BLU], width=0.55)
+    for x_, v in enumerate(perd):
+        ax.text(x_, v + max(perd) * 0.02, f&quot;{v:.2f}&quot;.replace(&quot;.&quot;, &quot;,&quot;) + &quot; pp&quot;, ha=&quot;center&quot;, fontsize=12)
+    ax.set_xticks(range(len(nomi)), [f&quot;ogni {RB[RB[&#x27;frequenza&#x27;] == f][&#x27;ogni_sedute&#x27;].iloc[0]} sedute\n({f})&quot; if RB[RB[&#x27;frequenza&#x27;] == f][&#x27;ogni_sedute&#x27;].iloc[0] &gt; 1 else f&quot;ogni seduta\n({f})&quot; for f in nomi])
+    ax.set_ylabel(&quot;perdita di rendimento annuo (punti percentuali)&quot;)
+    ax.grid(axis=&quot;x&quot;, visible=False)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_ribilanciamento.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 4: scimmie --------------------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(9.5, 5.6))
+    probs = sorted(SC[&quot;prob_cambio&quot;].unique())
+    colori = {0.0: BLU, config.COSTO_PROVA: GRIGIO, config.COSTO_MAX: ARANCIO}
+    for costo, col in colori.items():
+        d = SC[np.isclose(SC[&quot;costo&quot;], costo)].sort_values(&quot;prob_cambio&quot;)
+        ax.plot(d[&quot;prob_cambio&quot;] * 100, d[&quot;cagr_mediano&quot;] * 100, color=col, lw=3 if costo else 2.4, marker=&quot;o&quot;,
+                ls=&quot;--&quot; if costo == config.COSTO_MAX else &quot;-&quot;, label=(&quot;costo &quot; + f&quot;{costo * 100:.1f}%&quot;.replace(&quot;.&quot;, &quot;,&quot;)) if costo else &quot;senza costi&quot;)
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_xscale(&quot;log&quot;)
+    ax.set_xticks([p * 100 for p in probs], [f&quot;{p * 100:g}%&quot;.replace(&quot;.&quot;, &quot;,&quot;) for p in probs])
+    ax.set_xlabel(&quot;probabilità di cambiare posizione in ogni seduta&quot;)
+    ax.set_ylabel(&quot;rendimento annuo mediano delle scimmie&quot;)
+    ax.yaxis.set_major_formatter(pct)
+    ax.legend(loc=&quot;lower left&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig4_scimmie.png&quot;)
+    plt.close(fig)
+    print(&quot;Grafici salvati in figure/&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>regole, parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 101 - &quot;Il costo nascosto: commissioni, slippage, ribilanciamento&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Idea: si prendono otto regole di investimento fisse (le stesse dell&#x27;articolo 61, nessuna ottimizzata) e si fa variare
+il costo per operazione da 0 a 0,5% del valore scambiato. Si guarda quanto costa a ciascuna regola, se il costo è
+proporzionale al numero di cambi di posizione, se la classifica per Sharpe cambia, quanto costa ribilanciare un portafoglio
+50/50 a frequenze diverse e che cosa succede a chi cambia posizione a caso con frequenze crescenti (scimmie).
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati ---------------------------------------------------------------
+TICKER = &quot;^GSPC&quot;                  # S&amp;P 500, indice di prezzo (senza dividendi), dal 1927
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+
+# --- Le otto regole (long o cash), come nell&#x27;articolo 61 --------------------------------------------------------------
+# Il segnale della chiusura di ieri decide la posizione di oggi (nessun look-ahead, come nell&#x27;articolo 4).
+# &quot;Cambio&quot; = un acquisto o una vendita dell&#x27;intera posizione; entrare e uscire sono due cambi.
+STRATEGIE = {
+    &quot;bh&quot;: (&quot;Buy &amp; hold&quot;, (&quot;bh&quot;,)),
+    &quot;sma50&quot;: (&quot;Prezzo sopra la media a 50 giorni&quot;, (&quot;sopra_media&quot;, 50)),
+    &quot;sma100&quot;: (&quot;Prezzo sopra la media a 100 giorni&quot;, (&quot;sopra_media&quot;, 100)),
+    &quot;sma200&quot;: (&quot;Prezzo sopra la media a 200 giorni&quot;, (&quot;sopra_media&quot;, 200)),
+    &quot;cross&quot;: (&quot;Incrocio 50/200&quot;, (&quot;incrocio&quot;, 50, 200)),
+    &quot;mom&quot;: (&quot;Momentum a 12 mesi&quot;, (&quot;momentum&quot;, 252)),
+    &quot;calma&quot;: (&quot;Solo a mercato calmo&quot;, (&quot;calma&quot;, 20, 0.20)),       # investito se la volatilità a 20 giorni è sotto il 20% annuo
+    &quot;ritorno&quot;: (&quot;Ritorno alla media nel trend&quot;, (&quot;ritorno_media&quot;, 5, 200)),  # investito se sotto la media a 5 giorni ma sopra quella a 200
+}
+ID_BH, ID_FILTRO, ID_VELOCE = &quot;bh&quot;, &quot;sma200&quot;, &quot;sma50&quot;
+
+# --- La griglia dei costi (quota del valore scambiato, per ogni acquisto o vendita) -----------------------------------
+# Il costo è unico: somma di commissione, spread e slippage. Nessuna tassa.
+COSTI = (0.0, 0.0005, 0.001, 0.002, 0.003, 0.005)
+COSTO_MAX = COSTI[-1]
+COSTO_PROVA = 0.001               # il costo &quot;tipico&quot; che si cita nel testo (0,1%)
+
+SEDUTE_ANNO = 252
+INIZIO_TEST_SEDUTE = 260          # le prime sedute servono per il momentum a 252 giorni: tutte le regole partono dallo stesso giorno
+
+# --- Ribilanciamento: portafoglio 50% S&amp;P 500, 50% cassa a rendimento zero -----------------------------------------------
+QUOTA_AZIONI = 0.5
+RIBILANCIAMENTI = {&quot;giornaliero&quot;: 1, &quot;mensile&quot;: 21, &quot;annuale&quot;: 252}   # ogni quante sedute si riporta la quota al 50%
+
+# --- Scimmie: posizione casuale (investito / cassa) con probabilità giornaliera p di cambiare stato ---------------------
+SEME = 20261023
+N_SCIMMIE = 300
+PROB_CAMBIO = (0.01, 0.05, 0.10, 0.20, 0.50)
+
+# --- Soglie delle ipotesi ------------------------------------------------------------------------------------------------
+CAMBI_MIN_ANNO = 1.0              # ipotesi 1: si guardano le regole con almeno un cambio all&#x27;anno
+BANDA_PROPORZIONALITA = (0.7, 1.3)  # ipotesi 1: perdita di rendimento / (cambi annui x costo) deve stare in questa banda
+SOGLIA_BH = 0.0001                # ipotesi 2: perdita di rendimento annuo del buy &amp; hold sotto 0,01 punti percentuali
+SOGLIA_PROB_SCIMMIE = 0.10         # ipotesi 6: scimmie con probabilità di cambio almeno pari a questa
+
+SOGLIA_RIBIL = 0.0005             # ipotesi 5: perdita di rendimento annuo con ribilanciamento annuale sotto 0,05 punti percentuali
+
+NOMI_ESENTI = tuple(v[0] for v in STRATEGIE.values()) + (&quot;50/50&quot;,)
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) Il costo si paga a ogni cambio di posizione: per ogni regola con almeno un cambio all&#x27;anno, la perdita di rendimento annuo &quot;
+    &quot;composto tra costo zero e costo 0,5% sta tra 0,7 e 1,3 volte (cambi all&#x27;anno x 0,5%). &quot;
+    &quot;2) Il buy &amp; hold, che compra una volta sola, perde meno di 0,01 punti percentuali di rendimento annuo anche con costo 0,5%. &quot;
+    &quot;3) Il numero di regole con Sharpe più alto del buy &amp; hold è più basso con costo 0,5% che con costo zero. &quot;
+    &quot;4) Il filtro a 200 giorni conserva uno Sharpe più alto del buy &amp; hold anche con costo 0,5%. &quot;
+    &quot;5) Ribilanciare un portafoglio 50/50 ogni giorno costa, a parità di costo 0,5%, più di ribilanciare ogni mese, e ribilanciare ogni mese &quot;
+    &quot;costa più che ogni anno; con ribilanciamento annuale la perdita di rendimento annuo è sotto 0,05 punti percentuali. &quot;
+    &quot;6) Una scimmia che cambia posizione a caso con probabilità giornaliera di almeno il 10% ha un rendimento annuo mediano positivo &quot;
+    &quot;a costo zero e negativo a costo 0,5%.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>regole, rendimenti netti dei costi, ribilanciamento, scimmie</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 101: regole, rendimenti netti dei costi, ribilanciamento, scimmie.
+Separate dal flusso perché si possano controllare su dati inventati (verifica_motore.py).&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import motore_vettoriale as m
+
+
+# --- Regole (le stesse dell&#x27;articolo 61) --------------------------------------------------------------------------
+def segnale(close: pd.Series, spec: tuple) -&gt; pd.Series:
+    &quot;&quot;&quot;True se la regola è &#x27;investito&#x27;, calcolato con le chiusure fino a t incluse.&quot;&quot;&quot;
+    tipo = spec[0]
+    if tipo == &quot;bh&quot;:
+        return pd.Series(True, index=close.index)
+    if tipo == &quot;sopra_media&quot;:
+        return m.segnale_sopra_media(close, spec[1])
+    if tipo == &quot;incrocio&quot;:
+        return m.segnale_medie(close, spec[1], spec[2])
+    if tipo == &quot;momentum&quot;:
+        passato = close.shift(spec[1])
+        return (close &gt; passato) &amp; passato.notna()
+    if tipo == &quot;calma&quot;:
+        vol = m.rendimenti(close).rolling(spec[1]).std() * np.sqrt(252)
+        return (vol &lt; spec[2]) &amp; vol.notna()
+    if tipo == &quot;ritorno_media&quot;:
+        lenta = close.rolling(spec[2]).mean()
+        return (close &lt; close.rolling(spec[1]).mean()) &amp; (close &gt; lenta) &amp; lenta.notna()
+    raise ValueError(f&quot;regola sconosciuta: {tipo}&quot;)
+
+
+def posizione_regola(close: pd.Series, spec: tuple) -&gt; pd.Series:
+    &quot;&quot;&quot;Quota investita (0 o 1) nella seduta; il segnale di ieri decide la posizione di oggi.&quot;&quot;&quot;
+    return m.posizione(segnale(close, spec), 1).astype(float)
+
+
+def rendimenti_netti(rend: pd.Series, pos: pd.Series, costo: float) -&gt; pd.Series:
+    &quot;&quot;&quot;Rendimento giornaliero della regola (rend = rendimenti giornalieri dell&#x27;indice), meno il costo su ogni variazione della quota investita.&quot;&quot;&quot;
+    cambi = pos.diff().abs()
+    cambi.iloc[0] = abs(pos.iloc[0])          # l&#x27;ingresso iniziale dalla cassa è un cambio e si paga
+    return rend * pos - costo * cambi
+
+
+# --- Metriche ----------------------------------------------------------------------------------------------------------
+def sharpe(R: np.ndarray, sedute_anno: int = 252) -&gt; np.ndarray:
+    R = np.asarray(R, dtype=float)
+    sd = R.std(axis=-1, ddof=1)
+    with np.errstate(divide=&quot;ignore&quot;, invalid=&quot;ignore&quot;):
+        v = R.mean(axis=-1) / sd * np.sqrt(sedute_anno)
+    return np.where(sd &gt; 0, v, np.nan)
+
+
+def cagr(R: np.ndarray, anni: float) -&gt; np.ndarray:
+    R = np.asarray(R, dtype=float)
+    return np.exp(np.log1p(R).sum(axis=-1) / anni) - 1.0
+
+
+def perdita_massima(R: np.ndarray) -&gt; np.ndarray:
+    R = np.asarray(R, dtype=float)
+    v = np.cumprod(1.0 + R, axis=-1)
+    v = np.concatenate([np.ones(v.shape[:-1] + (1,)), v], axis=-1)
+    return (v / np.maximum.accumulate(v, axis=-1) - 1.0).min(axis=-1)
+
+
+# --- Ribilanciamento ---------------------------------------------------------------------------------------------------
+def mix_ribilanciato(rend: np.ndarray, quota: float, ogni: int, costo: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimenti giornalieri netti di un portafoglio con una quota fissa nell&#x27;indice e il resto in cassa (rendimento zero).
+
+    Ogni `ogni` sedute (alla chiusura) la quota derivata viene riportata a `quota`; si paga `costo` sul valore scambiato,
+    cioè |quota derivata - quota| del valore del portafoglio. All&#x27;inizio si parte tutto in cassa e si compra la quota obiettivo
+    il primo giorno (anche questo scambio si paga: `quota` del valore).&quot;&quot;&quot;
+    rend = np.asarray(rend, dtype=float)
+    out = np.empty(len(rend))
+    w = quota
+    for t, r in enumerate(rend):
+        p = w * r
+        w = w * (1.0 + r) / (1.0 + p)
+        netto = p
+        if t == 0:
+            netto = (1.0 + p) * (1.0 - costo * quota) - 1.0   # ingresso iniziale dalla cassa
+        if (t + 1) % ogni == 0:
+            scambio = abs(w - quota)
+            netto = (1.0 + netto) * (1.0 - costo * scambio) - 1.0
+            w = quota
+        out[t] = netto
+    return out
+
+
+# --- Scimmie -----------------------------------------------------------------------------------------------------------
+def posizioni_scimmie(n: int, T: int, prob: float, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;n posizioni casuali (1 investito, 0 cassa) lunghe T: partono investite e a ogni seduta cambiano stato con probabilità `prob`.&quot;&quot;&quot;
+    cambia = rng.random((n, T)) &lt; prob
+    cambia[:, 0] = False
+    return (np.cumsum(cambia, axis=1) % 2 == 0).astype(float)
+
+
+def rendimenti_scimmie(rend: np.ndarray, pos: np.ndarray, costo: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimenti netti di più posizioni (una per riga); il costo si paga a ogni cambio di stato.&quot;&quot;&quot;
+    cambi = np.abs(np.diff(pos, axis=1, prepend=np.zeros((pos.shape[0], 1))))   # l&#x27;ingresso iniziale dalla cassa si paga
+    return rend[None, :] * pos - costo * cambi
+
+
+# --- Correlazione di rango tra due classifiche ---------------------------------------------------------------------------
+def posti(valori) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posto in classifica, 1 = valore più alto; parità = posto medio; valori non definiti = ultimi.&quot;&quot;&quot;
+    v = np.where(np.isnan(np.asarray(valori, dtype=float)), -np.inf, valori)
+    return pd.Series(v).rank(ascending=False, method=&quot;average&quot;).to_numpy()
+
+
+def kendall(a, b) -&gt; float:
+    &quot;&quot;&quot;Tau-b di Kendall tra due vettori.&quot;&quot;&quot;
+    a, b = np.asarray(a, dtype=float), np.asarray(b, dtype=float)
+    da, db = np.sign(a[:, None] - a[None, :]), np.sign(b[:, None] - b[None, :])
+    iu = np.triu_indices(len(a), 1)
+    x, y = da[iu], db[iu]
+    den = np.sqrt((x != 0).sum() * (y != 0).sum())
+    return float((x * y).sum() / den) if den &gt; 0 else float(&quot;nan&quot;)
+</code></pre></details>
+<details><summary>flusso/motore_vettoriale.py<small>segnale, posizione con ritardo, valore (dall&#x27;articolo 4)</small></summary><pre><code class="language-python">&quot;&quot;&quot;Motore vettoriale minimo: segnale, posizione, rendimenti. Senza commissioni né tasse, per isolare l&#x27;effetto del look-ahead.
+
+Convenzioni:
+  - rend[t] è il rendimento della seduta t: chiusura di t su chiusura di t-1;
+  - il segnale[t] si calcola con le chiusure fino a t incluse;
+  - posizione(segnale, ritardo): ritardo = 0 usa il segnale di t per il rendimento di t (LOOK-AHEAD: si compra alla
+    chiusura di ieri sapendo la chiusura di oggi); ritardo = 1 usa il segnale di ieri (onesto).
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def rendimenti(close: pd.Series) -&gt; pd.Series:
+    return close.pct_change().fillna(0.0)
+
+
+def segnale_un_giorno(close: pd.Series) -&gt; pd.Series:
+    return close &gt; close.shift(1)
+
+
+def segnale_sopra_media(close: pd.Series, n: int) -&gt; pd.Series:
+    return (close &gt; close.rolling(n).mean()) &amp; close.rolling(n).mean().notna()
+
+
+def segnale_medie(close: pd.Series, veloce: int, lenta: int) -&gt; pd.Series:
+    sl = close.rolling(lenta).mean()
+    return (close.rolling(veloce).mean() &gt; sl) &amp; sl.notna()
+
+
+def posizione(segnale: pd.Series, ritardo: int) -&gt; pd.Series:
+    &quot;&quot;&quot;True se si è investiti nella seduta, dato il ritardo con cui il segnale è noto.&quot;&quot;&quot;
+    if ritardo &lt; 0:
+        raise ValueError(&quot;ritardo negativo: sarebbe usare il futuro&quot;)
+    return segnale.shift(ritardo, fill_value=False).astype(bool)
+
+
+def valore(rend: pd.Series, pos: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Valore di 1 investito, composto giorno per giorno: nei giorni in cassa il rendimento è zero.&quot;&quot;&quot;
+    return (1.0 + rend * pos.astype(float)).cumprod()
+
+
+def cagr(v: pd.Series, anni: float) -&gt; float:
+    return float(v.iloc[-1] ** (1.0 / anni) - 1.0)
+
+
+def perdita_massima(v: pd.Series) -&gt; float:
+    return float((v / v.cummax() - 1.0).min())
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati (formule a mano, assenza di look-ahead)</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni dell&#x27;articolo 101 su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+def serie(valori, inizio=&quot;2000-01-03&quot;) -&gt; pd.Series:
+    return pd.Series(np.asarray(valori, float), index=pd.bdate_range(inizio, periods=len(valori)))
+
+
+rng = np.random.default_rng(1)
+close = serie(100 * np.exp(np.cumsum(rng.normal(0.0003, 0.012, 1200))))
+
+# --- Regole: nessun look-ahead ---
+for i, (nome, spec) in config.STRATEGIE.items():
+    completa = fx.posizione_regola(close, spec)
+    tronca = fx.posizione_regola(close.iloc[:800], spec)
+    controlla(f&quot;{i}: cambiare il futuro non cambia la posizione passata&quot;, np.array_equal(completa.iloc[:800].to_numpy(), tronca.to_numpy()))
+    alt = close.copy()
+    alt.iloc[900:] *= 3.0
+    controlla(f&quot;{i}: la posizione fino al giorno 900 non dipende dai prezzi dopo&quot;, np.array_equal(completa.iloc[:901].to_numpy(), fx.posizione_regola(alt, spec).iloc[:901].to_numpy()))
+controlla(&quot;buy &amp; hold è sempre investito dal secondo giorno&quot;, bool((fx.posizione_regola(close, config.STRATEGIE[&quot;bh&quot;][1]).iloc[1:] == 1.0).all()))
+
+# --- Rendimenti netti: costo a ogni cambio, ingresso iniziale compreso ---
+pos = pd.Series([0, 0, 1, 1, 0, 0], index=close.index[:6], dtype=float)
+rend = serie([0, 0, 0.10, 0.10, 0, 0])
+rn = fx.rendimenti_netti(rend, pos, 0.01)
+controlla(&quot;due cambi (entrata e uscita): lordo 0,20 meno 0,02&quot;, abs(float(rn.sum()) - 0.18) &lt; 1e-12)
+pos1 = pd.Series([1, 1, 1], index=close.index[:3], dtype=float)
+controlla(&quot;partendo già investiti si paga l&#x27;ingresso iniziale&quot;, abs(float(fx.rendimenti_netti(serie([0, 0, 0]), pos1, 0.01).sum()) + 0.01) &lt; 1e-12)
+controlla(&quot;a costo zero il rendimento netto è quello lordo&quot;, np.allclose(fx.rendimenti_netti(serie([0.01, -0.02, 0.03]), pos1, 0.0), [0.01, -0.02, 0.03]))
+controlla(&quot;il costo è proporzionale: il doppio del costo, il doppio della perdita&quot;, abs(float(fx.rendimenti_netti(rend, pos, 0.02).sum()) - 0.16) &lt; 1e-12)
+
+# --- Ribilanciamento ---
+r = np.array([0.10, 0.0, 0.0])
+sen = fx.mix_ribilanciato(r, 0.5, 1, 0.0)
+controlla(&quot;50/50 senza costi: primo giorno rende metà&quot;, abs(sen[0] - 0.05) &lt; 1e-12)
+# giorno 1, costo 1%: ingresso 0,5% (costo*quota), poi quota derivata 0,5*1,1/1,05 = 0,5238..., scambio 0,0238...
+w1 = 0.5 * 1.1 / 1.05
+atteso = (1.05 * (1 - 0.01 * 0.5)) * (1 - 0.01 * abs(w1 - 0.5)) - 1
+controlla(&quot;50/50 giornaliero con costo, giorno 1 a mano&quot;, abs(fx.mix_ribilanciato(r, 0.5, 1, 0.01)[0] - atteso) &lt; 1e-12)
+controlla(&quot;senza ribilanciamenti nel periodo (ogni 10 sedute su 3) il costo è solo l&#x27;ingresso&quot;, abs(fx.mix_ribilanciato(r, 0.5, 10, 0.01)[0] - (1.05 * 0.995 - 1)) &lt; 1e-12)
+rr = rng.normal(0.0004, 0.01, 2000)
+cg = {k: np.sum(np.log1p(fx.mix_ribilanciato(rr, 0.5, k, 0.005))) for k in (1, 21, 252)}
+cg0 = {k: np.sum(np.log1p(fx.mix_ribilanciato(rr, 0.5, k, 0.0))) for k in (1, 21, 252)}
+controlla(&quot;il costo del ribilanciamento cala con la frequenza (giornaliero &gt; mensile &gt; annuale)&quot;, (cg0[1] - cg[1]) &gt; (cg0[21] - cg[21]) &gt; (cg0[252] - cg[252]) &gt; 0)
+controlla(&quot;il costo del ribilanciamento annuale è positivo e sotto lo 0,5% del valore all&#x27;anno in questi dati&quot;, 0 &lt; (cg0[252] - cg[252]) &lt; 0.005 * 2000 / 252)
+
+# --- Scimmie ---
+ps = fx.posizioni_scimmie(400, 5000, 0.10, np.random.default_rng(3))
+controlla(&quot;scimmie: valori 0/1, partono investite&quot;, set(np.unique(ps)) &lt;= {0.0, 1.0} and bool((ps[:, 0] == 1.0).all()))
+cambi_medi = np.abs(np.diff(ps, axis=1)).sum(axis=1).mean() / 5000
+controlla(&quot;scimmie: la frequenza dei cambi è vicina alla probabilità&quot;, abs(cambi_medi - 0.10) &lt; 0.01)
+rs = fx.rendimenti_scimmie(np.full(5000, 0.0), ps, 0.01)
+controlla(&quot;scimmie: con rendimenti nulli si perde esattamente il costo dei cambi&quot;, abs(rs.sum(axis=1).mean() + 0.01 * (np.abs(np.diff(ps, axis=1, prepend=0)).sum(axis=1).mean())) &lt; 1e-9)
+
+# --- Metriche ---
+controlla(&quot;rendimento annuo composto a mano&quot;, abs(float(fx.cagr(np.array([0.1, -0.1, 0.1]), 2.0)) - (1.089 ** 0.5 - 1)) &lt; 1e-12)
+controlla(&quot;Sharpe a mano su una serie piccola&quot;, abs(float(fx.sharpe(np.array([0.01, -0.01, 0.02, 0.0]))) - np.array([0.01, -0.01, 0.02, 0.0]).mean() / np.array([0.01, -0.01, 0.02, 0.0]).std(ddof=1) * np.sqrt(252)) &lt; 1e-9)
+controlla(&quot;Kendall di due classifiche uguali = 1 e opposte = -1&quot;, abs(fx.kendall([1, 2, 3], [4, 5, 9]) - 1) &lt; 1e-12 and abs(fx.kendall([1, 2, 3], [9, 5, 4]) + 1) &lt; 1e-12)
+controlla(&quot;posti: il valore più alto è primo&quot;, list(fx.posti(np.array([3.0, 1.0, 2.0, 5.0]))) == [2.0, 4.0, 3.0, 1.0])
+
+print(f&quot;{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>

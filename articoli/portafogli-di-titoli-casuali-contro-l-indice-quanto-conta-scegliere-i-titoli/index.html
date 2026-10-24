@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portafogli di titoli casuali contro l&#x27;indice: quanto conta scegliere i titoli? · il codice · TickerFight</title>
+<meta name="description" content="mille portafogli estratti a caso dall&#x27;S&amp;P 100 battono l&#x27;indice? Quanto conta, da sola, la scelta dei titoli?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a><a href="https://github.com/TickerFight/tickerfight">GitHub</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Portafogli di titoli casuali contro l&#x27;indice: quanto conta scegliere i titoli?</h1>
+<p class="domanda">Mille portafogli estratti a caso dall&#x27;S&amp;P 100 battono l&#x27;indice? Quanto conta, da sola, la scelta dei titoli?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="portafogli-di-titoli-casuali-contro-l-indice-quanto-conta-scegliere-i-titoli.zip" download>⬇ Scarica il codice (.zip)</a><a class="btn" href="https://github.com/TickerFight/tickerfight/tree/main/articoli/portafogli-di-titoli-casuali-contro-l-indice-quanto-conta-scegliere-i-titoli">Vedi su GitHub</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Universo:</strong> i componenti dell'S&amp;P 100 di oggi (lista fissata a priori, una classe azionaria per società); restano i titoli con prezzi dal primo giorno del periodo (2006).</li>
+<li><strong>Portafogli:</strong> 1.000 per ciascuna dimensione (5, 10, 20, 30 titoli), estratti a caso, pesi uguali, ribilanciati ogni primo giorno di Borsa dell'anno; nessun costo né tassa.</li>
+<li><strong>Confronti:</strong> SPY (rendimento totale) e universo a pesi uguali (stesso difetto di campione).</li>
+<li><strong>Controlli:</strong> altri quattro semi, due metà del periodo (persistenza), singoli titoli.</li>
+<li><strong>Nessun look-ahead:</strong> i titoli sono estratti prima di guardare i rendimenti.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>portafogli-di-titoli-casuali-contro-l-indice-quanto-conta-scegliere-i-titoli/
+├── requirements.txt   librerie Python (versioni fissate)
+└── flusso/
+    ├── 01_scarica_dati.py     scarica i prezzi corretti dell'universo e dello SPY
+    ├── 02_backtest_e_test.py  estrae i portafogli, li confronta con SPY e universo, controllo con altri semi
+    ├── 03_grafici.py          crea i quattro grafici
+    ├── config.py              parametri, universo e ipotesi (scritte prima dei risultati)
+    ├── funzioni.py            curve dei portafogli a pesi uguali con ribilanciamento annuale, CAGR, Sharpe, drawdown
+    └── verifica_motore.py     controlli delle funzioni su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd portafogli-di-titoli-casuali-contro-l-indice-quanto-conta-scegliere-i-titoli
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python (versioni fissate)</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance le chiusure giornaliere corrette (dividendi e frazionamenti) dell&#x27;universo e dello SPY.
+
+Salva dati/prezzi.csv (una colonna per titolo, indice Date) e dati/metadati.json con la fonte, la data del download,
+la versione di yfinance, l&#x27;esito per ogni titolo e l&#x27;impronta SHA-256 del file. Gli script successivi leggono SOLO i
+file salvati: i risultati restano riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.Series:
+    for tentativo in range(3):
+        try:
+            grezzo = yf.Ticker(ticker).history(start=config.INIZIO, auto_adjust=True)
+        except Exception as e:  # rete o limiti di Yahoo: si riprova
+            print(f&quot;{ticker}: errore {e!r} (tentativo {tentativo + 1})&quot;)
+            grezzo = pd.DataFrame()
+        if not grezzo.empty:
+            s = grezzo[&quot;Close&quot;].copy()
+            s.index = pd.to_datetime(s.index).tz_localize(None).normalize()
+            s = s[~s.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna()
+            return s[s &gt; 0]
+        time.sleep(8)
+    return pd.Series(dtype=float)
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    tickers = [config.INDICE] + list(config.UNIVERSO)
+    serie, esiti = {}, []
+    for t in tickers:
+        s = scarica(t)
+        if s.empty:
+            esiti.append({&quot;ticker&quot;: t, &quot;stato&quot;: &quot;assente: nessun dato restituito da Yahoo Finance&quot;})
+            print(f&quot;{t}: nessun dato&quot;)
+            continue
+        # seduta ancora in corso: barra incompleta, da scartare
+        if s.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:
+            s = s.iloc[:-1]
+        serie[t] = s
+        esiti.append({&quot;ticker&quot;: t, &quot;stato&quot;: &quot;ok&quot;, &quot;righe&quot;: len(s), &quot;prima_data&quot;: str(s.index[0].date()),
+                      &quot;ultima_data&quot;: str(s.index[-1].date())})
+        print(f&quot;{t}: {len(s)} righe, dal {s.index[0].date()} al {s.index[-1].date()}&quot;)
+    if config.INDICE not in serie or len(serie) &lt; 0.8 * len(tickers):
+        raise SystemExit(&quot;Download insufficiente: manca lo SPY o più del 20% dei titoli.&quot;)
+    df = pd.DataFrame(serie).sort_index()
+    df.index.name = &quot;Date&quot;
+    df.to_csv(config.FILE_PREZZI, float_format=&quot;%.6f&quot;)
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;prezzi&quot;: &quot;chiusure corrette per dividendi e frazionamenti (auto_adjust=True)&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+            &quot;file&quot;: config.FILE_PREZZI.name, &quot;sha256&quot;: hashlib.sha256(config.FILE_PREZZI.read_bytes()).hexdigest(),
+            &quot;titoli&quot;: esiti}
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Salvati {df.shape[1]} titoli, {len(df)} giorni.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>estrae i portafogli, li confronta con SPY e universo, controllo con altri semi</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Mille portafogli casuali di k titoli contro lo SPY e contro l&#x27;universo a pesi uguali.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json          ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  portafogli_k&lt;k&gt;.csv    per ogni portafoglio: rendimento annuo composto, Sharpe, drawdown massimo, CAGR nelle due metà
+  riassunto_k.csv        per ogni k: mediana, percentili, quote di vittorie, Sharpe e drawdown mediani
+  curve.csv              SPY, universo a pesi uguali e fascia (5°, 50°, 95° percentile) dei portafogli da K_PRINCIPALE titoli
+  universo_usato.json    titoli tenuti e scartati
+
+Nessun look-ahead: i titoli di ogni portafoglio sono estratti prima di guardare i rendimenti; i pesi sono 1/k all&#x27;inizio di
+ogni anno solare. Nessun costo, nessuna tassa.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    meta = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    df = pd.read_csv(config.FILE_PREZZI, index_col=&quot;Date&quot;, parse_dates=True).sort_index()
+    df = df[df.index &gt;= pd.Timestamp(config.INIZIO)]
+    spy = df[config.INDICE].dropna()
+    giorni = spy.index                       # calendario di riferimento: i giorni di Borsa dello SPY
+    df = df.reindex(giorni)
+
+    # --- Universo: solo i titoli con prezzo dal primo giorno e quasi senza buchi ------------------------------------
+    candidati = [t for t in config.UNIVERSO if t in df.columns]
+    mancanti_download = [t for t in config.UNIVERSO if t not in df.columns]
+    tenuti, scartati = [], {t: &quot;assente da Yahoo Finance&quot; for t in mancanti_download}
+    for t in candidati:
+        s = df[t]
+        if pd.isna(s.iloc[0]):
+            scartati[t] = &quot;non quotato dal primo giorno&quot;
+        elif s.isna().mean() &gt; config.SOGLIA_BUCHI:
+            scartati[t] = &quot;troppi giorni senza prezzo&quot;
+        else:
+            tenuti.append(t)
+    P_df = df[tenuti].ffill()
+    P_df[config.INDICE] = df[config.INDICE]
+    if P_df.isna().any().any():
+        raise SystemExit(&quot;Prezzi mancanti dopo il riempimento: controllare i dati.&quot;)
+    n = len(tenuti)
+    if n &lt; max(config.K_TITOLI) + 5:
+        raise SystemExit(f&quot;Universo troppo piccolo: {n} titoli.&quot;)
+    (config.RISULTATI / &quot;universo_usato.json&quot;).write_text(
+        json.dumps({&quot;tenuti&quot;: tenuti, &quot;scartati&quot;: scartati}, ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+
+    P = P_df[tenuti].to_numpy(float)
+    P_spy = P_df[[config.INDICE]].to_numpy(float)
+    anni = giorni.year.to_numpy()
+    T = len(giorni)
+    giorni_cal = (giorni[-1] - giorni[0]).days
+    i_meta = int(giorni.searchsorted(pd.Timestamp(config.META_DATA)))
+    giorni_h1 = (giorni[i_meta] - giorni[0]).days
+    giorni_h2 = (giorni[-1] - giorni[i_meta]).days
+
+    # --- Confronti: SPY e universo a pesi uguali ---------------------------------------------------------------------
+    V_spy = (P_spy / P_spy[0])[:, 0]
+    V_ew = fx.curve_portafogli(P, anni, np.full((n, 1), 1.0 / n))[:, 0]
+
+    def met(V):
+        v = V.reshape(-1, 1)
+        return {&quot;cagr&quot;: float(fx.cagr(v, giorni_cal)[0]), &quot;sharpe&quot;: float(fx.sharpe(v, config.GIORNI_ANNO_BORSA, config.TASSO_SENZA_RISCHIO)[0]),
+                &quot;mdd&quot;: float(fx.max_drawdown(v)[0]),
+                &quot;cagr_h1&quot;: float(fx.cagr(v[: i_meta + 1], giorni_h1)[0]),
+                &quot;cagr_h2&quot;: float(fx.cagr(v[i_meta:], giorni_h2)[0])}
+    m_spy, m_ew = met(V_spy), met(V_ew)
+
+    reg(&quot;data_prima&quot;, str(giorni[0].date()), &quot;data_lunga&quot;, &quot;Primo giorno di Borsa del periodo&quot;, &quot;dati/prezzi.csv&quot;)
+    reg(&quot;data_ultima&quot;, str(giorni[-1].date()), &quot;data_lunga&quot;, &quot;Ultimo giorno di Borsa del periodo&quot;, &quot;dati/prezzi.csv&quot;)
+    reg(&quot;anno_prima&quot;, str(giorni[0].date()), &quot;anno&quot;, &quot;Anno del primo giorno&quot;, &quot;dati/prezzi.csv&quot;)
+    reg(&quot;anno_ultima&quot;, str(giorni[-1].date()), &quot;anno&quot;, &quot;Anno dell&#x27;ultimo giorno&quot;, &quot;dati/prezzi.csv&quot;)
+    reg(&quot;anni_periodo&quot;, giorni_cal / config.GIORNI_ANNO_CALENDARIO, &quot;num1&quot;, &quot;Anni coperti dal periodo&quot;, &quot;giorni di calendario / 365,25&quot;)
+    reg(&quot;data_meta&quot;, str(giorni[i_meta].date()), &quot;data_lunga&quot;, &quot;Primo giorno di Borsa della seconda metà&quot;, &quot;config.py, META_DATA&quot;)
+    reg(&quot;anno_meta&quot;, str(giorni[i_meta].date()), &quot;anno&quot;, &quot;Anno in cui comincia la seconda metà&quot;, &quot;config.py, META_DATA&quot;)
+    reg(&quot;data_scarico&quot;, meta[&quot;scaricato_il_utc&quot;][:10], &quot;data&quot;, &quot;Data del download dei dati&quot;, &quot;dati/metadati.json&quot;)
+    reg(&quot;n_universo_lista&quot;, len(config.UNIVERSO), &quot;int&quot;, &quot;Titoli nella lista di partenza (S&amp;P 100 di oggi, una classe per società)&quot;, &quot;config.py, UNIVERSO&quot;)
+    reg(&quot;n_universo&quot;, n, &quot;int&quot;, &quot;Titoli tenuti nell&#x27;universo (prezzi dal primo giorno)&quot;, &quot;02_backtest_e_test.py, filtro sui dati&quot;)
+    reg(&quot;n_scartati&quot;, len(scartati), &quot;int&quot;, &quot;Titoli della lista scartati (non quotati dal primo giorno o assenti)&quot;, &quot;02_backtest_e_test.py, filtro sui dati&quot;)
+    reg(&quot;n_portafogli&quot;, config.N_PORTAFOGLI, &quot;int&quot;, &quot;Portafogli estratti per ogni dimensione&quot;, &quot;config.py, N_PORTAFOGLI&quot;)
+    reg(&quot;k_principale&quot;, config.K_PRINCIPALE, &quot;int&quot;, &quot;Dimensione di riferimento dei portafogli&quot;, &quot;config.py, K_PRINCIPALE&quot;)
+    for i, k in enumerate(config.K_TITOLI, 1):
+        reg(f&quot;k{i}&quot;, k, &quot;int&quot;, f&quot;Dimensione {i} dei portafogli (titoli)&quot;, &quot;config.py, K_TITOLI&quot;)
+    reg(&quot;livello_basso&quot;, config.LIVELLO_BASSO, &quot;pct0&quot;, &quot;Percentile basso della fascia&quot;, &quot;config.py, LIVELLO_BASSO&quot;)
+    reg(&quot;livello_alto&quot;, config.LIVELLO_ALTO, &quot;pct0&quot;, &quot;Percentile alto della fascia&quot;, &quot;config.py, LIVELLO_ALTO&quot;)
+    reg(&quot;s_ip1_quota&quot;, config.SOGLIE[&quot;ip1_quota&quot;], &quot;pct0&quot;, &quot;Soglia della prima ipotesi: quota di portafogli che batte lo SPY&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip2_lo&quot;, config.SOGLIE[&quot;ip2_lo&quot;], &quot;pct0&quot;, &quot;Estremo inferiore della seconda ipotesi&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip2_hi&quot;, config.SOGLIE[&quot;ip2_hi&quot;], &quot;pct0&quot;, &quot;Estremo superiore della seconda ipotesi&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip4_quota&quot;, config.SOGLIE[&quot;ip4_quota&quot;], &quot;pct0&quot;, &quot;Soglia della quarta ipotesi: quota di portafogli da 5 titoli che perde contro lo SPY&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip5_pp&quot;, config.SOGLIE[&quot;ip5_pp&quot;], &quot;num1&quot;, &quot;Soglia della quinta ipotesi: punti percentuali di distanza tra drawdown&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip6_corr&quot;, config.SOGLIE[&quot;ip6_corr&quot;], &quot;num2&quot;, &quot;Soglia della sesta ipotesi: valore assoluto della correlazione&quot;, &quot;config.py, SOGLIE&quot;)
+
+    reg(&quot;spy_cagr&quot;, m_spy[&quot;cagr&quot;], &quot;pct1&quot;, &quot;Rendimento annuo composto dello SPY (dividendi reinvestiti)&quot;, &quot;SPY buy &amp; hold, funzioni.cagr&quot;)
+    reg(&quot;spy_sharpe&quot;, m_spy[&quot;sharpe&quot;], &quot;num2&quot;, &quot;Sharpe annualizzato dello SPY (tasso senza rischio zero)&quot;, &quot;funzioni.sharpe&quot;)
+    reg(&quot;spy_mdd&quot;, -m_spy[&quot;mdd&quot;], &quot;pct1&quot;, &quot;Perdita massima dal picco dello SPY (valore assoluto)&quot;, &quot;funzioni.max_drawdown&quot;)
+    reg(&quot;spy_cagr_h1&quot;, m_spy[&quot;cagr_h1&quot;], &quot;pct1&quot;, &quot;Rendimento annuo composto dello SPY nella prima metà&quot;, &quot;funzioni.cagr&quot;)
+    reg(&quot;spy_cagr_h2&quot;, m_spy[&quot;cagr_h2&quot;], &quot;pct1&quot;, &quot;Rendimento annuo composto dello SPY nella seconda metà&quot;, &quot;funzioni.cagr&quot;)
+    reg(&quot;ew_cagr&quot;, m_ew[&quot;cagr&quot;], &quot;pct1&quot;, &quot;Rendimento annuo composto dell&#x27;universo a pesi uguali, ribilanciato ogni anno&quot;, &quot;funzioni.curve_portafogli, funzioni.cagr&quot;)
+    reg(&quot;ew_sharpe&quot;, m_ew[&quot;sharpe&quot;], &quot;num2&quot;, &quot;Sharpe annualizzato dell&#x27;universo a pesi uguali&quot;, &quot;funzioni.sharpe&quot;)
+    reg(&quot;ew_mdd&quot;, -m_ew[&quot;mdd&quot;], &quot;pct1&quot;, &quot;Perdita massima dal picco dell&#x27;universo a pesi uguali (valore assoluto)&quot;, &quot;funzioni.max_drawdown&quot;)
+    reg(&quot;ew_meno_spy&quot;, m_ew[&quot;cagr&quot;] - m_spy[&quot;cagr&quot;], &quot;pp1&quot;, &quot;Rendimento annuo dell&#x27;universo a pesi uguali meno quello dello SPY, in punti percentuali&quot;, &quot;ew_cagr - spy_cagr&quot;)
+    reg(&quot;ew_cagr_h1&quot;, m_ew[&quot;cagr_h1&quot;], &quot;pct1&quot;, &quot;Rendimento annuo composto dell&#x27;universo a pesi uguali nella prima metà&quot;, &quot;funzioni.cagr&quot;)
+    reg(&quot;ew_cagr_h2&quot;, m_ew[&quot;cagr_h2&quot;], &quot;pct1&quot;, &quot;Rendimento annuo composto dell&#x27;universo a pesi uguali nella seconda metà&quot;, &quot;funzioni.cagr&quot;)
+
+    # --- Portafogli casuali -----------------------------------------------------------------------------------------
+    rng = np.random.default_rng(config.SEED)
+    righe_k = []
+    fascia = None
+    q_lo, q_hi = config.LIVELLO_BASSO, config.LIVELLO_ALTO
+    for i, k in enumerate(config.K_TITOLI, 1):
+        W = fx.estrai_pesi(n, k, config.N_PORTAFOGLI, rng)
+        V = fx.curve_portafogli(P, anni, W)
+        c = fx.cagr(V, giorni_cal)
+        sh = fx.sharpe(V, config.GIORNI_ANNO_BORSA, config.TASSO_SENZA_RISCHIO)
+        md = fx.max_drawdown(V)
+        c1 = fx.cagr(V[: i_meta + 1], giorni_h1)
+        c2 = fx.cagr(V[i_meta:], giorni_h2)
+        pd.DataFrame({&quot;cagr&quot;: c, &quot;sharpe&quot;: sh, &quot;mdd&quot;: md, &quot;cagr_h1&quot;: c1, &quot;cagr_h2&quot;: c2}).to_csv(
+            config.RISULTATI / f&quot;portafogli_k{k}.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+        p_lo, p_med, p_hi = np.quantile(c, [q_lo, 0.5, q_hi])
+        quota_spy = float((c &gt; m_spy[&quot;cagr&quot;]).mean())
+        quota_ew = float((c &gt; m_ew[&quot;cagr&quot;]).mean())
+        righe_k.append({&quot;k&quot;: k, &quot;cagr_p5&quot;: p_lo, &quot;cagr_med&quot;: p_med, &quot;cagr_p95&quot;: p_hi, &quot;quota_spy&quot;: quota_spy, &quot;quota_ew&quot;: quota_ew,
+                        &quot;sharpe_med&quot;: float(np.median(sh)), &quot;mdd_med&quot;: float(np.median(md)), &quot;mdd_p5&quot;: float(np.quantile(md, q_lo)),
+                        &quot;cagr_min&quot;: float(c.min()), &quot;cagr_max&quot;: float(c.max())})
+        reg(f&quot;k{k}_p5&quot;, p_lo, &quot;pct1&quot;, f&quot;Rendimento annuo composto al 5° percentile dei portafogli da {k} titoli&quot;, &quot;np.quantile sui portafogli&quot;)
+        reg(f&quot;k{k}_med&quot;, p_med, &quot;pct1&quot;, f&quot;Rendimento annuo composto mediano dei portafogli da {k} titoli&quot;, &quot;np.quantile sui portafogli&quot;)
+        reg(f&quot;k{k}_p95&quot;, p_hi, &quot;pct1&quot;, f&quot;Rendimento annuo composto al 95° percentile dei portafogli da {k} titoli&quot;, &quot;np.quantile sui portafogli&quot;)
+        reg(f&quot;k{k}_larghezza&quot;, p_hi - p_lo, &quot;pp1&quot;, f&quot;Larghezza della fascia 5°-95° percentile del rendimento annuo dei portafogli da {k} titoli, in punti percentuali&quot;, &quot;p95 - p5&quot;)
+        reg(f&quot;k{k}_min&quot;, c.min(), &quot;pct1&quot;, f&quot;Rendimento annuo composto del peggior portafoglio da {k} titoli&quot;, &quot;min sui portafogli&quot;)
+        reg(f&quot;k{k}_max&quot;, c.max(), &quot;pct1&quot;, f&quot;Rendimento annuo composto del miglior portafoglio da {k} titoli&quot;, &quot;max sui portafogli&quot;)
+        reg(f&quot;k{k}_quota_spy&quot;, quota_spy, &quot;pct1&quot;, f&quot;Quota di portafogli da {k} titoli con rendimento annuo composto superiore a quello dello SPY&quot;, &quot;media del confronto sui portafogli&quot;)
+        reg(f&quot;k{k}_quota_perde&quot;, 1 - quota_spy, &quot;pct1&quot;, f&quot;Quota di portafogli da {k} titoli con rendimento annuo composto inferiore a quello dello SPY&quot;, &quot;1 - quota di vittorie&quot;)
+        reg(f&quot;k{k}_quota_ew&quot;, quota_ew, &quot;pct1&quot;, f&quot;Quota di portafogli da {k} titoli con rendimento annuo composto superiore a quello dell&#x27;universo a pesi uguali&quot;, &quot;media del confronto sui portafogli&quot;)
+        reg(f&quot;k{k}_sharpe_med&quot;, float(np.median(sh)), &quot;num2&quot;, f&quot;Sharpe mediano dei portafogli da {k} titoli&quot;, &quot;mediana sui portafogli&quot;)
+        reg(f&quot;k{k}_mdd_med&quot;, -float(np.median(md)), &quot;pct1&quot;, f&quot;Perdita massima dal picco mediana dei portafogli da {k} titoli (valore assoluto)&quot;, &quot;mediana sui portafogli&quot;)
+        reg(f&quot;k{k}_mdd_distanza&quot;, (-float(np.median(md))) - (-m_spy[&quot;mdd&quot;]), &quot;pp1&quot;, f&quot;Perdita massima mediana dei portafogli da {k} titoli meno quella dello SPY, in punti percentuali&quot;, &quot;mdd_med - spy_mdd&quot;)
+        reg(f&quot;k{k}_meglio_spy_sharpe&quot;, float((sh &gt; m_spy[&quot;sharpe&quot;]).mean()), &quot;pct0&quot;, f&quot;Quota di portafogli da {k} titoli con Sharpe superiore a quello dello SPY&quot;, &quot;media del confronto sui portafogli&quot;)
+        # metà del periodo
+        reg(f&quot;k{k}_quota_spy_h1&quot;, float((c1 &gt; m_spy[&quot;cagr_h1&quot;]).mean()), &quot;pct0&quot;, f&quot;Quota di portafogli da {k} titoli che batte lo SPY nella prima metà&quot;, &quot;confronto sulla prima metà&quot;)
+        reg(f&quot;k{k}_quota_spy_h2&quot;, float((c2 &gt; m_spy[&quot;cagr_h2&quot;]).mean()), &quot;pct0&quot;, f&quot;Quota di portafogli da {k} titoli che batte lo SPY nella seconda metà&quot;, &quot;confronto sulla seconda metà&quot;)
+        reg(f&quot;k{k}_quota_spy_entrambe&quot;, float(((c1 &gt; m_spy[&quot;cagr_h1&quot;]) &amp; (c2 &gt; m_spy[&quot;cagr_h2&quot;])).mean()), &quot;pct0&quot;,
+            f&quot;Quota di portafogli da {k} titoli che batte lo SPY in entrambe le metà&quot;, &quot;confronto sulle due metà&quot;)
+        reg(f&quot;k{k}_quota_peggio_entrambe&quot;, float(((c1 &lt; m_spy[&quot;cagr_h1&quot;]) &amp; (c2 &lt; m_spy[&quot;cagr_h2&quot;])).mean()), &quot;pct0&quot;,
+            f&quot;Quota di portafogli da {k} titoli che perde contro lo SPY in entrambe le metà&quot;, &quot;confronto sulle due metà&quot;)
+        if k == config.K_PRINCIPALE:
+            e1, e2 = c1 - m_spy[&quot;cagr_h1&quot;], c2 - m_spy[&quot;cagr_h2&quot;]
+            corr = float(np.corrcoef(e1, e2)[0, 1])
+            reg(&quot;corr_meta&quot;, corr, &quot;num2&quot;, &quot;Correlazione tra i portafogli dell&#x27;eccesso di rendimento annuo sullo SPY nella prima e nella seconda metà (k di riferimento)&quot;, &quot;np.corrcoef&quot;)
+            reg(&quot;corr_meta_abs&quot;, abs(corr), &quot;num2&quot;, &quot;Valore assoluto di corr_meta&quot;, &quot;abs(corr_meta)&quot;)
+            pd.DataFrame({&quot;eccesso_h1&quot;: e1, &quot;eccesso_h2&quot;: e2}).to_csv(config.RISULTATI / &quot;persistenza.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+            fascia = np.quantile(V, [q_lo, 0.5, q_hi], axis=1)
+            # sovrapposizione media tra due portafogli qualsiasi: quanti titoli in comune (attesa k*k/n)
+            reg(&quot;sovrapposizione_attesa&quot;, k * k / n, &quot;num1&quot;, &quot;Titoli in comune attesi tra due portafogli casuali di k titoli (k·k/n)&quot;, &quot;k_principale^2 / n_universo&quot;)
+            # rendimento medio di un singolo titolo, per mostrare la dispersione tra titoli
+            ct = fx.cagr(P / P[0], giorni_cal)
+            reg(&quot;titolo_peggiore&quot;, ct.min(), &quot;pct1&quot;, &quot;Rendimento annuo composto del peggior titolo dell&#x27;universo&quot;, &quot;funzioni.cagr sui singoli titoli&quot;)
+            reg(&quot;titolo_migliore&quot;, ct.max(), &quot;pct1&quot;, &quot;Rendimento annuo composto del miglior titolo dell&#x27;universo&quot;, &quot;funzioni.cagr sui singoli titoli&quot;)
+            reg(&quot;titolo_mediano&quot;, float(np.median(ct)), &quot;pct1&quot;, &quot;Rendimento annuo composto mediano dei singoli titoli&quot;, &quot;funzioni.cagr sui singoli titoli&quot;)
+            reg(&quot;quota_titoli_sopra_spy&quot;, float((ct &gt; m_spy[&quot;cagr&quot;]).mean()), &quot;pct0&quot;, &quot;Quota di titoli dell&#x27;universo che batte lo SPY (un titolo solo)&quot;, &quot;confronto dei singoli titoli con lo SPY&quot;)
+    pd.DataFrame(righe_k).to_csv(config.RISULTATI / &quot;riassunto_k.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    pd.DataFrame({&quot;Date&quot;: giorni, &quot;spy&quot;: V_spy, &quot;universo_pesi_uguali&quot;: V_ew,
+                  &quot;fascia_bassa&quot;: fascia[0], &quot;fascia_mediana&quot;: fascia[1], &quot;fascia_alta&quot;: fascia[2]}).to_csv(
+        config.RISULTATI / &quot;curve.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    # --- Verdetti delle ipotesi (numeri chiave) -----------------------------------------------------------------------
+    kp = config.K_PRINCIPALE
+    larg = [RIS[f&quot;k{k}_larghezza&quot;][&quot;valore&quot;] for k in config.K_TITOLI]
+    reg(&quot;ip3_si_restringe&quot;, int(all(a &gt; b for a, b in zip(larg, larg[1:]))), &quot;int&quot;, &quot;1 se la fascia 5°-95° si restringe a ogni passo di k, 0 altrimenti&quot;, &quot;confronto tra k consecutivi&quot;)
+
+    # --- Controllo con altri semi: la quota di vittorie dipende dall&#x27;estrazione? ---------------------------------------------
+    quote_spy, quote_ew = [RIS[f&quot;k{kp}_quota_spy&quot;][&quot;valore&quot;]], [RIS[f&quot;k{kp}_quota_ew&quot;][&quot;valore&quot;]]
+    for sd in config.SEED_CONTROLLO:
+        W = fx.estrai_pesi(n, kp, config.N_PORTAFOGLI, np.random.default_rng(sd))
+        c = fx.cagr(fx.curve_portafogli(P, anni, W), giorni_cal)
+        quote_spy.append(float((c &gt; m_spy[&quot;cagr&quot;]).mean()))
+        quote_ew.append(float((c &gt; m_ew[&quot;cagr&quot;]).mean()))
+    reg(&quot;seed_n&quot;, 1 + len(config.SEED_CONTROLLO), &quot;int&quot;, &quot;Estrazioni indipendenti (semi diversi) del controllo&quot;, &quot;config.py, SEED e SEED_CONTROLLO&quot;)
+    reg(&quot;seed_spy_min&quot;, min(quote_spy), &quot;pct1&quot;, &quot;Quota minima di portafogli (k di riferimento) che batte lo SPY, tra i semi&quot;, &quot;min sui semi&quot;)
+    reg(&quot;seed_spy_max&quot;, max(quote_spy), &quot;pct1&quot;, &quot;Quota massima di portafogli (k di riferimento) che batte lo SPY, tra i semi&quot;, &quot;max sui semi&quot;)
+    reg(&quot;seed_ew_min&quot;, min(quote_ew), &quot;pct1&quot;, &quot;Quota minima di portafogli (k di riferimento) che batte l&#x27;universo a pesi uguali, tra i semi&quot;, &quot;min sui semi&quot;)
+    reg(&quot;seed_ew_max&quot;, max(quote_ew), &quot;pct1&quot;, &quot;Quota massima di portafogli (k di riferimento) che batte l&#x27;universo a pesi uguali, tra i semi&quot;, &quot;max sui semi&quot;)
+
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri; universo di {n} titoli, {len(scartati)} scartati&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>crea i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_curve.png         lo SPY, l&#x27;universo a pesi uguali e la fascia dei portafogli casuali da K_PRINCIPALE titoli
+  fig2_fascia_per_k.png  fascia 5°-95° percentile del rendimento annuo per numero di titoli, con SPY e universo
+  fig3_quote.png         quota di portafogli che batte lo SPY e l&#x27;universo a pesi uguali, per numero di titoli
+  fig4_persistenza.png   eccesso di rendimento sullo SPY nelle due metà del periodo, portafogli da K_PRINCIPALE titoli
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    kp = config.K_PRINCIPALE
+
+    # --- Figura 1: curve ---------------------------------------------------------------------------------------------
+    c = pd.read_csv(R / &quot;curve.csv&quot;, parse_dates=[&quot;Date&quot;])
+    fig, ax = plt.subplots(figsize=(8.6, 4.8))
+    ax.fill_between(c.Date, c.fascia_bassa, c.fascia_alta, color=ARANCIO, alpha=0.22, lw=0,
+                    label=f&quot;{kp} titoli a caso: dal 5° al 95° percentile&quot;)
+    ax.plot(c.Date, c.fascia_mediana, color=ARANCIO, lw=1.6, ls=&quot;--&quot;, label=f&quot;{kp} titoli a caso: mediana&quot;)
+    ax.plot(c.Date, c.universo_pesi_uguali, color=GRIGIO, lw=1.6, label=&quot;Tutto l&#x27;universo a pesi uguali&quot;)
+    ax.plot(c.Date, c.spy, color=BLU, lw=2.4, label=&quot;SPY (S&amp;P 500)&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_ylabel(&quot;Valore di 1 dollaro investito (scala logaritmica)&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig1_curve.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 2: fascia per k --------------------------------------------------------------------------------------
+    s = pd.read_csv(R / &quot;riassunto_k.csv&quot;)
+    fig, ax = plt.subplots(figsize=(8.4, 4.8))
+    x = np.arange(len(s))
+    for xi, r in zip(x, s.itertuples()):
+        ax.vlines(xi, r.cagr_p5 * 100, r.cagr_p95 * 100, color=ARANCIO, lw=14, alpha=0.35)
+        ax.plot(xi, r.cagr_med * 100, &quot;o&quot;, color=ARANCIO, ms=9)
+        ax.text(xi + 0.14, r.cagr_p95 * 100, f&quot;{r.cagr_p95 * 100:.1f}%&quot;, va=&quot;center&quot;, fontsize=10, color=ARANCIO)
+        ax.text(xi + 0.14, r.cagr_p5 * 100, f&quot;{r.cagr_p5 * 100:.1f}%&quot;, va=&quot;center&quot;, fontsize=10, color=ARANCIO)
+    ax.axhline(V[&quot;spy_cagr&quot;][&quot;valore&quot;] * 100, color=BLU, lw=2.2, label=&quot;SPY&quot;)
+    ax.axhline(V[&quot;ew_cagr&quot;][&quot;valore&quot;] * 100, color=GRIGIO, lw=1.6, ls=&quot;--&quot;, label=&quot;Tutto l&#x27;universo a pesi uguali&quot;)
+    ax.set_xticks(x, [f&quot;{k} titoli&quot; for k in s.k])
+    ax.set_xlim(-0.5, len(s) - 0.4)
+    ax.set_ylabel(&quot;Rendimento annuo composto (%)&quot;)
+    ax.legend(loc=&quot;lower right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig2_fascia_per_k.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 3: quote ---------------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(8.4, 4.6))
+    w = 0.36
+    b1 = ax.bar(x - w / 2, s.quota_spy * 100, w, color=BLU, label=&quot;contro lo SPY&quot;)
+    b2 = ax.bar(x + w / 2, s.quota_ew * 100, w, color=GRIGIO, label=&quot;contro l&#x27;universo a pesi uguali&quot;)
+    for q, b in ((s.quota_spy, b1), (s.quota_ew, b2)):
+        for qi, bi in zip(q, b):
+            if qi &gt; 0.5:
+                bi.set_hatch(&quot;//&quot;)
+                bi.set_edgecolor(&quot;white&quot;)
+            ax.text(bi.get_x() + bi.get_width() / 2, qi * 100 + 1.5, f&quot;{qi * 100:.0f}%&quot;, ha=&quot;center&quot;, fontsize=10)
+    ax.axhline(50, color=&quot;black&quot;, lw=1)
+    ax.set_xticks(x, [f&quot;{k} titoli&quot; for k in s.k])
+    ax.set_ylim(0, 100)
+    ax.set_ylabel(&quot;Portafogli che battono il confronto (%)&quot;)
+    ax.legend(loc=&quot;upper right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig3_quote.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 4: persistenza ---------------------------------------------------------------------------------------
+    p = pd.read_csv(R / &quot;persistenza.csv&quot;)
+    fig, ax = plt.subplots(figsize=(6.4, 5.4))
+    ax.scatter(p.eccesso_h1 * 100, p.eccesso_h2 * 100, s=8, color=BLU, alpha=0.45)
+    ax.axhline(0, color=&quot;black&quot;, lw=1)
+    ax.axvline(0, color=&quot;black&quot;, lw=1)
+    ax.set_xlabel(&quot;Prima metà: rendimento annuo meno SPY (punti percentuali)&quot;)
+    ax.set_ylabel(&quot;Seconda metà: rendimento annuo meno SPY (punti percentuali)&quot;)
+    ax.text(0.03, 0.96, f&quot;correlazione {V[&#x27;corr_meta&#x27;][&#x27;valore&#x27;]:.2f}&quot;.replace(&quot;.&quot;, &quot;,&quot;), transform=ax.transAxes, va=&quot;top&quot;, fontsize=11)
+    fig.savefig(config.FIGURE / &quot;fig4_persistenza.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate in&quot;, config.FIGURE)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri, universo e ipotesi (scritte prima dei risultati)</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 281 - &quot;Portafogli di titoli casuali contro l&#x27;indice&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Round di TickerFight: mille portafogli estratti a caso da un universo di grandi titoli americani (l&#x27;S&amp;P 100) contro l&#x27;indice.
+Ogni portafoglio ha k titoli (5, 10, 20, 30) a pesi uguali, ribilanciati al primo giorno di Borsa di ogni anno, senza
+costi. Si confronta il rendimento annuo composto con quello dell&#x27;indice (lo SPY, a rendimento totale) e con quello
+dell&#x27;intero universo a pesi uguali (che ha lo stesso difetto del campione: vedi i limiti dell&#x27;articolo). La domanda: quanto
+conta, da sola, la scelta dei titoli?
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati ---------------------------------------------------------------
+# Prezzi di chiusura corretti per dividendi e frazionamenti (rendimento totale), da Yahoo Finance.
+INIZIO = &quot;2006-01-01&quot;              # primo giorno incluso; si usa dal primo giorno di Borsa in poi
+FUSO_BORSA = &quot;America/New_York&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+FILE_PREZZI = DATI / &quot;prezzi.csv&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere corrette per dividendi di titoli americani e dello SPY&quot;
+NOMI_ESENTI = (&quot;S&amp;P 100&quot;, &quot;S&amp;P&quot;, &quot;SPY&quot;, &quot;281&quot;, &quot;TickerFight&quot;)
+
+# Indice di confronto: SPY (ETF sull&#x27;S&amp;P 500), con dividendi reinvestiti.
+INDICE = &quot;SPY&quot;
+
+# Universo scelto a priori: i componenti dell&#x27;S&amp;P 100 come li conosciamo oggi (lista fissata PRIMA di guardare i dati,
+# una sola classe azionaria per società). Verranno tenuti solo i titoli con prezzi dal primo giorno del periodo: gli
+# altri (quotati dopo il 2006) escono dall&#x27;universo e il numero esatto è riportato nell&#x27;articolo.
+UNIVERSO = (
+    &quot;AAPL ABBV ABT ACN ADBE AIG AMD AMGN AMT AMZN AVGO AXP BA BAC BK BKNG BLK BMY BRK-B C CAT CHTR CL CMCSA COF COP COST &quot;
+    &quot;CRM CSCO CVS CVX DE DHR DIS DUK EMR FDX GD GE GILD GM GOOGL GS HD HON IBM INTC INTU ISRG JNJ JPM KO LIN LLY LMT LOW &quot;
+    &quot;MA MCD MDLZ MDT MET META MMM MO MRK MS MSFT NEE NFLX NKE NOW NVDA ORCL PEP PFE PG PLTR PM PYPL QCOM RTX SBUX SCHW SO &quot;
+    &quot;SPG T TGT TMO TMUS TSLA TXN UBER UNH UNP UPS USB V VZ WFC WMT XOM&quot;
+).split()
+SOGLIA_BUCHI = 0.01      # un titolo con più dell&#x27;1% di giorni senza prezzo (dopo il primo) esce dall&#x27;universo
+
+# --- Portafogli casuali ---------------------------------------------------------------------------------------
+K_TITOLI = (5, 10, 20, 30)     # titoli per portafoglio
+K_PRINCIPALE = 20              # la dimensione di riferimento per ipotesi 1, 2 e 6
+N_PORTAFOGLI = 1000            # portafogli estratti per ogni k (senza reinserimento dentro il portafoglio)
+SEED = 20261023
+SEED_CONTROLLO = (11, 22, 33, 44)   # altri quattro semi, per vedere se la quota di vittorie dipende dall&#x27;estrazione
+LIVELLO_BASSO, LIVELLO_ALTO = 0.05, 0.95   # percentili che delimitano la &quot;fascia&quot; dei portafogli
+GIORNI_ANNO_BORSA = 252
+GIORNI_ANNO_CALENDARIO = 365.25
+TASSO_SENZA_RISCHIO = 0.0      # semplificazione dichiarata
+# Due metà del periodo, per vedere se chi ha avuto fortuna nella prima la ripete nella seconda
+META_DATA = &quot;2016-01-01&quot;       # la seconda metà comincia dal primo giorno di Borsa di questa data
+
+# --- Soglie delle ipotesi (riportate qui per scriverle nell&#x27;articolo senza cifre a mano) -----------------------------
+SOGLIE = {&quot;ip1_quota&quot;: 0.50, &quot;ip2_lo&quot;: 0.40, &quot;ip2_hi&quot;: 0.60, &quot;ip4_quota&quot;: 0.25, &quot;ip5_pp&quot;: 5.0, &quot;ip6_corr&quot;: 0.30}
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) Con 20 titoli, più della metà dei portafogli casuali batte lo SPY per rendimento annuo composto (lo prevediamo anche perché &quot;
+    &quot;l&#x27;universo è fatto di società ancora grandi oggi, un vantaggio che dichiariamo tra i limiti). &quot;
+    &quot;2) Con 20 titoli, la quota di portafogli che batte l&#x27;intero universo a pesi uguali sta tra il 40% e il 60%: &quot;
+    &quot;contro un confronto che ha il suo stesso difetto di campione, la scelta dei titoli da sola non dà né vantaggio né svantaggio. &quot;
+    &quot;3) La fascia dei rendimenti (95° meno 5° percentile) si stringe a ogni passo, da 5 a 10, 20 e 30 titoli. &quot;
+    &quot;4) Con 5 titoli almeno un portafoglio su quattro perde contro lo SPY: pochi titoli, esito affidato alla sorte. &quot;
+    &quot;5) Il drawdown massimo mediano dei portafogli da 30 titoli sta entro 5 punti percentuali da quello dello SPY: &quot;
+    &quot;la diversificazione tra titoli non evita i crolli dell&#x27;intero mercato. &quot;
+    &quot;6) Chi ha avuto fortuna nella prima metà del periodo non la ripete nella seconda: con 20 titoli la correlazione, tra i portafogli, &quot;
+    &quot;dell&#x27;eccesso di rendimento sullo SPY nelle due metà è in valore assoluto sotto 0,30.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>curve dei portafogli a pesi uguali con ribilanciamento annuale, CAGR, Sharpe, drawdown</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;esperimento: curve dei portafogli a pesi uguali con ribilanciamento annuale e metriche.
+
+Convenzioni: prezzi[t, i] è la chiusura corretta del titolo i nel giorno t. I pesi dei portafogli sono decisi prima di
+guardare qualunque rendimento (estrazione casuale) e restano uguali (1/k) all&#x27;inizio di ogni anno solare: nessun look-ahead.
+Il valore parte da 1 nel primo giorno; il ribilanciamento avviene alla chiusura dell&#x27;ultimo giorno di Borsa dell&#x27;anno
+precedente. Nessun costo, nessuna tassa.
+&quot;&quot;&quot;
+import numpy as np
+
+
+def inizi_anno(anni: np.ndarray) -&gt; list[tuple[int, int]]:
+    &quot;&quot;&quot;Per ogni anno solare, (indice del primo giorno, indice dell&#x27;ultimo giorno).&quot;&quot;&quot;
+    out = []
+    s = 0
+    for t in range(1, len(anni) + 1):
+        if t == len(anni) or anni[t] != anni[s]:
+            out.append((s, t - 1))
+            s = t
+    return out
+
+
+def curve_portafogli(prezzi: np.ndarray, anni: np.ndarray, pesi: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Valore di M portafogli (colonne di pesi, forma (N, M)) nel tempo, forma (T, M), partendo da 1.
+
+    Dentro ogni anno il portafoglio è (prezzo / prezzo di base) @ pesi, dove la base è la chiusura dell&#x27;ultimo giorno
+    dell&#x27;anno precedente; il valore della base si porta dietro quello degli anni passati.
+    &quot;&quot;&quot;
+    T, M = len(prezzi), pesi.shape[1]
+    V = np.ones((T, M))
+    for s, e in inizi_anno(anni):
+        b = s - 1 if s &gt; 0 else 0
+        ts = np.arange(max(s, 1), e + 1)
+        if len(ts) == 0:
+            continue
+        V[ts] = V[b] * ((prezzi[ts] / prezzi[b]) @ pesi)
+    return V
+
+
+def cagr(V: np.ndarray, giorni_calendario: float, anno: float = 365.25) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimento annuo composto di ciascuna colonna di V (V[0] = valore iniziale, V[-1] finale).&quot;&quot;&quot;
+    return (V[-1] / V[0]) ** (anno / giorni_calendario) - 1
+
+
+def sharpe(V: np.ndarray, giorni_anno: int = 252, rf: float = 0.0) -&gt; np.ndarray:
+    r = V[1:] / V[:-1] - 1 - rf / giorni_anno
+    sd = r.std(axis=0, ddof=1)
+    return np.where(sd &gt; 0, r.mean(axis=0) / np.where(sd &gt; 0, sd, 1) * np.sqrt(giorni_anno), np.nan)
+
+
+def max_drawdown(V: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Massima perdita dal massimo precedente (valore negativo o zero) per ogni colonna.&quot;&quot;&quot;
+    picco = np.maximum.accumulate(V, axis=0)
+    return (V / picco - 1).min(axis=0)
+
+
+def estrai_pesi(n_titoli: int, k: int, m: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;M portafogli da k titoli scelti a caso (senza reinserimento) tra n_titoli, pesi 1/k. Forma (n_titoli, m).&quot;&quot;&quot;
+    W = np.zeros((n_titoli, m))
+    for j in range(m):
+        W[rng.choice(n_titoli, size=k, replace=False), j] = 1.0 / k
+    return W
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli delle funzioni su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+# 1. Prezzi costanti: ogni portafoglio vale sempre 1
+anni = np.array([2020] * 5 + [2021] * 5 + [2022] * 5)
+P = np.full((15, 4), 50.0)
+W = np.array([[1, 0.5], [0, 0.5], [0, 0], [0, 0]], float)
+controlla(&quot;prezzi costanti: valore 1&quot;, np.allclose(fx.curve_portafogli(P, anni, W), 1.0))
+
+# 2. Un solo titolo: il portafoglio è il titolo stesso (nessun effetto del ribilanciamento)
+rng = np.random.default_rng(1)
+P = 100 * np.cumprod(1 + rng.normal(0.0005, 0.01, (15, 4)), axis=0)
+W1 = np.array([[0.0], [1.0], [0.0], [0.0]])
+V = fx.curve_portafogli(P, anni, W1)[:, 0]
+controlla(&quot;un titolo solo = buy &amp; hold del titolo&quot;, np.allclose(V, P[:, 1] / P[0, 1]))
+
+# 3. Due titoli, calcolo a mano con ribilanciamento al cambio d&#x27;anno
+P2 = np.array([[100, 100], [110, 100], [110, 100], [110, 100], [121, 100],   # 2020 (5 giorni)
+               [121, 120], [121, 120], [121, 120], [121, 120], [121, 120],   # 2021
+               [121, 120], [121, 120], [121, 120], [121, 120], [121, 120]], float)
+W2 = np.array([[0.5], [0.5]])
+V = fx.curve_portafogli(P2, anni, W2)[:, 0]
+v_fine_2020 = 0.5 * 1.21 + 0.5 * 1.00          # = 1,105 con pesi iniziali 50/50
+controlla(&quot;fine 2020 a mano&quot;, np.isclose(V[4], v_fine_2020))
+# 2021: si riparte con pesi 50/50 sul valore di fine 2020; il secondo titolo sale da 100 a 120, il primo non si muove
+controlla(&quot;2021 a mano (ribilanciamento)&quot;, np.isclose(V[9], v_fine_2020 * (0.5 * 1.0 + 0.5 * 1.2)))
+controlla(&quot;2022 senza variazioni: valore costante&quot;, np.allclose(V[10:], V[9]))
+
+# 4. Metriche
+V = np.array([[1.0], [1.1], [0.9], [1.2]])
+controlla(&quot;max drawdown a mano&quot;, np.isclose(fx.max_drawdown(V)[0], 0.9 / 1.1 - 1))
+controlla(&quot;CAGR a mano (un anno)&quot;, np.isclose(fx.cagr(V, 365.25)[0], 0.2))
+controlla(&quot;CAGR a mano (due anni)&quot;, np.isclose(fx.cagr(V, 730.5)[0], 1.2 ** 0.5 - 1))
+S = fx.sharpe(np.array([[1.0], [1.01], [1.0201], [1.030301]]))
+controlla(&quot;Sharpe con rendimenti costanti: non finito oppure molto grande o nullo&quot;, (not np.isfinite(S[0])) or S[0] &gt; 1e6 or S[0] == 0 or np.isnan(S[0]))
+
+# 5. Estrazione dei pesi: k titoli, somma 1, colonne diverse
+W = fx.estrai_pesi(30, 7, 50, np.random.default_rng(3))
+controlla(&quot;pesi: somma 1 per colonna&quot;, np.allclose(W.sum(axis=0), 1.0))
+controlla(&quot;pesi: esattamente k titoli&quot;, np.all((W &gt; 0).sum(axis=0) == 7))
+controlla(&quot;pesi: portafogli diversi tra loro&quot;, len({tuple(np.flatnonzero(c)) for c in W.T}) &gt; 45)
+
+# 6. Il rendimento di un portafoglio a pesi uguali sull&#x27;anno intero è la media dei rendimenti dei titoli
+P3 = np.array([[100, 100, 100], [150, 100, 90], [200, 100, 80]], float)
+V = fx.curve_portafogli(P3, np.array([2020, 2020, 2020]), np.full((3, 1), 1 / 3))[:, 0]
+controlla(&quot;un anno: media dei rendimenti dei titoli&quot;, np.isclose(V[-1], (2.0 + 1.0 + 0.8) / 3))
+
+print(f&quot;\nTutti i {n_ok} controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>

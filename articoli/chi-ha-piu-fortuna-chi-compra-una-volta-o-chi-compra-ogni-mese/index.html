@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chi ha più fortuna: chi compra una volta o chi compra ogni mese? · il codice · TickerFight</title>
+<meta name="description" content="chi investe tutto il budget il primo giorno (lump sum) finisce davanti a chi lo divide in dodici rate mensili (PAC) per quanti mesi di partenza? E quanto di quel risultato è solo il rialzo medio del mercato, cioè il caso?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a><a href="https://github.com/TickerFight/tickerfight">GitHub</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Chi ha più fortuna: chi compra una volta o chi compra ogni mese?</h1>
+<p class="domanda">Chi investe tutto il budget il primo giorno (lump sum) finisce davanti a chi lo divide in dodici rate mensili (PAC) per quanti mesi di partenza? E quanto di quel risultato è solo il rialzo medio del mercato, cioè il caso?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="chi-ha-piu-fortuna-chi-compra-una-volta-o-chi-compra-ogni-mese.zip" download>⬇ Scarica il codice (.zip)</a><a class="btn" href="https://github.com/TickerFight/tickerfight/tree/main/articoli/chi-ha-piu-fortuna-chi-compra-una-volta-o-chi-compra-ogni-mese">Vedi su GitHub</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Budget:</strong> 1.200 euro. Lump sum: tutto al primo giorno di Borsa del mese di partenza. PAC: 100 euro al primo giorno di Borsa di ciascuno dei 12 mesi; la cassa non ancora investita non rende. Quote frazionate.</li>
+<li><strong>Valutazione:</strong> al primo giorno di Borsa del mese 12 e del mese 24 dalla partenza, per ogni mese di partenza possibile (le partenze vicine si sovrappongono: gli intervalli di confidenza ricampionano gli anni; si guardano anche le partenze non sovrapposte, per mese di calendario).</li>
+<li><strong>Il caso:</strong> (a) 1.000 storie per indice con gli stessi rendimenti mensili in ordine rimescolato; (b) 200 scimmie per partenza che piazzano le 12 rate in mesi a caso. Gli otto test del rimescolamento (4 indici per 2 orizzonti) sono corretti con Holm.</li>
+<li><strong>Costi:</strong> scenario con 2 euro a ordine (12 ordini contro 1). Nessuna tassa: il confronto è lordo.</li>
+<li><strong>Indici:</strong> di prezzo (niente dividendi), in valuta locale; il confronto è sempre dentro lo stesso indice.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>chi-ha-piu-fortuna-chi-compra-una-volta-o-chi-compra-ogni-mese/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica S&amp;P 500, DAX, FTSE 100, Nikkei 225
+    ├── 02_backtest_e_test.py  confronto su ogni mese di partenza, test contro il caso
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            prezzi mensili, valore di lump sum e PAC, scimmie, storie rimescolate, Holm
+    └── verifica_motore.py     17 controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd chi-ha-piu-fortuna-chi-compra-una-volta-o-chi-compra-ogni-mese
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera di quattro indici azionari (S&amp;P 500, DAX, FTSE 100, Nikkei 225).
+
+Salva, per ogni indice, dati/&lt;ticker&gt;.csv (Date, Open, High, Low, Close, Volume) e dati/metadati.json con la fonte,
+la data del download, la versione di yfinance e l&#x27;impronta SHA-256 di ogni file. Gli script successivi leggono SOLO
+i file salvati: i risultati restano riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;indici&quot;: []}
+    for ticker, nome, valuta in config.INDICI:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nome, &quot;valuta&quot;: valuta}
+        grezzo = scarica(ticker)
+        if grezzo.empty:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;indici&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;])
+        df = df[df[&quot;Close&quot;] &gt; 0]
+        # seduta ancora in corso: barra incompleta, da scartare
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:
+            df = df.iloc[:-1]
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;indici&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    if sum(1 for r in meta[&quot;indici&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;) &lt; len(config.INDICI):
+        raise SystemExit(&quot;Non tutti gli indici sono stati scaricati.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>confronto su ogni mese di partenza, test contro il caso</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Una volta o ogni mese: lump sum contro PAC su tutti i mesi di partenza, contro il caso.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json          ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  partenze.csv           per ogni indice, orizzonte e mese di partenza: valore di lump sum, PAC e differenza
+  rimescolate.csv        quota di vittorie del lump sum in ciascuna storia rimescolata (per indice e orizzonte)
+  per_mese_calendario.csv  quota di vittorie del lump sum per mese di calendario di partenza (partenze non sovrapposte)
+  indici_usati.json      indici effettivamente usati
+
+Lump sum: tutto il budget al primo giorno di Borsa del mese di partenza. PAC: un dodicesimo del budget al primo giorno di
+Borsa di ciascuno dei 12 mesi. Valutazione al primo giorno di Borsa del mese t+h. Nessun look-ahead: le date delle rate
+sono decise alla partenza.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def slug(ticker: str) -&gt; str:
+    return ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;).lower()
+
+
+def ic_cluster(vinto: np.ndarray, anni: np.ndarray, rng) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Intervallo di confidenza della quota di vittorie, ricampionando gli anni di partenza (le partenze vicine si sovrappongono).&quot;&quot;&quot;
+    ua = np.unique(anni)
+    somme = np.array([vinto[anni == a].sum() for a in ua], float)
+    conti = np.array([(anni == a).sum() for a in ua], float)
+    q = []
+    for _ in range(config.N_BOOTSTRAP):
+        k = rng.integers(0, len(ua), len(ua))
+        q.append(somme[k].sum() / conti[k].sum())
+    a = (1 - config.LIVELLO_CONFIDENZA) / 2
+    return float(np.quantile(q, a)), float(np.quantile(q, 1 - a))
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    global META
+    META = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    rng = np.random.default_rng(config.SEME)
+    B, R = config.BUDGET, config.N_RATE
+    righe_part, righe_rim, righe_cal, usati = [], [], [], []
+    pval_grezzi: dict[str, float] = {}
+    nulle: dict[str, np.ndarray] = {}
+
+    for ticker, nome, valuta in config.INDICI:
+        f = config.file_dati(ticker)
+        if not f.exists():
+            print(f&quot;{ticker}: file mancante, indice scartato&quot;)
+            continue
+        df = pd.read_csv(f, index_col=0, parse_dates=True)
+        pm = fx.prezzi_mensili(df[&quot;Close&quot;])
+        p = pm.values.astype(float)
+        date_m = pm.index
+        sl = slug(ticker)
+        usati.append({&quot;ticker&quot;: ticker, &quot;slug&quot;: sl, &quot;nome&quot;: nome})
+        reg(f&quot;{sl}_prima_data&quot;, str(date_m[0].date()), &quot;data_lunga&quot;, f&quot;Primo mese di dati di {nome}&quot;, &quot;dati/&quot;)
+        reg(f&quot;{sl}_ultima_data&quot;, str(date_m[-1].date()), &quot;data_lunga&quot;, f&quot;Ultimo mese di dati di {nome}&quot;, &quot;dati/&quot;)
+        reg(f&quot;{sl}_anno_inizio&quot;, str(date_m[0].date()), &quot;anno&quot;, f&quot;Anno del primo dato di {nome}&quot;, &quot;dati/&quot;)
+        reg(f&quot;{sl}_n_mesi&quot;, len(p), &quot;int&quot;, f&quot;Mesi di prezzi disponibili per {nome}&quot;, &quot;dati/&quot;)
+
+        for h in config.ORIZZONTI:
+            n = len(p) - h
+            part = date_m[:n]
+            anni = np.array([d.year for d in part])
+            lump0 = fx.valore_lump(p, h, B, 0.0)
+            pac0 = fx.valore_pac(p, h, B, R, 0.0)
+            diff = (pac0 - lump0) / B * 100                     # punti percentuali del budget; &gt; 0 vince il PAC
+            vince_lump = lump0 &gt; pac0
+            q = float(vince_lump.mean())
+            lo, hi = ic_cluster(vince_lump, anni, rng)
+            tag = f&quot;{sl}_{h}&quot;
+            reg(f&quot;{tag}_n_part&quot;, n, &quot;int&quot;, f&quot;Mesi di partenza usati per {nome}, orizzonte {h} mesi&quot;, &quot;numero di mesi meno l&#x27;orizzonte&quot;)
+            reg(f&quot;{tag}_quota_lump&quot;, q, &quot;pct0&quot;, f&quot;Quota di partenze in cui il lump sum batte il PAC, {nome}, {h} mesi&quot;)
+            reg(f&quot;{tag}_quota_lump_lo&quot;, lo, &quot;pct0&quot;, f&quot;Estremo inferiore dell&#x27;intervallo di confidenza della quota di vittorie del lump sum, {nome}, {h} mesi&quot;, &quot;ricampionamento degli anni di partenza (N_BOOTSTRAP)&quot;)
+            reg(f&quot;{tag}_quota_lump_hi&quot;, hi, &quot;pct0&quot;, f&quot;Estremo superiore dell&#x27;intervallo di confidenza della quota di vittorie del lump sum, {nome}, {h} mesi&quot;, &quot;ricampionamento degli anni di partenza (N_BOOTSTRAP)&quot;)
+            reg(f&quot;{tag}_diff_med&quot;, float(np.median(diff)), &quot;num1&quot;, f&quot;Differenza mediana PAC meno lump sum in punti percentuali del budget, {nome}, {h} mesi&quot;)
+            reg(f&quot;{tag}_diff_medio&quot;, float(diff.mean()), &quot;num1&quot;, f&quot;Differenza media PAC meno lump sum in punti percentuali del budget, {nome}, {h} mesi&quot;)
+            reg(f&quot;{tag}_diff_p5&quot;, float(np.quantile(diff, 0.05)), &quot;num1&quot;, f&quot;Quinto percentile della differenza PAC meno lump sum (punti del budget), {nome}, {h} mesi&quot;)
+            reg(f&quot;{tag}_diff_p95&quot;, float(np.quantile(diff, 0.95)), &quot;num1&quot;, f&quot;Novantacinquesimo percentile della differenza PAC meno lump sum (punti del budget), {nome}, {h} mesi&quot;)
+            i_max, i_min = int(np.argmax(diff)), int(np.argmin(diff))
+            reg(f&quot;{tag}_diff_max&quot;, float(diff[i_max]), &quot;num1&quot;, f&quot;Massimo vantaggio del PAC sul lump sum (punti del budget), {nome}, {h} mesi&quot;)
+            reg(f&quot;{tag}_diff_max_data&quot;, str(part[i_max].date()), &quot;data_lunga&quot;, f&quot;Mese di partenza in cui il PAC ha il massimo vantaggio, {nome}, {h} mesi&quot;)
+            reg(f&quot;{tag}_diff_max_euro&quot;, float(pac0[i_max] - lump0[i_max]), &quot;int&quot;, f&quot;Massimo vantaggio del PAC sul lump sum in euro, {nome}, {h} mesi&quot;)
+            reg(f&quot;{tag}_diff_min&quot;, float(-diff[i_min]), &quot;num1&quot;, f&quot;Massimo vantaggio del lump sum sul PAC (punti del budget), {nome}, {h} mesi&quot;)
+            reg(f&quot;{tag}_diff_min_data&quot;, str(part[i_min].date()), &quot;data_lunga&quot;, f&quot;Mese di partenza in cui il lump sum ha il massimo vantaggio, {nome}, {h} mesi&quot;)
+            reg(f&quot;{tag}_diff_min_euro&quot;, float(lump0[i_min] - pac0[i_min]), &quot;int&quot;, f&quot;Massimo vantaggio del lump sum sul PAC in euro, {nome}, {h} mesi&quot;)
+            reg(f&quot;{tag}_media_vantaggio_lump&quot;, float((-diff[vince_lump]).mean()), &quot;num1&quot;, f&quot;Vantaggio medio del lump sum nelle partenze che vince (punti del budget), {nome}, {h} mesi&quot;)
+            reg(f&quot;{tag}_media_vantaggio_pac&quot;, float(diff[~vince_lump].mean()) if (~vince_lump).any() else 0.0, &quot;num1&quot;, f&quot;Vantaggio medio del PAC nelle partenze che vince (punti del budget), {nome}, {h} mesi&quot;)
+
+            # direzione del mercato
+            sale = p[h:h + n] &gt; p[:n]
+            reg(f&quot;{tag}_quota_mercato_sale&quot;, float(sale.mean()), &quot;pct0&quot;, f&quot;Quota di partenze in cui l&#x27;indice sale tra la partenza e la valutazione, {nome}, {h} mesi&quot;)
+            reg(f&quot;{tag}_pac_vince_se_scende&quot;, float((~vince_lump)[~sale].mean()) if (~sale).any() else 0.0, &quot;pct0&quot;, f&quot;Quota di vittorie del PAC tra le partenze in cui l&#x27;indice scende, {nome}, {h} mesi&quot;)
+            reg(f&quot;{tag}_pac_vince_se_sale&quot;, float((~vince_lump)[sale].mean()) if sale.any() else 0.0, &quot;pct0&quot;, f&quot;Quota di vittorie del PAC tra le partenze in cui l&#x27;indice sale, {nome}, {h} mesi&quot;)
+            reg(f&quot;{tag}_n_scende&quot;, int((~sale).sum()), &quot;int&quot;, f&quot;Partenze in cui l&#x27;indice scende tra partenza e valutazione, {nome}, {h} mesi&quot;)
+
+            # commissioni
+            for c in config.COMMISSIONI:
+                if c == 0:
+                    continue
+                qc = float((fx.valore_lump(p, h, B, c) &gt; fx.valore_pac(p, h, B, R, c)).mean())
+                reg(f&quot;{tag}_quota_lump_comm&quot;, qc, &quot;pct0&quot;, f&quot;Quota di vittorie del lump sum con {c:g} euro a ordine, {nome}, {h} mesi&quot;)
+                reg(f&quot;{tag}_salto_comm&quot;, (qc - q) * 100, &quot;num1&quot;, f&quot;Aumento della quota di vittorie del lump sum con {c:g} euro a ordine (punti percentuali), {nome}, {h} mesi&quot;)
+                reg(&quot;comm_euro&quot;, c, &quot;int&quot;, &quot;Commissione per ordine dello scenario con costi&quot;, &quot;config.py, COMMISSIONI&quot;)
+
+            # partenze non sovrapposte (h=12): mesi di calendario
+            if h == config.ORIZZONTE_PRINCIPALE:
+                mesi_cal = np.array([d.month for d in part])
+                qm = []
+                for m in range(1, 13):
+                    sel = mesi_cal == m
+                    qm.append(float(vince_lump[sel].mean()))
+                    righe_cal.append({&quot;ticker&quot;: ticker, &quot;mese&quot;: m, &quot;quota_lump&quot;: qm[-1], &quot;n&quot;: int(sel.sum())})
+                reg(f&quot;{tag}_cal_min&quot;, min(qm), &quot;pct0&quot;, f&quot;Quota di vittorie del lump sum nel mese di calendario di partenza peggiore, {nome}, {h} mesi (partenze non sovrapposte)&quot;)
+                reg(f&quot;{tag}_cal_max&quot;, max(qm), &quot;pct0&quot;, f&quot;Quota di vittorie del lump sum nel mese di calendario di partenza migliore, {nome}, {h} mesi (partenze non sovrapposte)&quot;)
+
+            # caso: stesse mosse mensili, ordine rimescolato
+            nul = fx.quota_lump_rimescolate(p, h, B, R, config.N_RIMESCOLATE, rng)
+            nulle[tag] = nul
+            reg(f&quot;{tag}_null_media&quot;, float(nul.mean()), &quot;pct0&quot;, f&quot;Quota media di vittorie del lump sum nelle storie rimescolate, {nome}, {h} mesi&quot;, &quot;funzioni.quota_lump_rimescolate&quot;)
+            reg(f&quot;{tag}_null_lo&quot;, float(np.quantile(nul, 0.025)), &quot;pct0&quot;, f&quot;Percentile 2,5 della quota di vittorie del lump sum nelle storie rimescolate, {nome}, {h} mesi&quot;, &quot;funzioni.quota_lump_rimescolate&quot;)
+            reg(f&quot;{tag}_null_hi&quot;, float(np.quantile(nul, 0.975)), &quot;pct0&quot;, f&quot;Percentile 97,5 della quota di vittorie del lump sum nelle storie rimescolate, {nome}, {h} mesi&quot;, &quot;funzioni.quota_lump_rimescolate&quot;)
+            reg(f&quot;{tag}_dist_null&quot;, (q - float(nul.mean())) * 100, &quot;num1&quot;, f&quot;Quota vera meno quota media delle storie rimescolate, punti percentuali, {nome}, {h} mesi&quot;)
+            p2 = (1 + np.sum(np.abs(nul - nul.mean()) &gt;= abs(q - nul.mean()))) / (len(nul) + 1)
+            pval_grezzi[tag] = float(p2)
+            reg(f&quot;{tag}_p_null&quot;, float(p2), &quot;pval&quot;, f&quot;p-value bilaterale: quanto spesso una storia rimescolata si discosta dalla media quanto la storia vera, {nome}, {h} mesi&quot;, &quot;scarto assoluto dalla media delle rimescolate&quot;)
+            for k, v in enumerate(nul):
+                righe_rim.append({&quot;ticker&quot;: ticker, &quot;orizzonte&quot;: h, &quot;storia&quot;: k, &quot;quota_lump&quot;: v})
+
+            # scimmie: rate in mesi a caso (solo orizzonte principale, senza costi)
+            if h == config.ORIZZONTE_PRINCIPALE:
+                sm = fx.valore_scimmia(p, h, B, R, config.N_SCIMMIE, rng)
+                batte_pac = (pac0[:, None] &gt; sm).mean(axis=1)        # quota di scimmie battute dal PAC regolare, per partenza
+                reg(f&quot;{tag}_pac_batte_scimmia_mediana&quot;, float((batte_pac &gt; 0.5).mean()), &quot;pct0&quot;, f&quot;Quota di partenze in cui il PAC regolare batte più della metà delle scimmie, {nome}, {h} mesi&quot;, &quot;funzioni.valore_scimmia&quot;)
+                reg(f&quot;{tag}_lump_batte_scimmie&quot;, float((lump0[:, None] &gt; sm).mean()), &quot;pct0&quot;, f&quot;Quota di coppie partenza-scimmia in cui il lump sum batte la scimmia, {nome}, {h} mesi&quot;, &quot;funzioni.valore_scimmia&quot;)
+                reg(f&quot;{tag}_scimmia_diff_med&quot;, float(np.median((sm.mean(axis=1) - pac0) / B * 100)), &quot;num2&quot;, f&quot;Differenza mediana tra valore medio delle scimmie e PAC regolare (punti del budget), {nome}, {h} mesi&quot;, &quot;funzioni.valore_scimmia&quot;)
+
+            righe_part.append(pd.DataFrame({&quot;ticker&quot;: ticker, &quot;orizzonte&quot;: h, &quot;partenza&quot;: part.date, &quot;lump&quot;: lump0, &quot;pac&quot;: pac0,
+                                            &quot;diff_pp&quot;: diff, &quot;mercato_sale&quot;: sale}))
+
+    # Holm su tutti i test del rimescolamento (indici x orizzonti)
+    ad = fx.holm(pval_grezzi)
+    for tag, v in ad.items():
+        reg(f&quot;{tag}_p_holm&quot;, float(v), &quot;pval&quot;, f&quot;p-value del confronto con le storie rimescolate, corretto per Holm ({len(ad)} test: indici per orizzonti)&quot;, &quot;correzione di Holm&quot;)
+    reg(&quot;n_test_holm&quot;, len(ad), &quot;int&quot;, &quot;Test del rimescolamento corretti insieme con Holm (indici per orizzonti)&quot;, &quot;numero di indici per numero di orizzonti&quot;)
+    reg(&quot;n_test_holm_rifiutati&quot;, int(sum(v &lt; 0.05 for v in ad.values())), &quot;int&quot;, &quot;Test del rimescolamento che restano significativi dopo Holm (p corretto sotto 0,05)&quot;, &quot;correzione di Holm&quot;)
+    reg(&quot;n_indici&quot;, len(usati), &quot;int&quot;, &quot;Indici usati&quot;, &quot;dati/&quot;)
+    reg(&quot;budget&quot;, config.BUDGET, &quot;int&quot;, &quot;Budget totale da investire in euro&quot;, &quot;config.py, BUDGET&quot;)
+    reg(&quot;rata&quot;, config.BUDGET / config.N_RATE, &quot;int&quot;, &quot;Rata mensile del PAC in euro&quot;, &quot;config.py, BUDGET / N_RATE&quot;)
+    reg(&quot;n_rate&quot;, config.N_RATE, &quot;int&quot;, &quot;Numero di rate del PAC&quot;, &quot;config.py, N_RATE&quot;)
+    reg(&quot;h1&quot;, config.ORIZZONTI[0], &quot;int&quot;, &quot;Primo orizzonte in mesi&quot;, &quot;config.py, ORIZZONTI&quot;)
+    reg(&quot;h2&quot;, config.ORIZZONTI[1], &quot;int&quot;, &quot;Secondo orizzonte in mesi&quot;, &quot;config.py, ORIZZONTI&quot;)
+    reg(&quot;n_rimescolate&quot;, config.N_RIMESCOLATE, &quot;int&quot;, &quot;Storie rimescolate per indice e orizzonte&quot;, &quot;config.py, N_RIMESCOLATE&quot;)
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Scimmie per ogni mese di partenza&quot;, &quot;config.py, N_SCIMMIE&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello degli intervalli di confidenza&quot;, &quot;config.py, LIVELLO_CONFIDENZA&quot;)
+    reg(&quot;soglia_parita&quot;, config.SOGLIA_PARITA_PP, &quot;int&quot;, &quot;Soglia in punti percentuali dell&#x27;ipotesi 3&quot;, &quot;config.py, SOGLIA_PARITA_PP&quot;)
+    reg(&quot;s_ip1_quota&quot;, config.SOGLIE[&quot;ip1_quota&quot;], &quot;pct0&quot;, &quot;Soglia della prima ipotesi: quota di vittorie del lump sum&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip2_scende&quot;, config.SOGLIE[&quot;ip2_scende&quot;], &quot;pct0&quot;, &quot;Soglia della seconda ipotesi: vittorie del PAC quando l&#x27;indice scende&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip2_sale&quot;, config.SOGLIE[&quot;ip2_sale&quot;], &quot;pct0&quot;, &quot;Soglia della seconda ipotesi: vittorie del PAC quando l&#x27;indice sale&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip5_salto&quot;, config.SOGLIE[&quot;ip5_salto_pp&quot;], &quot;int&quot;, &quot;Soglia della quinta ipotesi: aumento della quota del lump sum con i costi (punti)&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip6_lo&quot;, config.SOGLIE[&quot;ip6_lo&quot;], &quot;pct0&quot;, &quot;Estremo inferiore della sesta ipotesi&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip6_hi&quot;, config.SOGLIE[&quot;ip6_hi&quot;], &quot;pct0&quot;, &quot;Estremo superiore della sesta ipotesi&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_alfa&quot;, config.SOGLIE[&quot;alfa&quot;], &quot;num2&quot;, &quot;Soglia di significatività dopo la correzione di Holm&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;data_scarico&quot;, META[&quot;scaricato_il_utc&quot;][:10], &quot;data&quot;, &quot;Data del download dei dati&quot;, &quot;dati/metadati.json&quot;)
+
+    pd.concat(righe_part).to_csv(config.RISULTATI / &quot;partenze.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+    pd.DataFrame(righe_rim).to_csv(config.RISULTATI / &quot;rimescolate.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    pd.DataFrame(righe_cal).to_csv(config.RISULTATI / &quot;per_mese_calendario.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+    (config.RISULTATI / &quot;indici_usati.json&quot;).write_text(json.dumps(usati, ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri su {len(usati)} indici&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_quota_vittorie.png        quota di vittorie del lump sum per indice e orizzonte, con la fascia delle storie rimescolate
+  fig2_distribuzione_sp500.png   differenza PAC meno lump sum (punti del budget) per l&#x27;S&amp;P 500 a 12 mesi
+  fig3_direzione_mercato.png     quota di vittorie del PAC quando l&#x27;indice scende e quando sale
+  fig4_sp500_nel_tempo.png       differenza PAC meno lump sum per mese di partenza, S&amp;P 500, 12 mesi
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    ind = json.loads((R / &quot;indici_usati.json&quot;).read_text(encoding=&quot;utf-8&quot;))
+    v = lambda k: V[k][&quot;valore&quot;]
+    nomi = {i[&quot;slug&quot;]: i[&quot;nome&quot;].split(&quot; (&quot;)[0] for i in ind}
+    slugs = [i[&quot;slug&quot;] for i in ind]
+    part = pd.read_csv(R / &quot;partenze.csv&quot;, parse_dates=[&quot;partenza&quot;])
+    sp = slug_p = [i[&quot;slug&quot;] for i in ind if i[&quot;ticker&quot;] == config.INDICE_PRINCIPALE][0]
+    tk_p = config.INDICE_PRINCIPALE
+    h1, h2 = config.ORIZZONTI
+
+    # --- Figura 1 -----------------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(8.4, 4.8))
+    x = np.arange(len(slugs))
+    larg = 0.36
+    for j, (h, col) in enumerate(((h1, BLU), (h2, &quot;#7fa6d1&quot;))):
+        pos = x + (j - 0.5) * larg
+        q = [v(f&quot;{s}_{h}_quota_lump&quot;) * 100 for s in slugs]
+        ax.bar(pos, q, larg * 0.92, color=col, label=f&quot;Lump sum davanti, {h} mesi&quot;)
+        for xi, s in zip(pos, slugs):
+            ax.plot([xi, xi], [v(f&quot;{s}_{h}_null_lo&quot;) * 100, v(f&quot;{s}_{h}_null_hi&quot;) * 100], color=ARANCIO, lw=3, solid_capstyle=&quot;butt&quot;)
+            ax.plot([xi - larg * 0.46, xi + larg * 0.46], [v(f&quot;{s}_{h}_null_media&quot;) * 100] * 2, color=ARANCIO, lw=1.5, ls=&quot;--&quot;)
+        for xi, qq in zip(pos, q):
+            ax.text(xi, 5, f&quot;{qq:.0f}%&quot;, ha=&quot;center&quot;, fontsize=11, color=&quot;white&quot;, fontweight=&quot;bold&quot;)
+    ax.plot([], [], color=ARANCIO, lw=3, label=&quot;Storie rimescolate (fascia 95%)&quot;)
+    ax.axhline(50, color=GRIGIO, lw=1)
+    ax.set_xticks(x, [nomi[s] for s in slugs])
+    ax.set_ylim(0, 100)
+    ax.set_ylabel(&quot;Partenze in cui vince il lump sum (%)&quot;)
+    ax.legend(loc=&quot;upper center&quot;, bbox_to_anchor=(0.5, -0.1), ncol=3, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig1_quota_vittorie.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 2 -----------------------------------------------------------------------------------------------
+    d = part[(part.ticker == tk_p) &amp; (part.orizzonte == h1)][&quot;diff_pp&quot;].values
+    fig, ax = plt.subplots(figsize=(8.4, 4.4))
+    lim = float(np.ceil(max(abs(np.quantile(d, 0.005)), abs(np.quantile(d, 0.995))) / 5) * 5)
+    bins = np.linspace(-lim, lim, 61)
+    n, b, patches = ax.hist(np.clip(d, -lim, lim), bins=bins, color=BLU, edgecolor=&quot;white&quot;)
+    for pa, left in zip(patches, b[:-1]):
+        if left &gt;= 0:
+            pa.set_facecolor(ARANCIO)
+            pa.set_hatch(&quot;//&quot;)
+    ax.axvline(0, color=&quot;black&quot;, lw=1)
+    ax.axvline(np.median(d), color=GRIGIO, lw=1.5, ls=&quot;--&quot;)
+    ax.text(np.median(d), ax.get_ylim()[1] * 0.93, f&quot; mediana {np.median(d):.1f}&quot;.replace(&quot;.&quot;, &quot;,&quot;), color=GRIGIO, fontsize=10)
+    ax.set_xlabel(&quot;PAC meno lump sum, in punti percentuali del budget  (a sinistra vince il lump sum, a destra il PAC)&quot;)
+    ax.set_ylabel(&quot;Mesi di partenza&quot;)
+    fig.savefig(config.FIGURE / &quot;fig2_distribuzione_sp500.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 3 -----------------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(8.4, 4.6))
+    larg = 0.36
+    ax.bar(x - larg / 2, [v(f&quot;{s}_{h1}_pac_vince_se_scende&quot;) * 100 for s in slugs], larg * 0.92, color=ARANCIO, hatch=&quot;//&quot;, label=&quot;Quando l&#x27;indice scende nei 12 mesi&quot;)
+    ax.bar(x + larg / 2, [v(f&quot;{s}_{h1}_pac_vince_se_sale&quot;) * 100 for s in slugs], larg * 0.92, color=BLU, label=&quot;Quando l&#x27;indice sale nei 12 mesi&quot;)
+    for xi, s in zip(x - larg / 2, slugs):
+        ax.text(xi, v(f&quot;{s}_{h1}_pac_vince_se_scende&quot;) * 100 + 1.2, f&quot;{v(f&#x27;{s}_{h1}_pac_vince_se_scende&#x27;) * 100:.0f}%&quot;, ha=&quot;center&quot;, fontsize=10)
+    for xi, s in zip(x + larg / 2, slugs):
+        ax.text(xi, v(f&quot;{s}_{h1}_pac_vince_se_sale&quot;) * 100 + 1.2, f&quot;{v(f&#x27;{s}_{h1}_pac_vince_se_sale&#x27;) * 100:.0f}%&quot;, ha=&quot;center&quot;, fontsize=10)
+    ax.set_xticks(x, [nomi[s] for s in slugs])
+    ax.set_ylim(0, 110)
+    ax.set_ylabel(&quot;Partenze in cui vince il PAC (%)&quot;)
+    ax.legend(loc=&quot;upper right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig3_direzione_mercato.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 4 -----------------------------------------------------------------------------------------------
+    s = part[(part.ticker == tk_p) &amp; (part.orizzonte == h1)]
+    fig, ax = plt.subplots(figsize=(9.2, 4.4))
+    ax.fill_between(s.partenza, 0, s.diff_pp.clip(lower=0), color=ARANCIO, hatch=&quot;//&quot;, edgecolor=&quot;white&quot;, lw=0, label=&quot;Vince il PAC&quot;)
+    ax.fill_between(s.partenza, 0, s.diff_pp.clip(upper=0), color=BLU, lw=0, label=&quot;Vince il lump sum&quot;)
+    ax.axhline(0, color=&quot;black&quot;, lw=1)
+    ax.set_ylabel(&quot;PAC meno lump sum (punti del budget)&quot;)
+    ax.set_xlabel(&quot;Mese di partenza&quot;)
+    ax.legend(loc=&quot;lower left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig4_sp500_nel_tempo.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate in&quot;, config.FIGURE)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 519 - &quot;Chi ha più fortuna: chi compra una volta o chi compra ogni mese?&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Due investitori hanno lo stesso budget. Il primo lo investe tutto il primo giorno (&quot;una volta&quot;, lump sum). Il secondo lo
+divide in dodici rate uguali, una al primo giorno di Borsa di ciascuno dei dodici mesi (&quot;ogni mese&quot;, PAC); la parte non
+ancora investita resta ferma in cassa, senza interessi. Si confronta il valore in euro dei due portafogli dopo 12 e dopo
+24 mesi dalla partenza, per OGNI mese di partenza possibile della storia di ciascun indice.
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati: indici di prezzo (ticker Yahoo Finance, nome, valuta) -----------------------------------------------
+# Scelti a priori. Sono indici di prezzo (niente dividendi): il confronto è sempre dentro lo stesso indice e in valuta
+# locale, quindi la mancanza dei dividendi non cambia il confronto tra i due modi di comprare, ma abbassa il rialzo medio.
+INDICI = [
+    (&quot;^GSPC&quot;, &quot;S&amp;P 500 (Stati Uniti)&quot;, &quot;USD&quot;),
+    (&quot;^GDAXI&quot;, &quot;DAX (Germania)&quot;, &quot;EUR&quot;),
+    (&quot;^FTSE&quot;, &quot;FTSE 100 (Regno Unito)&quot;, &quot;GBP&quot;),
+    (&quot;^N225&quot;, &quot;Nikkei 225 (Giappone)&quot;, &quot;JPY&quot;),
+]
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere di quattro indici azionari (S&amp;P 500, DAX, FTSE 100, Nikkei 225)&quot;
+NOMI_ESENTI = (&quot;S&amp;P&quot;, &quot;DAX&quot;, &quot;FTSE 100&quot;, &quot;Nikkei 225&quot;, &quot;FTSE&quot;, &quot;519&quot;)
+INDICE_PRINCIPALE = &quot;^GSPC&quot;        # quello dei grafici di dettaglio, scelto a priori: ha la storia più lunga
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+# --- Il confronto ---------------------------------------------------------------------------------------------
+BUDGET = 1200.0                    # euro totali da investire: 100 euro al mese per 12 mesi
+N_RATE = 12                        # rate del PAC, una al primo giorno di Borsa di ogni mese
+ORIZZONTI = (12, 24)               # mesi dalla partenza al giorno di valutazione (il primo giorno di Borsa del mese)
+# Prezzi: chiusura del primo giorno di Borsa di ogni mese (si acquista a quel prezzo). Mese di partenza = ogni mese
+# in cui l&#x27;orizzonte più lungo sta ancora nei dati.
+COMMISSIONI = (0.0, 2.0)           # euro per ordine: 0 e 2. Il lump sum fa 1 ordine, il PAC 12.
+ORIZZONTE_PRINCIPALE = 12
+
+# --- Il caso ------------------------------------------------------------------------------------------------------
+SEME = 20261023
+N_RIMESCOLATE = 1000               # storie sintetiche per indice: gli stessi rendimenti mensili, in ordine rimescolato
+N_SCIMMIE = 200                    # per ogni partenza: scimmie che piazzano le 12 rate in mesi a caso (con ripetizione)
+N_BOOTSTRAP = 2000
+LIVELLO_CONFIDENZA = 0.95
+SOGLIA_PARITA_PP = 5.0             # &quot;entro cinque punti percentuali&quot; nelle ipotesi
+
+# Le soglie delle ipotesi, riportate qui come numeri solo per scriverle nell&#x27;articolo senza cifre a mano (valori identici a quelli del testo che segue)
+SOGLIE = {&quot;ip1_quota&quot;: 0.55, &quot;ip2_scende&quot;: 0.80, &quot;ip2_sale&quot;: 0.25, &quot;ip5_salto_pp&quot;: 3.0, &quot;ip6_lo&quot;: 0.45, &quot;ip6_hi&quot;: 0.55, &quot;alfa&quot;: 0.05}
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) Su 12 mesi, nell&#x27;S&amp;P 500 chi investe tutto subito chiude davanti al PAC in più del 55% dei mesi di partenza &quot;
+    &quot;(ci aspettiamo circa due su tre, perché in media il mercato sale). &quot;
+    &quot;2) Il PAC vince quasi solo quando il mercato scende: tra le partenze in cui l&#x27;indice perde nei 12 mesi successivi, &quot;
+    &quot;il PAC vince in almeno l&#x27;80% dei casi, mentre tra quelle in cui sale vince in meno del 25%. &quot;
+    &quot;3) La quota di vittorie del lump sum nella storia vera è entro cinque punti percentuali da quella media delle storie &quot;
+    &quot;con i rendimenti mensili rimescolati (stessi rendimenti, ordine a caso): a decidere è il rialzo medio, non una &quot;
+    &quot;regolarità della storia. Quindi il test di rimescolamento NON rifiuta il caso (p corretto per Holm sopra 0,05). &quot;
+    &quot;4) Su 24 mesi la quota di vittorie del lump sum non scende rispetto ai 12 mesi, in nessuno dei quattro indici &quot;
+    &quot;(il PAC resta fermo nei mesi 13-24, mentre il lump sum continua a esporsi al rialzo). &quot;
+    &quot;5) Con 2 euro a ordine (12 ordini contro 1, su 1.200 euro) la quota di vittorie del lump sum sale di almeno &quot;
+    &quot;tre punti percentuali nell&#x27;S&amp;P 500: sul piccolo capitale i costi del PAC pesano. &quot;
+    &quot;6) Una scimmia che piazza le 12 rate in mesi a caso non è né meglio né peggio del PAC regolare: la quota di partenze &quot;
+    &quot;in cui il PAC regolare batte la scimmia mediana sta tra il 45% e il 55% nell&#x27;S&amp;P 500.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>prezzi mensili, valore di lump sum e PAC, scimmie, storie rimescolate, Holm</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;esperimento: prezzi del primo giorno di Borsa di ogni mese, valore di lump sum e PAC, rimescolamento.
+
+Convenzioni: p[i] è il prezzo del primo giorno di Borsa del mese i. Partendo dal mese t, il lump sum compra tutto in t;
+il PAC compra BUDGET/N_RATE in ciascuno dei mesi t, t+1, ..., t+N_RATE-1. Entrambi sono valutati al prezzo p[t+h].
+Quote frazionarie; la cassa non ancora investita non rende; la commissione è in euro fissi per ordine e si sottrae al valore finale.
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def prezzi_mensili(chiusure: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Chiusura del primo giorno di Borsa di ogni mese (indice = data di quel giorno).&quot;&quot;&quot;
+    s = chiusure.sort_index()
+    mese = s.index.to_period(&quot;M&quot;)
+    return s.groupby(mese).head(1).rename(&quot;prezzo&quot;)
+
+
+def valore_lump(p: np.ndarray, h: int, budget: float, comm: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Valore dopo h mesi del lump sum per ogni mese di partenza t = 0 .. len(p)-h-1.&quot;&quot;&quot;
+    n = len(p) - h
+    return budget * p[h:h + n] / p[:n] - comm
+
+
+def valore_pac(p: np.ndarray, h: int, budget: float, rate: int, comm: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Valore dopo h mesi del PAC (h &gt;= rate) per ogni mese di partenza t.&quot;&quot;&quot;
+    if h &lt; rate:
+        raise ValueError(&quot;l&#x27;orizzonte deve coprire tutte le rate&quot;)
+    n = len(p) - h
+    inv = np.r_[0.0, np.cumsum(1.0 / p)]                      # somma di 1/p[0..i-1]
+    t = np.arange(n)
+    somma = inv[t + rate] - inv[t]                            # somma di 1/p[t..t+rate-1]
+    return (budget / rate) * p[h:h + n] * somma - rate * comm
+
+
+def valore_scimmia(p: np.ndarray, h: int, budget: float, rate: int, n_scimmie: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Matrice (n_partenze, n_scimmie): ogni scimmia piazza le rate in mesi a caso (con ripetizione) tra t e t+rate-1.&quot;&quot;&quot;
+    n = len(p) - h
+    t = np.arange(n)[:, None, None]
+    sc = rng.integers(0, rate, size=(1, n_scimmie, rate))
+    acq = p[t + sc]                                            # prezzi a cui compra
+    return (budget / rate) * p[h:h + n][:, None] * (1.0 / acq).sum(axis=2)
+
+
+def serie_rimescolata(p: np.ndarray, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Stessi rendimenti mensili, in ordine casuale, dallo stesso prezzo iniziale.&quot;&quot;&quot;
+    r = np.diff(np.log(p))
+    return p[0] * np.exp(np.r_[0.0, np.cumsum(rng.permutation(r))])
+
+
+def quota_lump_rimescolate(p: np.ndarray, h: int, budget: float, rate: int, n: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Quota di partenze in cui il lump sum batte il PAC (senza commissioni) in ciascuna di n storie rimescolate.&quot;&quot;&quot;
+    out = np.empty(n)
+    for k in range(n):
+        q = serie_rimescolata(p, rng)
+        out[k] = np.mean(valore_lump(q, h, budget, 0.0) &gt; valore_pac(q, h, budget, rate, 0.0))
+    return out
+
+
+def holm(p: dict) -&gt; dict:
+    ordine = sorted(p, key=p.get)
+    m = len(ordine)
+    out, massimo = {}, 0.0
+    for k, nome in enumerate(ordine):
+        massimo = max(massimo, min(1.0, (m - k) * p[nome]))
+        out[nome] = massimo
+    return out
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>17 controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+B, R = 1200.0, 12
+
+# 1. Prezzo costante: lump e PAC valgono il budget
+p = np.full(40, 100.0)
+controlla(&quot;prezzo costante: lump = budget&quot;, np.allclose(fx.valore_lump(p, 12, B, 0.0), B))
+controlla(&quot;prezzo costante: PAC = budget&quot;, np.allclose(fx.valore_pac(p, 12, B, R, 0.0), B))
+
+# 2. Prezzo che sale di 1 al mese (p = 100, 101, ...): confronto con calcolo a mano per la partenza 0, orizzonte 12
+p = 100.0 + np.arange(40)
+a_mano_lump = B * p[12] / p[0]
+a_mano_pac = sum((B / R) * p[12] / p[k] for k in range(12))
+controlla(&quot;calcolo a mano del lump&quot;, np.isclose(fx.valore_lump(p, 12, B, 0.0)[0], a_mano_lump))
+controlla(&quot;calcolo a mano del PAC&quot;, np.isclose(fx.valore_pac(p, 12, B, R, 0.0)[0], a_mano_pac))
+controlla(&quot;mercato in rialzo: il lump batte il PAC in ogni partenza&quot;,
+          np.all(fx.valore_lump(p, 12, B, 0.0) &gt; fx.valore_pac(p, 12, B, R, 0.0)))
+
+# 3. Mercato in calo: vince il PAC
+q = 200.0 - np.arange(40)
+controlla(&quot;mercato in calo: il PAC batte il lump in ogni partenza&quot;,
+          np.all(fx.valore_pac(q, 12, B, R, 0.0) &gt; fx.valore_lump(q, 12, B, 0.0)))
+
+# 4. Commissioni: 2 euro a ordine tolgono 2 al lump e 24 al PAC
+controlla(&quot;commissione lump = 2 euro&quot;, np.allclose(fx.valore_lump(p, 12, B, 0.0) - fx.valore_lump(p, 12, B, 2.0), 2.0))
+controlla(&quot;commissione PAC = 24 euro&quot;, np.allclose(fx.valore_pac(p, 12, B, R, 0.0) - fx.valore_pac(p, 12, B, R, 2.0), 24.0))
+
+# 5. Numero di partenze
+controlla(&quot;numero di partenze = mesi - orizzonte&quot;, len(fx.valore_lump(p, 24, B, 0.0)) == 16)
+
+# 6. Orizzonte più corto delle rate: errore
+try:
+    fx.valore_pac(p, 6, B, R, 0.0)
+    controlla(&quot;orizzonte &lt; rate rifiutato&quot;, False)
+except ValueError:
+    controlla(&quot;orizzonte &lt; rate rifiutato&quot;, True)
+
+# 7. Prezzi del primo giorno di Borsa del mese
+idx = pd.to_datetime([&quot;2020-01-02&quot;, &quot;2020-01-03&quot;, &quot;2020-02-03&quot;, &quot;2020-02-04&quot;, &quot;2020-03-02&quot;])
+pm = fx.prezzi_mensili(pd.Series([1.0, 2.0, 3.0, 4.0, 5.0], index=idx))
+controlla(&quot;primo giorno di Borsa del mese&quot;, list(pm.values) == [1.0, 3.0, 5.0])
+
+# 8. Scimmie su prezzo costante valgono il budget; con tutte le rate al primo mese valgono il lump (rate=1 -&gt; come lump)
+rng = np.random.default_rng(1)
+controlla(&quot;scimmie su prezzo costante = budget&quot;, np.allclose(fx.valore_scimmia(np.full(40, 50.0), 12, B, R, 5, rng), B))
+sm = fx.valore_scimmia(p, 12, B, 1, 3, rng)
+controlla(&quot;una sola rata: la scimmia coincide con il lump&quot;, np.allclose(sm[:, 0], fx.valore_lump(p, 12, B, 0.0)))
+
+# 9. Rimescolamento: stesso prezzo iniziale e finale, stessa somma dei rendimenti
+r = fx.serie_rimescolata(p, rng)
+controlla(&quot;rimescolata: stesso inizio e fine&quot;, np.isclose(r[0], p[0]) and np.isclose(r[-1], p[-1]))
+controlla(&quot;rimescolata: stessi rendimenti ordinati&quot;, np.allclose(np.sort(np.diff(np.log(r))), np.sort(np.diff(np.log(p)))))
+
+# 10. Holm
+h = fx.holm({&quot;a&quot;: 0.01, &quot;b&quot;: 0.02, &quot;c&quot;: 0.5})
+controlla(&quot;Holm: valori attesi&quot;, np.isclose(h[&quot;a&quot;], 0.03) and np.isclose(h[&quot;b&quot;], 0.04) and np.isclose(h[&quot;c&quot;], 0.5))
+
+# 11. Rimescolate su mercato sempre in salita (nessun margine di ordine): lump vince sempre
+qq = fx.quota_lump_rimescolate(100.0 * 1.01 ** np.arange(40), 12, B, R, 5, rng)
+controlla(&quot;rendimenti costanti: il rimescolamento non cambia nulla (lump vince sempre)&quot;, np.allclose(qq, 1.0))
+
+print(f&quot;\n{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>

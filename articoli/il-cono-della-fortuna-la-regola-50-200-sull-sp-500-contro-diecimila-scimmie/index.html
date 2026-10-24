@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Il cono della fortuna: la regola 50/200 sull&#x27;S&amp;P 500 contro diecimila scimmie · il codice · TickerFight</title>
+<meta name="description" content="in dieci anni di S&amp;P 500, il risultato della regola 50/200 è distinguibile da quello di una «scimmia» che compra e vende a caso, ma con la stessa dieta della regola (stessi giorni investiti, stesso numero di ordini, stesse durate di permanenza)? Il confronto è con 10.000 scimmie e si vede in un grafico a cono, anche in 3D.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a><a href="https://github.com/TickerFight/tickerfight">GitHub</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Il cono della fortuna: la regola 50/200 sull&#x27;S&amp;P 500 contro diecimila scimmie</h1>
+<p class="domanda">In dieci anni di S&amp;P 500, il risultato della regola 50/200 è distinguibile da quello di una «scimmia» che compra e vende a caso, ma con la stessa dieta della regola (stessi giorni investiti, stesso numero di ordini, stesse durate di permanenza)? Il confronto è con 10.000 scimmie e si vede in un grafico a cono, anche in 3D.</p>
+<div class="btns"><a class="btn p" href="https://ticker-fight.blogspot.com/2026/10/il-cono-della-fortuna-la-regola-50200.html">Leggi l'articolo sul blog →</a><a class="btn" href="il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie.zip" download>⬇ Scarica il codice (.zip)</a><a class="btn" href="https://github.com/TickerFight/tickerfight/tree/main/articoli/il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie">Vedi su GitHub</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Scimmia:</strong> ha lo stesso numero di ordini della regola, le stesse durate di ciascun periodo investito e lo stesso totale di giorni investiti; cambia solo il momento in cui entra, perché le pause tra un periodo e l'altro sono distribuite a caso. Il programma controlla che ogni scimmia abbia la stessa dieta della regola.</li>
+<li><strong>Costi:</strong> 1 € a ordine, tassa 26% con compensazione delle minusvalenze, cambio dell'ultima chiusura, come negli altri articoli.</li>
+<li><strong>Ipotesi scritte prima dei risultati:</strong> vedi <code>flusso/config.py</code>.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica S&amp;P 500 e cambio euro-dollaro
+    ├── 02_backtest_e_test.py  regola, 10.000 scimmie, cono, percentili, perdita massima
+    ├── 03_grafici.py          cono 2D, cono 3D (immagine e GIF che ruota), percentile nel tempo, istogrammi
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── simulazione.py         motore: segnale, ordini, commissioni, cambio, tassa e minusvalenze
+    └── verifica_motore.py     19 controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance l&#x27;indice S&amp;P 500 (^GSPC) e il cambio euro/dollaro.
+
+Salva:
+  dati/sp500_giornaliero.csv     Date, Open, High, Low, Close, Volume
+  dati/eurusd_giornaliero.csv    idem, in dollari per un euro
+  dati/metadati.json             fonte, data del download, versione di yfinance, impronta SHA-256 dei file
+
+Gli script successivi leggono SOLO i file salvati: i risultati sono riproducibili anche se Yahoo
+corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(f&quot;Yahoo Finance non ha restituito dati per {ticker}.&quot;)
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Open&quot;, &quot;Close&quot;])
+    if (df[[&quot;Open&quot;, &quot;Close&quot;]] &lt;= 0).any().any():
+        raise SystemExit(f&quot;{ticker}: trovati prezzi non positivi.&quot;)
+    return df
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    titolo = scarica(config.TICKER)
+    cambio = scarica(config.TICKER_CAMBIO)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if titolo.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(titolo.index[-1].date())
+        titolo = titolo.iloc[:-1]
+
+    titolo.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+    cambio.to_csv(config.FILE_CAMBIO, float_format=&quot;%.6f&quot;)
+
+    def impronta(p):
+        return hashlib.sha256(p.read_bytes()).hexdigest()
+
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;ticker_cambio&quot;: config.TICKER_CAMBIO,
+        &quot;descrizione&quot;: config.DESCRIZIONE_DATI,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: config.URL_FONTE,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_titolo&quot;: len(titolo),
+        &quot;righe_cambio&quot;: len(cambio),
+        &quot;prima_data_titolo&quot;: str(titolo.index[0].date()),
+        &quot;ultima_data_titolo&quot;: str(titolo.index[-1].date()),
+        &quot;prima_data_cambio&quot;: str(cambio.index[0].date()),
+        &quot;ultima_data_cambio&quot;: str(cambio.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonne_usate&quot;: config.NOTA_COLONNA,
+        &quot;sha256_titolo&quot;: impronta(config.FILE_DATI),
+        &quot;sha256_cambio&quot;: impronta(config.FILE_CAMBIO),
+    }
+    config.FILE_METADATI.write_text(json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>regola, 10.000 scimmie, cono, percentili, perdita massima</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Il cono della fortuna: la regola 50/200 sull&#x27;S&amp;P 500 contro migliaia di scimmie.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json          ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  curve.csv              prezzo, medie, posizione e valore del portafoglio giorno per giorno (regola e buy &amp; hold)
+  operazioni_regola.csv  registro di tutte le operazioni della regola
+  cono_fasce.csv         percentili dei percorsi casuali nel tempo, con il valore della regola e il suo percentile
+  cono_densita.csv       densità dei percorsi casuali: una riga per data, una colonna per fascia di valore
+  percorsi_finali.csv    valore finale e perdita massima di ogni percorso casuale
+
+La scimmia: stessa quota di giorni investiti, stesso numero di acquisti e di vendite e stessa durata di ogni
+periodo di permanenza sul mercato della regola; cambia solo dove i periodi cadono nel tempo. Passa dallo stesso motore
+di simulazione (commissioni, cambio, tassa e minusvalenze compresi).
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import simulazione as s
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con simulazione.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine):
+    &quot;&quot;&quot;Registra un numero con la sua giustificazione (finisce nelle note dell&#x27;articolo).&quot;&quot;&quot;
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def periodi(w: np.ndarray) -&gt; list[int]:
+    &quot;&quot;&quot;Lunghezze dei periodi consecutivi di True.&quot;&quot;&quot;
+    x = np.r_[False, w, False].astype(int)
+    d = np.diff(x)
+    return list((np.flatnonzero(d == -1) - np.flatnonzero(d == 1)).tolist())
+
+
+def scimmia(durate: list[int], lunghezza: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Segnale casuale: gli stessi periodi (in ordine casuale), con pause di durata casuale (&gt;= 1 tra due periodi).&quot;&quot;&quot;
+    m = len(durate)
+    giorni_fuori = lunghezza - sum(durate)
+    liberi = giorni_fuori - (m - 1)
+    tagli = np.sort(rng.choice(liberi + m, size=m, replace=False))
+    bordi = np.r_[-1, tagli, liberi + m]
+    pause = np.diff(bordi) - 1                      # m + 1 pause: la prima e l&#x27;ultima possono essere zero
+    pause[1:-1] += 1                                # le pause interne sono almeno di un giorno
+    ordine = rng.permutation(m)
+    w = np.zeros(lunghezza, dtype=bool)
+    pos = int(pause[0])
+    for k, j in enumerate(ordine):
+        w[pos:pos + durate[j]] = True
+        pos += durate[j] + int(pause[k + 1])
+    return w
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    titolo = s.carica_csv(config.FILE_DATI)
+    cambio = s.carica_csv(config.FILE_CAMBIO)
+    meta = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    df = s.prepara(titolo, cambio, config.SMA_VELOCE, config.SMA_LENTA)
+    n = len(df)
+    fine = df.index[-1]
+    i0 = s.indice_data(df, fine - pd.DateOffset(years=config.ANNI_TEST))
+    if i0 &lt; config.SMA_LENTA + 1:
+        raise SystemExit(&quot;Storia insufficiente per calcolare la media lenta prima dell&#x27;inizio del test.&quot;)
+    if df[&quot;fx&quot;].iloc[i0 - 1:].isna().any():
+        raise SystemExit(&quot;Cambio mancante in una seduta nel periodo del test.&quot;)
+    L = n - i0
+    date = df.index[i0:]
+    P = config.MODO_PRINCIPALE
+
+    mm = s.simula(df, i0, config.CAPITALE, config.COMMISSIONE, config.ALIQUOTA, P, True)
+    bh = s.simula(df, i0, config.CAPITALE, config.COMMISSIONE, config.ALIQUOTA, P, False)
+    pd.DataFrame(mm[&quot;operazioni&quot;]).to_csv(config.RISULTATI / &quot;operazioni_regola.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    f = df.iloc[i0:]
+    pd.DataFrame({&quot;data&quot;: date, &quot;chiusura_usd&quot;: f[&quot;Close&quot;].to_numpy(), &quot;sma_veloce&quot;: f[&quot;sma_v&quot;].to_numpy(),
+                  &quot;sma_lenta&quot;: f[&quot;sma_l&quot;].to_numpy(), &quot;regola_in_posizione&quot;: mm[&quot;in_posizione&quot;],
+                  &quot;valore_regola&quot;: mm[&quot;equity&quot;], &quot;valore_bh&quot;: bh[&quot;equity&quot;]}).to_csv(
+        config.RISULTATI / &quot;curve.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    # --- La scimmia ----------------------------------------------------------------------------------------
+    seg = df[&quot;segnale&quot;].to_numpy(bool)
+    w = seg[i0 - 1:n - 1]                       # i segnali che decidono gli ordini delle sedute i0 ... n-1
+    durate = periodi(w)
+    if len(durate) &lt; 3:
+        raise SystemExit(&quot;La regola ha troppi pochi periodi investiti per un confronto con il caso.&quot;)
+    rng = np.random.default_rng(config.SEME)
+    df2 = df.copy()
+    base = seg.copy()
+    # la bar del giorno bh minimo: serve il valore dei percorsi casuali proprio quel giorno
+    dd_bh = bh[&quot;equity&quot;] / np.maximum.accumulate(bh[&quot;equity&quot;]) - 1
+    i_min_bh = int(np.argmin(dd_bh))
+    campione = sorted(set(range(0, L, config.PASSO_CAMPIONE)) | {L - 1, i_min_bh})
+    eq = np.empty((config.N_PERCORSI, len(campione)), dtype=np.float32)
+    finali = np.empty(config.N_PERCORSI)
+    dd = np.empty(config.N_PERCORSI)
+    for k in range(config.N_PERCORSI):
+        sig = base.copy()
+        sig[i0 - 1:n - 1] = scimmia(durate, len(w), rng)
+        df2[&quot;segnale&quot;] = sig
+        r = s.simula(df2, i0, config.CAPITALE, config.COMMISSIONE, config.ALIQUOTA, P, True)
+        if r[&quot;n_acquisti&quot;] != mm[&quot;n_acquisti&quot;] or r[&quot;n_vendite&quot;] != mm[&quot;n_vendite&quot;] or abs(r[&quot;quota_giorni_investito&quot;] - mm[&quot;quota_giorni_investito&quot;]) &gt; 1e-9:
+            raise SystemExit(&quot;La scimmia non ha la stessa dieta della regola: controllare scimmia().&quot;)
+        eq[k] = r[&quot;equity&quot;][campione]
+        finali[k] = r[&quot;valore_finale_eur&quot;]
+        dd[k] = -r[&quot;perdita_massima&quot;]
+    pd.DataFrame({&quot;finale&quot;: finali, &quot;perdita_massima&quot;: dd}).to_csv(config.RISULTATI / &quot;percorsi_finali.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    date_c = date[campione]
+    rule_c = mm[&quot;equity&quot;][campione]
+    bh_c = bh[&quot;equity&quot;][campione]
+    liv = [5, 25, 50, 75, 95]
+    pc = np.percentile(eq, liv, axis=0)
+    perc_regola = (eq &lt; rule_c[None, :]).mean(axis=0)
+    fasce = pd.DataFrame({&quot;data&quot;: date_c, **{f&quot;p{q}&quot;: pc[i] for i, q in enumerate(liv)},
+                          &quot;regola&quot;: rule_c, &quot;buy_hold&quot;: bh_c, &quot;percentile_regola&quot;: perc_regola})
+    fasce.to_csv(config.RISULTATI / &quot;cono_fasce.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+    lo, hi = float(eq.min()), float(eq.max())
+    bordi = np.linspace(lo, hi, config.BIN_VALORE + 1)
+    dens = np.stack([np.histogram(eq[:, j], bins=bordi)[0] for j in range(eq.shape[1])]) / config.N_PERCORSI
+    centri = (bordi[:-1] + bordi[1:]) / 2
+    dd_df = pd.DataFrame(dens, columns=[f&quot;{c:.2f}&quot; for c in centri])
+    dd_df.insert(0, &quot;data&quot;, date_c)
+    dd_df.to_csv(config.RISULTATI / &quot;cono_densita.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    # --- Numeri dell&#x27;articolo ---------------------------------------------------------------------------------
+    origine_dati = f&quot;dati/ ({meta[&#x27;fonte&#x27;]}, {config.TICKER} e {config.TICKER_CAMBIO}, scaricati il {meta[&#x27;scaricato_il_utc&#x27;][:10]})&quot;
+    reg(&quot;capitale&quot;, config.CAPITALE, &quot;int&quot;, &quot;Capitale iniziale in euro&quot;, &quot;config.py, CAPITALE&quot;)
+    reg(&quot;commissione&quot;, config.COMMISSIONE, &quot;num2&quot;, &quot;Commissione fissa per ogni ordine, in euro&quot;, &quot;config.py, COMMISSIONE&quot;)
+    reg(&quot;aliquota&quot;, config.ALIQUOTA, &quot;pct0&quot;, &quot;Aliquota sulle plusvalenze&quot;, &quot;config.py, ALIQUOTA&quot;)
+    reg(&quot;sma_veloce&quot;, config.SMA_VELOCE, &quot;annonum&quot;, &quot;Giorni della media veloce&quot;, &quot;config.py, SMA_VELOCE&quot;)
+    reg(&quot;sma_lenta&quot;, config.SMA_LENTA, &quot;annonum&quot;, &quot;Giorni della media lenta&quot;, &quot;config.py, SMA_LENTA&quot;)
+    reg(&quot;anni_test&quot;, config.ANNI_TEST, &quot;annonum&quot;, &quot;Anni del test&quot;, &quot;config.py, ANNI_TEST&quot;)
+    reg(&quot;n_percorsi&quot;, config.N_PERCORSI, &quot;int&quot;, &quot;Percorsi casuali simulati&quot;, &quot;config.py, N_PERCORSI&quot;)
+    reg(&quot;seme&quot;, config.SEME, &quot;annonum&quot;, &quot;Seme dei sorteggi&quot;, &quot;config.py, SEME&quot;)
+    reg(&quot;data_inizio&quot;, str(date[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta del test&quot;, origine_dati)
+    reg(&quot;data_fine&quot;, str(fine.date()), &quot;data_lunga&quot;, &quot;Ultima seduta del test (ultimo dato scaricato)&quot;, origine_dati)
+    reg(&quot;n_sedute&quot;, L, &quot;int&quot;, &quot;Sedute di borsa nel periodo del test&quot;, origine_dati)
+    reg(&quot;data_scarico&quot;, meta[&quot;scaricato_il_utc&quot;][:10], &quot;data&quot;, &quot;Data del download dei dati&quot;, &quot;dati/metadati.json&quot;)
+    reg(&quot;finale_mm&quot;, mm[&quot;valore_finale_eur&quot;], &quot;num2&quot;, &quot;Valore finale netto della regola, in euro (si vende tutto alla fine)&quot;, f&quot;{SORGENTE}, simula()&quot;)
+    reg(&quot;finale_bh&quot;, bh[&quot;valore_finale_eur&quot;], &quot;num2&quot;, &quot;Valore finale netto del buy &amp; hold, in euro&quot;, f&quot;{SORGENTE}, simula()&quot;)
+    reg(&quot;rend_mm&quot;, mm[&quot;rendimento_totale&quot;], &quot;pct0&quot;, &quot;Rendimento totale netto della regola&quot;, f&quot;{SORGENTE}, simula()&quot;)
+    reg(&quot;rend_bh&quot;, bh[&quot;rendimento_totale&quot;], &quot;pct0&quot;, &quot;Rendimento totale netto del buy &amp; hold&quot;, f&quot;{SORGENTE}, simula()&quot;)
+    reg(&quot;cagr_mm&quot;, mm[&quot;cagr&quot;], &quot;pct1&quot;, &quot;Rendimento annuo composto netto della regola&quot;, f&quot;{SORGENTE}, simula()&quot;)
+    reg(&quot;cagr_bh&quot;, bh[&quot;cagr&quot;], &quot;pct1&quot;, &quot;Rendimento annuo composto netto del buy &amp; hold&quot;, f&quot;{SORGENTE}, simula()&quot;)
+    reg(&quot;maxdd_mm&quot;, -mm[&quot;perdita_massima&quot;], &quot;pct0&quot;, &quot;Perdita massima dal picco della regola&quot;, f&quot;{SORGENTE}, simula()&quot;)
+    reg(&quot;maxdd_bh&quot;, -bh[&quot;perdita_massima&quot;], &quot;pct0&quot;, &quot;Perdita massima dal picco del buy &amp; hold&quot;, f&quot;{SORGENTE}, simula()&quot;)
+    reg(&quot;n_acquisti&quot;, mm[&quot;n_acquisti&quot;], &quot;int&quot;, &quot;Acquisti della regola nel periodo&quot;, f&quot;{SORGENTE}, simula()&quot;)
+    reg(&quot;n_ordini&quot;, mm[&quot;n_acquisti&quot;] + mm[&quot;n_vendite&quot;], &quot;int&quot;, &quot;Ordini della regola (acquisti e vendite, compresa l&#x27;eventuale vendita finale)&quot;, f&quot;{SORGENTE}, simula()&quot;)
+    reg(&quot;quota_investito&quot;, mm[&quot;quota_giorni_investito&quot;], &quot;pct0&quot;, &quot;Quota di sedute con la regola investita&quot;, f&quot;{SORGENTE}, simula()&quot;)
+    reg(&quot;durata_media&quot;, float(np.mean(durate)), &quot;int&quot;, &quot;Durata media, in sedute, di un periodo investito della regola&quot;, &quot;operazioni della regola&quot;)
+    reg(&quot;durata_max&quot;, int(max(durate)), &quot;int&quot;, &quot;Durata, in sedute, del periodo investito più lungo della regola&quot;, &quot;operazioni della regola&quot;)
+    reg(&quot;tasse_mm&quot;, mm[&quot;tasse_eur&quot;], &quot;num2&quot;, &quot;Tasse pagate dalla regola, in euro&quot;, f&quot;{SORGENTE}, simula()&quot;)
+    reg(&quot;comm_mm&quot;, mm[&quot;commissioni_eur&quot;], &quot;num2&quot;, &quot;Commissioni pagate dalla regola, in euro&quot;, f&quot;{SORGENTE}, simula()&quot;)
+
+    cas_med = float(np.median(finali))
+    reg(&quot;cas_mediana&quot;, cas_med, &quot;num2&quot;, &quot;Valore finale mediano dei percorsi casuali, in euro&quot;, &quot;percorsi_finali.csv&quot;)
+    reg(&quot;cas_p5&quot;, float(np.percentile(finali, 5)), &quot;num2&quot;, &quot;5° percentile del valore finale dei percorsi casuali, in euro&quot;, &quot;percorsi_finali.csv&quot;)
+    reg(&quot;cas_p95&quot;, float(np.percentile(finali, 95)), &quot;num2&quot;, &quot;95° percentile del valore finale dei percorsi casuali, in euro&quot;, &quot;percorsi_finali.csv&quot;)
+    reg(&quot;cas_min&quot;, float(finali.min()), &quot;num2&quot;, &quot;Valore finale peggiore tra i percorsi casuali, in euro&quot;, &quot;percorsi_finali.csv&quot;)
+    reg(&quot;cas_max&quot;, float(finali.max()), &quot;num2&quot;, &quot;Valore finale migliore tra i percorsi casuali, in euro&quot;, &quot;percorsi_finali.csv&quot;)
+    reg(&quot;perc_mm&quot;, float((finali &lt; mm[&quot;valore_finale_eur&quot;]).mean()), &quot;pct0&quot;, &quot;Quota di percorsi casuali che chiudono sotto la regola&quot;, &quot;percorsi_finali.csv&quot;)
+    reg(&quot;p_mm&quot;, (int((finali &gt;= mm[&quot;valore_finale_eur&quot;]).sum()) + 1) / (config.N_PERCORSI + 1), &quot;pval&quot;,
+        &quot;Quota di percorsi casuali che fanno almeno quanto la regola (p-value a una coda)&quot;, &quot;percorsi_finali.csv&quot;)
+    reg(&quot;quota_cas_sopra_mm&quot;, float((finali &gt;= mm[&quot;valore_finale_eur&quot;]).mean()), &quot;pct0&quot;, &quot;Quota di percorsi casuali che fanno almeno quanto la regola&quot;, &quot;percorsi_finali.csv&quot;)
+    reg(&quot;quota_cas_sopra_bh&quot;, float((finali &gt;= bh[&quot;valore_finale_eur&quot;]).mean()), &quot;pct1&quot;, &quot;Quota di percorsi casuali che fanno almeno quanto il buy &amp; hold&quot;, &quot;percorsi_finali.csv&quot;)
+    reg(&quot;bh_sopra_mediana&quot;, bh[&quot;valore_finale_eur&quot;] - cas_med, &quot;num2&quot;, &quot;Buy &amp; hold meno valore mediano dei percorsi casuali, in euro&quot;, &quot;finale_bh - cas_mediana&quot;)
+    reg(&quot;mm_sopra_mediana&quot;, mm[&quot;valore_finale_eur&quot;] - cas_med, &quot;num2&quot;, &quot;Regola meno valore mediano dei percorsi casuali, in euro&quot;, &quot;finale_mm - cas_mediana&quot;)
+    reg(&quot;cas_dd_mediana&quot;, float(np.median(dd)), &quot;pct0&quot;, &quot;Perdita massima mediana dei percorsi casuali&quot;, &quot;percorsi_finali.csv&quot;)
+    reg(&quot;cas_dd_p5&quot;, float(np.percentile(dd, 5)), &quot;pct0&quot;, &quot;5° percentile della perdita massima dei percorsi casuali (i meno colpiti)&quot;, &quot;percorsi_finali.csv&quot;)
+    reg(&quot;cas_dd_p95&quot;, float(np.percentile(dd, 95)), &quot;pct0&quot;, &quot;95° percentile della perdita massima dei percorsi casuali (i più colpiti)&quot;, &quot;percorsi_finali.csv&quot;)
+    # Molti percorsi hanno la stessa perdita massima della regola (il crollo del 2020 li trova tutti investiti): si
+    # arrotonda a sei decimali per non assegnare a caso gli «uguali» a causa del rumore dell&#x27;aritmetica.
+    ddr, soglia_dd = np.round(dd, 6), round(float(-mm[&quot;perdita_massima&quot;]), 6)
+    reg(&quot;dd_perc_mm&quot;, float((ddr &gt; soglia_dd).mean()), &quot;pct0&quot;, &quot;Quota di percorsi casuali con una perdita massima più grande di quella della regola&quot;, &quot;percorsi_finali.csv&quot;)
+    reg(&quot;dd_uguale_mm&quot;, float((ddr == soglia_dd).mean()), &quot;pct0&quot;, &quot;Quota di percorsi casuali con la stessa perdita massima della regola (arrotondata a sei decimali)&quot;, &quot;percorsi_finali.csv&quot;)
+    reg(&quot;dd_minore_mm&quot;, float((ddr &lt; soglia_dd).mean()), &quot;pct0&quot;, &quot;Quota di percorsi casuali con una perdita massima più piccola di quella della regola&quot;, &quot;percorsi_finali.csv&quot;)
+    reg(&quot;p_dd&quot;, (int((ddr &lt;= soglia_dd).sum()) + 1) / (config.N_PERCORSI + 1), &quot;pval&quot;,
+        &quot;Quota di percorsi casuali con una perdita massima minore o uguale a quella della regola (p-value a una coda)&quot;, &quot;percorsi_finali.csv&quot;)
+
+    # La regola dentro il cono, nel tempo
+    j_min, j_max = int(np.argmin(perc_regola)), int(np.argmax(perc_regola))
+    j_bh = campione.index(i_min_bh)
+    reg(&quot;perc_min&quot;, float(perc_regola[j_min]), &quot;pct0&quot;, &quot;Punto più basso del percentile della regola tra i percorsi casuali&quot;, &quot;cono_fasce.csv&quot;)
+    reg(&quot;data_perc_min&quot;, str(date_c[j_min].date()), &quot;data_lunga&quot;, &quot;Data del punto più basso del percentile della regola&quot;, &quot;cono_fasce.csv&quot;)
+    reg(&quot;perc_max&quot;, float(perc_regola[j_max]), &quot;pct0&quot;, &quot;Punto più alto del percentile della regola tra i percorsi casuali&quot;, &quot;cono_fasce.csv&quot;)
+    reg(&quot;data_perc_max&quot;, str(date_c[j_max].date()), &quot;data_lunga&quot;, &quot;Data del punto più alto del percentile della regola&quot;, &quot;cono_fasce.csv&quot;)
+    reg(&quot;perc_medio&quot;, float(perc_regola.mean()), &quot;pct0&quot;, &quot;Percentile medio della regola nel tempo (media sulle date campionate)&quot;, &quot;cono_fasce.csv&quot;)
+    reg(&quot;quota_tempo_sopra_mediana&quot;, float((rule_c &gt; pc[2]).mean()), &quot;pct0&quot;, &quot;Quota di date in cui la regola sta sopra la mediana dei percorsi casuali&quot;, &quot;cono_fasce.csv&quot;)
+    reg(&quot;data_minimo_bh&quot;, str(date_c[j_bh].date()), &quot;data_lunga&quot;, &quot;Giorno del punto più basso del buy &amp; hold (massima perdita dal picco)&quot;, &quot;curve.csv&quot;)
+    reg(&quot;perc_al_minimo_bh&quot;, float(perc_regola[j_bh]), &quot;pct0&quot;, &quot;Percentile della regola tra i percorsi casuali nel giorno del punto più basso del buy &amp; hold&quot;, &quot;cono_fasce.csv&quot;)
+    reg(&quot;mm_al_minimo_bh&quot;, float(rule_c[j_bh]), &quot;num2&quot;, &quot;Valore della regola nel giorno del punto più basso del buy &amp; hold, in euro&quot;, &quot;cono_fasce.csv&quot;)
+    reg(&quot;mediana_al_minimo_bh&quot;, float(pc[2][j_bh]), &quot;num2&quot;, &quot;Valore mediano dei percorsi casuali nello stesso giorno, in euro&quot;, &quot;cono_fasce.csv&quot;)
+    reg(&quot;bh_al_minimo_bh&quot;, float(bh_c[j_bh]), &quot;num2&quot;, &quot;Valore del buy &amp; hold nello stesso giorno, in euro&quot;, &quot;cono_fasce.csv&quot;)
+
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+           &quot;python&quot;: platform.python_version(), &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri in risultati/metriche.json&quot;)
+    print(f&quot;Periodo {date[0].date()} -&gt; {fine.date()}, {L} sedute; regola: {mm[&#x27;n_acquisti&#x27;]} acquisti, investita {mm[&#x27;quota_giorni_investito&#x27;]:.0%}&quot;)
+    print(f&quot;regola {mm[&#x27;valore_finale_eur&#x27;]:.2f}  bh {bh[&#x27;valore_finale_eur&#x27;]:.2f}  casuali mediana {cas_med:.2f} [{np.percentile(finali,5):.0f}, {np.percentile(finali,95):.0f}]&quot;)
+    print(f&quot;percentile regola {np.mean(finali &lt; mm[&#x27;valore_finale_eur&#x27;]):.0%}; p={RIS[&#x27;p_mm&#x27;][&#x27;valore&#x27;]:.4f}; dd regola {-mm[&#x27;perdita_massima&#x27;]:.0%}, casuali mediana {np.median(dd):.0%}&quot;)
+    print(f&quot;minimo bh il {date_c[j_bh].date()}: percentile regola {perc_regola[j_bh]:.0%}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>cono 2D, cono 3D (immagine e GIF che ruota), percentile nel tempo, istogrammi</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG e la GIF in figure/.
+
+  fig1_cono.png                 il cono in 2D: fasce dei percorsi casuali, regola e buy &amp; hold
+  fig2_cono_3d.png              il cono in 3D: tempo, valore e densità dei percorsi casuali, con la regola sopra
+  fig2_cono_3d.gif              lo stesso grafico in 3D, che ruota
+  fig3_percentile_nel_tempo.png il percentile della regola tra i percorsi casuali, giorno per giorno
+  fig4_finale_e_perdita.png     valore finale e perdita massima: percorsi casuali contro regola e buy &amp; hold
+&quot;&quot;&quot;
+import io
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.dates as mdates  # noqa: E402
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+from PIL import Image  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+
+
+def euro(x, _=None):
+    return f&quot;{x:,.0f}&quot;.replace(&quot;,&quot;, &quot;.&quot;) + &quot; €&quot;
+
+
+def liscia(m: np.ndarray, k: int = 3) -&gt; np.ndarray:
+    &quot;&quot;&quot;Media mobile leggera lungo le colonne (fasce di valore) e le righe (tempo), solo per rendere la superficie leggibile.&quot;&quot;&quot;
+    ker = np.ones(k) / k
+    m = np.apply_along_axis(lambda v: np.convolve(np.pad(v, k // 2, mode=&quot;edge&quot;), ker, mode=&quot;valid&quot;), 1, m)
+    return np.apply_along_axis(lambda v: np.convolve(np.pad(v, k // 2, mode=&quot;edge&quot;), ker, mode=&quot;valid&quot;), 0, m)
+
+
+def disegna_3d(ax, T, V, Z, fasce, azim, elev=26):
+    ax.plot_surface(T, V, Z, cmap=&quot;Greys&quot;, rstride=1, cstride=1, linewidth=0, antialiased=True, alpha=0.95)
+    anni = T[:, 0]
+    valori = V[0]
+    for col, nome, stile in ((&quot;regola&quot;, &quot;regola&quot;, &quot;-&quot;), (&quot;buy_hold&quot;, &quot;buy &amp; hold&quot;, &quot;--&quot;)):
+        y = fasce[col].to_numpy()
+        j = np.clip(np.searchsorted(valori, y), 0, len(valori) - 1)
+        z = Z[np.arange(len(anni)), j] + Z.max() * 0.03
+        ax.plot(anni, y, z, color=BLU if col == &quot;regola&quot; else ARANCIO, lw=3.2, ls=stile, label=nome)
+    ax.set_xlabel(&quot;anni dall&#x27;inizio&quot;, labelpad=8)
+    ax.set_ylabel(&quot;valore dei 500 €&quot;, labelpad=10)
+    ax.set_zlabel(&quot;percorsi casuali&quot;, labelpad=4)
+    ax.yaxis.set_major_formatter(euro)
+    ax.zaxis.set_major_formatter(lambda v, _: f&quot;{v * 100:.0f}%&quot;)
+    ax.view_init(elev=elev, azim=azim)
+    ax.set_box_aspect((1.5, 1.2, 0.7))
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    R = config.RISULTATI
+    fasce = pd.read_csv(R / &quot;cono_fasce.csv&quot;, parse_dates=[&quot;data&quot;])
+    dens = pd.read_csv(R / &quot;cono_densita.csv&quot;, parse_dates=[&quot;data&quot;])
+    fin = pd.read_csv(R / &quot;percorsi_finali.csv&quot;)
+    curve = pd.read_csv(R / &quot;curve.csv&quot;, parse_dates=[&quot;data&quot;])
+
+    # --- Figura 1: il cono in 2D ------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(11, 5.8))
+    ax.fill_between(fasce[&quot;data&quot;], fasce[&quot;p5&quot;], fasce[&quot;p95&quot;], color=GRIGIO, alpha=0.20, lw=0, label=&quot;dal 5° al 95° percentile dei percorsi casuali&quot;)
+    ax.fill_between(fasce[&quot;data&quot;], fasce[&quot;p25&quot;], fasce[&quot;p75&quot;], color=GRIGIO, alpha=0.30, lw=0, label=&quot;dal 25° al 75°&quot;)
+    ax.plot(fasce[&quot;data&quot;], fasce[&quot;p50&quot;], color=&quot;#555&quot;, lw=1.2, label=&quot;mediana&quot;)
+    ax.plot(curve[&quot;data&quot;], curve[&quot;valore_bh&quot;], color=ARANCIO, lw=1.8, ls=&quot;--&quot;, label=&quot;buy &amp; hold&quot;)
+    ax.plot(curve[&quot;data&quot;], curve[&quot;valore_regola&quot;], color=BLU, lw=2.2, label=f&quot;regola {config.SMA_VELOCE}/{config.SMA_LENTA}&quot;)
+    ax.axhline(config.CAPITALE, color=GRIGIO, lw=1, ls=&quot;:&quot;)
+    ax.yaxis.set_major_formatter(euro)
+    ax.xaxis.set_major_locator(mdates.YearLocator(2))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter(&quot;%Y&quot;))
+    ax.set_ylabel(&quot;valore dei 500 €&quot;)
+    ax.legend(ncol=3, loc=&quot;lower left&quot;, bbox_to_anchor=(0, 1.0), fontsize=10, columnspacing=1.2)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_cono.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 2: il cono in 3D (statica e GIF) ------------------------------------------------------------------
+    valori = np.array([float(c) for c in dens.columns[1:]])
+    Z = liscia(dens.iloc[:, 1:].to_numpy(float), 5)
+    anni = (dens[&quot;data&quot;] - dens[&quot;data&quot;].iloc[0]).dt.days.to_numpy() / 365.25
+    # Il primo periodo ha tutti i percorsi vicini ai 500 €: un picco che schiaccia il resto. Si limita l&#x27;altezza (solo per la leggibilità).
+    Z = np.minimum(Z, np.percentile(Z[anni &gt; 0.5], 99))
+    T, V = np.meshgrid(anni, valori, indexing=&quot;ij&quot;)
+    fig = plt.figure(figsize=(10, 7.2))
+    ax = fig.add_subplot(111, projection=&quot;3d&quot;)
+    disegna_3d(ax, T, V, Z, fasce, azim=-62)
+    ax.legend(loc=&quot;upper left&quot;, bbox_to_anchor=(0.02, 0.92), fontsize=11)
+    fig.savefig(config.FIGURE / &quot;fig2_cono_3d.png&quot;, dpi=130)
+    plt.close(fig)
+
+    frames = []
+    for az in np.linspace(-62, 298, 45, endpoint=False):
+        fig = plt.figure(figsize=(7.2, 5.4))
+        ax = fig.add_subplot(111, projection=&quot;3d&quot;)
+        disegna_3d(ax, T, V, Z, fasce, azim=float(az))
+        ax.legend(loc=&quot;upper left&quot;, bbox_to_anchor=(0.0, 0.95), fontsize=9)
+        buf = io.BytesIO()
+        fig.savefig(buf, format=&quot;png&quot;, dpi=80, bbox_inches=None, pad_inches=0)
+        plt.close(fig)
+        buf.seek(0)
+        frames.append(Image.open(buf).convert(&quot;P&quot;, palette=Image.ADAPTIVE, colors=128))
+    frames[0].save(config.FIGURE / &quot;fig2_cono_3d.gif&quot;, save_all=True, append_images=frames[1:], duration=90, loop=0, optimize=True)
+
+    # --- Figura 3: percentile nel tempo ---------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(11, 4.8))
+    ax.axhspan(25, 75, color=GRIGIO, alpha=0.15, lw=0, label=&quot;zona centrale (dal 25° al 75° percentile)&quot;)
+    ax.axhline(50, color=&quot;#555&quot;, lw=1)
+    ax.plot(fasce[&quot;data&quot;], fasce[&quot;percentile_regola&quot;] * 100, color=BLU, lw=2.0)
+    ax.set_ylim(0, 100)
+    ax.yaxis.set_major_formatter(lambda v, _: f&quot;{v:.0f}°&quot;)
+    ax.set_ylabel(&quot;percentile della regola&quot;)
+    ax.xaxis.set_major_locator(mdates.YearLocator(2))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter(&quot;%Y&quot;))
+    ax.legend(loc=&quot;lower left&quot;, bbox_to_anchor=(0, 1.0))
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_percentile_nel_tempo.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 4: valore finale e perdita massima -----------------------------------------------------------
+    import json
+    val = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    fm, fb = float(val[&quot;finale_mm&quot;][&quot;valore&quot;]), float(val[&quot;finale_bh&quot;][&quot;valore&quot;])
+    ddm, ddb = float(val[&quot;maxdd_mm&quot;][&quot;valore&quot;]), float(val[&quot;maxdd_bh&quot;][&quot;valore&quot;])
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(14, 5))
+    a1.hist(fin[&quot;finale&quot;], bins=50, color=GRIGIO, alpha=0.6, edgecolor=&quot;white&quot;)
+    a1.axvline(fm, color=BLU, lw=2.4, label=&quot;regola&quot;)
+    a1.axvline(fb, color=ARANCIO, lw=2.2, ls=&quot;--&quot;, label=&quot;buy &amp; hold&quot;)
+    a1.xaxis.set_major_formatter(euro)
+    a1.set_xlabel(&quot;valore finale netto dei percorsi casuali&quot;)
+    a1.set_ylabel(&quot;numero di percorsi&quot;)
+    a2.hist(fin[&quot;perdita_massima&quot;] * 100, bins=50, color=GRIGIO, alpha=0.6, edgecolor=&quot;white&quot;)
+    a2.axvline(ddm * 100, color=BLU, lw=2.4, label=&quot;regola&quot;)
+    a2.axvline(ddb * 100, color=ARANCIO, lw=2.2, ls=&quot;--&quot;, label=&quot;buy &amp; hold&quot;)
+    a2.xaxis.set_major_formatter(lambda v, _: f&quot;{v:.0f}%&quot;)
+    a2.set_xlabel(&quot;perdita massima dal picco dei percorsi casuali&quot;)
+    for a in (a1, a2):
+        a.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig4_finale_e_perdita.png&quot;)
+    plt.close(fig)
+    print(&quot;Grafici salvati in figure/&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo bonus - &quot;Il cono della fortuna: la regola 50/200 sull&#x27;S&amp;P 500 contro la scimmia&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni
+numero dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+L&#x27;articolo è fuori programmazione e fuori catalogo: per questo la cartella si chiama &quot;bonus&quot; e non ha numero.
+
+Idea: il risultato della regola 50/200 è merito del timing o di un po&#x27; di fortuna? Si confronta con migliaia di
+&quot;scimmie&quot; che hanno la stessa dieta della regola (stessi giorni investiti, stesso numero di ordini, stessi
+periodi di permanenza sul mercato) ma entrano ed escono a caso.
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati ---------------------------------------------------------------
+TICKER = &quot;^GSPC&quot;                      # indice S&amp;P 500, in dollari. Si assume uno strumento che lo replica, negoziabile in euro
+TICKER_CAMBIO = &quot;EURUSD=X&quot;            # dollari per un euro
+INIZIO_DOWNLOAD = &quot;2015-01-01&quot;        # serve storia per la media a 200 giorni prima dell&#x27;inizio del test
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;sp500_giornaliero.csv&quot;
+FILE_CAMBIO = DATI / &quot;eurusd_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;chiusure e aperture giornaliere dell&#x27;indice S&amp;P 500 e cambio euro/dollaro&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = (&quot;Open e Close non corretti per i dividendi: l&#x27;indice è un indice di prezzo, i dividendi non sono &quot;
+                &quot;considerati, né per la regola né per il buy &amp; hold&quot;)
+
+# --- Scenario dell&#x27;investitore (identico agli articoli precedenti) ----------
+CAPITALE = 500.0
+COMMISSIONE = 1.0
+ALIQUOTA = 0.26
+ANNI_TEST = 10            # dieci anni: abbastanza ordini della regola perché il confronto con il caso abbia senso
+SMA_VELOCE = 50
+SMA_LENTA = 200
+MODO_PRINCIPALE = &quot;apertura&quot;   # segnale a fine seduta t, ordine all&#x27;apertura di t+1
+
+# --- La scimmia: timing casuale con la stessa dieta della regola -----------------
+# Stessi giorni investiti, stesso numero di acquisti e di vendite, stessa durata di ogni periodo di permanenza
+# sul mercato: cambia solo DOVE i periodi cadono nel tempo.
+N_PERCORSI = 10000
+SEME = 2026
+PASSO_CAMPIONE = 5        # per i grafici si conserva il valore di ogni quinta seduta (una a settimana)
+BIN_VALORE = 70           # fasce di valore per la superficie 3D
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) Il valore finale della regola cade dentro il cono: almeno il 5% dei percorsi casuali fa altrettanto o meglio &quot;
+    &quot;(il timing non è dimostrabilmente meglio della fortuna). &quot;
+    &quot;2) Il giorno del punto più basso del buy &amp; hold la regola sta sopra la mediana dei percorsi casuali: nei crolli il &quot;
+    &quot;timing aiuta. &quot;
+    &quot;3) Il buy &amp; hold chiude sopra la mediana dei percorsi casuali, perché è sempre investito e in dieci anni di rialzo &quot;
+    &quot;stare sul mercato conta più del timing.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/simulazione.py<small>motore: segnale, ordini, commissioni, cambio, tassa e minusvalenze</small></summary><pre><code class="language-python">&quot;&quot;&quot;Motore di simulazione in euro di una regola a medie mobili su un singolo titolo.
+
+Regole (da dichiarare nell&#x27;articolo):
+  - segnale: investito se la media mobile veloce è sopra la lenta, calcolate sulle chiusure;
+  - il segnale a fine seduta t decide l&#x27;operazione della seduta t+1 (nessun look-ahead);
+  - esecuzione &quot;apertura&quot;: prezzo di apertura di t+1, cambio dell&#x27;ultima chiusura nota (t);
+    esecuzione &quot;chiusura&quot;: prezzo di chiusura di t+1, cambio di t+1 (controllo di robustezza);
+  - azioni frazionate, si investe tutta la cassa; commissione fissa per ogni ordine, acquisto o vendita;
+  - la cassa non rende nulla; i dividendi non sono considerati;
+  - tassa sulle plusvalenze calcolate in euro (cambio incluso), pagata a ogni vendita come nel regime
+    amministrato; la commissione si somma al costo di acquisto e si sottrae dall&#x27;incasso; le minusvalenze
+    compensano le plusvalenze successive fino al quarto anno seguente;
+  - a fine periodo si vende tutto, con commissione e tassa, per confrontare cifre nette.
+Non modellati: imposta di bollo, ritenuta sui dividendi, spread di cambio.
+&quot;&quot;&quot;
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+
+class Zaino:
+    &quot;&quot;&quot;Minusvalenze compensabili con le plusvalenze successive, fino al 4° anno seguente.&quot;&quot;&quot;
+
+    def __init__(self, aliquota: float):
+        self.aliquota = aliquota
+        self.voci: list[list[float]] = []   # [ultimo anno utilizzabile, importo residuo]
+
+    def tassa(self, anno: int, guadagno: float) -&gt; float:
+        if guadagno &lt; 0:
+            self.voci.append([anno + 4, -guadagno])
+            return 0.0
+        residuo = guadagno
+        for voce in sorted(self.voci, key=lambda v: v[0]):      # prima le più vecchie
+            if voce[0] &lt; anno or voce[1] &lt;= 0:
+                continue
+            usa = min(voce[1], residuo)
+            voce[1] -= usa
+            residuo -= usa
+            if residuo &lt;= 0:
+                break
+        return self.aliquota * residuo
+
+
+def carica_csv(percorso: Path) -&gt; pd.DataFrame:
+    df = pd.read_csv(percorso, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    if (df[&quot;Close&quot;] &lt;= 0).any() or df[&quot;Close&quot;].isna().any():
+        raise SystemExit(f&quot;{percorso}: chiusure mancanti o non positive.&quot;)
+    return df
+
+
+def prepara(titolo: pd.DataFrame, cambio: pd.DataFrame, veloce: int, lenta: int) -&gt; pd.DataFrame:
+    df = titolo[[&quot;Open&quot;, &quot;Close&quot;]].astype(float).copy()
+    fx = cambio[&quot;Close&quot;].astype(float)
+    df[&quot;fx&quot;] = fx.reindex(df.index.union(fx.index)).ffill().reindex(df.index)
+    df[&quot;sma_v&quot;] = df[&quot;Close&quot;].rolling(veloce).mean()
+    df[&quot;sma_l&quot;] = df[&quot;Close&quot;].rolling(lenta).mean()
+    df[&quot;segnale&quot;] = (df[&quot;sma_v&quot;] &gt; df[&quot;sma_l&quot;]) &amp; df[&quot;sma_l&quot;].notna()
+    return df
+
+
+def indice_data(df: pd.DataFrame, data) -&gt; int:
+    &quot;&quot;&quot;Posizione della prima seduta con data uguale o successiva a quella indicata.&quot;&quot;&quot;
+    return int(np.searchsorted(df.index.values, np.datetime64(data)))
+
+
+def simula(df: pd.DataFrame, i0: int, capitale: float, commissione: float, aliquota: float,
+           modo: str, strategia: bool) -&gt; dict:
+    &quot;&quot;&quot;strategia=True: regola a medie mobili; False: buy &amp; hold (compra a i0, vende alla fine).&quot;&quot;&quot;
+    O, C, FX = (df[c].to_numpy(float) for c in (&quot;Open&quot;, &quot;Close&quot;, &quot;fx&quot;))
+    SEG = df[&quot;segnale&quot;].to_numpy(bool)
+    date = df.index
+    n = len(df)
+    cassa, azioni, base = float(capitale), 0.0, 0.0
+    zaino = Zaino(aliquota)
+    log: list[dict] = []
+    tot = {&quot;commissioni&quot;: 0.0, &quot;tasse&quot;: 0.0}
+    equity = np.empty(n - i0)
+    in_posizione = np.zeros(n - i0, dtype=bool)
+
+    def compra(i, px_usd, fx, etichetta):
+        nonlocal cassa, azioni, base
+        investito = cassa - commissione
+        if investito &lt;= 0:
+            return
+        px_eur = px_usd / fx
+        spesa = cassa
+        azioni = investito / px_eur
+        base = spesa
+        tot[&quot;commissioni&quot;] += commissione
+        log.append(dict(data=str(date[i].date()), lato=&quot;acquisto&quot;, motivo=etichetta, prezzo_usd=px_usd, cambio=fx,
+                        prezzo_eur=px_eur, azioni=azioni, commissione=commissione, spesa_eur=spesa,
+                        incasso_netto_eur=0.0, plusvalenza_eur=0.0, tassa_eur=0.0))
+        cassa = 0.0
+
+    def vendi(i, px_usd, fx, etichetta):
+        nonlocal cassa, azioni, base
+        px_eur = px_usd / fx
+        lordo = azioni * px_eur
+        netto = lordo - commissione
+        guadagno = netto - base
+        tassa = zaino.tassa(int(date[i].year), guadagno)
+        tot[&quot;commissioni&quot;] += commissione
+        tot[&quot;tasse&quot;] += tassa
+        log.append(dict(data=str(date[i].date()), lato=&quot;vendita&quot;, motivo=etichetta, prezzo_usd=px_usd, cambio=fx,
+                        prezzo_eur=px_eur, azioni=azioni, commissione=commissione, spesa_eur=0.0,
+                        incasso_netto_eur=netto, plusvalenza_eur=guadagno, tassa_eur=tassa))
+        cassa = netto - tassa
+        azioni, base = 0.0, 0.0
+
+    for i in range(i0, n):
+        voglio = bool(SEG[i - 1]) if strategia else True
+        px, fx = (O[i], FX[i - 1]) if modo == &quot;apertura&quot; else (C[i], FX[i])
+        if voglio and azioni == 0.0:
+            compra(i, px, fx, &quot;segnale&quot; if strategia else &quot;acquisto iniziale&quot;)
+        elif (not voglio) and azioni &gt; 0.0:
+            vendi(i, px, fx, &quot;segnale&quot;)
+        equity[i - i0] = cassa + azioni * C[i] / FX[i]
+        in_posizione[i - i0] = azioni &gt; 0.0
+    if azioni &gt; 0.0:
+        vendi(n - 1, C[n - 1], FX[n - 1], &quot;liquidazione finale&quot;)
+
+    picco = np.maximum.accumulate(equity)
+    anni = (date[-1] - date[i0]).days / 365.25
+    finale = cassa
+    return {
+        &quot;valore_finale_eur&quot;: finale,
+        &quot;rendimento_totale&quot;: finale / capitale - 1,
+        &quot;cagr&quot;: (finale / capitale) ** (1 / anni) - 1 if finale &gt; 0 else float(&quot;nan&quot;),
+        &quot;anni&quot;: anni,
+        &quot;n_acquisti&quot;: sum(1 for r in log if r[&quot;lato&quot;] == &quot;acquisto&quot;),
+        &quot;n_vendite&quot;: sum(1 for r in log if r[&quot;lato&quot;] == &quot;vendita&quot;),
+        &quot;commissioni_eur&quot;: tot[&quot;commissioni&quot;],
+        &quot;tasse_eur&quot;: tot[&quot;tasse&quot;],
+        &quot;quota_giorni_investito&quot;: float(in_posizione.mean()),
+        &quot;perdita_massima&quot;: float((equity / picco - 1).min()),
+        &quot;operazioni&quot;: log,
+        &quot;equity&quot;: equity,
+        &quot;in_posizione&quot;: in_posizione,
+    }
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>19 controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli del motore di simulazione. Usa SOLO dati inventati: nessun numero qui è un risultato.
+
+Si esegue prima del backtest (lo fa anche il flusso su GitHub): se un controllo fallisce, il flusso si ferma.
+  1. conti fatti a mano (guadagno, perdita, cambio, compensazione delle minusvalenze);
+  2. confronto con una formula indipendente;
+  3. coerenza del registro delle operazioni con i prezzi grezzi.
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import simulazione as s
+
+ok = 0
+
+
+def verifica(nome, condizione, dettaglio=&quot;&quot;):
+    global ok
+    if not condizione:
+        raise SystemExit(f&quot;FALLITO: {nome} {dettaglio}&quot;)
+    ok += 1
+    print(f&quot;  ok  {nome}&quot;)
+
+
+def uguali(a, b, tol=1e-9):
+    return abs(a - b) &lt;= tol * max(1.0, abs(a), abs(b))
+
+
+print(&quot;1. Conti a mano&quot;)
+# Guadagno: compro a 100, vendo a 120, cambio 1. Azioni = 499/100 = 4,99; incasso 598,8; netto 597,8;
+# plusvalenza 97,8; tassa 25,428; cassa finale 572,372.
+piccolo = pd.DataFrame({&quot;Open&quot;: [100, 100, 100, 120, 120, 120.0], &quot;Close&quot;: [100, 100, 110, 120, 120, 120.0],
+                        &quot;fx&quot;: 1.0, &quot;segnale&quot;: [False, True, True, False, False, False]},
+                       index=pd.bdate_range(&quot;2022-03-01&quot;, periods=6))
+r = s.simula(piccolo, 1, 500, 1.0, 0.26, &quot;apertura&quot;, True)
+verifica(&quot;guadagno: cassa finale 572,372&quot;, uguali(r[&quot;valore_finale_eur&quot;], 572.372), r[&quot;valore_finale_eur&quot;])
+verifica(&quot;guadagno: tassa 25,428&quot;, uguali(r[&quot;tasse_eur&quot;], 25.428))
+verifica(&quot;guadagno: 2 commissioni&quot;, uguali(r[&quot;commissioni_eur&quot;], 2.0))
+
+perdita = piccolo.copy()
+perdita[&quot;Open&quot;] = [100, 100, 110, 110, 90, 90.0]
+perdita[&quot;Close&quot;] = [100, 100, 110, 100, 90, 90.0]
+r = s.simula(perdita, 1, 500, 1.0, 0.26, &quot;apertura&quot;, True)
+verifica(&quot;perdita: cassa finale = 499/110*90-1&quot;, uguali(r[&quot;valore_finale_eur&quot;], 499 / 110 * 90 - 1), r[&quot;valore_finale_eur&quot;])
+verifica(&quot;perdita: nessuna tassa&quot;, r[&quot;tasse_eur&quot;] == 0.0)
+
+cambio = piccolo.copy()
+cambio[&quot;fx&quot;] = 1.25
+r = s.simula(cambio, 1, 500, 1.0, 0.26, &quot;apertura&quot;, True)
+verifica(&quot;cambio costante: stesso risultato in euro&quot;, uguali(r[&quot;valore_finale_eur&quot;], 572.372))
+
+# Con il cambio che cambia tra acquisto e vendita la plusvalenza in euro cambia: compro con cambio 1,00,
+# vendo con cambio 1,25 (dollaro più debole -&gt; meno euro): 4,99 azioni * 120 / 1,25 = 479,04; netto 478,04.
+cambio_var = piccolo.copy()
+cambio_var[&quot;fx&quot;] = [1.0, 1.0, 1.0, 1.0, 1.25, 1.25]   # acquisto all&#x27;apertura di i=2 con fx[1]=1,00; vendita i=4 con fx[3]=1,00
+r = s.simula(cambio_var, 1, 500, 1.0, 0.26, &quot;apertura&quot;, True)
+verifica(&quot;cambio: ordini con il cambio dell&#x27;ultima chiusura nota&quot;, uguali(r[&quot;valore_finale_eur&quot;], 572.372), r[&quot;valore_finale_eur&quot;])
+cambio_var[&quot;fx&quot;] = [1.0, 1.0, 1.0, 1.25, 1.25, 1.25]  # vendita i=4 con fx[3]=1,25
+r = s.simula(cambio_var, 1, 500, 1.0, 0.26, &quot;apertura&quot;, True)
+netto_atteso = 4.99 * 120 / 1.25 - 1                  # 478,04 euro, sotto i 500 spesi: perdita, nessuna tassa
+verifica(&quot;cambio: perdita da cambio, nessuna tassa&quot;, uguali(r[&quot;valore_finale_eur&quot;], netto_atteso) and r[&quot;tasse_eur&quot;] == 0.0,
+         r[&quot;valore_finale_eur&quot;])
+
+z = s.Zaino(0.26)
+verifica(&quot;zaino: perdita non tassata&quot;, z.tassa(2022, -100) == 0.0)
+verifica(&quot;zaino: guadagno 150 dopo perdita 100 -&gt; tassa su 50&quot;, uguali(z.tassa(2023, 150), 13.0))
+z = s.Zaino(0.26)
+z.tassa(2023, -10)
+verifica(&quot;zaino: perdita scaduta (2023 -&gt; usabile fino al 2027)&quot;, uguali(z.tassa(2028, 100), 26.0))
+z = s.Zaino(0.26)
+z.tassa(2023, -10)
+verifica(&quot;zaino: perdita ancora valida nel 2027&quot;, uguali(z.tassa(2027, 100), 0.26 * 90))
+
+print(&quot;2. Confronto con una formula indipendente (dati inventati, cambio 1, senza costi)&quot;)
+rng = np.random.default_rng(7)
+date = pd.bdate_range(&quot;2020-01-01&quot;, &quot;2026-10-20&quot;)
+n = len(date)
+chiusura = 100 * np.exp(np.cumsum(rng.normal(0.0004, 0.018, n)))
+apertura = np.r_[chiusura[0], chiusura[:-1]] * (1 + rng.normal(0, 0.004, n))
+fx_var = 1.1 * np.exp(np.cumsum(rng.normal(0, 0.003, n)))
+titolo = pd.DataFrame({&quot;Open&quot;: apertura, &quot;Close&quot;: chiusura}, index=pd.Index(date, name=&quot;Date&quot;))
+cambio_df = pd.DataFrame({&quot;Close&quot;: fx_var}, index=pd.Index(date, name=&quot;Date&quot;))
+piatto = pd.DataFrame({&quot;Close&quot;: 1.0}, index=cambio_df.index)
+df = s.prepara(titolo, piatto, 50, 200)
+i0 = s.indice_data(df, df.index[-1] - pd.DateOffset(years=5))
+SEG = df[&quot;segnale&quot;].to_numpy(bool)
+C = df[&quot;Close&quot;].to_numpy()
+formula = 500 * np.prod([(C[i + 1] / C[i]) ** SEG[i - 1] for i in range(i0, len(df) - 1)])
+r = s.simula(df, i0, 500, 0.0, 0.0, &quot;chiusura&quot;, True)
+verifica(&quot;regola, esecuzione alla chiusura, lordo = prodotto dei rendimenti&quot;, uguali(r[&quot;valore_finale_eur&quot;], formula),
+         f&quot;{r[&#x27;valore_finale_eur&#x27;]} contro {formula}&quot;)
+bh = s.simula(df, i0, 500, 0.0, 0.0, &quot;chiusura&quot;, False)
+verifica(&quot;buy &amp; hold lordo = chiusura finale / chiusura iniziale&quot;, uguali(bh[&quot;valore_finale_eur&quot;], 500 * C[-1] / C[i0]))
+bh_a = s.simula(df, i0, 500, 0.0, 0.0, &quot;apertura&quot;, False)
+verifica(&quot;buy &amp; hold, esecuzione all&#x27;apertura = ultima chiusura / prima apertura&quot;,
+         uguali(bh_a[&quot;valore_finale_eur&quot;], 500 * C[-1] / df[&quot;Open&quot;].iloc[i0]))
+con = s.simula(df, i0, 500, 1.0, 0.0, &quot;apertura&quot;, True)
+verifica(&quot;commissioni = 1 euro per ogni ordine&quot;, uguali(con[&quot;commissioni_eur&quot;], len(con[&quot;operazioni&quot;]) * 1.0))
+netto = s.simula(df, i0, 500, 1.0, 0.26, &quot;apertura&quot;, True)
+verifica(&quot;con la tassa non si finisce mai sopra il caso senza tassa&quot;,
+         netto[&quot;valore_finale_eur&quot;] &lt;= con[&quot;valore_finale_eur&quot;] + 1e-9)
+verifica(&quot;il registro delle operazioni quadra con la cassa finale&quot;,
+         uguali(500 - sum(o[&quot;spesa_eur&quot;] for o in netto[&quot;operazioni&quot;]) +
+                sum(o[&quot;incasso_netto_eur&quot;] - o[&quot;tassa_eur&quot;] for o in netto[&quot;operazioni&quot;]), netto[&quot;valore_finale_eur&quot;]))
+
+print(&quot;3. Il registro delle operazioni contro i prezzi grezzi (ricerca per data, senza gli array del motore)&quot;)
+dfv = s.prepara(titolo, cambio_df, 50, 200)
+i0v = s.indice_data(dfv, dfv.index[-1] - pd.DateOffset(years=5))
+rv = s.simula(dfv, i0v, 500, 1.0, 0.26, &quot;apertura&quot;, True)
+errori = 0
+for o in rv[&quot;operazioni&quot;]:
+    d = pd.Timestamp(o[&quot;data&quot;])
+    if o[&quot;motivo&quot;] == &quot;liquidazione finale&quot;:
+        px, fx = titolo.loc[d, &quot;Close&quot;], cambio_df.loc[d, &quot;Close&quot;]
+    else:
+        prec = cambio_df.index[cambio_df.index.get_loc(d) - 1]
+        px, fx = titolo.loc[d, &quot;Open&quot;], cambio_df.loc[prec, &quot;Close&quot;]
+    if not (uguali(o[&quot;prezzo_usd&quot;], px) and uguali(o[&quot;cambio&quot;], fx) and uguali(o[&quot;prezzo_eur&quot;], px / fx)):
+        errori += 1
+verifica(f&quot;{len(rv[&#x27;operazioni&#x27;])} operazioni con prezzo e cambio corretti&quot;, errori == 0, f&quot;{errori} errori&quot;)
+
+print(f&quot;\nTutti i {ok} controlli superati (dati inventati: nessuno di questi numeri è un risultato).&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>

@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PAC contro lump sum: conta più la lunghezza delle rate o il decennio di partenza? · il codice · TickerFight</title>
+<meta name="description" content="investire tutto subito (lump sum, cioè buy &amp; hold dal primo giorno) o a rate (PAC)? Qui il PAC viene provato con cinque lunghezze (3, 6, 12, 24, 36 rate), con valutazione a 60 mesi dalla partenza, su ogni mese di partenza della storia di quattro indici; poi si guarda decennio per decennio, le partenze vicino ai massimi, gli esiti peggiori e il confronto con il caso (scimmie).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a><a href="https://github.com/TickerFight/tickerfight">GitHub</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>PAC contro lump sum: conta più la lunghezza delle rate o il decennio di partenza?</h1>
+<p class="domanda">Investire tutto subito (lump sum, cioè buy &amp; hold dal primo giorno) o a rate (PAC)? Qui il PAC viene provato con cinque lunghezze (3, 6, 12, 24, 36 rate), con valutazione a 60 mesi dalla partenza, su ogni mese di partenza della storia di quattro indici; poi si guarda decennio per decennio, le partenze vicino ai massimi, gli esiti peggiori e il confronto con il caso (scimmie).</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza.zip" download>⬇ Scarica il codice (.zip)</a><a class="btn" href="https://github.com/TickerFight/tickerfight/tree/main/articoli/pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza">Vedi su GitHub</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Budget:</strong> 12.000 euro. Lump sum: tutto al primo giorno di Borsa del mese di partenza. PAC a N rate: un N-esimo del budget al primo giorno di Borsa di ciascuno degli N mesi; la cassa non ancora investita non rende. Quote frazionate, nessun costo, nessuna tassa.</li>
+<li><strong>Valutazione:</strong> al primo giorno di Borsa del mese 60 dalla partenza, per ogni mese di partenza possibile (le partenze vicine si sovrappongono: gli intervalli di confidenza ricampionano gli anni).</li>
+<li><strong>Lunghezze del PAC:</strong> 3, 6, 12, 24, 36 rate; il PAC di riferimento è quello a 12 rate.</li>
+<li><strong>Decenni:</strong> dal 1930 al 2010, fissati a priori, sull'S&amp;P 500.</li>
+<li><strong>Ai massimi:</strong> partenze con prezzo entro il 3% dal massimo dei prezzi fino a quel mese (nessun look-ahead).</li>
+<li><strong>Il caso:</strong> 200 scimmie per partenza che piazzano le 12 rate in mesi a caso nei primi 12 mesi.</li>
+<li><strong>Indici:</strong> di prezzo (niente dividendi), in valuta locale; il confronto è sempre dentro lo stesso indice.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica S&amp;P 500, DAX, FTSE 100, Nikkei 225
+    ├── 02_backtest_e_test.py  confronto su ogni mese di partenza e tutte le metriche
+    ├── 03_grafici.py          i tre grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            prezzi mensili, valore di lump sum e PAC, scimmie, massimi, decenni
+    └── verifica_motore.py     18 controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera di quattro indici azionari (S&amp;P 500, DAX, FTSE 100, Nikkei 225).
+
+Salva, per ogni indice, dati/&lt;ticker&gt;.csv (Date, Open, High, Low, Close, Volume) e dati/metadati.json con la fonte,
+la data del download, la versione di yfinance e l&#x27;impronta SHA-256 di ogni file. Gli script successivi leggono SOLO
+i file salvati: i risultati restano riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;indici&quot;: []}
+    for ticker, nome, valuta in config.INDICI:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nome, &quot;valuta&quot;: valuta}
+        grezzo = scarica(ticker)
+        if grezzo.empty:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;indici&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;])
+        df = df[df[&quot;Close&quot;] &gt; 0]
+        # seduta ancora in corso: barra incompleta, da scartare
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:
+            df = df.iloc[:-1]
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;indici&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    if sum(1 for r in meta[&quot;indici&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;) &lt; len(config.INDICI):
+        raise SystemExit(&quot;Non tutti gli indici sono stati scaricati.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>confronto su ogni mese di partenza e tutte le metriche</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - PAC contro lump sum: cinque lunghezze di PAC, valutazione a 60 mesi, su ogni mese di partenza.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json            ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  partenze_sp500.csv       per ogni mese di partenza dell&#x27;S&amp;P 500: valore di lump sum e PAC per ogni lunghezza, massimi, decennio
+  quote_per_lunghezza.csv  quota di vittorie del lump sum per indice e lunghezza del PAC
+  per_decennio.csv         quota di vittorie del lump sum per decennio di partenza (S&amp;P 500, PAC di riferimento)
+  indici_usati.json        indici effettivamente usati
+
+Lump sum: tutto il budget al primo giorno di Borsa del mese di partenza. PAC a N rate: un N-esimo del budget al primo giorno di
+Borsa di ciascuno degli N mesi di partenza. Valutazione al primo giorno di Borsa del mese t+60. Nessun look-ahead: le date delle
+rate sono decise alla partenza e il segnale &quot;ai massimi&quot; usa solo i prezzi fino al mese di partenza.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def slug(ticker: str) -&gt; str:
+    return ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;).lower()
+
+
+def ic_cluster(vinto: np.ndarray, anni: np.ndarray, rng) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Intervallo di confidenza della quota di vittorie, ricampionando gli anni di partenza (le partenze vicine si sovrappongono).&quot;&quot;&quot;
+    ua = np.unique(anni)
+    somme = np.array([vinto[anni == a].sum() for a in ua], float)
+    conti = np.array([(anni == a).sum() for a in ua], float)
+    q = []
+    for _ in range(config.N_BOOTSTRAP):
+        k = rng.integers(0, len(ua), len(ua))
+        q.append(somme[k].sum() / conti[k].sum())
+    a = (1 - config.LIVELLO_CONFIDENZA) / 2
+    return float(np.quantile(q, a)), float(np.quantile(q, 1 - a))
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    meta = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    rng = np.random.default_rng(config.SEME)
+    B, H, NP = config.BUDGET, config.ORIZZONTE, config.N_PRINCIPALE
+    righe_quote, usati = [], []
+    quote_ind: dict[str, list[float]] = {}
+
+    for ticker, nome, valuta in config.INDICI:
+        f = config.file_dati(ticker)
+        if not f.exists():
+            print(f&quot;{ticker}: file mancante, indice scartato&quot;)
+            continue
+        df = pd.read_csv(f, index_col=0, parse_dates=True)
+        pm = fx.prezzi_mensili(df[&quot;Close&quot;])
+        p = pm.values.astype(float)
+        date_m = pm.index
+        sl = slug(ticker)
+        usati.append({&quot;ticker&quot;: ticker, &quot;slug&quot;: sl, &quot;nome&quot;: nome})
+        principale = ticker == config.INDICE_PRINCIPALE
+        n = len(p) - H
+        part = date_m[:n]
+        anni = np.array([d.year for d in part])
+        reg(f&quot;{sl}_prima_data&quot;, str(date_m[0].date()), &quot;data_lunga&quot;, f&quot;Primo mese di dati di {nome}&quot;, &quot;dati/&quot;)
+        reg(f&quot;{sl}_anno_inizio&quot;, str(date_m[0].date()), &quot;anno&quot;, f&quot;Anno del primo dato di {nome}&quot;, &quot;dati/&quot;)
+        reg(f&quot;{sl}_n_part&quot;, n, &quot;int&quot;, f&quot;Mesi di partenza usati per {nome} (con valutazione a {H} mesi)&quot;, &quot;numero di mesi meno l&#x27;orizzonte&quot;)
+        reg(f&quot;{sl}_ultima_partenza&quot;, str(part[-1].date()), &quot;data_lunga&quot;, f&quot;Ultimo mese di partenza di {nome}&quot;, &quot;dati/&quot;)
+
+        lump = fx.valore_lump(p, H, B)
+        quote = []
+        pacs = {}
+        for N in config.RATE:
+            pac = fx.valore_pac(p, H, B, N)
+            pacs[N] = pac
+            diff = (pac - lump) / B * 100                      # punti percentuali del budget; &gt; 0 vince il PAC
+            vince_lump = lump &gt; pac
+            q = float(vince_lump.mean())
+            quote.append(q)
+            lo, hi = ic_cluster(vince_lump, anni, rng)
+            tag = f&quot;{sl}_n{N}&quot;
+            reg(f&quot;{tag}_quota_lump&quot;, q, &quot;pct0&quot;, f&quot;Quota di partenze in cui il lump sum batte il PAC a {N} rate, {nome}, valutazione a {H} mesi&quot;)
+            reg(f&quot;{tag}_quota_lump_lo&quot;, lo, &quot;pct0&quot;, f&quot;Estremo inferiore dell&#x27;intervallo di confidenza della quota di vittorie del lump sum, PAC a {N} rate, {nome}&quot;, &quot;ricampionamento degli anni di partenza (N_BOOTSTRAP)&quot;)
+            reg(f&quot;{tag}_quota_lump_hi&quot;, hi, &quot;pct0&quot;, f&quot;Estremo superiore dell&#x27;intervallo di confidenza della quota di vittorie del lump sum, PAC a {N} rate, {nome}&quot;, &quot;ricampionamento degli anni di partenza (N_BOOTSTRAP)&quot;)
+            reg(f&quot;{tag}_diff_med&quot;, float(np.median(diff)), &quot;num1&quot;, f&quot;Differenza mediana PAC meno lump sum in punti percentuali del budget, PAC a {N} rate, {nome}&quot;)
+            reg(f&quot;{tag}_media_vantaggio_lump&quot;, float((-diff[vince_lump]).mean()) if vince_lump.any() else 0.0, &quot;num1&quot;, f&quot;Vantaggio medio del lump sum nelle partenze che vince (punti del budget), PAC a {N} rate, {nome}&quot;)
+            reg(f&quot;{tag}_media_vantaggio_pac&quot;, float(diff[~vince_lump].mean()) if (~vince_lump).any() else 0.0, &quot;num1&quot;, f&quot;Vantaggio medio del PAC nelle partenze che vince (punti del budget), PAC a {N} rate, {nome}&quot;)
+            righe_quote.append({&quot;ticker&quot;: ticker, &quot;rate&quot;: N, &quot;quota_lump&quot;: q, &quot;ic_lo&quot;: lo, &quot;ic_hi&quot;: hi, &quot;diff_mediana_pp&quot;: float(np.median(diff)), &quot;n_partenze&quot;: n})
+        crescente = all(b &gt; a for a, b in zip(quote, quote[1:]))
+        quote_ind[sl] = quote
+        reg(f&quot;{sl}_crescente&quot;, int(crescente), &quot;int&quot;, f&quot;1 se la quota di vittorie del lump sum cresce a ogni passo da {config.RATE[0]} a {config.RATE[-1]} rate, 0 altrimenti ({nome})&quot;, &quot;confronto tra quote consecutive&quot;)
+        reg(f&quot;{sl}_quota_min&quot;, min(quote), &quot;pct0&quot;, f&quot;Quota più bassa di vittorie del lump sum tra le cinque lunghezze del PAC, {nome}&quot;)
+
+        if principale:
+            sp = sl
+            pac = pacs[NP]
+            diff = (pac - lump) / B * 100
+            vince_lump = lump &gt; pac
+            part_df = pd.DataFrame({&quot;partenza&quot;: part.date, &quot;decennio&quot;: [fx.decennio(d) for d in part], &quot;lump&quot;: lump})
+            for N in config.RATE:
+                part_df[f&quot;pac_{N}&quot;] = pacs[N]
+            vicino = fx.vicino_ai_massimi(p, config.SOGLIA_MASSIMI)[:n]
+            part_df[&quot;ai_massimi&quot;] = vicino
+            part_df.to_csv(config.RISULTATI / &quot;partenze_sp500.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+
+            # ipotesi 1: tutte e cinque le lunghezze sopra la soglia
+            reg(&quot;sp_quota_min&quot;, min(quote), &quot;pct0&quot;, f&quot;Quota più bassa di vittorie del lump sum tra le cinque lunghezze del PAC, {nome}&quot;)
+            reg(&quot;sp_n_lunghezze_sopra&quot;, int(sum(q &gt; config.SOGLIE[&quot;ip1_quota&quot;] for q in quote)), &quot;int&quot;, f&quot;Lunghezze del PAC (su cinque) con quota di vittorie del lump sum sopra la soglia della prima ipotesi, {nome}&quot;, &quot;confronto con config.SOGLIE&quot;)
+
+            reg(&quot;sp_range_lunghezza&quot;, (max(quote) - min(quote)) * 100, &quot;num1&quot;, f&quot;Distanza in punti percentuali tra la quota più alta e la più bassa di vittorie del lump sum tra le cinque lunghezze del PAC, {nome}&quot;)
+
+            # vantaggio in euro del lump sum su 60 mesi: multiplo del budget
+            reg(&quot;sp_lump_multiplo_mediano&quot;, float(np.median(lump) / B), &quot;num2&quot;, f&quot;Valore mediano del lump sum a {H} mesi diviso il budget, {nome} (indice di prezzo, senza dividendi)&quot;)
+            reg(&quot;sp_pac_multiplo_mediano&quot;, float(np.median(pac) / B), &quot;num2&quot;, f&quot;Valore mediano del PAC a {NP} rate a {H} mesi diviso il budget, {nome}&quot;)
+            reg(&quot;sp_quota_mercato_sale&quot;, float((p[H:H + n] &gt; p[:n]).mean()), &quot;pct0&quot;, f&quot;Quota di partenze in cui l&#x27;indice sale tra la partenza e la valutazione a {H} mesi, {nome}&quot;)
+            sale = p[H:H + n] &gt; p[:n]
+            reg(&quot;sp_pac_vince_se_scende&quot;, float((~vince_lump)[~sale].mean()), &quot;pct0&quot;, f&quot;Quota di vittorie del PAC a {NP} rate tra le partenze in cui l&#x27;indice scende nei {H} mesi, {nome}&quot;)
+            reg(&quot;sp_pac_vince_se_sale&quot;, float((~vince_lump)[sale].mean()), &quot;pct0&quot;, f&quot;Quota di vittorie del PAC a {NP} rate tra le partenze in cui l&#x27;indice sale nei {H} mesi, {nome}&quot;)
+            reg(&quot;sp_n_scende&quot;, int((~sale).sum()), &quot;int&quot;, f&quot;Partenze in cui l&#x27;indice scende nei {H} mesi, {nome}&quot;)
+
+            # decenni
+            dec = np.array([fx.decennio(d) for d in part])
+            righe_dec = []
+            n_pac_magg = 0
+            for d in config.DECENNI:
+                sel = dec == d
+                qd = float(vince_lump[sel].mean())
+                righe_dec.append({&quot;decennio&quot;: d, &quot;n_partenze&quot;: int(sel.sum()), &quot;quota_lump&quot;: qd,
+                                  &quot;diff_mediana_pp&quot;: float(np.median(diff[sel])), &quot;sale&quot;: float(sale[sel].mean())})
+                reg(f&quot;dec{d}_quota_lump&quot;, qd, &quot;pct0&quot;, f&quot;Quota di vittorie del lump sum con il PAC a {NP} rate, partenze del decennio {d}, {nome}&quot;)
+                reg(f&quot;dec{d}_anno&quot;, d, &quot;annonum&quot;, f&quot;Decennio di partenza {d} (etichetta)&quot;, &quot;config.py, DECENNI&quot;)
+                reg(f&quot;dec{d}_n&quot;, int(sel.sum()), &quot;int&quot;, f&quot;Mesi di partenza del decennio {d}, {nome}&quot;)
+                reg(f&quot;dec{d}_diff_med&quot;, float(np.median(diff[sel])), &quot;num1&quot;, f&quot;Differenza mediana PAC meno lump sum (punti del budget), partenze del decennio {d}, {nome}&quot;)
+                n_pac_magg += int(qd &lt; 0.5)
+            pd.DataFrame(righe_dec).to_csv(config.RISULTATI / &quot;per_decennio.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+            qs = {r[&quot;decennio&quot;]: r[&quot;quota_lump&quot;] for r in righe_dec}
+            d_pac = min(qs, key=qs.get)
+            d_lump = max(qs, key=qs.get)
+            reg(&quot;dec_n_pac_maggioranza&quot;, n_pac_magg, &quot;int&quot;, f&quot;Decenni di partenza in cui il PAC a {NP} rate vince la maggioranza delle partenze, {nome}&quot;, &quot;conteggio dei decenni con quota del lump sum sotto il 50%&quot;)
+            reg(&quot;dec_n_decenni&quot;, len(config.DECENNI), &quot;int&quot;, &quot;Decenni di partenza considerati&quot;, &quot;config.py, DECENNI&quot;)
+            reg(&quot;dec_migliore_pac&quot;, d_pac, &quot;annonum&quot;, f&quot;Decennio di partenza più favorevole al PAC a {NP} rate, {nome}&quot;, &quot;per_decennio.csv&quot;)
+            reg(&quot;dec_migliore_pac_quota_pac&quot;, 1 - qs[d_pac], &quot;pct0&quot;, f&quot;Quota di vittorie del PAC nel decennio più favorevole al PAC, {nome}&quot;, &quot;per_decennio.csv&quot;)
+            reg(&quot;dec_migliore_lump&quot;, d_lump, &quot;annonum&quot;, f&quot;Decennio di partenza più favorevole al lump sum, {nome}&quot;, &quot;per_decennio.csv&quot;)
+            reg(&quot;dec_migliore_lump_quota&quot;, qs[d_lump], &quot;pct0&quot;, f&quot;Quota di vittorie del lump sum nel decennio più favorevole al lump sum, {nome}&quot;, &quot;per_decennio.csv&quot;)
+            reg(&quot;dec_range&quot;, (max(qs.values()) - min(qs.values())) * 100, &quot;num1&quot;, f&quot;Distanza in punti percentuali tra il decennio con la quota più alta e quello con la quota più bassa di vittorie del lump sum, {nome}&quot;, &quot;per_decennio.csv&quot;)
+            reg(&quot;dec_prima&quot;, config.DECENNI[0], &quot;annonum&quot;, &quot;Primo decennio di partenza considerato&quot;, &quot;config.py, DECENNI&quot;)
+            reg(&quot;dec_ultima&quot;, config.DECENNI[-1], &quot;annonum&quot;, &quot;Ultimo decennio di partenza considerato&quot;, &quot;config.py, DECENNI&quot;)
+            reg(&quot;dec_fuori&quot;, int(n - sum(int((dec == d).sum()) for d in config.DECENNI)), &quot;int&quot;, f&quot;Mesi di partenza di {nome} fuori dai decenni considerati (1927-1929 e dal 2020)&quot;, &quot;n_part meno partenze nei decenni&quot;)
+
+            # partenze vicino ai massimi
+            q_mass = float(vince_lump[vicino].mean())
+            q_altre = float(vince_lump[~vicino].mean())
+            reg(&quot;mass_soglia&quot;, config.SOGLIA_MASSIMI, &quot;pct0&quot;, &quot;Distanza dal massimo storico entro cui una partenza è «ai massimi»&quot;, &quot;config.py, SOGLIA_MASSIMI&quot;)
+            reg(&quot;mass_n&quot;, int(vicino.sum()), &quot;int&quot;, f&quot;Mesi di partenza ai massimi, {nome}&quot;, &quot;funzioni.vicino_ai_massimi&quot;)
+            reg(&quot;mass_n_altre&quot;, int((~vicino).sum()), &quot;int&quot;, f&quot;Mesi di partenza non ai massimi, {nome}&quot;, &quot;funzioni.vicino_ai_massimi&quot;)
+            reg(&quot;mass_quota_lump&quot;, q_mass, &quot;pct0&quot;, f&quot;Quota di vittorie del lump sum con PAC a {NP} rate nelle partenze ai massimi, {nome}&quot;)
+            reg(&quot;mass_quota_lump_altre&quot;, q_altre, &quot;pct0&quot;, f&quot;Quota di vittorie del lump sum con PAC a {NP} rate nelle altre partenze, {nome}&quot;)
+            reg(&quot;mass_distanza&quot;, abs(q_mass - q_altre) * 100, &quot;num1&quot;, f&quot;Distanza in punti percentuali tra le due quote (ai massimi e altre), {nome}&quot;, &quot;differenza in valore assoluto&quot;)
+            reg(&quot;mass_diff_med&quot;, float(np.median(diff[vicino])), &quot;num1&quot;, f&quot;Differenza mediana PAC meno lump sum (punti del budget) nelle partenze ai massimi, {nome}&quot;)
+            reg(&quot;mass_diff_med_altre&quot;, float(np.median(diff[~vicino])), &quot;num1&quot;, f&quot;Differenza mediana PAC meno lump sum (punti del budget) nelle altre partenze, {nome}&quot;)
+
+            # esiti peggiori
+            reg(&quot;code_lump_p5&quot;, float(np.quantile(lump, 0.05)), &quot;int&quot;, f&quot;Quinto percentile del valore finale in euro del lump sum a {H} mesi, {nome} (budget {B:.0f} euro)&quot;)
+            reg(&quot;code_pac_p5&quot;, float(np.quantile(pac, 0.05)), &quot;int&quot;, f&quot;Quinto percentile del valore finale in euro del PAC a {NP} rate a {H} mesi, {nome}&quot;)
+            reg(&quot;code_med_diff&quot;, float(np.median(lump) - np.median(pac)), &quot;int&quot;, f&quot;Valore mediano del lump sum meno valore mediano del PAC a {NP} rate, in euro, {nome}&quot;)
+            reg(&quot;code_p5_diff&quot;, float(np.quantile(pac, 0.05) - np.quantile(lump, 0.05)), &quot;int&quot;, f&quot;Quinto percentile del PAC a {NP} rate meno quinto percentile del lump sum, in euro, {nome}&quot;)
+            reg(&quot;code_lump_min&quot;, float(lump.min()), &quot;int&quot;, f&quot;Valore finale minimo in euro del lump sum a {H} mesi, {nome}&quot;)
+            reg(&quot;code_pac_min&quot;, float(pac.min()), &quot;int&quot;, f&quot;Valore finale minimo in euro del PAC a {NP} rate a {H} mesi, {nome}&quot;)
+            reg(&quot;code_lump_med&quot;, float(np.median(lump)), &quot;int&quot;, f&quot;Valore finale mediano in euro del lump sum a {H} mesi, {nome}&quot;)
+            reg(&quot;code_pac_med&quot;, float(np.median(pac)), &quot;int&quot;, f&quot;Valore finale mediano in euro del PAC a {NP} rate a {H} mesi, {nome}&quot;)
+            reg(&quot;code_lump_p95&quot;, float(np.quantile(lump, 0.95)), &quot;int&quot;, f&quot;Novantacinquesimo percentile del valore finale in euro del lump sum a {H} mesi, {nome}&quot;)
+            reg(&quot;code_pac_p95&quot;, float(np.quantile(pac, 0.95)), &quot;int&quot;, f&quot;Novantacinquesimo percentile del valore finale in euro del PAC a {NP} rate a {H} mesi, {nome}&quot;)
+            reg(&quot;code_lump_perde&quot;, float((lump &lt; B).mean()), &quot;pct0&quot;, f&quot;Quota di partenze in cui il lump sum vale meno del budget dopo {H} mesi, {nome}&quot;)
+            reg(&quot;code_pac_perde&quot;, float((pac &lt; B).mean()), &quot;pct0&quot;, f&quot;Quota di partenze in cui il PAC a {NP} rate vale meno del budget dopo {H} mesi, {nome}&quot;)
+            i_l, i_p = int(np.argmin(lump)), int(np.argmin(pac))
+            reg(&quot;code_lump_min_data&quot;, str(part[i_l].date()), &quot;data_lunga&quot;, f&quot;Mese di partenza del peggior esito del lump sum, {nome}&quot;)
+            reg(&quot;code_pac_min_data&quot;, str(part[i_p].date()), &quot;data_lunga&quot;, f&quot;Mese di partenza del peggior esito del PAC a {NP} rate, {nome}&quot;)
+            i_max, i_min = int(np.argmax(diff)), int(np.argmin(diff))
+            reg(&quot;sp_diff_max&quot;, float(diff[i_max]), &quot;num1&quot;, f&quot;Massimo vantaggio del PAC a {NP} rate sul lump sum (punti del budget), {nome}&quot;)
+            reg(&quot;sp_diff_max_data&quot;, str(part[i_max].date()), &quot;data_lunga&quot;, f&quot;Mese di partenza del massimo vantaggio del PAC, {nome}&quot;)
+            reg(&quot;sp_diff_min&quot;, float(-diff[i_min]), &quot;num1&quot;, f&quot;Massimo vantaggio del lump sum sul PAC a {NP} rate (punti del budget), {nome}&quot;)
+            reg(&quot;sp_diff_min_data&quot;, str(part[i_min].date()), &quot;data_lunga&quot;, f&quot;Mese di partenza del massimo vantaggio del lump sum, {nome}&quot;)
+
+            # scimmie
+            sm = fx.valore_scimmia(p, H, B, NP, config.N_SCIMMIE, rng)
+            batte_pac = (pac[:, None] &gt; sm).mean(axis=1)
+            reg(&quot;scim_pac_batte_mediana&quot;, float((batte_pac &gt; 0.5).mean()), &quot;pct0&quot;, f&quot;Quota di partenze in cui il PAC regolare a {NP} rate batte più della metà delle scimmie, {nome}&quot;, &quot;funzioni.valore_scimmia&quot;)
+            reg(&quot;scim_lump_batte&quot;, float((lump[:, None] &gt; sm).mean()), &quot;pct0&quot;, f&quot;Quota di coppie partenza-scimmia in cui il lump sum batte la scimmia, {nome}&quot;, &quot;funzioni.valore_scimmia&quot;)
+            reg(&quot;scim_diff_med&quot;, float(np.median((sm.mean(axis=1) - pac) / B * 100)), &quot;num2&quot;, f&quot;Differenza mediana tra valore medio delle scimmie e PAC regolare (punti del budget), {nome}&quot;, &quot;funzioni.valore_scimmia&quot;)
+
+    # ipotesi 2: monotonia in tutti gli indici
+    reg(&quot;n_indici&quot;, len(usati), &quot;int&quot;, &quot;Indici usati&quot;, &quot;dati/&quot;)
+    reg(&quot;n_indici_crescenti&quot;, int(sum(all(b &gt; a for a, b in zip(q, q[1:])) for q in quote_ind.values())), &quot;int&quot;,
+        &quot;Indici in cui la quota di vittorie del lump sum cresce a ogni passo di lunghezza del PAC&quot;, &quot;conteggio dei flag *_crescente&quot;)
+    reg(&quot;budget&quot;, config.BUDGET, &quot;int&quot;, &quot;Budget totale da investire in euro&quot;, &quot;config.py, BUDGET&quot;)
+    reg(&quot;orizzonte&quot;, config.ORIZZONTE, &quot;int&quot;, &quot;Mesi tra la partenza e la valutazione&quot;, &quot;config.py, ORIZZONTE&quot;)
+    reg(&quot;orizzonte_anni&quot;, config.ORIZZONTE // 12, &quot;int&quot;, &quot;Anni tra la partenza e la valutazione&quot;, &quot;config.py, ORIZZONTE&quot;)
+    for k, N in enumerate(config.RATE, 1):
+        reg(f&quot;r{k}&quot;, N, &quot;int&quot;, f&quot;Lunghezza {k} del PAC in rate mensili&quot;, &quot;config.py, RATE&quot;)
+        reg(f&quot;rata{k}&quot;, config.BUDGET / N, &quot;int&quot;, f&quot;Importo di ogni rata del PAC a {N} rate, in euro&quot;, &quot;config.py, BUDGET / RATE&quot;)
+    reg(&quot;n_principale&quot;, config.N_PRINCIPALE, &quot;int&quot;, &quot;Lunghezza del PAC di riferimento&quot;, &quot;config.py, N_PRINCIPALE&quot;)
+    reg(&quot;rata_principale&quot;, config.BUDGET / config.N_PRINCIPALE, &quot;int&quot;, &quot;Importo di ogni rata del PAC di riferimento, in euro&quot;, &quot;config.py, BUDGET / N_PRINCIPALE&quot;)
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Scimmie per ogni mese di partenza&quot;, &quot;config.py, N_SCIMMIE&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello degli intervalli di confidenza&quot;, &quot;config.py, LIVELLO_CONFIDENZA&quot;)
+    reg(&quot;s_ip1_quota&quot;, config.SOGLIE[&quot;ip1_quota&quot;], &quot;pct0&quot;, &quot;Soglia della prima ipotesi: quota di vittorie del lump sum&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip3_min&quot;, config.SOGLIE[&quot;ip3_min_dec&quot;], &quot;int&quot;, &quot;Soglia minima della terza ipotesi: decenni con PAC in maggioranza&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip3_max&quot;, config.SOGLIE[&quot;ip3_max_dec&quot;], &quot;int&quot;, &quot;Soglia massima della terza ipotesi: decenni con PAC in maggioranza&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip4_pp&quot;, config.SOGLIE[&quot;ip4_pp&quot;], &quot;int&quot;, &quot;Soglia della quarta ipotesi: distanza in punti percentuali tra le due quote&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip6_lo&quot;, config.SOGLIE[&quot;ip6_lo&quot;], &quot;pct0&quot;, &quot;Estremo inferiore della sesta ipotesi&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip6_hi&quot;, config.SOGLIE[&quot;ip6_hi&quot;], &quot;pct0&quot;, &quot;Estremo superiore della sesta ipotesi&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;data_scarico&quot;, meta[&quot;scaricato_il_utc&quot;][:10], &quot;data&quot;, &quot;Data del download dei dati&quot;, &quot;dati/metadati.json&quot;)
+
+    pd.DataFrame(righe_quote).to_csv(config.RISULTATI / &quot;quote_per_lunghezza.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+    (config.RISULTATI / &quot;indici_usati.json&quot;).write_text(json.dumps(usati, ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri su {len(usati)} indici&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i tre grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_quota_per_lunghezza.png   quota di vittorie del lump sum per lunghezza del PAC, quattro indici
+  fig2_decenni.png               quota di vittorie del PAC a 12 rate per decennio di partenza (S&amp;P 500)
+  fig3_valori_finali.png         distribuzione del valore finale in euro, lump sum e PAC a 12 rate (S&amp;P 500)
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    ind = json.loads((R / &quot;indici_usati.json&quot;).read_text(encoding=&quot;utf-8&quot;))
+    nomi = {i[&quot;slug&quot;]: i[&quot;nome&quot;].split(&quot; (&quot;)[0] for i in ind}
+    quote = pd.read_csv(R / &quot;quote_per_lunghezza.csv&quot;)
+    tk_p = config.INDICE_PRINCIPALE
+
+    # --- Figura 1: quota del lump sum per lunghezza del PAC ----------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(8.4, 4.8))
+    x = np.arange(len(config.RATE))
+    for t in quote.ticker.unique():
+        s = quote[quote.ticker == t].sort_values(&quot;rate&quot;)
+        if t == tk_p:
+            ax.fill_between(x, s.ic_lo * 100, s.ic_hi * 100, color=BLU, alpha=0.15, lw=0)
+            ax.plot(x, s.quota_lump * 100, color=BLU, lw=2.8, marker=&quot;o&quot;, label=&quot;S&amp;P 500 (fascia di confidenza 95%)&quot;)
+            for xi, q in zip(x, s.quota_lump):
+                ax.text(xi, q * 100 + 2.5, f&quot;{q * 100:.0f}%&quot;, ha=&quot;center&quot;, color=BLU, fontsize=11, fontweight=&quot;bold&quot;)
+        else:
+            nome = [i[&quot;nome&quot;].split(&quot; (&quot;)[0] for i in ind if i[&quot;ticker&quot;] == t][0]
+            ax.plot(x, s.quota_lump * 100, color=GRIGIO, lw=1.4, marker=&quot;.&quot;, ls=&quot;--&quot; if nome != &quot;DAX&quot; else &quot;-&quot;, label=nome)
+    ax.axhline(50, color=&quot;black&quot;, lw=1)
+    ax.set_xticks(x, [f&quot;{n} rate&quot; for n in config.RATE])
+    ax.set_ylim(30, 100)
+    ax.set_xlabel(&quot;Lunghezza del PAC&quot;)
+    ax.set_ylabel(&quot;Partenze in cui vince il lump sum (%)&quot;)
+    ax.legend(loc=&quot;lower right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig1_quota_per_lunghezza.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 2: decenni -------------------------------------------------------------------------------------------
+    dec = pd.read_csv(R / &quot;per_decennio.csv&quot;)
+    fig, ax = plt.subplots(figsize=(8.4, 4.6))
+    qpac = (1 - dec.quota_lump) * 100
+    for xi, q, d in zip(range(len(dec)), qpac, dec.decennio):
+        if q &gt; 50:
+            ax.bar(xi, q, 0.7, color=ARANCIO, hatch=&quot;//&quot;, edgecolor=&quot;white&quot;)
+        else:
+            ax.bar(xi, q, 0.7, color=BLU)
+        ax.text(xi, q + 1.5, f&quot;{q:.0f}%&quot;, ha=&quot;center&quot;, fontsize=10)
+    ax.axhline(50, color=&quot;black&quot;, lw=1)
+    ax.set_xticks(range(len(dec)), [f&quot;{d}&quot; for d in dec.decennio])
+    ax.set_ylim(0, 100)
+    ax.set_xlabel(&quot;Decennio di partenza&quot;)
+    ax.set_ylabel(f&quot;Partenze in cui vince il PAC (%)&quot;)
+    fig.savefig(config.FIGURE / &quot;fig2_decenni.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 3: valori finali -------------------------------------------------------------------------------------
+    pt = pd.read_csv(R / &quot;partenze_sp500.csv&quot;)
+    B = config.BUDGET
+    lump, pac = pt[&quot;lump&quot;].values / B, pt[f&quot;pac_{config.N_PRINCIPALE}&quot;].values / B
+    fig, ax = plt.subplots(figsize=(8.4, 4.6))
+    hi = float(np.ceil(np.quantile(np.r_[lump, pac], 0.995) * 4) / 4)
+    bins = np.linspace(0, hi, 50)
+    ax.hist(np.clip(lump, 0, hi), bins=bins, color=BLU, alpha=0.85, label=&quot;Lump sum&quot;)
+    ax.hist(np.clip(pac, 0, hi), bins=bins, histtype=&quot;step&quot;, color=ARANCIO, lw=2.2, label=f&quot;PAC a {config.N_PRINCIPALE} rate&quot;)
+    ax.axvline(1.0, color=&quot;black&quot;, lw=1)
+    for v, c, lab in ((np.quantile(lump, 0.05), BLU, &quot;5° percentile&quot;), (np.quantile(pac, 0.05), ARANCIO, &quot;5° percentile&quot;)):
+        ax.axvline(v, color=c, lw=1.4, ls=&quot;--&quot;)
+    ax.set_xlabel(&quot;Valore dopo 60 mesi diviso il budget (1 = il budget di partenza); tratteggi: 5° percentile&quot;)
+    ax.set_ylabel(&quot;Mesi di partenza&quot;)
+    ax.legend(loc=&quot;upper right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig3_valori_finali.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate in&quot;, config.FIGURE)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 201 - &quot;PAC contro lump sum: conta più la lunghezza delle rate o il decennio di partenza?&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Round di TickerFight: due sfidanti con lo stesso budget. Il LUMP SUM compra tutto il primo giorno (è un buy &amp; hold dal primo
+giorno). Il PAC divide il budget in N rate uguali, una al primo giorno di Borsa di ciascuno degli N mesi di partenza; la
+parte non ancora investita resta in cassa, senza interessi. Tutti e due sono valutati allo stesso giorno, 60 mesi dopo la
+partenza, per OGNI mese di partenza della storia. Si fa variare N (3, 6, 12, 24, 36 rate) e si guarda in quali decenni di
+partenza il PAC ha vinto, che cosa cambia se si parte vicino ai massimi e come si comportano gli esiti peggiori.
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati: indici di prezzo (ticker Yahoo Finance, nome, valuta) -----------------------------------------------
+# Scelti a priori, gli stessi dell&#x27;articolo 519. Sono indici di prezzo (niente dividendi): il confronto è sempre dentro lo
+# stesso indice e in valuta locale. L&#x27;S&amp;P 500, con la storia più lunga, è l&#x27;indice principale.
+INDICI = [
+    (&quot;^GSPC&quot;, &quot;S&amp;P 500 (Stati Uniti)&quot;, &quot;USD&quot;),
+    (&quot;^GDAXI&quot;, &quot;DAX (Germania)&quot;, &quot;EUR&quot;),
+    (&quot;^FTSE&quot;, &quot;FTSE 100 (Regno Unito)&quot;, &quot;GBP&quot;),
+    (&quot;^N225&quot;, &quot;Nikkei 225 (Giappone)&quot;, &quot;JPY&quot;),
+]
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere di quattro indici azionari (S&amp;P 500, DAX, FTSE 100, Nikkei 225)&quot;
+NOMI_ESENTI = (&quot;S&amp;P&quot;, &quot;DAX&quot;, &quot;FTSE 100&quot;, &quot;Nikkei 225&quot;, &quot;FTSE&quot;, &quot;201&quot;, &quot;519&quot;, &quot;TickerFight&quot;)
+INDICE_PRINCIPALE = &quot;^GSPC&quot;
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+# --- Il confronto ---------------------------------------------------------------------------------------------
+BUDGET = 12000.0                   # euro totali da investire
+RATE = (3, 6, 12, 24, 36)          # lunghezze del PAC in mesi (una rata al mese)
+ORIZZONTE = 60                     # mesi dalla partenza al giorno di valutazione (primo giorno di Borsa del mese t+60)
+N_PRINCIPALE = 12                  # il PAC &quot;di riferimento&quot; per decenni, massimi, esiti peggiori e scimmie
+# Prezzi: chiusura del primo giorno di Borsa di ogni mese (si acquista a quel prezzo). Partenze: ogni mese per cui t+60 sta nei dati.
+
+# --- Partenze vicino ai massimi -----------------------------------------------------------------------------------
+# Una partenza è &quot;ai massimi&quot; se il prezzo del mese di partenza è entro questa quota dal massimo dei prezzi mensili
+# fino a quel mese incluso (informazione nota alla partenza, nessun look-ahead).
+SOGLIA_MASSIMI = 0.03
+
+# --- Decenni di partenza -------------------------------------------------------------------------------------------
+# Le partenze dell&#x27;S&amp;P 500 si raggruppano per decennio di calendario. Decenni fissati a priori: dal 1930 al 2010 (nove gruppi, tutti con
+# 120 partenze). Restano fuori i 25 mesi del 1927-1929 e le partenze dal 2020 in poi, che non riempiono un decennio.
+DECENNI = tuple(range(1930, 2020, 10))
+
+# --- Il caso: scimmie ------------------------------------------------------------------------------------------------
+SEME = 20261023
+N_SCIMMIE = 200                    # per ogni partenza: scimmie che piazzano le N_PRINCIPALE rate in mesi a caso (con ripetizione) entro i primi N_PRINCIPALE mesi
+N_BOOTSTRAP = 2000
+LIVELLO_CONFIDENZA = 0.95
+
+# --- Soglie delle ipotesi (numeri riportati qui per scriverli nell&#x27;articolo senza cifre a mano) -----------------------
+SOGLIE = {&quot;ip1_quota&quot;: 0.55, &quot;ip3_min_dec&quot;: 1, &quot;ip3_max_dec&quot;: 3, &quot;ip4_pp&quot;: 10.0, &quot;ip6_lo&quot;: 0.45, &quot;ip6_hi&quot;: 0.55}
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) Nell&#x27;S&amp;P 500, con valutazione a 60 mesi dalla partenza, il lump sum chiude davanti al PAC in più del 55% dei mesi di partenza, &quot;
+    &quot;per ciascuna delle cinque lunghezze del PAC (3, 6, 12, 24 e 36 rate). &quot;
+    &quot;2) Più il PAC è lungo, meno spesso vince: la quota di vittorie del lump sum cresce a ogni passo da 3 a 36 rate, e lo fa in tutti e quattro gli indici. &quot;
+    &quot;3) Il PAC a 12 rate vince la maggioranza delle partenze in almeno un decennio di partenza dell&#x27;S&amp;P 500 e in non più di tre: &quot;
+    &quot;a decidere sono pochi periodi, non la regola. &quot;
+    &quot;4) Partire vicino ai massimi (entro il 3% dal massimo storico noto alla partenza) non cambia il verdetto: nell&#x27;S&amp;P 500, con il PAC a 12 rate, &quot;
+    &quot;la quota di vittorie del lump sum nelle partenze ai massimi sta entro 10 punti percentuali da quella delle altre partenze. &quot;
+    &quot;5) Il PAC a 12 rate protegge dal caso peggiore: nell&#x27;S&amp;P 500 il quinto percentile del valore finale in euro è più alto per il PAC che per il lump sum. &quot;
+    &quot;6) Una scimmia che piazza le 12 rate in mesi a caso non è né meglio né peggio del PAC regolare: nell&#x27;S&amp;P 500 la quota di partenze in cui il PAC &quot;
+    &quot;regolare batte più della metà delle scimmie sta tra il 45% e il 55%.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>prezzi mensili, valore di lump sum e PAC, scimmie, massimi, decenni</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;esperimento: prezzi del primo giorno di Borsa di ogni mese, valore di lump sum e PAC, scimmie, massimi.
+
+Convenzioni: p[i] è il prezzo del primo giorno di Borsa del mese i. Partendo dal mese t, il lump sum compra tutto in t;
+il PAC compra BUDGET/N in ciascuno dei mesi t, t+1, ..., t+N-1. Entrambi sono valutati al prezzo p[t+h].
+Quote frazionarie; la cassa non ancora investita non rende; nessun costo (confronto lordo).
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def prezzi_mensili(chiusure: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Chiusura del primo giorno di Borsa di ogni mese (indice = data di quel giorno).&quot;&quot;&quot;
+    s = chiusure.sort_index()
+    mese = s.index.to_period(&quot;M&quot;)
+    return s.groupby(mese).head(1).rename(&quot;prezzo&quot;)
+
+
+def valore_lump(p: np.ndarray, h: int, budget: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Valore dopo h mesi del lump sum per ogni mese di partenza t = 0 .. len(p)-h-1.&quot;&quot;&quot;
+    n = len(p) - h
+    return budget * p[h:h + n] / p[:n]
+
+
+def valore_pac(p: np.ndarray, h: int, budget: float, rate: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Valore dopo h mesi del PAC a `rate` rate (h &gt;= rate) per ogni mese di partenza t.&quot;&quot;&quot;
+    if h &lt; rate:
+        raise ValueError(&quot;l&#x27;orizzonte deve coprire tutte le rate&quot;)
+    n = len(p) - h
+    inv = np.r_[0.0, np.cumsum(1.0 / p)]                      # somma di 1/p[0..i-1]
+    t = np.arange(n)
+    somma = inv[t + rate] - inv[t]                            # somma di 1/p[t..t+rate-1]
+    return (budget / rate) * p[h:h + n] * somma
+
+
+def valore_scimmia(p: np.ndarray, h: int, budget: float, rate: int, n_scimmie: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Matrice (n_partenze, n_scimmie): ogni scimmia piazza le rate in mesi a caso (con ripetizione) tra t e t+rate-1.&quot;&quot;&quot;
+    n = len(p) - h
+    t = np.arange(n)[:, None, None]
+    sc = rng.integers(0, rate, size=(1, n_scimmie, rate))
+    acq = p[t + sc]                                            # prezzi a cui compra
+    return (budget / rate) * p[h:h + n][:, None] * (1.0 / acq).sum(axis=2)
+
+
+def vicino_ai_massimi(p: np.ndarray, soglia: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;True se il prezzo del mese è entro `soglia` dal massimo dei prezzi fino a quel mese incluso (nessun look-ahead).&quot;&quot;&quot;
+    massimo = np.maximum.accumulate(p)
+    return p &gt;= massimo * (1.0 - soglia)
+
+
+def decennio(data: pd.Timestamp) -&gt; int:
+    return (data.year // 10) * 10
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>18 controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+B, H = 12000.0, 60
+
+# 1. Prezzo costante: lump e PAC valgono il budget, per ogni lunghezza
+p = np.full(100, 100.0)
+controlla(&quot;prezzo costante: lump = budget&quot;, np.allclose(fx.valore_lump(p, H, B), B))
+for r in (3, 12, 36):
+    controlla(f&quot;prezzo costante: PAC a {r} rate = budget&quot;, np.allclose(fx.valore_pac(p, H, B, r), B))
+
+# 2. Calcolo a mano su un prezzo che sale di 1 al mese
+p = 100.0 + np.arange(100)
+controlla(&quot;calcolo a mano del lump&quot;, np.isclose(fx.valore_lump(p, H, B)[0], B * p[H] / p[0]))
+a_mano = sum((B / 12) * p[H] / p[k] for k in range(12))
+controlla(&quot;calcolo a mano del PAC a 12 rate&quot;, np.isclose(fx.valore_pac(p, H, B, 12)[0], a_mano))
+a_mano_s = sum((B / 12) * p[H + 5] / p[5 + k] for k in range(12))
+controlla(&quot;calcolo a mano del PAC, partenza 5&quot;, np.isclose(fx.valore_pac(p, H, B, 12)[5], a_mano_s))
+
+# 3. Mercato in rialzo: il lump batte il PAC; in calo: il PAC batte il lump
+controlla(&quot;mercato in rialzo: il lump batte il PAC in ogni partenza&quot;, np.all(fx.valore_lump(p, H, B) &gt; fx.valore_pac(p, H, B, 12)))
+q = 300.0 - np.arange(100)
+controlla(&quot;mercato in calo: il PAC batte il lump in ogni partenza&quot;, np.all(fx.valore_pac(q, H, B, 12) &gt; fx.valore_lump(q, H, B)))
+
+# 4. Una sola rata = lump sum
+controlla(&quot;PAC a 1 rata = lump sum&quot;, np.allclose(fx.valore_pac(p, H, B, 1), fx.valore_lump(p, H, B)))
+
+# 5. Numero di partenze
+controlla(&quot;numero di partenze = mesi - orizzonte&quot;, len(fx.valore_lump(p, H, B)) == 40)
+
+# 6. Rate più lunghe dell&#x27;orizzonte: errore
+try:
+    fx.valore_pac(p, 6, B, 12)
+    controlla(&quot;orizzonte &lt; rate rifiutato&quot;, False)
+except ValueError:
+    controlla(&quot;orizzonte &lt; rate rifiutato&quot;, True)
+
+# 7. Prezzi del primo giorno di Borsa del mese
+idx = pd.to_datetime([&quot;2020-01-02&quot;, &quot;2020-01-03&quot;, &quot;2020-02-03&quot;, &quot;2020-02-04&quot;, &quot;2020-03-02&quot;])
+pm = fx.prezzi_mensili(pd.Series([1.0, 2.0, 3.0, 4.0, 5.0], index=idx))
+controlla(&quot;primo giorno di Borsa del mese&quot;, list(pm.values) == [1.0, 3.0, 5.0])
+
+# 8. Scimmie
+rng = np.random.default_rng(1)
+controlla(&quot;scimmie su prezzo costante = budget&quot;, np.allclose(fx.valore_scimmia(np.full(100, 50.0), H, B, 12, 5, rng), B))
+sm = fx.valore_scimmia(p, H, B, 1, 3, rng)
+controlla(&quot;una sola rata: la scimmia coincide con il lump&quot;, np.allclose(sm[:, 0], fx.valore_lump(p, H, B)))
+
+# 9. Partenze ai massimi: massimo corrente senza look-ahead
+pp = np.array([100.0, 110.0, 105.0, 104.0, 120.0, 90.0])
+vicino = fx.vicino_ai_massimi(pp, 0.03)
+controlla(&quot;ai massimi: [sì, sì, no, no, sì, no]&quot;, list(vicino) == [True, True, False, False, True, False])
+pp2 = np.array([100.0, 99.0, 96.0, 200.0])
+controlla(&quot;ai massimi: il massimo futuro non conta&quot;, list(fx.vicino_ai_massimi(pp2, 0.03)[:3]) == [True, True, False])
+
+# 10. Decenni
+controlla(&quot;decennio 1927 -&gt; 1920&quot;, fx.decennio(pd.Timestamp(&quot;1927-12-30&quot;)) == 1920 and fx.decennio(pd.Timestamp(&quot;2010-01-04&quot;)) == 2010)
+
+print(f&quot;\n{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>

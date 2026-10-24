@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Volatility targeting: ridurre le azioni quando il mercato trema migliora il portafoglio? · il codice · TickerFight</title>
+<meta name="description" content="ridurre l&#x27;esposizione quando la volatilità sale rende un portafoglio azionario migliore, o solo più tranquillo?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a><a href="https://github.com/TickerFight/tickerfight">GitHub</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Volatility targeting: ridurre le azioni quando il mercato trema migliora il portafoglio?</h1>
+<p class="domanda">Ridurre l&#x27;esposizione quando la volatilità sale rende un portafoglio azionario migliore, o solo più tranquillo?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="volatility-targeting-ridurre-le-azioni-quando-il-mercato-trema-migliora-il-portafoglio.zip" download>⬇ Scarica il codice (.zip)</a><a class="btn" href="https://github.com/TickerFight/tickerfight/tree/main/articoli/volatility-targeting-ridurre-le-azioni-quando-il-mercato-trema-migliora-il-portafoglio">Vedi su GitHub</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Strategia:</strong> a fine mese si misura la volatilità degli ultimi 21 giorni di borsa; il peso in azioni del mese successivo è obiettivo (10% annuo) diviso volatilità, con tetto a 1 (nessuna leva); il resto è in cassa, che non rende.</li>
+<li><strong>Niente look-ahead:</strong> il peso calcolato alla chiusura dell'ultima seduta del mese si scambia alla chiusura della seduta seguente e lavora dal rendimento della seduta ancora dopo.</li>
+<li><strong>Indici:</strong> S&amp;P 500, Nasdaq Composite, DAX, FTSE 100, CAC 40, Nikkei 225, scelti prima di guardare i dati. Indici di prezzo, valuta locale.</li>
+<li><strong>Confronti:</strong> buy &amp; hold; buy &amp; hold con la stessa volatilità della strategia (peso fisso); scimmie con gli stessi pesi in mesi casuali.</li>
+<li><strong>Test:</strong> differenza di Sharpe con bootstrap a blocchi (21 giorni), p-value delle scimmie con correzione di Holm, cinque varianti di robustezza riportate tutte, due finestre di crisi fissate in anticipo.</li>
+<li><strong>Costi:</strong> 5 punti base su ogni scambio. Le tasse non sono modellate (dichiarato nei limiti).</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>volatility-targeting-ridurre-le-azioni-quando-il-mercato-trema-migliora-il-portafoglio/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica sei indici azionari
+    ├── 02_backtest_e_test.py  strategia, buy &amp; hold, stessa volatilità, scimmie, bootstrap, varianti
+    ├── 03_grafici.py          i cinque grafici
+    ├── config.py              indici, parametri, varianti e ipotesi, scritti prima dei risultati
+    ├── motore.py              volatilità, pesi mensili, posizione ritardata, costi, metriche, bootstrap
+    └── verifica_motore.py     controlli su dati inventati (conti a mano, assenza di look-ahead)
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd volatility-targeting-ridurre-le-azioni-quando-il-mercato-trema-migliora-il-portafoglio
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera di sei indici azionari.
+
+Salva, per ogni indice, dati/&lt;ticker&gt;.csv (Date, Open, High, Low, Close, Volume) e dati/metadati.json con la fonte,
+la data del download, la versione di yfinance e l&#x27;impronta SHA-256 di ogni file. Gli script successivi leggono SOLO
+i file salvati: i risultati restano riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;indici&quot;: []}
+    for ticker, nome, valuta in config.INDICI:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nome, &quot;valuta&quot;: valuta}
+        grezzo = scarica(ticker)
+        if grezzo.empty:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;indici&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;])
+        df = df[df[&quot;Close&quot;] &gt; 0]
+        # seduta ancora in corso: barra incompleta, da scartare
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:
+            df = df.iloc[:-1]
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;indici&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    if sum(1 for r in meta[&quot;indici&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;) &lt; 4:
+        raise SystemExit(&quot;Troppi pochi indici scaricati.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>strategia, buy &amp; hold, stessa volatilità, scimmie, bootstrap, varianti</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Volatility targeting: strategia contro buy &amp; hold, contro il buy &amp; hold con la stessa volatilità e contro le scimmie.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json       ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  indici_usati.json   indici effettivamente usati
+  varianti.csv        le varianti di robustezza, tutte, indice per indice
+  scimmie_sharpe.csv  Sharpe lordo di ogni scimmia, per indice
+  bootstrap.csv       differenze di Sharpe ricampionate (strategia - buy &amp; hold), per indice
+  curve_&lt;ticker&gt;.csv  curve, pesi e volatilità mobile dell&#x27;indice principale (una seduta su cinque)
+Scimmia: stessi pesi mensili della strategia, ma assegnati ai mesi in ordine casuale (confronto lordo di costi).
+&quot;&quot;&quot;
+import json
+import math
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import motore as m
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con motore.py&quot;
+GA = config.GIORNI_ANNO
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def slug(ticker: str) -&gt; str:
+    return ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;).lower()
+
+
+def holm(p: dict) -&gt; dict:
+    ordine = sorted(p, key=p.get)
+    mm = len(ordine)
+    out, massimo = {}, 0.0
+    for k, nome in enumerate(ordine):
+        massimo = max(massimo, min(1.0, (mm - k) * p[nome]))
+        out[nome] = massimo
+    return out
+
+
+def carica(ticker: str) -&gt; pd.Series:
+    df = pd.read_csv(config.file_dati(ticker), parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    c = df[&quot;Close&quot;].astype(float)
+    if (c &lt;= 0).any() or c.isna().any():
+        raise SystemExit(f&quot;{ticker}: chiusure mancanti o non positive.&quot;)
+    return c
+
+
+def metriche_base(d: pd.DataFrame, anni: float) -&gt; dict:
+    rs, rb = d[&quot;strategia&quot;], d[&quot;buyhold&quot;]
+    vs, vb = m.vol_annua(rs, GA), m.vol_annua(rb, GA)
+    k = vs / vb                                   # buy &amp; hold con la stessa volatilità: peso fisso k, ribilanciato ogni giorno
+    req = k * d[&quot;r&quot;]
+    req.iloc[0] -= config.COSTO_BP / 1e4 * k      # paga l&#x27;acquisto iniziale
+    return dict(rs=rs, rb=rb, req=req, k=k, vs=vs, vb=vb, veq=m.vol_annua(req, GA),
+                cagr_s=m.cagr(rs, anni), cagr_b=m.cagr(rb, anni), cagr_eq=m.cagr(req, anni),
+                dd_s=m.perdita_massima(rs), dd_b=m.perdita_massima(rb), dd_eq=m.perdita_massima(req),
+                sh_s=m.sharpe(rs, GA), sh_b=m.sharpe(rb, GA),
+                vv_s=m.volvol(rs, GA), vv_b=m.volvol(rb, GA))
+
+
+def analizza(tk, nome, valuta, k_rng):
+    meta = [r for r in META[&quot;indici&quot;] if r[&quot;ticker&quot;] == tk][0]
+    if meta[&quot;stato&quot;] != &quot;ok&quot;:
+        return None
+    c = carica(tk)
+    d = m.serie_strategia(c, config.OBIETTIVO_VOL, config.FINESTRA, config.TETTO_PESO, GA, config.COSTO_BP)
+    anni = (d.index[-1] - d.index[0]).days / 365.25
+    if anni &lt; config.ANNI_MINIMI:
+        print(f&quot;{tk}: scartato, solo {anni:.1f} anni&quot;)
+        return None
+    b = metriche_base(d, anni)
+    rs, rb = b[&quot;rs&quot;].to_numpy(), b[&quot;rb&quot;].to_numpy()
+    rng = np.random.default_rng([config.SEME, k_rng])
+
+    # --- bootstrap a blocchi sulla differenza di Sharpe --------------------------------------------------
+    boot = m.bootstrap_dsharpe(rs, rb, config.N_BOOTSTRAP, config.BLOCCO_BOOTSTRAP, GA, rng)
+    alfa = (1 - config.LIVELLO_CONFIDENZA) / 2
+    lo, hi = np.quantile(boot, [alfa, 1 - alfa])
+
+    # --- scimmie: stessi pesi, mesi a caso (lordo di costi) --------------------------------------------
+    g = d.groupby(&quot;periodo&quot;)
+    w = g[&quot;peso&quot;].first().to_numpy()
+    s1 = g[&quot;r&quot;].sum().to_numpy()
+    s2 = g[&quot;r&quot;].apply(lambda x: (x ** 2).sum()).to_numpy()
+    n = len(d)
+    sh_lordo = float(m.sharpe_da_somme(w, s1, s2, n, GA))
+    perm = rng.permuted(np.tile(w, (config.N_SCIMMIE, 1)), axis=1)
+    sh_sc = m.sharpe_da_somme(perm, s1, s2, n, GA)
+    p_sc = (int((sh_sc &gt;= sh_lordo).sum()) + 1) / (config.N_SCIMMIE + 1)
+
+    # --- finestre di crisi --------------------------------------------------------------------------------
+    crisi = {}
+    for k, (etichetta, ini, fin) in enumerate(config.CRISI):
+        sel = (d.index &gt;= pd.Timestamp(ini)) &amp; (d.index &lt;= pd.Timestamp(fin))
+        if d.index[0] &lt;= pd.Timestamp(ini) and sel.sum() &gt; 5:
+            crisi[k] = dict(s=float(np.prod(1 + rs[sel]) - 1), b=float(np.prod(1 + rb[sel]) - 1),
+                            eq=float(np.prod(1 + b[&quot;req&quot;].to_numpy()[sel]) - 1),
+                            peso_medio=float(d[&quot;peso&quot;].to_numpy()[sel].mean()))
+        else:
+            crisi[k] = None
+
+    # --- varianti di robustezza (tutte riportate) ------------------------------------------------------------
+    var = []
+    for et, obiettivo, finestra, tetto in config.VARIANTI:
+        dv = m.serie_strategia(c, obiettivo, finestra, tetto, GA, config.COSTO_BP)
+        av = (dv.index[-1] - dv.index[0]).days / 365.25
+        bv = metriche_base(dv, av)
+        var.append(dict(indice=tk, variante=et, obiettivo=obiettivo, finestra=finestra, tetto=tetto,
+                        sharpe_s=bv[&quot;sh_s&quot;], sharpe_b=bv[&quot;sh_b&quot;], cagr_s=bv[&quot;cagr_s&quot;], cagr_b=bv[&quot;cagr_b&quot;],
+                        dd_s=bv[&quot;dd_s&quot;], dd_b=bv[&quot;dd_b&quot;], vol_s=bv[&quot;vs&quot;], vol_b=bv[&quot;vb&quot;],
+                        peso_medio=float(dv[&quot;peso&quot;].mean())))
+
+    # --- curve dell&#x27;indice principale ------------------------------------------------------------------------
+    curva = None
+    if tk == config.INDICE_PRINCIPALE:
+        es, eb, eq = m.equity(rs), m.equity(rb), m.equity(b[&quot;req&quot;])
+        vol_s = pd.Series(rs, index=d.index).rolling(GA).std(ddof=0) * np.sqrt(GA)
+        vol_b = pd.Series(rb, index=d.index).rolling(GA).std(ddof=0) * np.sqrt(GA)
+        e1 = np.r_[1.0, es]
+        e2 = np.r_[1.0, eb]
+        dd_s = (es / np.maximum.accumulate(np.r_[1.0, es])[1:] - 1)
+        dd_b = (eb / np.maximum.accumulate(np.r_[1.0, eb])[1:] - 1)
+        camp = np.arange(0, n, 5)
+        curva = pd.DataFrame({&quot;data&quot;: d.index[camp], &quot;strategia&quot;: es[camp], &quot;buyhold&quot;: eb[camp], &quot;stessa_vol&quot;: eq[camp],
+                              &quot;dd_strategia&quot;: dd_s[camp], &quot;dd_buyhold&quot;: dd_b[camp], &quot;peso&quot;: d[&quot;peso&quot;].to_numpy()[camp],
+                              &quot;vol_strategia&quot;: vol_s.to_numpy()[camp], &quot;vol_buyhold&quot;: vol_b.to_numpy()[camp]})
+
+    return dict(tk=tk, sl=slug(tk), nome=nome, d=d, anni=anni, b=b, lo=lo, hi=hi, boot=boot, sh_lordo=sh_lordo, sh_sc=sh_sc,
+                p_sc=p_sc, crisi=crisi, var=var, curva=curva, w=w)
+
+
+def main() -&gt; None:
+    global META
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    META = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    res = []
+    for k, (tk, nome, valuta) in enumerate(config.INDICI):
+        r = analizza(tk, nome, valuta, k)
+        if r:
+            res.append(r)
+            b = r[&quot;b&quot;]
+            print(f&quot;{tk}: {r[&#x27;anni&#x27;]:.1f} anni, Sharpe {b[&#x27;sh_s&#x27;]:.2f} contro {b[&#x27;sh_b&#x27;]:.2f}, volatilità {b[&#x27;vs&#x27;]:.3f} contro {b[&#x27;vb&#x27;]:.3f}, &quot;
+                  f&quot;perdita massima {b[&#x27;dd_s&#x27;]:.2f} contro {b[&#x27;dd_b&#x27;]:.2f}, p scimmie {r[&#x27;p_sc&#x27;]:.3f}&quot;)
+    if len(res) &lt; 4:
+        raise SystemExit(&quot;Troppi pochi indici utilizzabili.&quot;)
+
+    ph = holm({r[&quot;tk&quot;]: r[&quot;p_sc&quot;] for r in res})
+    n_ind = len(res)
+    for r in res:
+        sl, b, d = r[&quot;sl&quot;], r[&quot;b&quot;], r[&quot;d&quot;]
+        pesi = d[&quot;peso&quot;]
+        reg(f&quot;{sl}_nome&quot;, r[&quot;nome&quot;], &quot;testo&quot;, &quot;Nome dell&#x27;indice&quot;, &quot;config.py, INDICI&quot;)
+        reg(f&quot;{sl}_prima_data&quot;, str(d.index[0].date()), &quot;data&quot;, f&quot;Prima seduta in cui la strategia ha una posizione ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_anni&quot;, r[&quot;anni&quot;], &quot;num1&quot;, f&quot;Anni di storia usati ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_cagr_s&quot;, b[&quot;cagr_s&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo composto netto del volatility targeting ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_cagr_b&quot;, b[&quot;cagr_b&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo composto del buy &amp; hold ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_cagr_eq&quot;, b[&quot;cagr_eq&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo composto del buy &amp; hold con la stessa volatilità della strategia ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_vol_s&quot;, b[&quot;vs&quot;], &quot;pct1&quot;, f&quot;Volatilità annua realizzata della strategia ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_vol_b&quot;, b[&quot;vb&quot;], &quot;pct1&quot;, f&quot;Volatilità annua realizzata del buy &amp; hold ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_vv_s&quot;, b[&quot;vv_s&quot;], &quot;pct1&quot;, f&quot;Deviazione standard della volatilità a un anno mobile, strategia ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_vv_b&quot;, b[&quot;vv_b&quot;], &quot;pct1&quot;, f&quot;Deviazione standard della volatilità a un anno mobile, buy &amp; hold ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_dd_s&quot;, b[&quot;dd_s&quot;], &quot;pct1&quot;, f&quot;Perdita massima della strategia ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_dd_b&quot;, b[&quot;dd_b&quot;], &quot;pct1&quot;, f&quot;Perdita massima del buy &amp; hold ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_dd_eq&quot;, b[&quot;dd_eq&quot;], &quot;pct1&quot;, f&quot;Perdita massima del buy &amp; hold con la stessa volatilità ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_sh_s&quot;, b[&quot;sh_s&quot;], &quot;num2&quot;, f&quot;Indice di Sharpe della strategia, cassa a rendimento zero ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_sh_b&quot;, b[&quot;sh_b&quot;], &quot;num2&quot;, f&quot;Indice di Sharpe del buy &amp; hold, cassa a rendimento zero ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_dsh&quot;, b[&quot;sh_s&quot;] - b[&quot;sh_b&quot;], &quot;num2&quot;, f&quot;Differenza di Sharpe strategia meno buy &amp; hold ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_dsh_lo&quot;, r[&quot;lo&quot;], &quot;num2&quot;, f&quot;Estremo inferiore dell&#x27;intervallo al 95% della differenza di Sharpe ({r[&#x27;nome&#x27;]})&quot;,
+            &quot;bootstrap a blocchi circolari di 21 giorni su coppie di giorni&quot;)
+        reg(f&quot;{sl}_dsh_hi&quot;, r[&quot;hi&quot;], &quot;num2&quot;, f&quot;Estremo superiore dell&#x27;intervallo al 95% della differenza di Sharpe ({r[&#x27;nome&#x27;]})&quot;,
+            &quot;bootstrap a blocchi circolari di 21 giorni su coppie di giorni&quot;)
+        reg(f&quot;{sl}_finale_s&quot;, config.CAPITALE * m.equity(b[&quot;rs&quot;])[-1], &quot;int&quot;, f&quot;Valore finale di {config.CAPITALE:.0f} euro con la strategia, al lordo delle tasse ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_finale_b&quot;, config.CAPITALE * m.equity(b[&quot;rb&quot;])[-1], &quot;int&quot;, f&quot;Valore finale di {config.CAPITALE:.0f} euro con il buy &amp; hold, al lordo delle tasse ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_peso_medio&quot;, float(pesi.mean()), &quot;pct0&quot;, f&quot;Peso medio in azioni della strategia ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_quota_tetto&quot;, float((pesi &gt;= config.TETTO_PESO - 1e-12).mean()), &quot;pct0&quot;, f&quot;Quota di sedute con peso pieno (tetto) ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_peso_min&quot;, float(pesi.min()), &quot;pct0&quot;, f&quot;Peso minimo raggiunto dalla strategia ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_scambi_anno&quot;, float(d[&quot;scambio&quot;].sum() / r[&quot;anni&quot;]), &quot;num1&quot;,
+            f&quot;Scambio annuo, in multipli del capitale (somma delle variazioni di peso per anno) ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_sh_lordo&quot;, r[&quot;sh_lordo&quot;], &quot;num2&quot;, f&quot;Sharpe lordo di costi della strategia, base del confronto con le scimmie ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_sh_sc_med&quot;, float(np.mean(r[&quot;sh_sc&quot;])), &quot;num2&quot;, f&quot;Sharpe lordo medio delle scimmie ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_p_sc&quot;, r[&quot;p_sc&quot;], &quot;pval&quot;, f&quot;Quota di scimmie con Sharpe uguale o maggiore della strategia (p-value) ({r[&#x27;nome&#x27;]})&quot;)
+        reg(f&quot;{sl}_p_sc_holm&quot;, ph[r[&quot;tk&quot;]], &quot;pval&quot;, f&quot;p-value delle scimmie dopo la correzione di Holm ({r[&#x27;nome&#x27;]})&quot;)
+        for kk, (et, _, _) in enumerate(config.CRISI):
+            cr = r[&quot;crisi&quot;][kk]
+            if cr:
+                reg(f&quot;{sl}_crisi{kk}_s&quot;, cr[&quot;s&quot;], &quot;pct1&quot;, f&quot;Rendimento della strategia nella finestra «{et}» ({r[&#x27;nome&#x27;]})&quot;)
+                reg(f&quot;{sl}_crisi{kk}_b&quot;, cr[&quot;b&quot;], &quot;pct1&quot;, f&quot;Rendimento del buy &amp; hold nella finestra «{et}» ({r[&#x27;nome&#x27;]})&quot;)
+                reg(f&quot;{sl}_crisi{kk}_peso&quot;, cr[&quot;peso_medio&quot;], &quot;pct0&quot;, f&quot;Peso medio della strategia nella finestra «{et}» ({r[&#x27;nome&#x27;]})&quot;)
+
+    # --- aggregati -----------------------------------------------------------------------------------------
+    B = [r[&quot;b&quot;] for r in res]
+    reg(&quot;n_indici&quot;, n_ind, &quot;int&quot;, &quot;Numero di indici utilizzabili&quot;, &quot;02_backtest_e_test.py&quot;)
+    reg(&quot;n_scartati&quot;, len(config.INDICI) - n_ind, &quot;int&quot;, &quot;Indici scartati per dati assenti o storia troppo corta&quot;, &quot;02_backtest_e_test.py&quot;)
+    reg(&quot;n_vol_minore&quot;, sum(b[&quot;vs&quot;] &lt; b[&quot;vb&quot;] for b in B), &quot;int&quot;, &quot;Indici in cui la volatilità della strategia è più bassa di quella del buy &amp; hold&quot;)
+    reg(&quot;n_vv_minore&quot;, sum(b[&quot;vv_s&quot;] &lt; b[&quot;vv_b&quot;] for b in B), &quot;int&quot;, &quot;Indici in cui la volatilità a un anno varia meno nella strategia&quot;)
+    reg(&quot;n_dd_minore&quot;, sum(b[&quot;dd_s&quot;] &gt; b[&quot;dd_b&quot;] for b in B), &quot;int&quot;, &quot;Indici in cui la perdita massima della strategia è più piccola&quot;)
+    reg(&quot;n_cagr_minore&quot;, sum(b[&quot;cagr_s&quot;] &lt; b[&quot;cagr_b&quot;] for b in B), &quot;int&quot;, &quot;Indici in cui il rendimento annuo della strategia è più basso del buy &amp; hold&quot;)
+    reg(&quot;n_sh_sopra&quot;, sum(b[&quot;sh_s&quot;] &gt; b[&quot;sh_b&quot;] for b in B), &quot;int&quot;, &quot;Indici in cui lo Sharpe della strategia è più alto di quello del buy &amp; hold&quot;)
+    reg(&quot;n_ic_zero&quot;, sum(r[&quot;lo&quot;] &lt;= 0 &lt;= r[&quot;hi&quot;] for r in res), &quot;int&quot;, &quot;Indici in cui l&#x27;intervallo di confidenza della differenza di Sharpe contiene lo zero&quot;)
+    reg(&quot;n_ic_sopra&quot;, sum(r[&quot;lo&quot;] &gt; 0 for r in res), &quot;int&quot;, &quot;Indici in cui l&#x27;intervallo della differenza di Sharpe sta tutto sopra lo zero&quot;)
+    reg(&quot;n_ic_sotto&quot;, sum(r[&quot;hi&quot;] &lt; 0 for r in res), &quot;int&quot;, &quot;Indici in cui l&#x27;intervallo della differenza di Sharpe sta tutto sotto lo zero&quot;)
+    reg(&quot;n_scimmie_sign&quot;, sum(r[&quot;p_sc&quot;] &lt; 0.05 for r in res), &quot;int&quot;, &quot;Indici in cui meno del 5% delle scimmie ha uno Sharpe uguale o maggiore (senza correzione)&quot;)
+    reg(&quot;n_scimmie_holm&quot;, sum(ph[r[&quot;tk&quot;]] &lt; 0.05 for r in res), &quot;int&quot;, &quot;Indici in cui il p-value delle scimmie resta sotto il 5% dopo la correzione di Holm&quot;)
+    reg(&quot;n_eq_cagr_sopra&quot;, sum(b[&quot;cagr_s&quot;] &gt; b[&quot;cagr_eq&quot;] for b in B), &quot;int&quot;, &quot;Indici in cui la strategia batte in rendimento annuo il buy &amp; hold con la stessa volatilità&quot;)
+    reg(&quot;n_eq_dd_meglio&quot;, sum(b[&quot;dd_s&quot;] &gt; b[&quot;dd_eq&quot;] for b in B), &quot;int&quot;, &quot;Indici in cui la strategia ha una perdita massima più piccola del buy &amp; hold con la stessa volatilità&quot;)
+    reg(&quot;sh_diff_media&quot;, float(np.mean([b[&quot;sh_s&quot;] - b[&quot;sh_b&quot;] for b in B])), &quot;num2&quot;, &quot;Differenza media di Sharpe (strategia meno buy &amp; hold) sugli indici&quot;)
+    reg(&quot;peso_medio_tutti&quot;, float(np.mean([r[&quot;d&quot;][&quot;peso&quot;].mean() for r in res])), &quot;pct0&quot;, &quot;Peso medio in azioni, media sugli indici&quot;)
+
+    # --- parametri e fonti (giustificano le cifre del testo) ----------------------------------------------
+    reg(&quot;obiettivo&quot;, config.OBIETTIVO_VOL, &quot;pct0&quot;, &quot;Volatilità annua obiettivo&quot;, &quot;config.py, OBIETTIVO_VOL&quot;)
+    reg(&quot;finestra&quot;, config.FINESTRA, &quot;int&quot;, &quot;Giorni di borsa per misurare la volatilità&quot;, &quot;config.py, FINESTRA&quot;)
+    reg(&quot;tetto&quot;, config.TETTO_PESO, &quot;pct0&quot;, &quot;Peso massimo in azioni&quot;, &quot;config.py, TETTO_PESO&quot;)
+    reg(&quot;costo_bp&quot;, config.COSTO_BP, &quot;int&quot;, &quot;Costo di ogni scambio in punti base&quot;, &quot;config.py, COSTO_BP&quot;)
+    reg(&quot;capitale&quot;, config.CAPITALE, &quot;int&quot;, &quot;Capitale iniziale di riferimento in euro&quot;, &quot;config.py, CAPITALE&quot;)
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Numero di scimmie&quot;, &quot;config.py, N_SCIMMIE&quot;)
+    reg(&quot;n_bootstrap&quot;, config.N_BOOTSTRAP, &quot;int&quot;, &quot;Ricampionamenti del bootstrap&quot;, &quot;config.py, N_BOOTSTRAP&quot;)
+    reg(&quot;blocco&quot;, config.BLOCCO_BOOTSTRAP, &quot;int&quot;, &quot;Giorni per blocco del bootstrap&quot;, &quot;config.py, BLOCCO_BOOTSTRAP&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello di confidenza&quot;, &quot;config.py, LIVELLO_CONFIDENZA&quot;)
+    reg(&quot;giorni_anno&quot;, GA, &quot;int&quot;, &quot;Giorni di borsa in un anno per annualizzare&quot;, &quot;config.py, GIORNI_ANNO&quot;)
+    reg(&quot;tetto_alto&quot;, config.VARIANTI[4][3], &quot;num1&quot;, &quot;Tetto della variante con leva&quot;, &quot;config.py, VARIANTI&quot;)
+    for kk, (et, ini, fin) in enumerate(config.CRISI):
+        reg(f&quot;crisi{kk}_nome&quot;, et, &quot;testo&quot;, &quot;Nome della finestra di crisi&quot;, &quot;config.py, CRISI&quot;)
+        reg(f&quot;crisi{kk}_ini&quot;, ini, &quot;data&quot;, f&quot;Inizio della finestra «{et}» (fissata prima dei risultati)&quot;, &quot;config.py, CRISI&quot;)
+        reg(f&quot;crisi{kk}_fin&quot;, fin, &quot;data&quot;, f&quot;Fine della finestra «{et}» (fissata prima dei risultati)&quot;, &quot;config.py, CRISI&quot;)
+    for kk, (et, ob, fi, te) in enumerate(config.VARIANTI):
+        reg(f&quot;var{kk}_nome&quot;, et, &quot;testo&quot;, &quot;Nome della variante di robustezza&quot;, &quot;config.py, VARIANTI&quot;)
+        vr = [v for r in res for v in r[&quot;var&quot;] if v[&quot;variante&quot;] == et]
+        reg(f&quot;var{kk}_n_sh&quot;, sum(v[&quot;sharpe_s&quot;] &gt; v[&quot;sharpe_b&quot;] for v in vr), &quot;int&quot;, f&quot;Indici con Sharpe più alto del buy &amp; hold, variante «{et}»&quot;)
+        reg(f&quot;var{kk}_n_dd&quot;, sum(v[&quot;dd_s&quot;] &gt; v[&quot;dd_b&quot;] for v in vr), &quot;int&quot;, f&quot;Indici con perdita massima più piccola del buy &amp; hold, variante «{et}»&quot;)
+        reg(f&quot;var{kk}_n_cagr&quot;, sum(v[&quot;cagr_s&quot;] &gt; v[&quot;cagr_b&quot;] for v in vr), &quot;int&quot;, f&quot;Indici con rendimento annuo più alto del buy &amp; hold, variante «{et}»&quot;)
+        reg(f&quot;var{kk}_dsh&quot;, float(np.mean([v[&quot;sharpe_s&quot;] - v[&quot;sharpe_b&quot;] for v in vr])), &quot;num2&quot;, f&quot;Differenza media di Sharpe sugli indici, variante «{et}»&quot;)
+        reg(f&quot;var{kk}_peso&quot;, float(np.mean([v[&quot;peso_medio&quot;] for v in vr])), &quot;pct0&quot;, f&quot;Peso medio sugli indici, variante «{et}»&quot;)
+    reg(&quot;lit_mm_anno&quot;, 2017, &quot;annonum&quot;, &quot;Anno di Moreira e Muir, Journal of Finance (volume 72)&quot;, &quot;riferimento bibliografico&quot;)
+    reg(&quot;lit_cowy_anno&quot;, 2020, &quot;annonum&quot;, &quot;Anno di Cederburg, O&#x27;Doherty, Wang e Yan, Journal of Financial Economics (volume 138)&quot;, &quot;riferimento bibliografico&quot;)
+    reg(&quot;lit_cowy_n&quot;, 103, &quot;int&quot;, &quot;Strategie azionarie studiate da Cederburg e coautori, secondo l&#x27;abstract&quot;, &quot;abstract dell&#x27;articolo&quot;)
+    reg(&quot;lit_hh_anno&quot;, 2018, &quot;annonum&quot;, &quot;Anno di Harvey e coautori, Journal of Portfolio Management&quot;, &quot;riferimento bibliografico&quot;)
+    reg(&quot;data_ultima&quot;, max(str(r[&quot;d&quot;].index[-1].date()) for r in res), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/*.csv&quot;)
+
+    reg(&quot;run_utc&quot;, datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;testo&quot;, &quot;Data di esecuzione dell&#x27;analisi&quot;, &quot;02_backtest_e_test.py&quot;)
+
+    # --- file ---------------------------------------------------------------------------------------------
+    R = config.RISULTATI
+    json.dump({&quot;valori&quot;: RIS}, open(R / &quot;metriche.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;), indent=1, ensure_ascii=False)
+    json.dump([{&quot;ticker&quot;: r[&quot;tk&quot;], &quot;slug&quot;: r[&quot;sl&quot;], &quot;nome&quot;: r[&quot;nome&quot;]} for r in res], open(R / &quot;indici_usati.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;),
+              indent=1, ensure_ascii=False)
+    pd.DataFrame([v for r in res for v in r[&quot;var&quot;]]).to_csv(R / &quot;varianti.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    pd.DataFrame({r[&quot;sl&quot;]: r[&quot;sh_sc&quot;] for r in res}).to_csv(R / &quot;scimmie_sharpe.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    pd.DataFrame({r[&quot;sl&quot;]: r[&quot;boot&quot;] for r in res}).to_csv(R / &quot;bootstrap.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    for r in res:
+        if r[&quot;curva&quot;] is not None:
+            r[&quot;curva&quot;].to_csv(R / &quot;curva_principale.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    print(f&quot;Scritti {len(RIS)} numeri in metriche.json&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i cinque grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_valore.png          valore di 1 euro nell&#x27;indice principale: strategia, buy &amp; hold, buy &amp; hold con la stessa volatilità
+  fig2_volatilita.png      volatilità realizzata a un anno nell&#x27;indice principale, con la linea dell&#x27;obiettivo
+  fig3_perdite.png         perdite dal massimo nell&#x27;indice principale
+  fig4_sharpe.png          differenza di Sharpe (strategia meno buy &amp; hold) per indice, con intervallo di confidenza
+  fig5_scimmie.png         Sharpe delle scimmie contro la strategia, indice per indice
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+from matplotlib.patches import Patch  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    ind = json.loads((R / &quot;indici_usati.json&quot;).read_text(encoding=&quot;utf-8&quot;))
+    v = lambda sl, k: V[f&quot;{sl}_{k}&quot;][&quot;valore&quot;]
+    nome_pr = [i[&quot;nome&quot;] for i in ind if i[&quot;ticker&quot;] == config.INDICE_PRINCIPALE]
+    nome_pr = nome_pr[0] if nome_pr else ind[0][&quot;nome&quot;]
+    cur = pd.read_csv(R / &quot;curva_principale.csv&quot;, parse_dates=[&quot;data&quot;])
+
+    # --- Figura 1 ------------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.plot(cur[&quot;data&quot;], cur[&quot;buyhold&quot;], color=ARANCIO, lw=1.6, label=&quot;Buy &amp; hold&quot;)
+    ax.plot(cur[&quot;data&quot;], cur[&quot;strategia&quot;], color=BLU, lw=1.8, label=&quot;Volatility targeting&quot;)
+    ax.plot(cur[&quot;data&quot;], cur[&quot;stessa_vol&quot;], color=GRIGIO, lw=1.3, ls=&quot;--&quot;, label=&quot;Buy &amp; hold con la stessa volatilità&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_ylabel(&quot;Valore di 1 euro (scala logaritmica)&quot;)
+    ax.set_title(f&quot;{nome_pr}: quanto vale 1 euro investito all&#x27;inizio&quot;, loc=&quot;left&quot;, fontsize=13)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_valore.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 2 ------------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.plot(cur[&quot;data&quot;], cur[&quot;vol_buyhold&quot;], color=ARANCIO, lw=1.5, label=&quot;Buy &amp; hold&quot;)
+    ax.plot(cur[&quot;data&quot;], cur[&quot;vol_strategia&quot;], color=BLU, lw=1.8, label=&quot;Volatility targeting&quot;)
+    ax.axhline(config.OBIETTIVO_VOL, color=GRIGIO, ls=&quot;--&quot;, lw=1.2, label=&quot;Obiettivo&quot;)
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f&quot;{x * 100:.0f}%&quot;.replace(&quot;.&quot;, &quot;,&quot;)))
+    ax.set_ylabel(&quot;Volatilità annua, finestra di un anno&quot;)
+    ax.set_title(f&quot;{nome_pr}: la volatilità realizzata&quot;, loc=&quot;left&quot;, fontsize=13)
+    ax.legend(loc=&quot;upper right&quot;)
+    fig.savefig(config.FIGURE / &quot;fig2_volatilita.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 3 ------------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.fill_between(cur[&quot;data&quot;], cur[&quot;dd_buyhold&quot;], 0, color=ARANCIO, alpha=0.35, label=&quot;Buy &amp; hold&quot;)
+    ax.fill_between(cur[&quot;data&quot;], cur[&quot;dd_strategia&quot;], 0, color=BLU, alpha=0.55, label=&quot;Volatility targeting&quot;)
+    ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f&quot;{x * 100:.0f}%&quot;))
+    ax.set_ylabel(&quot;Distanza dal massimo precedente&quot;)
+    ax.set_title(f&quot;{nome_pr}: le perdite dal massimo&quot;, loc=&quot;left&quot;, fontsize=13)
+    ax.legend(loc=&quot;lower left&quot;)
+    fig.savefig(config.FIGURE / &quot;fig3_perdite.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 4 ------------------------------------------------------------------------------------------
+    sl = [i[&quot;slug&quot;] for i in ind]
+    nomi = [i[&quot;nome&quot;].split(&quot; (&quot;)[0] for i in ind]
+    d = np.array([v(s, &quot;dsh&quot;) for s in sl])
+    lo = np.array([v(s, &quot;dsh_lo&quot;) for s in sl])
+    hi = np.array([v(s, &quot;dsh_hi&quot;) for s in sl])
+    o = np.argsort(d)
+    fig, ax = plt.subplots(figsize=(9, 4.8))
+    y = np.arange(len(sl))
+    for k, j in enumerate(o):
+        signif = lo[j] &gt; 0 or hi[j] &lt; 0
+        col = BLU if signif else GRIGIO
+        ax.barh(k, d[j], color=col, alpha=0.85, hatch=&quot;//&quot; if d[j] &gt; 0 else None, edgecolor=&quot;white&quot;)
+        ax.plot([lo[j], hi[j]], [k, k], color=&quot;black&quot;, lw=1.4)
+    ax.axvline(0, color=&quot;black&quot;, lw=0.8)
+    ax.set_yticks(y)
+    ax.set_yticklabels([nomi[j] for j in o])
+    ax.set_xlabel(&quot;Sharpe della strategia meno Sharpe del buy &amp; hold (barra nera: intervallo al 95%)&quot;)
+    ax.legend(handles=[Patch(facecolor=BLU, label=&quot;intervallo che esclude lo zero&quot;),
+                       Patch(facecolor=GRIGIO, label=&quot;intervallo che contiene lo zero&quot;),
+                       Patch(facecolor=&quot;white&quot;, edgecolor=&quot;black&quot;, hatch=&quot;//&quot;, label=&quot;tratteggio: vince la strategia&quot;)],
+              loc=&quot;lower right&quot;, fontsize=10)
+    ax.set_title(&quot;Il volatility targeting migliora lo Sharpe?&quot;, loc=&quot;left&quot;, fontsize=13)
+    fig.savefig(config.FIGURE / &quot;fig4_sharpe.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 5 ------------------------------------------------------------------------------------------
+    sc = pd.read_csv(R / &quot;scimmie_sharpe.csv&quot;)
+    n = len(sl)
+    col = 3 if n &gt; 4 else 2
+    righe = int(np.ceil(n / col))
+    fig, axs = plt.subplots(righe, col, figsize=(11, 3.3 * righe), sharey=False)
+    axs = np.atleast_1d(axs).ravel()
+    for k, s in enumerate(sl):
+        ax = axs[k]
+        x = sc[s].to_numpy()
+        ax.hist(x, bins=40, color=GRIGIO, alpha=0.7)
+        lin = v(s, &quot;sh_lordo&quot;)
+        ax.axvline(lin, color=BLU, lw=2.2)
+        ax.set_title(f&quot;{nomi[k]}: p = {v(s, &#x27;p_sc&#x27;):.3f}&quot;.replace(&quot;.&quot;, &quot;,&quot;), fontsize=11, loc=&quot;left&quot;)
+        ax.set_yticks([])
+    for ax in axs[n:]:
+        ax.axis(&quot;off&quot;)
+    fig.suptitle(&quot;Sharpe lordo delle scimmie (stessi pesi, mesi a caso) e della strategia (linea blu)&quot;, x=0.01, ha=&quot;left&quot;, fontsize=13)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig5_scimmie.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate in&quot;, config.FIGURE)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>indici, parametri, varianti e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 241 - &quot;Volatility targeting&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Strategia: a fine mese si misura la volatilità degli ultimi 21 giorni di borsa; il peso in azioni del mese successivo
+è obiettivo / volatilità annualizzata, con tetto a 1 (nessuna leva), il resto in cassa (che non rende).
+Confronto con il buy &amp; hold sullo stesso indice, con un portafoglio a peso costante e con migliaia di scimmie che
+usano gli stessi pesi, ma in mesi a caso.
+
+Regola anti look-ahead: il peso calcolato con la chiusura dell&#x27;ultima seduta del mese t viene scambiato alla chiusura
+della seduta successiva e comincia a lavorare sul rendimento della seduta ancora dopo (segnale di ieri, posizione di oggi).
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati: indici azionari (ticker Yahoo Finance, nome, valuta) -------------------
+# Scelti a priori, prima di guardare i dati: sono indici di prezzo (senza dividendi), nella valuta locale.
+# Il confronto è sempre fatto dentro lo stesso indice. Se Yahoo non restituisce abbastanza storia, l&#x27;indice è scartato.
+INDICI = [
+    (&quot;^GSPC&quot;, &quot;S&amp;P 500 (Stati Uniti)&quot;, &quot;USD&quot;),
+    (&quot;^IXIC&quot;, &quot;Nasdaq Composite (Stati Uniti)&quot;, &quot;USD&quot;),
+    (&quot;^GDAXI&quot;, &quot;DAX (Germania)&quot;, &quot;EUR&quot;),
+    (&quot;^FTSE&quot;, &quot;FTSE 100 (Regno Unito)&quot;, &quot;GBP&quot;),
+    (&quot;^FCHI&quot;, &quot;CAC 40 (Francia)&quot;, &quot;EUR&quot;),
+    (&quot;^N225&quot;, &quot;Nikkei 225 (Giappone)&quot;, &quot;JPY&quot;),
+]
+INDICE_PRINCIPALE = &quot;^GSPC&quot;          # quello dei grafici di dettaglio
+INIZIO_DOWNLOAD = &quot;1960-01-01&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;, &quot;Nasdaq Composite&quot;, &quot;FTSE 100&quot;, &quot;CAC 40&quot;, &quot;Nikkei 225&quot;)
+FUSO_BORSA = &quot;America/New_York&quot;
+ANNI_MINIMI = 15            # sotto questa soglia l&#x27;indice viene scartato
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;chiusure giornaliere di sei indici azionari&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure, in valuta locale, senza dividendi&quot;
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+# --- La strategia (parametri fissati prima di guardare i dati) ------------------------------
+OBIETTIVO_VOL = 0.10        # volatilità annua obiettivo
+FINESTRA = 21               # giorni di borsa per misurare la volatilità
+GIORNI_ANNO = 252
+TETTO_PESO = 1.0            # nessuna leva
+COSTO_BP = 5.0              # costo di ogni scambio, in punti base sul valore scambiato (solo dato di scenario)
+CAPITALE = 500.0            # per tradurre i rendimenti in euro nell&#x27;articolo
+
+# --- Varianti di robustezza: si riportano TUTTE, nessuna è scelta a posteriori ----------------------------
+VARIANTI = [
+    # (etichetta, obiettivo, finestra, tetto)
+    (&quot;base&quot;, 0.10, 21, 1.0),
+    (&quot;obiettivo 8%&quot;, 0.08, 21, 1.0),
+    (&quot;obiettivo 15%&quot;, 0.15, 21, 1.0),
+    (&quot;finestra 63&quot;, 0.10, 63, 1.0),
+    (&quot;tetto 1,5 (con leva, finanziamento a costo zero)&quot;, 0.10, 21, 1.5),
+]
+
+# --- Test statistici -------------------------------------------------------------------
+SEME = 20261023
+N_SCIMMIE = 5000
+N_BOOTSTRAP = 2000
+BLOCCO_BOOTSTRAP = 21       # giorni per blocco
+LIVELLO_CONFIDENZA = 0.95
+
+# --- Finestre di crisi, fissate a priori (date di calendario) ------------------------------------
+CRISI = [
+    (&quot;Crisi finanziaria&quot;, &quot;2008-09-01&quot;, &quot;2009-03-09&quot;),
+    (&quot;Crollo del Covid&quot;, &quot;2020-02-19&quot;, &quot;2020-03-23&quot;),
+]
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) In tutti gli indici la volatilità realizzata della strategia è più bassa di quella del buy &amp; hold e varia meno &quot;
+    &quot;nel tempo (deviazione standard della volatilità a un anno più bassa). &quot;
+    &quot;2) In tutti gli indici la perdita massima della strategia è più piccola di quella del buy &amp; hold. &quot;
+    &quot;3) Dopo i costi il rendimento annuo della strategia è più basso di quello del buy &amp; hold in almeno quattro indici su sei, &quot;
+    &quot;perché con il tetto a 1 e la cassa a rendimento zero si è in media meno esposti; l&#x27;indice di Sharpe invece non è &quot;
+    &quot;più alto in modo significativo: l&#x27;intervallo di confidenza della differenza contiene lo zero in almeno quattro indici su sei. &quot;
+    &quot;4) Le scimmie (stessi pesi, mesi a caso) hanno un Sharpe più alto di quello della strategia in meno del cinque per cento &quot;
+    &quot;dei casi in almeno metà degli indici: il momento in cui si riduce l&#x27;esposizione conta, non solo quanto si riduce.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/motore.py<small>volatilità, pesi mensili, posizione ritardata, costi, metriche, bootstrap</small></summary><pre><code class="language-python">&quot;&quot;&quot;Motore del volatility targeting. Funzioni pure su serie di prezzi: nessun accesso a file, nessuna rete.
+
+Regole (da dichiarare nell&#x27;articolo):
+  - volatilità: deviazione standard dei rendimenti giornalieri semplici delle ultime `finestra` sedute, annualizzata;
+  - a fine mese (ultima seduta del mese) il peso obiettivo è min(tetto, obiettivo / volatilità);
+  - il peso calcolato alla chiusura t viene scambiato alla chiusura t+1 e lavora sul rendimento della seduta t+2
+    (segnale di ieri, posizione di oggi): la posizione che guadagna il rendimento di t è quindi `segnale[t-2]`;
+  - la quota non investita sta in cassa, che non rende; i dividendi non sono considerati;
+  - ogni scambio costa `costo_bp` punti base sul valore scambiato (|variazione del peso|); anche l&#x27;acquisto iniziale.
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def rendimenti(close: pd.Series) -&gt; pd.Series:
+    return close.pct_change()
+
+
+def fine_mese(indice: pd.DatetimeIndex) -&gt; np.ndarray:
+    &quot;&quot;&quot;True nell&#x27;ultima seduta di ogni mese; l&#x27;ultima riga dei dati non conta (il mese può non essere finito).&quot;&quot;&quot;
+    mese = indice.year * 12 + indice.month
+    ultimo = np.r_[mese[1:] != mese[:-1], False]
+    return np.asarray(ultimo)
+
+
+def volatilita(r: pd.Series, finestra: int, giorni_anno: int) -&gt; pd.Series:
+    return r.rolling(finestra).std(ddof=1) * np.sqrt(giorni_anno)
+
+
+def segnale_peso(close: pd.Series, obiettivo: float, finestra: int, tetto: float, giorni_anno: int) -&gt; pd.Series:
+    &quot;&quot;&quot;Peso obiettivo noto alla chiusura di ogni seduta (cambia solo a fine mese, poi resta fermo).&quot;&quot;&quot;
+    r = rendimenti(close)
+    vol = volatilita(r, finestra, giorni_anno)
+    peso = np.minimum(tetto, obiettivo / vol)
+    peso = peso.where(pd.Series(fine_mese(close.index), index=close.index))
+    return peso.ffill()
+
+
+def posizione(segnale: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Peso con cui si guadagna il rendimento della seduta t: segnale della seduta t-2.&quot;&quot;&quot;
+    return segnale.shift(2)
+
+
+def serie_strategia(close: pd.Series, obiettivo: float, finestra: int, tetto: float, giorni_anno: int,
+                    costo_bp: float) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Rendimenti giornalieri netti di strategia e buy &amp; hold, dalla prima seduta con posizione definita.&quot;&quot;&quot;
+    r = rendimenti(close)
+    sig = segnale_peso(close, obiettivo, finestra, tetto, giorni_anno)
+    pos = posizione(sig)
+    valido = pos.notna() &amp; r.notna()
+    primo = np.flatnonzero(valido.to_numpy())
+    if len(primo) == 0:
+        raise ValueError(&quot;nessuna seduta con posizione definita&quot;)
+    i0 = int(primo[0])
+    r = r.iloc[i0:]
+    pos = pos.iloc[i0:]
+    sig = sig.iloc[i0:]
+    prec = pos.shift(1).fillna(0.0)                     # prima seduta: si parte da zero, l&#x27;acquisto iniziale costa
+    scambio = (pos - prec).abs()
+    c = costo_bp / 1e4
+    rs = pos * r - c * scambio
+    rb = r.copy()
+    rb.iloc[0] -= c * 1.0                                # buy &amp; hold: anche lui paga l&#x27;acquisto iniziale
+    fm = fine_mese(close.index)
+    effettivo = np.r_[False, False, fm[:-2]][i0:]          # True nella seduta in cui il nuovo peso comincia a lavorare
+    periodo = np.cumsum(effettivo)
+    return pd.DataFrame({&quot;r&quot;: r, &quot;peso&quot;: pos, &quot;scambio&quot;: scambio, &quot;strategia&quot;: rs, &quot;buyhold&quot;: rb,
+                         &quot;periodo&quot;: periodo})
+
+
+def equity(rend: pd.Series | np.ndarray) -&gt; np.ndarray:
+    return np.cumprod(1.0 + np.asarray(rend, dtype=float))
+
+
+def sharpe(rend, giorni_anno: int) -&gt; float:
+    x = np.asarray(rend, dtype=float)
+    sd = x.std(ddof=0)
+    return float(x.mean() / sd * np.sqrt(giorni_anno)) if sd &gt; 0 else float(&quot;nan&quot;)
+
+
+def vol_annua(rend, giorni_anno: int) -&gt; float:
+    return float(np.asarray(rend, dtype=float).std(ddof=0) * np.sqrt(giorni_anno))
+
+
+def perdita_massima(rend) -&gt; float:
+    e = np.r_[1.0, equity(rend)]
+    return float((e / np.maximum.accumulate(e) - 1).min())
+
+
+def cagr(rend, anni: float) -&gt; float:
+    return float(equity(rend)[-1] ** (1 / anni) - 1)
+
+
+def volvol(rend: pd.Series, giorni_anno: int) -&gt; float:
+    &quot;&quot;&quot;Deviazione standard della volatilità annualizzata misurata su 252 sedute mobili.&quot;&quot;&quot;
+    v = rend.rolling(giorni_anno).std(ddof=0) * np.sqrt(giorni_anno)
+    return float(v.dropna().std(ddof=0))
+
+
+def sharpe_da_somme(w: np.ndarray, s1: np.ndarray, s2: np.ndarray, n: int, giorni_anno: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Sharpe lordo di un portafoglio a pesi costanti per periodo: w, s1 (somma r), s2 (somma r^2) per periodo.
+    Accetta w con più righe (una per scimmia).&quot;&quot;&quot;
+    media = (w * s1).sum(axis=-1) / n
+    m2 = (w ** 2 * s2).sum(axis=-1) / n
+    sd = np.sqrt(np.maximum(m2 - media ** 2, 1e-30))
+    return media / sd * np.sqrt(giorni_anno)
+
+
+def bootstrap_dsharpe(rs: np.ndarray, rb: np.ndarray, n_boot: int, blocco: int, giorni_anno: int,
+                      rng, a_pezzi: int = 100) -&gt; np.ndarray:
+    &quot;&quot;&quot;Differenza di Sharpe (strategia - buy &amp; hold) su ricampionamenti a blocchi circolari, coppie di giorni insieme.&quot;&quot;&quot;
+    n = len(rs)
+    nb = int(np.ceil(n / blocco))
+    out = np.empty(n_boot)
+    off = np.arange(blocco)
+    fatti = 0
+    while fatti &lt; n_boot:
+        k = min(a_pezzi, n_boot - fatti)
+        st = rng.integers(0, n, size=(k, nb))
+        idx = ((st[:, :, None] + off) % n).reshape(k, nb * blocco)[:, :n]
+        xs, xb = rs[idx], rb[idx]
+        ss = xs.mean(axis=1) / np.maximum(xs.std(axis=1), 1e-30)
+        sb = xb.mean(axis=1) / np.maximum(xb.std(axis=1), 1e-30)
+        out[fatti:fatti + k] = (ss - sb) * np.sqrt(giorni_anno)
+        fatti += k
+    return out
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati (conti a mano, assenza di look-ahead)</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli del motore del volatility targeting. Usa SOLO dati inventati: nessun numero qui è un risultato.
+
+Si esegue prima del backtest (lo fa anche il flusso su GitHub): se un controllo fallisce, il flusso si ferma.
+  1. conti fatti a mano su serie costruite apposta;
+  2. assenza di look-ahead: cambiare un prezzo futuro non cambia mai le posizioni passate;
+  3. coerenza tra formule: Sharpe da somme contro Sharpe diretto, periodi, bootstrap.
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import motore as m
+
+ok = 0
+GA = 252
+
+
+def verifica(nome, condizione, dettaglio=&quot;&quot;):
+    global ok
+    if not condizione:
+        raise SystemExit(f&quot;FALLITO: {nome} {dettaglio}&quot;)
+    ok += 1
+    print(f&quot;  ok  {nome}&quot;)
+
+
+def serie(rend, inizio=&quot;2020-01-01&quot;):
+    idx = pd.bdate_range(inizio, periods=len(rend))
+    return pd.Series(100.0 * np.cumprod(1 + np.asarray(rend, dtype=float)), index=idx)
+
+
+rng = np.random.default_rng(1)
+print(&quot;1. Conti a mano&quot;)
+# Rendimenti alternati +1% / -1%: deviazione standard campionaria nota.
+alt = np.tile([0.01, -0.01], 200)
+c = serie(alt)
+v = m.volatilita(m.rendimenti(c), 20, GA).dropna()
+atteso = np.std(alt[1:21] if False else np.array([0.01, -0.01] * 10), ddof=1) * np.sqrt(GA)
+verifica(&quot;volatilità di una serie +1%/-1%&quot;, abs(v.iloc[0] - atteso) &lt; 1e-3 * atteso, f&quot;{v.iloc[0]} vs {atteso}&quot;)
+
+# Volatilità costante del 20% annuo: il peso obiettivo con obiettivo 10% deve essere 0,5.
+sd_g = 0.20 / np.sqrt(GA)
+base = np.tile([sd_g, -sd_g], 300)
+c = serie(base)
+sig = m.segnale_peso(c, 0.10, 20, 1.0, GA).dropna()
+verifica(&quot;peso = obiettivo / volatilità (0,5, con la correzione n-1)&quot;, np.allclose(sig.to_numpy(), 0.5 * np.sqrt(19 / 20), atol=0.003), sig.iloc[:3].tolist())
+sig2 = m.segnale_peso(c, 0.30, 20, 1.0, GA).dropna()
+verifica(&quot;il tetto limita il peso a 1&quot;, np.allclose(sig2.to_numpy(), 1.0))
+sig3 = m.segnale_peso(c, 0.30, 20, 1.5, GA).dropna()
+verifica(&quot;con tetto 1,5 il peso è 1,46 (0,30 / 0,20 con la correzione n-1)&quot;, np.allclose(sig3.to_numpy(), 0.30 / 0.20 * np.sqrt(19 / 20), atol=0.01))
+
+# Costi: peso costante 0,5 e costo zero =&gt; rendimento della strategia = 0,5 * rendimento dell&#x27;indice
+d0 = m.serie_strategia(c, 0.10, 20, 1.0, GA, 0.0)
+verifica(&quot;senza costi: rendimento = peso * indice&quot;, np.allclose(d0[&quot;strategia&quot;], d0[&quot;peso&quot;] * d0[&quot;r&quot;]))
+verifica(&quot;la prima seduta ha scambio pari al peso&quot;, abs(d0[&quot;scambio&quot;].iloc[0] - d0[&quot;peso&quot;].iloc[0]) &lt; 1e-12)
+d1 = m.serie_strategia(c, 0.10, 20, 1.0, GA, 10.0)
+costo_tot = (d0[&quot;strategia&quot;] - d1[&quot;strategia&quot;]).sum()
+verifica(&quot;costo totale = 10 punti base * scambi totali&quot;, abs(costo_tot - 0.001 * d0[&quot;scambio&quot;].sum()) &lt; 1e-12)
+verifica(&quot;buy &amp; hold paga solo l&#x27;acquisto iniziale&quot;, abs((d0[&quot;buyhold&quot;] - d1[&quot;buyhold&quot;]).sum() - 0.001) &lt; 1e-12)
+
+print(&quot;2. Nessun look-ahead&quot;)
+rend = rng.normal(0.0004, 0.01, 1500)
+rend[600:700] *= 3
+c = serie(rend)
+a = m.serie_strategia(c, 0.10, 21, 1.0, GA, 5.0)
+for taglio in (900, 1200, 1400):
+    r2 = rend.copy()
+    r2[taglio:] = rng.normal(0, 0.05, len(r2) - taglio)         # futuro completamente diverso
+    b = m.serie_strategia(serie(r2), 0.10, 21, 1.0, GA, 5.0)
+    comune = a.index[a.index &lt; c.index[taglio]]
+    verifica(f&quot;posizioni identiche fino al giorno {taglio} (futuro cambiato)&quot;,
+             np.allclose(a.loc[comune, &quot;peso&quot;], b.loc[comune, &quot;peso&quot;], atol=0, rtol=0, equal_nan=True))
+# Ritardo: il peso calcolato a fine mese non è mai usato prima di due sedute dopo.
+fm = m.fine_mese(c.index)
+sig = m.segnale_peso(c, 0.10, 21, 1.0, GA)
+pos = m.posizione(sig)
+primo_fm = np.flatnonzero(fm &amp; sig.notna().to_numpy())[0]
+verifica(&quot;il peso nuovo non è usato nelle due sedute dopo la fine del mese&quot;,
+         pos.iloc[primo_fm + 1] != sig.iloc[primo_fm] or np.isnan(pos.iloc[primo_fm + 1]))
+verifica(&quot;la posizione compare dopo due sedute&quot;, abs(pos.iloc[primo_fm + 2] - sig.iloc[primo_fm]) &lt; 1e-15)
+verifica(&quot;l&#x27;ultima riga non è mai una fine mese&quot;, not m.fine_mese(c.index)[-1])
+
+print(&quot;3. Coerenza tra formule&quot;)
+d = m.serie_strategia(c, 0.10, 21, 1.0, GA, 5.0)
+verifica(&quot;equity finale = prodotto di (1+r)&quot;, abs(m.equity(d[&quot;strategia&quot;])[-1] - np.prod(1 + d[&quot;strategia&quot;])) &lt; 1e-12)
+verifica(&quot;perdita massima di una serie sempre crescente è zero&quot;, m.perdita_massima(np.full(50, 0.01)) == 0.0)
+e = m.perdita_massima(np.array([0.10, -0.50, 0.20]))
+verifica(&quot;perdita massima a mano (-50%)&quot;, abs(e - (-0.5)) &lt; 1e-12, str(e))
+# Sharpe da somme contro Sharpe diretto
+per = d[&quot;periodo&quot;].to_numpy()
+w = d.groupby(&quot;periodo&quot;)[&quot;peso&quot;].first().to_numpy()
+s1 = d.groupby(&quot;periodo&quot;)[&quot;r&quot;].sum().to_numpy()
+s2 = d.groupby(&quot;periodo&quot;)[&quot;r&quot;].apply(lambda x: (x ** 2).sum()).to_numpy()
+lordo = d[&quot;peso&quot;] * d[&quot;r&quot;]
+verifica(&quot;Sharpe da somme = Sharpe diretto&quot;, abs(m.sharpe_da_somme(w, s1, s2, len(d), GA) - m.sharpe(lordo, GA)) &lt; 1e-9)
+verifica(&quot;i periodi sono mensili (circa 21 sedute)&quot;, 15 &lt;= len(d) / len(w) &lt;= 25, str(len(d) / len(w)))
+perm = np.stack([rng.permutation(w) for _ in range(3)])
+verifica(&quot;Sharpe da somme accetta più permutazioni&quot;, m.sharpe_da_somme(perm, s1, s2, len(d), GA).shape == (3,))
+# Bootstrap: due serie identiche =&gt; differenza di Sharpe nulla
+x = rng.normal(0.0005, 0.01, 800)
+bs = m.bootstrap_dsharpe(x, x, 50, 21, GA, np.random.default_rng(3))
+verifica(&quot;bootstrap su serie identiche dà differenza nulla&quot;, np.allclose(bs, 0))
+# volatilità e rolling
+v2 = m.volvol(pd.Series(rng.normal(0, 0.01, 800)), GA)
+verifica(&quot;volvol positiva e finita&quot;, np.isfinite(v2) and v2 &gt; 0)
+print(f&quot;\n{ok} controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>

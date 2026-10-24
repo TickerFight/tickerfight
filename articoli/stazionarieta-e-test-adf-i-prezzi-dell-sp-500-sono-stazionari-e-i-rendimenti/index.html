@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stazionarietà e test ADF: i prezzi dell&#x27;S&amp;P 500 sono stazionari? E i rendimenti? · il codice · TickerFight</title>
+<meta name="description" content="i prezzi e i rendimenti dell&#x27;S&amp;P 500 sono stazionari? Che cosa dice il test di Dickey-Fuller aumentato (ADF) e quanto ci si può fidare?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a><a href="https://github.com/TickerFight/tickerfight">GitHub</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Stazionarietà e test ADF: i prezzi dell&#x27;S&amp;P 500 sono stazionari? E i rendimenti?</h1>
+<p class="domanda">I prezzi e i rendimenti dell&#x27;S&amp;P 500 sono stazionari? Che cosa dice il test di Dickey-Fuller aumentato (ADF) e quanto ci si può fidare?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="stazionarieta-e-test-adf-i-prezzi-dell-sp-500-sono-stazionari-e-i-rendimenti.zip" download>⬇ Scarica il codice (.zip)</a><a class="btn" href="https://github.com/TickerFight/tickerfight/tree/main/articoli/stazionarieta-e-test-adf-i-prezzi-dell-sp-500-sono-stazionari-e-i-rendimenti">Vedi su GitHub</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Serie:</strong> logaritmo della chiusura giornaliera e rendimenti logaritmici giornalieri dell'S&amp;P 500 (indice di prezzo, senza dividendi).</li>
+<li><strong>Test:</strong> ADF con ritardi scelti con il criterio AIC (massimo 20). Sul log-prezzo con costante e trend, sui rendimenti con la sola costante. Ipotesi nulla: radice unitaria.</li>
+<li><strong>Finestre:</strong> decenni di 2.520 sedute non sovrapposti.</li>
+<li><strong>Simulazioni:</strong> 1.000 random walk e 1.000 serie stazionarie lente (mezza vita di cinque anni), con la stessa volatilità dei dati reali, lunghe come una finestra: servono a misurare dimensione e potenza del test.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>stazionarieta-e-test-adf-i-prezzi-dell-sp-500-sono-stazionari-e-i-rendimenti/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica l'S&amp;P 500 dal 1927
+    ├── 02_backtest_e_test.py  ADF su intero periodo e finestre di dieci anni, simulazioni di dimensione e potenza
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            ADF, finestre, random walk e serie stazionarie simulate
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd stazionarieta-e-test-adf-i-prezzi-dell-sp-500-sono-stazionari-e-i-rendimenti
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>ADF su intero periodo e finestre di dieci anni, simulazioni di dimensione e potenza</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Stazionarietà e test ADF sull&#x27;S&amp;P 500.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json        ogni numero dell&#x27;articolo, con descrizione e origine
+  adf_finestre.csv     per ogni finestra di dieci anni: p-value e statistica ADF su log-prezzo e rendimenti, volatilità annualizzata
+  simulazioni.csv      statistiche ADF di random walk e di serie stazionarie lente simulate
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    date = close.index
+    logp = np.log(close).to_numpy()
+    rend = fx.log_rendimenti(close).to_numpy()          # rend[i] = rendimento della seduta i+1
+    n = len(close)
+    rng = np.random.default_rng(config.SEME)
+
+    reg(&quot;prima_data&quot;, str(date[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(date[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;n_sedute&quot;, n, &quot;int&quot;, &quot;Sedute (chiusure giornaliere) nei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_totali&quot;, n / config.SEDUTE_ANNO, &quot;num1&quot;, &quot;Anni di borsa nei dati (sedute diviso 252)&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_finestra&quot;, config.SEDUTE_FINESTRA / config.SEDUTE_ANNO, &quot;annonum&quot;, &quot;Anni di ciascuna finestra&quot;, &quot;config.py, SEDUTE_FINESTRA&quot;)
+    reg(&quot;soglia&quot;, config.SOGLIA, &quot;pct0&quot;, &quot;Livello di significatività dei test&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_forte&quot;, config.SOGLIA_FORTE, &quot;pct0&quot;, &quot;Livello di significatività forte&quot;, &quot;config.py&quot;)
+    reg(&quot;maxlag&quot;, config.MAXLAG_AIC, &quot;int&quot;, &quot;Ritardi massimi ammessi nell&#x27;ADF sui dati reali (scelta con AIC)&quot;, &quot;config.py, MAXLAG_AIC&quot;)
+    reg(&quot;h3_liv&quot;, config.H3_QUOTA_LIV, &quot;pct0&quot;, &quot;Ipotesi 3: quota minima di finestre in cui il prezzo non rifiuta&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_rend&quot;, config.H3_QUOTA_REND, &quot;pct0&quot;, &quot;Ipotesi 3: quota minima di finestre in cui i rendimenti rifiutano&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_pot&quot;, config.H5_POTENZA_MAX, &quot;pct0&quot;, &quot;Ipotesi 5: potenza massima attesa&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_dim_min&quot;, config.H5_DIM_MIN, &quot;pct0&quot;, &quot;Ipotesi 5: dimensione minima attesa&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_dim_max&quot;, config.H5_DIM_MAX, &quot;pct0&quot;, &quot;Ipotesi 5: dimensione massima attesa&quot;, &quot;config.py&quot;)
+    reg(&quot;n_sim&quot;, config.N_SIM, &quot;int&quot;, &quot;Serie simulate per tipo&quot;, &quot;config.py, N_SIM&quot;)
+
+    # --- Intero periodo ---------------------------------------------------------------------------------------
+    s, p, lag = fx.adf(logp, config.REGR_LIVELLI, config.MAXLAG_AIC)
+    reg(&quot;adf_liv_stat&quot;, s, &quot;num2&quot;, &quot;Statistica ADF sul logaritmo del prezzo, intero periodo (costante e trend)&quot;, &quot;adfuller&quot;)
+    reg(&quot;adf_liv_p&quot;, p, &quot;pval&quot;, &quot;P-value ADF sul logaritmo del prezzo, intero periodo (ipotesi nulla: radice unitaria)&quot;, &quot;adfuller (MacKinnon)&quot;)
+    reg(&quot;adf_liv_lag&quot;, lag, &quot;int&quot;, &quot;Ritardi scelti con AIC, log-prezzo&quot;, &quot;adfuller&quot;)
+    s2, p2, _ = fx.adf(logp, config.REGR_LIVELLI_ALT, config.MAXLAG_AIC)
+    reg(&quot;adf_liv_alt_p&quot;, p2, &quot;pval&quot;, &quot;P-value ADF sul logaritmo del prezzo, intero periodo, solo costante&quot;, &quot;adfuller&quot;)
+    s3, p3, lag3 = fx.adf(rend, config.REGR_RENDIMENTI, config.MAXLAG_AIC)
+    reg(&quot;adf_rend_stat&quot;, s3, &quot;num2&quot;, &quot;Statistica ADF sui rendimenti logaritmici giornalieri, intero periodo (solo costante)&quot;, &quot;adfuller&quot;)
+    reg(&quot;adf_rend_p&quot;, p3, &quot;pval&quot;, &quot;P-value ADF sui rendimenti giornalieri, intero periodo&quot;, &quot;adfuller (MacKinnon)&quot;)
+    reg(&quot;adf_rend_lag&quot;, lag3, &quot;int&quot;, &quot;Ritardi scelti con AIC, rendimenti&quot;, &quot;adfuller&quot;)
+    reg(&quot;h1_ok&quot;, int(p &gt; config.SOGLIA), &quot;int&quot;, &quot;1 se l&#x27;ADF sul log-prezzo non rifiuta la radice unitaria (p sopra la soglia)&quot;, &quot;adfuller&quot;)
+    reg(&quot;h2_ok&quot;, int(p3 &lt; config.SOGLIA_FORTE), &quot;int&quot;, &quot;1 se l&#x27;ADF sui rendimenti rifiuta con p sotto la soglia forte&quot;, &quot;adfuller&quot;)
+    reg(&quot;rend_medio_ann&quot;, float(np.exp(rend.mean() * config.SEDUTE_ANNO) - 1), &quot;pct1&quot;, &quot;Rendimento annuo composto dell&#x27;indice di prezzo (media dei log-rendimenti per 252, esponenziale)&quot;, &quot;dati/&quot;)
+    reg(&quot;vol_tot&quot;, float(rend.std(ddof=1) * np.sqrt(config.SEDUTE_ANNO)), &quot;pct1&quot;, &quot;Volatilità annualizzata di tutto il periodo&quot;, &quot;dati/&quot;)
+
+    # --- Finestre -----------------------------------------------------------------------------------------------
+    righe = []
+    for k, (a, b) in enumerate(fx.finestre(n, config.SEDUTE_FINESTRA), 1):
+        lp = logp[a:b]
+        r = np.diff(lp)
+        sl, pl, _ = fx.adf(lp, config.REGR_LIVELLI, config.MAXLAG_AIC)
+        sr, pr, _ = fx.adf(r, config.REGR_RENDIMENTI, config.MAXLAG_AIC)
+        righe.append({&quot;finestra&quot;: k, &quot;inizio&quot;: date[a].date(), &quot;fine&quot;: date[b - 1].date(), &quot;stat_liv&quot;: sl, &quot;p_liv&quot;: pl,
+                      &quot;stat_rend&quot;: sr, &quot;p_rend&quot;: pr, &quot;vol_ann&quot;: r.std(ddof=1) * np.sqrt(config.SEDUTE_ANNO)})
+    W = pd.DataFrame(righe)
+    nf = len(W)
+    if nf &lt; 5:
+        raise SystemExit(&quot;Troppo poche finestre.&quot;)
+    n_liv_non_rif = int((W[&quot;p_liv&quot;] &gt; config.SOGLIA).sum())
+    n_rend_rif = int((W[&quot;p_rend&quot;] &lt; config.SOGLIA).sum())
+    reg(&quot;n_finestre&quot;, nf, &quot;int&quot;, &quot;Finestre di dieci anni non sovrapposte&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;n_liv_non_rif&quot;, n_liv_non_rif, &quot;int&quot;, &quot;Finestre in cui l&#x27;ADF sul log-prezzo NON rifiuta la radice unitaria&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;n_liv_rif&quot;, nf - n_liv_non_rif, &quot;int&quot;, &quot;Finestre in cui l&#x27;ADF sul log-prezzo rifiuta la radice unitaria&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;quota_liv_non_rif&quot;, n_liv_non_rif / nf, &quot;pct0&quot;, &quot;Quota di finestre in cui l&#x27;ADF sul log-prezzo non rifiuta&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;n_rend_rif&quot;, n_rend_rif, &quot;int&quot;, &quot;Finestre in cui l&#x27;ADF sui rendimenti rifiuta la radice unitaria (p sotto 5%)&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;quota_rend_rif&quot;, n_rend_rif / nf, &quot;pct0&quot;, &quot;Quota di finestre in cui l&#x27;ADF sui rendimenti rifiuta&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;p_rend_max&quot;, float(W[&quot;p_rend&quot;].max()), &quot;pval&quot;, &quot;Il p-value più alto sui rendimenti tra le finestre&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;p_liv_min&quot;, float(W[&quot;p_liv&quot;].min()), &quot;pval&quot;, &quot;Il p-value più basso sul log-prezzo tra le finestre&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;p_liv_mediano&quot;, float(W[&quot;p_liv&quot;].median()), &quot;pval&quot;, &quot;P-value mediano sul log-prezzo tra le finestre&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;h3_ok&quot;, int(n_liv_non_rif / nf &gt;= config.H3_QUOTA_LIV and n_rend_rif / nf &gt;= config.H3_QUOTA_REND), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 3 è rispettata (80% e 95%)&quot;, &quot;adf_finestre.csv&quot;)
+    i_max, i_min = int(W[&quot;vol_ann&quot;].idxmax()), int(W[&quot;vol_ann&quot;].idxmin())
+    reg(&quot;vol_max&quot;, float(W[&quot;vol_ann&quot;].max()), &quot;pct1&quot;, &quot;Volatilità annualizzata della finestra più turbolenta&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;vol_min&quot;, float(W[&quot;vol_ann&quot;].min()), &quot;pct1&quot;, &quot;Volatilità annualizzata della finestra più calma&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;vol_rapporto&quot;, float(W[&quot;vol_ann&quot;].max() / W[&quot;vol_ann&quot;].min()), &quot;num1&quot;, &quot;Rapporto tra volatilità massima e minima tra le finestre&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;vol_max_inizio&quot;, str(W[&quot;inizio&quot;][i_max]), &quot;data_lunga&quot;, &quot;Inizio della finestra più turbolenta&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;vol_max_fine&quot;, str(W[&quot;fine&quot;][i_max]), &quot;data_lunga&quot;, &quot;Fine della finestra più turbolenta&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;vol_min_inizio&quot;, str(W[&quot;inizio&quot;][i_min]), &quot;data_lunga&quot;, &quot;Inizio della finestra più calma&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;vol_min_fine&quot;, str(W[&quot;fine&quot;][i_min]), &quot;data_lunga&quot;, &quot;Fine della finestra più calma&quot;, &quot;adf_finestre.csv&quot;)
+    reg(&quot;h4_ok&quot;, int(W[&quot;vol_ann&quot;].max() / W[&quot;vol_ann&quot;].min() &gt;= 2), &quot;int&quot;, &quot;1 se il rapporto di volatilità è almeno 2&quot;, &quot;adf_finestre.csv&quot;)
+
+    # --- Simulazioni: dimensione e potenza ------------------------------------------------------------------------
+    sigma = float(rend.std(ddof=1))
+    phi = 0.5 ** (1 / (config.EMIVITA_ANNI * config.SEDUTE_ANNO))
+    L = config.SEDUTE_FINESTRA
+    st_rw, p_rw, st_ar, p_ar = [], [], [], []
+    for _ in range(config.N_SIM):
+        s_, p_, _ = fx.adf(fx.random_walk(rng, L, sigma), config.REGR_LIVELLI, config.MAXLAG_SIM, autolag=None)
+        st_rw.append(s_); p_rw.append(p_)
+        s_, p_, _ = fx.adf(fx.ar1(rng, L, phi, sigma), config.REGR_LIVELLI, config.MAXLAG_SIM, autolag=None)
+        st_ar.append(s_); p_ar.append(p_)
+    pd.DataFrame({&quot;stat_rw&quot;: st_rw, &quot;p_rw&quot;: p_rw, &quot;stat_ar&quot;: st_ar, &quot;p_ar&quot;: p_ar}).to_csv(
+        config.RISULTATI / &quot;simulazioni.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    dim = float(np.mean(np.array(p_rw) &lt; config.SOGLIA))
+    pot = float(np.mean(np.array(p_ar) &lt; config.SOGLIA))
+    reg(&quot;emivita&quot;, config.EMIVITA_ANNI, &quot;annonum&quot;, &quot;Mezza vita (anni) della serie stazionaria simulata&quot;, &quot;config.py, EMIVITA_ANNI&quot;)
+    reg(&quot;phi_ar&quot;, phi, &quot;num3&quot;, &quot;Coefficiente autoregressivo giornaliero della serie stazionaria simulata&quot;, &quot;config.py&quot;)
+    reg(&quot;sim_dimensione&quot;, dim, &quot;pct1&quot;, &quot;Quota di random walk simulati in cui l&#x27;ADF rifiuta (p sotto 5%): dovrebbe stare vicino al 5%&quot;, &quot;simulazioni.csv&quot;)
+    reg(&quot;sim_potenza&quot;, pot, &quot;pct1&quot;, &quot;Quota di serie stazionarie lente simulate in cui l&#x27;ADF rifiuta la radice unitaria&quot;, &quot;simulazioni.csv&quot;)
+    reg(&quot;stat_critica&quot;, float(np.quantile(st_rw, config.SOGLIA)), &quot;num2&quot;, &quot;Quinto percentile della statistica ADF sui random walk simulati (soglia empirica)&quot;, &quot;simulazioni.csv&quot;)
+    reg(&quot;h5_ok&quot;, int(pot &lt; config.H5_POTENZA_MAX and config.H5_DIM_MIN &lt;= dim &lt;= config.H5_DIM_MAX), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 5 è rispettata&quot;, &quot;simulazioni.csv&quot;)
+    reg(&quot;sigma_sim&quot;, sigma, &quot;num3&quot;, &quot;Deviazione standard giornaliera dei log-rendimenti usata nelle simulazioni (in unità, non percentuale)&quot;, &quot;dati/&quot;)
+
+    W.to_csv(config.RISULTATI / &quot;adf_finestre.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri; {nf} finestre&quot;)
+    print(f&quot;ADF log-prezzo p={p:.3f}; rendimenti p={p3:.2g}; finestre: livelli non rifiutati {n_liv_non_rif}/{nf}, rendimenti rifiutati {n_rend_rif}/{nf}&quot;)
+    print(f&quot;vol rapporto {W[&#x27;vol_ann&#x27;].max() / W[&#x27;vol_ann&#x27;].min():.2f}; dimensione {dim:.1%}; potenza {pot:.1%}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO dati/ e risultati/ e salva i PNG in figure/.
+
+  fig1_prezzo_e_rendimenti.png   il log-prezzo sale, i rendimenti oscillano
+  fig2_pvalue_finestre.png       p-value ADF per finestra: log-prezzo contro rendimenti
+  fig3_volatilita_finestre.png   volatilità annualizzata per finestra
+  fig4_simulazioni.png           statistica ADF di random walk e di serie stazionarie lente, e dei decenni reali
+&quot;&quot;&quot;
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+import funzioni as fx  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    r = fx.log_rendimenti(close)
+    W = pd.read_csv(R / &quot;adf_finestre.csv&quot;, parse_dates=[&quot;inizio&quot;, &quot;fine&quot;])
+    S = pd.read_csv(R / &quot;simulazioni.csv&quot;)
+    etich = [str(d.year) for d in W[&quot;inizio&quot;]]
+    x = np.arange(len(W))
+
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(11, 7), sharex=True, gridspec_kw={&quot;height_ratios&quot;: [1.3, 1]})
+    a1.plot(close.index, close, color=BLU, lw=1.2)
+    a1.set_yscale(&quot;log&quot;)
+    a1.set_ylabel(&quot;S&amp;P 500 (scala logaritmica)&quot;)
+    a2.plot(r.index, r * 100, color=ARANCIO, lw=0.4)
+    a2.axhline(0, color=&quot;#555&quot;, lw=1)
+    a2.set_ylabel(&quot;rendimento giornaliero (%)&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_prezzo_e_rendimenti.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(11, 5.2))
+    w = 0.38
+    ax.bar(x - w / 2, np.maximum(W[&quot;p_liv&quot;], 1e-4), w, color=BLU, label=&quot;logaritmo del prezzo&quot;)
+    ax.bar(x + w / 2, np.maximum(W[&quot;p_rend&quot;], 1e-4), w, color=ARANCIO, label=&quot;rendimenti giornalieri&quot;)
+    ax.axhline(config.SOGLIA, color=&quot;#555&quot;, ls=&quot;--&quot;, lw=1.2)
+    ax.text(len(W) - 0.5, config.SOGLIA * 1.25, &quot;soglia 5%&quot;, ha=&quot;right&quot;, fontsize=10, color=&quot;#555&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_xticks(x, etich, rotation=45, ha=&quot;right&quot;, fontsize=10)
+    ax.set_xlabel(&quot;anno di inizio della finestra di dieci anni&quot;)
+    ax.set_ylabel(&quot;p-value del test ADF (scala logaritmica)&quot;)
+    ax.legend(loc=&quot;lower left&quot;, bbox_to_anchor=(0, 1.0), ncol=2)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig2_pvalue_finestre.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(11, 5))
+    ax.bar(x, W[&quot;vol_ann&quot;] * 100, color=[ARANCIO if v == W[&quot;vol_ann&quot;].max() else (BLU if v == W[&quot;vol_ann&quot;].min() else GRIGIO) for v in W[&quot;vol_ann&quot;]])
+    ax.set_xticks(x, etich, rotation=45, ha=&quot;right&quot;, fontsize=10)
+    ax.set_xlabel(&quot;anno di inizio della finestra di dieci anni&quot;)
+    ax.set_ylabel(&quot;volatilità annualizzata (%)&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_volatilita_finestre.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(11, 5.2))
+    lim = (min(S[&quot;stat_rw&quot;].min(), S[&quot;stat_ar&quot;].min(), W[&quot;stat_liv&quot;].min()) - 0.3, max(S[&quot;stat_rw&quot;].max(), S[&quot;stat_ar&quot;].max(), W[&quot;stat_liv&quot;].max()) + 0.3)
+    bins = np.linspace(*lim, 60)
+    ax.hist(S[&quot;stat_rw&quot;], bins=bins, color=GRIGIO, alpha=0.8, label=&quot;random walk simulati (radice unitaria vera)&quot;)
+    ax.hist(S[&quot;stat_ar&quot;], bins=bins, color=ARANCIO, alpha=0.6, label=&quot;serie stazionarie lente simulate&quot;)
+    crit = np.quantile(S[&quot;stat_rw&quot;], config.SOGLIA)
+    ax.axvline(crit, color=&quot;#555&quot;, ls=&quot;--&quot;, lw=1.4)
+    ax.text(crit, ax.get_ylim()[1] * 0.97, &quot; soglia: a sinistra il test rifiuta&quot;, fontsize=10, va=&quot;top&quot;, ha=&quot;right&quot;, color=&quot;#555&quot;)
+    ymax = ax.get_ylim()[1]
+    ax.plot(W[&quot;stat_liv&quot;], np.full(len(W), -0.02 * ymax), &quot;|&quot;, color=BLU, ms=16, mew=2.2, clip_on=False, label=&quot;decenni reali dell&#x27;S&amp;P 500 (log-prezzo)&quot;)
+    ax.set_xlabel(&quot;statistica ADF&quot;)
+    ax.set_ylabel(&quot;numero di serie&quot;)
+    ax.legend(loc=&quot;upper right&quot;, bbox_to_anchor=(1, 0.9))
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig4_simulazioni.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate in&quot;, config.FIGURE)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 301 - &quot;Stazionarietà e test ADF&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Idea: il test di Dickey-Fuller aumentato (ADF) ha come ipotesi nulla la radice unitaria (serie non stazionaria). Lo si applica al
+logaritmo del prezzo dell&#x27;S&amp;P 500 e ai suoi rendimenti logaritmici giornalieri, sull&#x27;intero periodo e in finestre di dieci anni non
+sovrapposte; poi si misura con simulazioni quanto il test sia affidabile (dimensione e potenza) su serie lunghe quanto una finestra.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;ADF&quot;, &quot;KPSS&quot;)
+
+# --- Test ----------------------------------------------------------------------------------------------------
+SOGLIA = 0.05                     # livello di significatività dei test
+SOGLIA_FORTE = 0.01
+MAXLAG_AIC = 20                   # ritardi massimi per l&#x27;ADF sui dati reali; il numero è scelto col criterio AIC
+REGR_LIVELLI = &quot;ct&quot;               # logaritmo del prezzo: costante e trend deterministico (la serie sale nel tempo)
+REGR_LIVELLI_ALT = &quot;c&quot;            # robustezza: solo costante
+REGR_RENDIMENTI = &quot;c&quot;             # rendimenti: solo costante (oscillano attorno a una media)
+H3_QUOTA_LIV = 0.80               # ipotesi 3: quota minima di finestre in cui il prezzo non rifiuta
+H3_QUOTA_REND = 0.95              # ipotesi 3: quota minima di finestre in cui i rendimenti rifiutano
+H5_POTENZA_MAX = 0.50             # ipotesi 5: potenza massima
+H5_DIM_MIN, H5_DIM_MAX = 0.03, 0.07   # ipotesi 5: intervallo della dimensione
+SEDUTE_FINESTRA = 2520            # dieci anni di borsa
+SEDUTE_ANNO = 252
+
+# --- Simulazioni (dimensione e potenza del test su serie lunghe come una finestra) -----------------------------
+N_SIM = 1000
+MAXLAG_SIM = 5                    # ritardi fissi nelle simulazioni (niente selezione: velocità)
+SEME = 20261024
+EMIVITA_ANNI = 5                  # la serie stazionaria simulata ritorna a metà strada verso la media in cinque anni
+# AR(1) sul log-prezzo: phi = 0,5^(1/(emivita in sedute)); volatilità giornaliera uguale a quella dei dati reali
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati ------------------------------------------------------------
+IPOTESI = (
+    &quot;1) Sull&#x27;intero periodo l&#x27;ADF applicato al logaritmo del prezzo NON rifiuta la radice unitaria (p-value sopra 0,05). &quot;
+    &quot;2) Sull&#x27;intero periodo l&#x27;ADF applicato ai rendimenti giornalieri la rifiuta con decisione (p-value sotto 0,01). &quot;
+    &quot;3) Lo stesso vale nelle finestre di dieci anni: sul logaritmo del prezzo il test non rifiuta in almeno l&#x27;80% delle finestre, &quot;
+    &quot;sui rendimenti rifiuta (p-value sotto 0,05) in almeno il 95%. &quot;
+    &quot;4) Stazionario non vuol dire costante: la volatilità annualizzata del decennio più turbolento è almeno il doppio di quella del decennio più calmo. &quot;
+    &quot;5) Il test ha una potenza modesta: su una serie davvero stazionaria ma lenta (mezza vita di cinque anni) lunga come una finestra, &quot;
+    &quot;l&#x27;ADF rifiuta la radice unitaria in meno del 50% delle simulazioni; su un random walk rifiuta in una quota vicina al 5% (tra 3% e 7%).&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>ADF, finestre, random walk e serie stazionarie simulate</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 301: test ADF, finestre, simulazioni.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from statsmodels.tsa.stattools import adfuller
+
+
+def log_rendimenti(close: pd.Series) -&gt; pd.Series:
+    return np.log(close).diff().dropna()
+
+
+def adf(x, regressione: str, maxlag: int, autolag=&quot;AIC&quot;) -&gt; tuple[float, float, int]:
+    &quot;&quot;&quot;Restituisce statistica, p-value e ritardi usati.&quot;&quot;&quot;
+    r = adfuller(np.asarray(x, float), maxlag=maxlag, regression=regressione, autolag=autolag, result_object=False)
+    return float(r[0]), float(r[1]), int(r[2])
+
+
+def finestre(n: int, ampiezza: int) -&gt; list[tuple[int, int]]:
+    &quot;&quot;&quot;Finestre consecutive non sovrapposte; l&#x27;ultima parte incompleta è scartata.&quot;&quot;&quot;
+    return [(a, a + ampiezza) for a in range(0, n - ampiezza + 1, ampiezza)]
+
+
+def random_walk(rng, n: int, sigma: float, mu: float = 0.0) -&gt; np.ndarray:
+    return np.cumsum(rng.normal(mu, sigma, n))
+
+
+def ar1(rng, n: int, phi: float, sigma: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;AR(1) stazionario (media zero), partendo dalla distribuzione stazionaria.&quot;&quot;&quot;
+    e = rng.normal(0.0, sigma, n)
+    x = np.empty(n)
+    x[0] = rng.normal(0.0, sigma / np.sqrt(1 - phi ** 2))
+    for t in range(1, n):
+        x[t] = phi * x[t - 1] + e[t]
+    return x
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome, cond):
+    global n_ok
+    print((&quot;OK   &quot; if cond else &quot;FAIL &quot;) + nome)
+    if not cond:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+rng = np.random.default_rng(1)
+controlla(&quot;finestre non sovrapposte e complete&quot;, fx.finestre(10, 3) == [(0, 3), (3, 6), (6, 9)])
+c = pd.Series(100 * 1.01 ** np.arange(5))
+controlla(&quot;log-rendimento di un +1% costante&quot;, np.allclose(fx.log_rendimenti(c).to_numpy(), np.log(1.01)))
+ru = rng.normal(0, 0.01, 3000)
+st, p, _ = fx.adf(ru, &quot;c&quot;, 5)
+controlla(&quot;rumore bianco: l&#x27;ADF rifiuta la radice unitaria&quot;, p &lt; 0.001)
+rw = fx.random_walk(rng, 3000, 0.01)
+st, p, _ = fx.adf(rw, &quot;c&quot;, 5)
+controlla(&quot;random walk: l&#x27;ADF non rifiuta&quot;, p &gt; 0.05)
+a = fx.ar1(rng, 3000, 0.5, 0.01)
+st, p, _ = fx.adf(a, &quot;c&quot;, 5)
+controlla(&quot;AR(1) con phi 0,5: l&#x27;ADF rifiuta&quot;, p &lt; 0.001)
+controlla(&quot;AR(1): deviazione standard vicina a quella teorica&quot;, abs(a.std() - 0.01 / np.sqrt(1 - 0.25)) &lt; 0.002)
+st1, p1, l1 = fx.adf(rw, &quot;ct&quot;, 20)
+controlla(&quot;autolag restituisce un numero di ritardi tra 0 e 20&quot;, 0 &lt;= l1 &lt;= 20)
+print(f&quot;{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
