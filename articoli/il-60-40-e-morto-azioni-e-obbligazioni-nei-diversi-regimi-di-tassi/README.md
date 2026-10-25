@@ -2,7 +2,7 @@
 
 **Domanda:** il portafoglio classico 60% azioni / 40% obbligazioni funziona ancora, o dipende dal regime di tassi in cui lo si usa? Qui il 60/40 viene seguito dal 1981 a oggi, diviso in tre regimi di tassi (bassi, medi, alti), con un controllo sul caso (portafogli a peso azionario casuale) e sull'incertezza (bootstrap).
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Il 60/40 è morto? Azioni e obbligazioni nei diversi regimi di tassi](https://ticker-fight.blogspot.com/2026/10/il-6040-e-morto-azioni-e-obbligazioni.html).
 
 ## Il disegno
 

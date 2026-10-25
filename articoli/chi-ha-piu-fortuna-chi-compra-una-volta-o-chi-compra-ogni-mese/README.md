@@ -2,7 +2,7 @@
 
 **Domanda:** chi investe tutto il budget il primo giorno (lump sum) finisce davanti a chi lo divide in dodici rate mensili (PAC) per quanti mesi di partenza? E quanto di quel risultato è solo il rialzo medio del mercato, cioè il caso?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Chi ha più fortuna: chi compra una volta o chi compra ogni mese?](https://ticker-fight.blogspot.com/2026/10/chi-ha-piu-fortuna-chi-compra-una-volta.html).
 
 ## Il disegno
 

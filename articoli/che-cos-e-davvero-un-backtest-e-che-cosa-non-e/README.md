@@ -2,7 +2,7 @@
 
 **Domanda:** che cosa dice, e che cosa non dice, un backtest? Si costruisce il più semplice possibile (segnale, esecuzione, rendimenti) con la regola più nota, lo SPY sopra la media a 200 giorni, e lo si legge contro il buy & hold, le epoche, le finestre di dieci anni e mille calendari casuali.
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Che cos'è davvero un backtest, e che cosa non è?](https://ticker-fight.blogspot.com/2026/10/che-cose-davvero-un-backtest-e-che-cosa.html).
 
 ## Il disegno
 

@@ -2,7 +2,7 @@
 
 **Domanda:** se ogni mese si compra il settore americano che ha reso di più negli ultimi mesi, con 1.000 € di capitale, commissioni per ordine e tassa del 26%, si batte il semplice buy & hold dell'S&P 500? Condizioni di chi parte con poco: commissione per ordine in tre scenari, tassa con minusvalenze riportate, azioni frazionate.
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Rotazione tra i settori americani: comprare ogni mese il più forte batte il buy & hold, con 1.000 euro?](https://ticker-fight.blogspot.com/2026/10/rotazione-tra-i-settori-americani.html).
 
 ## Il disegno
 

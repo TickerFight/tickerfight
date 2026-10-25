@@ -2,7 +2,7 @@
 
 **Domanda:** quando il rendimento a 10 anni scende sotto quello a 3 mesi, arriva davvero una recessione? E conviene uscire dalle azioni?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [La curva dei tassi invertita: è davvero un segnale di recessione, e conviene uscire dalle azioni?](https://ticker-fight.blogspot.com/2026/10/la-curva-dei-tassi-invertita-e-davvero.html).
 
 ## Il disegno
 

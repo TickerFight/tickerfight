@@ -2,7 +2,7 @@
 
 **Domanda:** per ogni regola di investimento, a quale costo per cambio di posizione smette di battere il buy & hold? L'articolo 101 ha fatto crescere il costo e guardato la perdita; qui si cerca direttamente il costo di pareggio, una volta sul rendimento annuo e una volta sullo Sharpe.
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [A che costo per operazione smette di battere il buy & hold una regola di trading?](https://ticker-fight.blogspot.com/2026/10/a-che-costo-per-operazione-smette-di.html).
 
 ## Il disegno
 

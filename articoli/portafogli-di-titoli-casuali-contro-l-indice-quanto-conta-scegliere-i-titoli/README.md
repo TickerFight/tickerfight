@@ -2,7 +2,7 @@
 
 **Domanda:** mille portafogli estratti a caso dall'S&P 100 battono l'indice? Quanto conta, da sola, la scelta dei titoli?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Portafogli di titoli casuali contro l'indice: quanto conta scegliere i titoli?](https://ticker-fight.blogspot.com/2026/10/portafogli-di-titoli-casuali-contro.html).
 
 ## Il disegno
 

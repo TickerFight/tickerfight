@@ -2,7 +2,7 @@
 
 **Domanda:** negli ultimi vent'anni gli Stati Uniti hanno battuto Europa e mercati emergenti, e quanto è stabile quel primato su finestre mobili?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [USA, Europa o mercati emergenti: chi ha vinto davvero negli ultimi vent'anni, e il primato è stabile?](https://ticker-fight.blogspot.com/2026/10/usa-europa-o-mercati-emergenti-chi-ha.html).
 
 ## Il disegno
 

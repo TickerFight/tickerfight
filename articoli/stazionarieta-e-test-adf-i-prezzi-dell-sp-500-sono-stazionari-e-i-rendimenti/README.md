@@ -2,7 +2,7 @@
 
 **Domanda:** i prezzi e i rendimenti dell'S&P 500 sono stazionari? Che cosa dice il test di Dickey-Fuller aumentato (ADF) e quanto ci si può fidare?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Stazionarietà e test ADF: i prezzi dell'S&P 500 sono stazionari? E i rendimenti?](https://ticker-fight.blogspot.com/2026/10/stazionarieta-e-test-adf-i-prezzi-dells.html).
 
 ## Il disegno
 

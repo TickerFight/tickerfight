@@ -2,7 +2,7 @@
 
 **Domanda:** su una regola di trend (chiusura sopra la media a 200 sedute) uno stop loss fisso al 5% protegge dalle perdite grosse o taglia i guadagni? Condizioni di chi parte con 1.000 €: commissione per ordine in tre scenari, tassa del 26% con minusvalenze riportate, azioni frazionate.
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Stop loss al 5%: protegge o taglia i guadagni?](https://ticker-fight.blogspot.com/2026/10/stop-loss-al-5-protegge-o-taglia-i.html).
 
 ## Il disegno
 

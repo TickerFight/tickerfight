@@ -2,7 +2,7 @@
 
 **Domanda:** investire tutto subito (lump sum, cioè buy & hold dal primo giorno) o a rate (PAC)? Qui il PAC viene provato con cinque lunghezze (3, 6, 12, 24, 36 rate), con valutazione a 60 mesi dalla partenza, su ogni mese di partenza della storia di quattro indici; poi si guarda decennio per decennio, le partenze vicino ai massimi, gli esiti peggiori e il confronto con il caso (scimmie).
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [PAC contro lump sum: conta più la lunghezza delle rate o il decennio di partenza?](https://ticker-fight.blogspot.com/2026/10/pac-contro-lump-sum-conta-piu-la.html).
 
 ## Il disegno
 

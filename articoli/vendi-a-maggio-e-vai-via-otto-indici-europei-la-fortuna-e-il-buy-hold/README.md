@@ -2,7 +2,7 @@
 
 **Domanda:** il vecchio proverbio «vendi a maggio e vai via» funziona sugli indici azionari europei, o la differenza tra novembre-aprile e maggio-ottobre è fortuna?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [«Vendi a maggio e vai via»: otto indici europei, la fortuna e il buy & hold](https://ticker-fight.blogspot.com/2026/10/vendi-maggio-e-vai-via-otto-indici.html).
 
 ## Il disegno
 

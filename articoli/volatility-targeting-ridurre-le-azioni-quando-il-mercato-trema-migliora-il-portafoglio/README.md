@@ -2,7 +2,7 @@
 
 **Domanda:** ridurre l'esposizione quando la volatilità sale rende un portafoglio azionario migliore, o solo più tranquillo?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Volatility targeting: ridurre le azioni quando il mercato trema migliora il portafoglio?](https://ticker-fight.blogspot.com/2026/10/volatility-targeting-ridurre-le-azioni.html).
 
 ## Il disegno
 
