@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-10 pubblicati, 11 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+10 pubblicati, 12 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -22,6 +22,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [«Vendi a maggio e vai via»: otto indici europei, la fortuna e il buy & hold](https://tickerfight.github.io/tickerfight/articoli/vendi-a-maggio-e-vai-via-otto-indici-europei-la-fortuna-e-il-buy-hold/) | In revisione | — | — |
 | [Il 60/40 è morto? Azioni e obbligazioni nei diversi regimi di tassi](https://tickerfight.github.io/tickerfight/articoli/il-60-40-e-morto-azioni-e-obbligazioni-nei-diversi-regimi-di-tassi/) | In revisione | — | — |
 | [PAC contro lump sum: conta più la lunghezza delle rate o il decennio di partenza?](https://tickerfight.github.io/tickerfight/articoli/pac-contro-lump-sum-conta-piu-la-lunghezza-delle-rate-o-il-decennio-di-partenza/) | In revisione | — | — |
+| [USA, Europa o mercati emergenti: chi ha vinto davvero negli ultimi vent'anni, e il primato è stabile?](https://tickerfight.github.io/tickerfight/articoli/usa-europa-o-mercati-emergenti-chi-ha-vinto-davvero-negli-ultimi-vent-anni-e-il-primato-e-stabile/) | In revisione | — | — |
 | [Volatility targeting: ridurre le azioni quando il mercato trema migliora il portafoglio?](https://tickerfight.github.io/tickerfight/articoli/volatility-targeting-ridurre-le-azioni-quando-il-mercato-trema-migliora-il-portafoglio/) | In revisione | — | — |
 | [Portafogli di titoli casuali contro l'indice: quanto conta scegliere i titoli?](https://tickerfight.github.io/tickerfight/articoli/portafogli-di-titoli-casuali-contro-l-indice-quanto-conta-scegliere-i-titoli/) | In revisione | — | — |
 | [Stazionarietà e test ADF: i prezzi dell'S&P 500 sono stazionari? E i rendimenti?](https://tickerfight.github.io/tickerfight/articoli/stazionarieta-e-test-adf-i-prezzi-dell-sp-500-sono-stazionari-e-i-rendimenti/) | In revisione | — | — |
