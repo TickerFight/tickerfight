@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-10 pubblicati, 13 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+10 pubblicati, 14 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -26,6 +26,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [Volatility targeting: ridurre le azioni quando il mercato trema migliora il portafoglio?](https://tickerfight.github.io/tickerfight/articoli/volatility-targeting-ridurre-le-azioni-quando-il-mercato-trema-migliora-il-portafoglio/) | In revisione | — | — |
 | [Portafogli di titoli casuali contro l'indice: quanto conta scegliere i titoli?](https://tickerfight.github.io/tickerfight/articoli/portafogli-di-titoli-casuali-contro-l-indice-quanto-conta-scegliere-i-titoli/) | In revisione | — | — |
 | [Stazionarietà e test ADF: i prezzi dell'S&P 500 sono stazionari? E i rendimenti?](https://tickerfight.github.io/tickerfight/articoli/stazionarieta-e-test-adf-i-prezzi-dell-sp-500-sono-stazionari-e-i-rendimenti/) | In revisione | — | — |
+| [La curva dei tassi invertita: è davvero un segnale di recessione, e conviene uscire dalle azioni?](https://tickerfight.github.io/tickerfight/articoli/la-curva-dei-tassi-invertita-e-davvero-un-segnale-di-recessione-e-conviene-uscire-dalle-azioni/) | In revisione | — | — |
 | [Chi ha più fortuna: chi compra una volta o chi compra ogni mese?](https://tickerfight.github.io/tickerfight/articoli/chi-ha-piu-fortuna-chi-compra-una-volta-o-chi-compra-ogni-mese/) | In revisione | — | — |
 | [Stop loss al 5%: protegge o taglia i guadagni?](https://tickerfight.github.io/tickerfight/articoli/stop-loss-al-5-protegge-o-taglia-i-guadagni/) | In revisione | — | — |
 | [Rotazione tra i settori americani: comprare ogni mese il più forte batte il buy & hold, con 1.000 euro?](https://tickerfight.github.io/tickerfight/articoli/rotazione-tra-i-settori-americani-comprare-ogni-mese-il-piu-forte-batte-il-buy-hold-con-1-000-euro/) | In revisione | — | — |
