@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La curva dei tassi invertita: è davvero un segnale di recessione, e conviene uscire dalle azioni? · il codice · TickerFight</title>
+<meta name="description" content="quando il rendimento a 10 anni scende sotto quello a 3 mesi, arriva davvero una recessione? E conviene uscire dalle azioni?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>La curva dei tassi invertita: è davvero un segnale di recessione, e conviene uscire dalle azioni?</h1>
+<p class="domanda">Quando il rendimento a 10 anni scende sotto quello a 3 mesi, arriva davvero una recessione? E conviene uscire dalle azioni?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="la-curva-dei-tassi-invertita-e-davvero-un-segnale-di-recessione-e-conviene-uscire-dalle-azioni.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Segnale:</strong> a fine mese, spread = rendimento a 10 anni meno rendimento a 3 mesi. Curva invertita se lo spread è sotto zero.</li>
+<li><strong>Episodio:</strong> almeno 3 fine-mese invertiti; serie separate da meno di 6 mesi di curva normale sono un solo episodio.</li>
+<li><strong>Recessioni:</strong> le otto dichiarate dal NBER dal 1969 (date in <code>config.py</code>).</li>
+<li><strong>Strategia:</strong> il segnale di fine mese decide il mese successivo: curva invertita = liquidità al tasso a 3 mesi, altrimenti S&amp;P 500 (indice di prezzo, senza dividendi). Confronto con il buy &amp; hold.</li>
+<li><strong>Il caso:</strong> 2.000 strategie con lo stesso segnale spostato circolarmente nel tempo (almeno 24 mesi).</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>la-curva-dei-tassi-invertita-e-davvero-un-segnale-di-recessione-e-conviene-uscire-dalle-azioni/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica S&amp;P 500, ^TNX (10 anni) e ^IRX (3 mesi)
+    ├── 02_backtest_e_test.py  episodi, recessioni NBER, strategia, confronto con il caso
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            serie mensili, episodi di inversione, strategia, drawdown
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd la-curva-dei-tassi-invertita-e-davvero-un-segnale-di-recessione-e-conviene-uscire-dalle-azioni
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance S&amp;P 500, rendimento a 10 anni (^TNX) e rendimento a 3 mesi (^IRX).
+
+Salva:
+  dati/serie_giornaliere.csv   colonne Date, GSPC (chiusura), TNX (% annuo), IRX (% annuo)
+  dati/serie_metadati.json     fonte, data del download, versione di yfinance, impronta SHA-256
+Gli script successivi leggono SOLO il file salvato.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.Series:
+    grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(f&quot;Yahoo Finance non ha restituito dati per {ticker}.&quot;)
+    s = grezzo[&quot;Close&quot;].copy()
+    s.index = pd.to_datetime(s.index).tz_localize(None).normalize()
+    s = s[~s.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna()
+    return s
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    gspc = scarica(config.TICKER_AZIONI)
+    tnx = scarica(config.TICKER_10A)
+    irx = scarica(config.TICKER_3M)
+    for nome, s in ((&quot;TNX&quot;, tnx), (&quot;IRX&quot;, irx)):
+        if not (-1 &lt; s.median() &lt; 25):
+            raise SystemExit(f&quot;{nome}: scala dei tassi inattesa (mediana {s.median():.2f}); attesi valori in % annuo.&quot;)
+    df = pd.concat({&quot;GSPC&quot;: gspc, &quot;TNX&quot;: tnx, &quot;IRX&quot;: irx}, axis=1).sort_index()
+    df = df.dropna(subset=[&quot;GSPC&quot;])
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+    df.index.name = &quot;Date&quot;
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    meta = {
+        &quot;ticker&quot;: {&quot;azioni&quot;: config.TICKER_AZIONI, &quot;10_anni&quot;: config.TICKER_10A, &quot;3_mesi&quot;: config.TICKER_3M},
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: config.URL_FONTE,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonne&quot;: &quot;GSPC = chiusura dell&#x27;indice (senza dividendi); TNX e IRX = rendimento annuo in %&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(json.dumps(meta, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>episodi, recessioni NBER, strategia, confronto con il caso</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Curva dei tassi invertita: episodi, recessioni NBER, strategia e confronto con il caso.
+
+Legge SOLO dati/serie_giornaliere.csv e produce in risultati/:
+  metriche.json    ogni numero dell&#x27;articolo, con descrizione e origine
+  mensile.csv      serie di fine-mese: indice, tassi, spread, segnale, rendimenti della strategia e del buy &amp; hold
+  episodi.csv      per ogni episodio di inversione: inizio, fine, durata, se è seguito da recessione e con quale anticipo
+  recessioni.csv   per ogni recessione NBER: se è stata preceduta da un&#x27;inversione e da quanto
+  spostamenti.csv  rendimento annuo composto delle strategie con segnale spostato nel tempo
+Il segnale di fine mese t decide la posizione del mese t+1 (nessun look-ahead).
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    g = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    m = fx.mensile(g[[&quot;GSPC&quot;, &quot;TNX&quot;, &quot;IRX&quot;]])
+    m = m[(m[&quot;GSPC&quot;] &gt; 0)]
+    ultima_seduta = g.index[-1]
+    if (m.index[-1] - ultima_seduta).days &gt; 4:       # ultimo mese incompleto: scartato
+        m = m.iloc[:-1]
+    m[&quot;spread&quot;] = m[&quot;TNX&quot;] - m[&quot;IRX&quot;]
+    n = len(m)
+    primo = m.index[0]
+    inv = (m[&quot;spread&quot;] &lt; config.SPREAD_SOGLIA).to_numpy()
+    eps = fx.episodi(inv, config.MIN_MESI_EPISODIO, config.GAP_UNIONE)
+
+    reg(&quot;prima_data&quot;, str(m.index[0].date()), &quot;data_lunga&quot;, &quot;Primo fine-mese con tutte e tre le serie&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(m.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultimo fine-mese completo dei dati (l&#x27;eventuale mese in corso è scartato)&quot;, &quot;dati/&quot;)
+    reg(&quot;anno_inizio&quot;, str(m.index[0].date()), &quot;anno&quot;, &quot;Anno del primo fine-mese con tutte e tre le serie&quot;, &quot;dati/&quot;)
+    reg(&quot;n_mesi&quot;, n, &quot;int&quot;, &quot;Fine-mese nel campione&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_campione&quot;, n / 12, &quot;num1&quot;, &quot;Anni del campione (mesi diviso 12)&quot;, &quot;dati/&quot;)
+    reg(&quot;mesi_invertiti&quot;, int(inv.sum()), &quot;int&quot;, &quot;Fine-mese con 10 anni sotto 3 mesi&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;quota_invertiti&quot;, float(inv.mean()), &quot;pct1&quot;, &quot;Quota dei fine-mese con curva invertita&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;spread_min&quot;, float(m[&quot;spread&quot;].min()), &quot;num2&quot;, &quot;Spread 10 anni - 3 mesi più basso a fine mese (punti percentuali)&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;spread_min_data&quot;, str(m[&quot;spread&quot;].idxmin().date()), &quot;data_lunga&quot;, &quot;Fine-mese dello spread più basso&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;spread_med&quot;, float(m[&quot;spread&quot;].median()), &quot;num2&quot;, &quot;Spread mediano 10 anni - 3 mesi (punti percentuali)&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;n_episodi&quot;, len(eps), &quot;int&quot;, &quot;Episodi di inversione (almeno 3 fine-mese invertiti, uniti se separati da meno di 6 mesi)&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;min_mesi&quot;, config.MIN_MESI_EPISODIO, &quot;int&quot;, &quot;Fine-mese invertiti minimi per un episodio&quot;, &quot;config.py&quot;)
+    reg(&quot;gap_unione&quot;, config.GAP_UNIONE, &quot;int&quot;, &quot;Mesi di curva normale sotto i quali due serie invertite sono un solo episodio&quot;, &quot;config.py&quot;)
+    reg(&quot;orizzonte&quot;, config.ORIZZONTE, &quot;int&quot;, &quot;Mesi entro cui deve iniziare la recessione perché l&#x27;inversione sia «seguita»&quot;, &quot;config.py&quot;)
+
+    # --- Recessioni: sono state precedute da un&#x27;inversione? ---
+    rec_idx = [fx.indice_mesi(p, primo) for p, _ in config.RECESSIONI]
+    righe_r, n_prec, anticipi_r = [], 0, []
+    for (picco, minimo), s in zip(config.RECESSIONI, rec_idx):
+        prec = [e for e in eps if e[0] &lt;= s and e[1] &gt;= s - config.ORIZZONTE]
+        ok = len(prec) &gt; 0
+        n_prec += int(ok)
+        ant = s - prec[-1][0] if ok else None
+        righe_r.append({&quot;picco&quot;: picco, &quot;minimo&quot;: minimo, &quot;preceduta&quot;: int(ok), &quot;mesi_da_inizio_inversione&quot;: ant})
+        if ok:
+            anticipi_r.append(ant)
+    pd.DataFrame(righe_r).to_csv(config.RISULTATI / &quot;recessioni.csv&quot;, index=False)
+    reg(&quot;n_recessioni&quot;, len(config.RECESSIONI), &quot;int&quot;, &quot;Recessioni NBER dal 1969 in poi&quot;, &quot;config.py, RECESSIONI&quot;)
+    reg(&quot;n_precedute&quot;, n_prec, &quot;int&quot;, &quot;Recessioni precedute da un&#x27;inversione nei 24 mesi prima dell&#x27;inizio&quot;, &quot;recessioni.csv&quot;)
+    reg(&quot;h1_min&quot;, config.H1_MIN_RECESSIONI, &quot;int&quot;, &quot;Soglia dell&#x27;ipotesi 1&quot;, &quot;config.py&quot;)
+    reg(&quot;h1_ok&quot;, int(n_prec &gt;= config.H1_MIN_RECESSIONI), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 1 è rispettata&quot;, &quot;recessioni.csv&quot;)
+    mancate = [r for r in righe_r if not r[&quot;preceduta&quot;]]
+    reg(&quot;n_mancate&quot;, len(mancate), &quot;int&quot;, &quot;Recessioni non precedute da alcuna inversione&quot;, &quot;recessioni.csv&quot;)
+    reg(&quot;mancate_testo&quot;, &quot;, &quot;.join(r[&quot;picco&quot;] for r in mancate) if mancate else &quot;nessuna&quot;, &quot;testo&quot;, &quot;Mesi di inizio delle recessioni non precedute da inversione&quot;, &quot;recessioni.csv&quot;)
+
+    # --- Episodi: seguiti da recessione? ---
+    righe_e = []
+    for a, b in eps:
+        censurato = a + config.ORIZZONTE &gt; n - 1
+        segue = [s for s in rec_idx if a &lt;= s &lt;= a + config.ORIZZONTE]
+        righe_e.append({&quot;inizio&quot;: str(m.index[a].date()), &quot;fine&quot;: str(m.index[b].date()), &quot;mesi_durata&quot;: b - a + 1,
+                        &quot;censurato&quot;: int(censurato), &quot;seguito&quot;: int(bool(segue)),
+                        &quot;anticipo_mesi&quot;: (segue[0] - a) if segue else None})
+    E = pd.DataFrame(righe_e)
+    E.to_csv(config.RISULTATI / &quot;episodi.csv&quot;, index=False)
+    giudicabili = E[(E[&quot;censurato&quot;] == 0) | (E[&quot;seguito&quot;] == 1)]
+    n_giud = len(giudicabili)
+    n_segu = int(giudicabili[&quot;seguito&quot;].sum())
+    quota = n_segu / n_giud if n_giud else 0.0
+    reg(&quot;n_censurati&quot;, int(((E[&quot;censurato&quot;] == 1) &amp; (E[&quot;seguito&quot;] == 0)).sum()), &quot;int&quot;, &quot;Episodi troppo recenti per essere giudicati (meno di 24 mesi dall&#x27;inizio alla fine dei dati)&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;n_giudicabili&quot;, n_giud, &quot;int&quot;, &quot;Episodi giudicabili&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;n_seguiti&quot;, n_segu, &quot;int&quot;, &quot;Episodi giudicabili seguiti da una recessione entro 24 mesi&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;n_falsi&quot;, n_giud - n_segu, &quot;int&quot;, &quot;Episodi giudicabili non seguiti da recessione entro 24 mesi (falsi allarmi)&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;quota_seguiti&quot;, quota, &quot;pct0&quot;, &quot;Quota di episodi giudicabili seguiti da recessione&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;h2_min&quot;, config.H2_QUOTA_MIN, &quot;pct0&quot;, &quot;Soglia dell&#x27;ipotesi 2&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_ok&quot;, int(quota &gt;= config.H2_QUOTA_MIN), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 2 è rispettata&quot;, &quot;episodi.csv&quot;)
+    falsi = giudicabili[giudicabili[&quot;seguito&quot;] == 0]
+    reg(&quot;falsi_testo&quot;, &quot;, &quot;.join(str(pd.Timestamp(d).year) for d in falsi[&quot;inizio&quot;]) if len(falsi) else &quot;nessuno&quot;, &quot;testo&quot;, &quot;Anni di inizio degli episodi non seguiti da recessione&quot;, &quot;episodi.csv&quot;)
+    ant = giudicabili.loc[giudicabili[&quot;seguito&quot;] == 1, &quot;anticipo_mesi&quot;].astype(float).to_numpy()
+    if len(ant) == 0:
+        raise SystemExit(&quot;Nessun episodio seguito da recessione: dati inattesi.&quot;)
+    reg(&quot;ant_mediano&quot;, float(np.median(ant)), &quot;num1&quot;, &quot;Anticipo mediano (mesi) tra inizio dell&#x27;inversione e inizio della recessione&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;ant_min&quot;, float(ant.min()), &quot;int&quot;, &quot;Anticipo minimo (mesi)&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;ant_max&quot;, float(ant.max()), &quot;int&quot;, &quot;Anticipo massimo (mesi)&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;ant_ampiezza&quot;, float(ant.max() - ant.min()), &quot;int&quot;, &quot;Differenza tra anticipo massimo e minimo (mesi)&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;h3_med_min&quot;, config.H3_MEDIANA_MIN, &quot;int&quot;, &quot;Limite inferiore dell&#x27;anticipo mediano (ipotesi 3)&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_med_max&quot;, config.H3_MEDIANA_MAX, &quot;int&quot;, &quot;Limite superiore dell&#x27;anticipo mediano (ipotesi 3)&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_amp&quot;, config.H3_AMPIEZZA_MIN, &quot;int&quot;, &quot;Ampiezza minima dell&#x27;anticipo (ipotesi 3)&quot;, &quot;config.py&quot;)
+    h3 = config.H3_MEDIANA_MIN &lt;= np.median(ant) &lt;= config.H3_MEDIANA_MAX and (ant.max() - ant.min()) &gt;= config.H3_AMPIEZZA_MIN
+    reg(&quot;h3_ok&quot;, int(h3), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 3 è rispettata&quot;, &quot;episodi.csv&quot;)
+    durate = E[&quot;mesi_durata&quot;].astype(float)
+    reg(&quot;durata_med&quot;, float(durate.median()), &quot;num1&quot;, &quot;Durata mediana di un episodio (mesi, dall&#x27;inizio alla fine)&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;durata_max&quot;, float(durate.max()), &quot;int&quot;, &quot;Durata massima di un episodio (mesi)&quot;, &quot;episodi.csv&quot;)
+
+    # --- Strategia: liquidità quando la curva è invertita ---
+    p = m[&quot;GSPC&quot;].to_numpy()
+    r_az = p[1:] / p[:-1] - 1                       # rendimento del mese t+1
+    r_cash = m[&quot;IRX&quot;].to_numpy()[:-1] / 100 / 12    # liquidità remunerata al tasso a 3 mesi di fine mese t
+    fuori = inv[:-1]                                # segnale a fine mese t -&gt; posizione mese t+1
+    r_str = fx.rendimenti_strategia(r_az, r_cash, fuori)
+    m[&quot;r_azioni&quot;] = np.concatenate([[np.nan], r_az])
+    m[&quot;r_strategia&quot;] = np.concatenate([[np.nan], r_str])
+    m[&quot;inv&quot;] = inv.astype(int)
+    m.to_csv(config.RISULTATI / &quot;mensile.csv&quot;, float_format=&quot;%.6f&quot;)
+    c_bh, c_st = fx.cagr(r_az), fx.cagr(r_str)
+    d_bh, d_st = fx.max_drawdown(r_az), fx.max_drawdown(r_str)
+    reg(&quot;cagr_bh&quot;, c_bh, &quot;pct1&quot;, &quot;Rendimento annuo composto del buy &amp; hold sull&#x27;S&amp;P 500 (solo prezzi)&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;cagr_str&quot;, c_st, &quot;pct1&quot;, &quot;Rendimento annuo composto della strategia (liquidità al tasso a 3 mesi quando la curva è invertita)&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;dd_bh&quot;, d_bh, &quot;pct1&quot;, &quot;Drawdown massimo mensile del buy &amp; hold&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;dd_str&quot;, d_st, &quot;pct1&quot;, &quot;Drawdown massimo mensile della strategia&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;molt_bh&quot;, float(np.prod(1 + r_az)), &quot;num1&quot;, &quot;Quante volte è moltiplicato il capitale con il buy &amp; hold&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;molt_str&quot;, float(np.prod(1 + r_str)), &quot;num1&quot;, &quot;Quante volte è moltiplicato il capitale con la strategia&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;quota_fuori&quot;, float(fuori.mean()), &quot;pct1&quot;, &quot;Quota dei mesi trascorsi in liquidità dalla strategia&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;diff_cagr&quot;, (c_st - c_bh), &quot;pp1&quot;, &quot;Rendimento annuo della strategia meno quello del buy &amp; hold (punti percentuali)&quot;, &quot;mensile.csv&quot;)
+    h4 = (c_st &lt; c_bh) and (d_st &gt; d_bh)
+    reg(&quot;h4_ok&quot;, int(h4), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 4 è rispettata (rende meno e ha un drawdown meno profondo)&quot;, &quot;mensile.csv&quot;)
+    # due sottoperiodi: fino al 1989 compreso e dal 1990 in poi
+    anni_r = m.index[1:].year.to_numpy()
+    for nome, sel in ((&quot;a&quot;, anni_r &lt;= 1989), (&quot;b&quot;, anni_r &gt;= 1990)):
+        reg(f&quot;cagr_bh_{nome}&quot;, fx.cagr(r_az[sel]), &quot;pct1&quot;, f&quot;Rendimento annuo composto del buy &amp; hold nel sottoperiodo {&#x27;fino al 1989&#x27; if nome == &#x27;a&#x27; else &#x27;dal 1990 in poi&#x27;}&quot;, &quot;mensile.csv&quot;)
+        reg(f&quot;cagr_str_{nome}&quot;, fx.cagr(r_str[sel]), &quot;pct1&quot;, f&quot;Rendimento annuo composto della strategia nel sottoperiodo {&#x27;fino al 1989&#x27; if nome == &#x27;a&#x27; else &#x27;dal 1990 in poi&#x27;}&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;anno_taglio&quot;, 1989, &quot;annonum&quot;, &quot;Ultimo anno del primo sottoperiodo&quot;, &quot;02_backtest_e_test.py&quot;)
+    reg(&quot;anno_taglio2&quot;, 1990, &quot;annonum&quot;, &quot;Primo anno del secondo sottoperiodo&quot;, &quot;02_backtest_e_test.py&quot;)
+    # rendimento medio delle azioni nei 12 mesi dopo l&#x27;inizio di ogni episodio
+    fw = []
+    for a, b in eps:
+        if a + 12 &lt;= n - 1:
+            fw.append(p[a + 12] / p[a] - 1)
+    reg(&quot;fw12_med&quot;, float(np.median(fw)), &quot;pct1&quot;, &quot;Rendimento mediano dell&#x27;S&amp;P 500 nei 12 mesi successivi all&#x27;inizio di un episodio (solo prezzi)&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;fw12_pos&quot;, int(sum(x &gt; 0 for x in fw)), &quot;int&quot;, &quot;Episodi dopo i quali l&#x27;S&amp;P 500 è salito nei 12 mesi successivi&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;fw12_n&quot;, len(fw), &quot;int&quot;, &quot;Episodi con 12 mesi di dati successivi&quot;, &quot;episodi.csv&quot;)
+
+    # --- Il caso: stesso segnale spostato circolarmente nel tempo ---
+    rng = np.random.default_rng(config.SEME)
+    nn = len(fuori)
+    shifts = rng.integers(config.SPOSTAMENTO_MIN, nn - config.SPOSTAMENTO_MIN + 1, size=config.N_SPOSTAMENTI)
+    cs, ds = [], []
+    for k in shifts:
+        f = np.roll(fuori, int(k))
+        rs = fx.rendimenti_strategia(r_az, r_cash, f)
+        cs.append(fx.cagr(rs))
+        ds.append(fx.max_drawdown(rs))
+    cs, ds = np.array(cs), np.array(ds)
+    pd.DataFrame({&quot;spostamento_mesi&quot;: shifts, &quot;cagr&quot;: cs, &quot;drawdown_max&quot;: ds}).to_csv(config.RISULTATI / &quot;spostamenti.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    pval = float((np.sum(cs &gt;= c_st) + 1) / (len(cs) + 1))
+    reg(&quot;n_sposta&quot;, config.N_SPOSTAMENTI, &quot;int&quot;, &quot;Strategie con segnale spostato nel tempo&quot;, &quot;config.py&quot;)
+    reg(&quot;sposta_min&quot;, config.SPOSTAMENTO_MIN, &quot;int&quot;, &quot;Spostamento minimo (mesi)&quot;, &quot;config.py&quot;)
+    reg(&quot;sposta_med&quot;, float(np.median(cs)), &quot;pct1&quot;, &quot;Rendimento annuo composto mediano delle strategie spostate&quot;, &quot;spostamenti.csv&quot;)
+    reg(&quot;sposta_p5&quot;, float(np.quantile(cs, 0.05)), &quot;pct1&quot;, &quot;5° percentile del rendimento annuo delle strategie spostate&quot;, &quot;spostamenti.csv&quot;)
+    reg(&quot;sposta_p95&quot;, float(np.quantile(cs, 0.95)), &quot;pct1&quot;, &quot;95° percentile del rendimento annuo delle strategie spostate&quot;, &quot;spostamenti.csv&quot;)
+    reg(&quot;sposta_p&quot;, pval, &quot;pct1&quot;, &quot;Quota di strategie spostate che rende almeno quanto la strategia vera&quot;, &quot;spostamenti.csv&quot;)
+    reg(&quot;sposta_sopra_bh&quot;, float(np.mean(cs &gt;= c_bh)), &quot;pct1&quot;, &quot;Quota di strategie spostate che rende almeno quanto il buy &amp; hold&quot;, &quot;spostamenti.csv&quot;)
+    reg(&quot;sposta_dd_med&quot;, float(np.median(ds)), &quot;pct1&quot;, &quot;Drawdown massimo mediano delle strategie spostate&quot;, &quot;spostamenti.csv&quot;)
+    reg(&quot;soglia_p&quot;, config.SOGLIA_P, &quot;pct0&quot;, &quot;Soglia dell&#x27;ipotesi 5&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_ok&quot;, int(pval &gt; config.SOGLIA_P), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 5 è rispettata (la strategia vera non si distingue dal caso)&quot;, &quot;spostamenti.csv&quot;)
+
+    reg(&quot;anno_em&quot;, 1998, &quot;annonum&quot;, &quot;Anno di pubblicazione di Estrella e Mishkin&quot;, &quot;Review of Economics and Statistics, vol. 80&quot;)
+    reg(&quot;anno_eh&quot;, 1991, &quot;annonum&quot;, &quot;Anno di pubblicazione di Estrella e Hardouvelis&quot;, &quot;Journal of Finance, vol. 46&quot;)
+    reg(&quot;anno_prima_rec&quot;, int(config.RECESSIONI[0][0][:4]), &quot;annonum&quot;, &quot;Anno di inizio della prima recessione NBER considerata&quot;, &quot;config.py, RECESSIONI&quot;)
+    i90 = fx.indice_mesi(&quot;1989-05&quot;, primo)
+    reg(&quot;spread_1989&quot;, float(m[&quot;spread&quot;].iloc[i90]), &quot;num2&quot;, &quot;Spread 10 anni - 3 mesi a fine maggio 1989 (punti percentuali): l&#x27;unico fine-mese invertito prima della recessione del 1990&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;anno_1989&quot;, 1989, &quot;annonum&quot;, &quot;Anno dello spread quasi nullo prima della recessione del 1990&quot;, &quot;mensile.csv&quot;)
+    reg(&quot;anno_1990&quot;, int(config.RECESSIONI[4][0][:4]), &quot;annonum&quot;, &quot;Anno di inizio della recessione non preceduta da inversione&quot;, &quot;config.py, RECESSIONI&quot;)
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri; {len(eps)} episodi&quot;)
+    print(f&quot;H1 {n_prec}/{len(config.RECESSIONI)}; H2 {n_segu}/{n_giud}; anticipi {ant}; H4 cagr {c_st:.3%} vs {c_bh:.3%}, dd {d_st:.1%} vs {d_bh:.1%}; H5 p={pval:.3f}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_spread_e_recessioni.png   spread 10 anni - 3 mesi, curva invertita e recessioni NBER
+  fig2_anticipo_episodi.png      per ogni episodio: mesi tra inizio dell&#x27;inversione e inizio della recessione (o falso allarme)
+  fig3_strategia_e_buy_hold.png  capitale della strategia e del buy &amp; hold (scala logaritmica)
+  fig4_contro_il_caso.png        rendimento annuo delle strategie con segnale spostato nel tempo
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    m = pd.read_csv(R / &quot;mensile.csv&quot;, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;)
+    E = pd.read_csv(R / &quot;episodi.csv&quot;, parse_dates=[&quot;inizio&quot;, &quot;fine&quot;])
+    S = pd.read_csv(R / &quot;spostamenti.csv&quot;)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+
+    # Figura 1
+    fig, ax = plt.subplots(figsize=(11, 5))
+    for picco, minimo in config.RECESSIONI:
+        ax.axvspan(pd.Period(picco, &quot;M&quot;).start_time, pd.Period(minimo, &quot;M&quot;).end_time, color=GRIGIO, alpha=0.35, lw=0)
+    ax.plot(m.index, m[&quot;spread&quot;], color=BLU, lw=1.2)
+    ax.fill_between(m.index, m[&quot;spread&quot;], 0, where=m[&quot;spread&quot;] &lt; 0, color=ARANCIO, alpha=0.8, interpolate=True)
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_ylabel(&quot;10 anni meno 3 mesi (punti percentuali)&quot;)
+    ax.set_title(&quot;Arancio: curva invertita. Fasce grigie: recessioni dichiarate dal NBER&quot;, fontsize=11, loc=&quot;left&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_spread_e_recessioni.png&quot;)
+    plt.close(fig)
+
+    # Figura 2
+    fig, ax = plt.subplots(figsize=(11, 5))
+    x = np.arange(len(E))
+    for i, r in E.iterrows():
+        if r[&quot;seguito&quot;] == 1:
+            ax.bar(i, r[&quot;anticipo_mesi&quot;], color=BLU)
+            ax.text(i, r[&quot;anticipo_mesi&quot;] + 0.4, f&quot;{int(r[&#x27;anticipo_mesi&#x27;])}&quot;, ha=&quot;center&quot;, fontsize=10)
+        elif r[&quot;censurato&quot;] == 1:
+            ax.bar(i, config.ORIZZONTE, color=&quot;white&quot;, edgecolor=GRIGIO, hatch=&quot;//&quot;)
+            ax.text(i, config.ORIZZONTE + 0.4, &quot;in corso&quot;, ha=&quot;center&quot;, fontsize=10, color=&quot;#555&quot;)
+        else:
+            ax.bar(i, config.ORIZZONTE, color=&quot;white&quot;, edgecolor=ARANCIO, hatch=&quot;//&quot;, lw=1.5)
+            ax.text(i, config.ORIZZONTE + 0.4, &quot;falso allarme&quot;, ha=&quot;center&quot;, fontsize=10, color=ARANCIO)
+    ax.set_xticks(x, [d.strftime(&quot;%m/%Y&quot;) for d in E[&quot;inizio&quot;]], rotation=45, ha=&quot;right&quot;, fontsize=10)
+    ax.set_xlabel(&quot;inizio dell&#x27;episodio di inversione&quot;)
+    ax.set_ylabel(&quot;mesi alla recessione successiva&quot;)
+    ax.set_ylim(0, config.ORIZZONTE + 4)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig2_anticipo_episodi.png&quot;)
+    plt.close(fig)
+
+    # Figura 3
+    r = m.dropna(subset=[&quot;r_azioni&quot;])
+    cb = (1 + r[&quot;r_azioni&quot;]).cumprod()
+    cs = (1 + r[&quot;r_strategia&quot;]).cumprod()
+    fig, ax = plt.subplots(figsize=(11, 5.2))
+    ax.plot(cb.index, cb, color=GRIGIO, lw=1.6, label=&quot;buy &amp; hold S&amp;P 500&quot;)
+    ax.plot(cs.index, cs, color=BLU, lw=1.8, ls=&quot;--&quot;, label=&quot;fuori dalle azioni con la curva invertita&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_ylabel(&quot;capitale (partenza = 1, scala logaritmica)&quot;)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_strategia_e_buy_hold.png&quot;)
+    plt.close(fig)
+
+    # Figura 4
+    fig, ax = plt.subplots(figsize=(11, 5))
+    ax.hist(S[&quot;cagr&quot;] * 100, bins=40, color=GRIGIO, alpha=0.85)
+    ax.axvline(V[&quot;cagr_str&quot;][&quot;valore&quot;] * 100, color=BLU, lw=2.5, ls=&quot;--&quot;, label=&quot;segnale vero&quot;)
+    ax.axvline(V[&quot;cagr_bh&quot;][&quot;valore&quot;] * 100, color=ARANCIO, lw=2.5, label=&quot;buy &amp; hold&quot;)
+    ax.set_xlabel(&quot;rendimento annuo composto (%)&quot;)
+    ax.set_ylabel(&quot;numero di strategie&quot;)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig4_contro_il_caso.png&quot;)
+    plt.close(fig)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 341 - &quot;La curva dei tassi invertita&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Idea: la curva dei tassi americana è «invertita» quando il rendimento a 10 anni (^TNX) scende sotto quello a 3 mesi (^IRX). Si misura
+(1) se le recessioni dichiarate dal NBER sono state precedute da un&#x27;inversione, (2) quante inversioni non hanno poi portato a una
+recessione, (3) con quanto anticipo, (4) che cosa succede a chi esce dall&#x27;S&amp;P 500 (^GSPC) quando la curva è invertita, (5) se il
+risultato batte il caso (stessa quantità di mesi in liquidità, ma in momenti scelti a caso).
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER_AZIONI = &quot;^GSPC&quot;
+TICKER_10A = &quot;^TNX&quot;
+TICKER_3M = &quot;^IRX&quot;
+INIZIO_DOWNLOAD = &quot;1960-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;serie_giornaliere.csv&quot;
+FILE_METADATI = DATI / &quot;serie_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;S&amp;P 500 e i rendimenti dei titoli di Stato americani a 10 anni e a 3 mesi&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;NBER&quot;,)
+SEDUTE_ANNO = 252
+
+# --- Recessioni americane dichiarate dal NBER (mese del picco e mese del minimo) ---------------------------------
+# Fonte: National Bureau of Economic Research, Business Cycle Dating Committee, https://www.nber.org/cycles/cyclesmain.html
+RECESSIONI = (
+    (&quot;1969-12&quot;, &quot;1970-11&quot;),
+    (&quot;1973-11&quot;, &quot;1975-03&quot;),
+    (&quot;1980-01&quot;, &quot;1980-07&quot;),
+    (&quot;1981-07&quot;, &quot;1982-11&quot;),
+    (&quot;1990-07&quot;, &quot;1991-03&quot;),
+    (&quot;2001-03&quot;, &quot;2001-11&quot;),
+    (&quot;2007-12&quot;, &quot;2009-06&quot;),
+    (&quot;2020-02&quot;, &quot;2020-04&quot;),
+)
+
+# --- Definizioni (fissate prima dei risultati) --------------------------------------------------------------------
+SPREAD_SOGLIA = 0.0               # curva invertita quando (10 anni - 3 mesi) è sotto zero, in punti percentuali
+MIN_MESI_EPISODIO = 3             # un episodio è una serie di almeno 3 fine-mese consecutivi con curva invertita
+GAP_UNIONE = 6                    # due serie separate da meno di 6 mesi con curva normale sono un unico episodio
+ORIZZONTE = 24                    # mesi: una recessione «segue» l&#x27;inversione se inizia entro 24 mesi dall&#x27;inizio dell&#x27;episodio
+H1_MIN_RECESSIONI = 7             # ipotesi 1: almeno 7 recessioni su 8 precedute da un&#x27;inversione
+H2_QUOTA_MIN = 0.60               # ipotesi 2: quota minima di episodi seguiti da recessione
+H3_MEDIANA_MIN, H3_MEDIANA_MAX = 6, 18   # ipotesi 3: anticipo mediano (mesi)
+H3_AMPIEZZA_MIN = 12              # ipotesi 3: differenza tra anticipo massimo e minimo (mesi)
+SOGLIA_P = 0.05                   # ipotesi 5
+N_SPOSTAMENTI = 2000              # strategie «a caso»: lo stesso segnale spostato circolarmente nel tempo
+SPOSTAMENTO_MIN = 24              # mesi: spostamenti più piccoli di 2 anni sono esclusi (sarebbero troppo simili al segnale vero)
+SEME = 20261025
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati ----------------------------------------------------------------
+IPOTESI = (
+    &quot;1) Almeno 7 delle 8 recessioni dichiarate dal NBER dal 1969 in poi sono state precedute da una curva invertita (10 anni sotto 3 mesi) &quot;
+    &quot;in almeno un fine-mese dei 24 mesi prima dell&#x27;inizio. &quot;
+    &quot;2) L&#x27;inversione non è infallibile ma di solito ha ragione: almeno il 60% degli episodi di inversione (giudicabili) è seguito da una recessione entro 24 mesi. &quot;
+    &quot;3) Il segnale dà un orizzonte, non una data: l&#x27;anticipo mediano tra inizio dell&#x27;inversione e inizio della recessione sta tra 6 e 18 mesi, &quot;
+    &quot;ma tra l&#x27;anticipo massimo e quello minimo ci sono almeno 12 mesi di differenza. &quot;
+    &quot;4) Uscire dall&#x27;S&amp;P 500 quando la curva è invertita riduce il drawdown massimo ma rende meno del buy &amp; hold (le azioni continuano a salire per mesi dopo l&#x27;inversione). &quot;
+    &quot;5) Il risultato della strategia non è distinguibile dal caso: tra 2.000 strategie con lo stesso segnale spostato nel tempo, &quot;
+    &quot;la quota che rende almeno quanto quella vera supera il 5%.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>serie mensili, episodi di inversione, strategia, drawdown</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 341: serie mensili, episodi di inversione, strategia, spostamenti circolari.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def mensile(df: pd.DataFrame) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Ultima osservazione di ogni mese (fine-mese); i tassi giornalieri mancanti sono portati avanti prima.&quot;&quot;&quot;
+    d = df.sort_index().ffill()
+    m = d.resample(&quot;ME&quot;).last()
+    return m.dropna()
+
+
+def episodi(inv: np.ndarray, min_mesi: int, gap: int) -&gt; list[tuple[int, int]]:
+    &quot;&quot;&quot;Intervalli (inizio, fine) inclusi di mesi invertiti: unisce quelli separati da meno di `gap` mesi, poi scarta quelli con meno di `min_mesi` mesi invertiti.&quot;&quot;&quot;
+    runs, i, n = [], 0, len(inv)
+    while i &lt; n:
+        if inv[i]:
+            j = i
+            while j + 1 &lt; n and inv[j + 1]:
+                j += 1
+            runs.append([i, j])
+            i = j + 1
+        else:
+            i += 1
+    uniti: list[list[int]] = []
+    for r in runs:
+        if uniti and r[0] - uniti[-1][1] - 1 &lt; gap:
+            uniti[-1][1] = r[1]
+        else:
+            uniti.append(r)
+    out = []
+    for a, b in uniti:
+        if int(inv[a:b + 1].sum()) &gt;= min_mesi:
+            out.append((a, b))
+    return out
+
+
+def rendimenti_strategia(rend_azioni: np.ndarray, rend_cash: np.ndarray, fuori: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;rend_azioni[i] e rend_cash[i]: rendimento del mese i+1; fuori[i]: segnale a fine mese i (True = liquidità nel mese seguente).&quot;&quot;&quot;
+    return np.where(fuori, rend_cash, rend_azioni)
+
+
+def cagr(rend: np.ndarray) -&gt; float:
+    return float(np.prod(1 + rend) ** (12 / len(rend)) - 1)
+
+
+def max_drawdown(rend: np.ndarray) -&gt; float:
+    c = np.cumprod(1 + rend)
+    picco = np.maximum.accumulate(np.concatenate([[1.0], c]))[1:]
+    return float((c / picco - 1).min())
+
+
+def indice_mesi(periodo: str, primo: pd.Timestamp) -&gt; int:
+    &quot;&quot;&quot;Numero di mesi tra il primo mese dei dati e il mese «AAAA-MM».&quot;&quot;&quot;
+    p = pd.Period(periodo, freq=&quot;M&quot;)
+    return (p - primo.to_period(&quot;M&quot;)).n
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome, cond):
+    global n_ok
+    print((&quot;OK   &quot; if cond else &quot;FAIL &quot;) + nome)
+    if not cond:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+inv = np.array([0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0], dtype=bool)
+controlla(&quot;episodi: un solo mese isolato è scartato&quot;, fx.episodi(inv, 3, 2) == [(1, 3), (6, 9)])
+controlla(&quot;episodi: unione quando il gap è sotto soglia&quot;, fx.episodi(inv, 3, 3) == [(1, 9)])
+r = np.full(12, 0.01)
+controlla(&quot;CAGR di +1% al mese&quot;, abs(fx.cagr(r) - (1.01 ** 12 - 1)) &lt; 1e-12)
+controlla(&quot;drawdown di una serie sempre in salita è zero&quot;, fx.max_drawdown(r) == 0.0)
+controlla(&quot;drawdown: -50% poi risalita&quot;, abs(fx.max_drawdown(np.array([0.1, -0.5, 0.2])) - (-0.5)) &lt; 1e-12)
+fuori = np.array([False, True, False])
+s = fx.rendimenti_strategia(np.array([0.1, -0.2, 0.05]), np.array([0.0, 0.0, 0.0]), fuori)
+controlla(&quot;strategia: in liquidità il mese segnalato&quot;, np.allclose(s, [0.1, 0.0, 0.05]))
+idx = pd.date_range(&quot;2000-01-01&quot;, periods=70, freq=&quot;D&quot;)
+d = pd.DataFrame({&quot;a&quot;: np.arange(70.0)}, index=idx)
+m = fx.mensile(d)
+controlla(&quot;mensile: ultimo giorno del mese&quot;, float(m[&quot;a&quot;].iloc[0]) == 30.0)
+controlla(&quot;indice_mesi&quot;, fx.indice_mesi(&quot;2000-04&quot;, pd.Timestamp(&quot;2000-01-31&quot;)) == 3)
+print(f&quot;{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
