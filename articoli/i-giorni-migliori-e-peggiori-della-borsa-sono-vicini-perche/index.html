@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I giorni migliori e peggiori della Borsa sono vicini: perché? · il codice · TickerFight</title>
+<meta name="description" content="i giorni di Borsa migliori e peggiori (l&#x27;1% più alto e l&#x27;1% più basso dei rendimenti giornalieri) cadono vicini nel tempo? Quanto più del caso? E la spiegazione sta nella volatilità di ieri?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>I giorni migliori e peggiori della Borsa sono vicini: perché?</h1>
+<p class="domanda">I giorni di Borsa migliori e peggiori (l&#x27;1% più alto e l&#x27;1% più basso dei rendimenti giornalieri) cadono vicini nel tempo? Quanto più del caso? E la spiegazione sta nella volatilità di ieri?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="i-giorni-migliori-e-peggiori-della-borsa-sono-vicini-perche.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Giorni estremi:</strong> l'1% di sedute con il rendimento più alto e l'1% con il più basso, per ciascun indice.</li>
+<li><strong>Vicinanza:</strong> distanza in sedute tra ogni giorno peggiore e il giorno migliore più vicino; quota di giorni peggiori con un migliore entro 10 sedute.</li>
+<li><strong>Il caso:</strong> 2.000 storie per indice con gli stessi rendimenti giornalieri in ordine rimescolato. Otto test (4 indici per due versioni dei dati) corretti con Holm.</li>
+<li><strong>La volatilità:</strong> quintili della volatilità di ieri (solo dati fino a ieri) e rendimenti divisi per la volatilità EWMA di ieri.</li>
+<li><strong>Il filtro:</strong> fuori dal mercato quando la volatilità a 20 sedute supera l'80° percentile della propria storia fino a ieri; contro buy &amp; hold e 1.000 scimmie con lo stesso numero di sedute in liquidità; con e senza costo di 0,1% per passaggio.</li>
+<li><strong>Indici:</strong> di prezzo (niente dividendi), in valuta locale.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>i-giorni-migliori-e-peggiori-della-borsa-sono-vicini-perche/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica S&amp;P 500, DAX, FTSE 100, Nikkei 225
+    ├── 02_backtest_e_test.py  vicinanza, caso, volatilità, filtro
+    ├── 03_grafici.py          i cinque grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            giorni estremi, distanze, volatilità di ieri, filtro, scimmie, Holm
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd i-giorni-migliori-e-peggiori-della-borsa-sono-vicini-perche
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera di quattro indici azionari (S&amp;P 500, DAX, FTSE 100, Nikkei 225).
+
+Salva, per ogni indice, dati/&lt;ticker&gt;.csv (Date, Open, High, Low, Close, Volume) e dati/metadati.json con la fonte,
+la data del download, la versione di yfinance e l&#x27;impronta SHA-256 di ogni file. Gli script successivi leggono SOLO
+i file salvati: i risultati restano riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;indici&quot;: []}
+    for ticker, nome, valuta in config.INDICI:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nome, &quot;valuta&quot;: valuta}
+        grezzo = scarica(ticker)
+        if grezzo.empty:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;indici&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;])
+        df = df[df[&quot;Close&quot;] &gt; 0]
+        # seduta ancora in corso: barra incompleta, da scartare
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:
+            df = df.iloc[:-1]
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;indici&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    if sum(1 for r in meta[&quot;indici&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;) &lt; len(config.INDICI):
+        raise SystemExit(&quot;Non tutti gli indici sono stati scaricati.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>vicinanza, caso, volatilità, filtro</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Giorni migliori e peggiori vicini: distanze, caso, volatilità, filtro.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json            ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  curva_distanza.csv       S&amp;P 500: quota di giorni peggiori con un giorno migliore entro d sedute (vera, caso medio, fascia 95%)
+  quintili.csv             quota di giorni estremi in ciascun quinto di volatilità di ieri, per indice
+  anni_estremi.csv         numero di giorni estremi per indice e anno
+  estremi_sp500.csv        i dieci giorni peggiori e i dieci migliori dell&#x27;S&amp;P 500
+  filtro.csv               rendimento annuo composto di buy &amp; hold, filtro e scimmie, per indice
+  scimmie_sp500.csv        rendimento annuo composto di ciascuna scimmia (S&amp;P 500)
+  indici_usati.json        indici effettivamente usati
+Nessun look-ahead: la volatilità usata per la seduta t contiene solo rendimenti fino a t-1.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def slug(ticker: str) -&gt; str:
+    return ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;).lower()
+
+
+def massimo_calo(r: np.ndarray) -&gt; float:
+    v = np.cumprod(1 + r)
+    return float((v / np.maximum.accumulate(v) - 1).min())
+
+
+def nulla(serie: np.ndarray, anni: np.ndarray, n: int, rng, griglia=None):
+    &quot;&quot;&quot;Statistiche di n storie rimescolate della serie.&quot;&quot;&quot;
+    med, qpm, qmp, atop = (np.empty(n) for _ in range(4))
+    curva = np.empty((n, len(griglia))) if griglia is not None else None
+    for k in range(n):
+        q = rng.permutation(serie)
+        s = fx.statistiche_vicinanza(q, config.QUOTA_ESTREMI, config.FINESTRA_VICINO)
+        med[k], qpm[k], qmp[k] = s[&quot;mediana_peggiori_migliori&quot;], s[&quot;quota_peggiori_con_migliore&quot;], s[&quot;quota_migliori_con_peggiore&quot;]
+        atop[k] = fx.quota_anni_top(q, anni, config.QUOTA_ESTREMI, config.N_ANNI_TOP)
+        if curva is not None:
+            pe, mi = fx.posizioni_estreme(q, config.QUOTA_ESTREMI)
+            d = np.sort(fx.distanza_vicino(pe, mi))
+            curva[k] = np.searchsorted(d, griglia, side=&quot;right&quot;) / len(d)
+    return med, qpm, qmp, atop, curva
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    META = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    rng = np.random.default_rng(config.SEME)
+    a = (1 - config.LIVELLO_CONFIDENZA) / 2
+    usati, righe_quint, righe_anni, righe_filtro = [], [], [], []
+    p_grezzi: dict[str, float] = {}
+    griglia = np.unique(np.round(np.geomspace(1, 500, 60)).astype(int))
+
+    for ticker, nome, valuta in config.INDICI:
+        f = config.file_dati(ticker)
+        if not f.exists():
+            print(f&quot;{ticker}: file mancante, indice scartato&quot;)
+            continue
+        s = slug(ticker)
+        df = pd.read_csv(f, index_col=0, parse_dates=True)
+        rs = fx.rendimenti(df[&quot;Close&quot;])
+        r = rs.values.astype(float)
+        date = rs.index
+        anni = date.year.values
+        n = len(r)
+        usati.append({&quot;ticker&quot;: ticker, &quot;slug&quot;: s, &quot;nome&quot;: nome, &quot;valuta&quot;: valuta, &quot;prima&quot;: str(date[0].date()), &quot;ultima&quot;: str(date[-1].date()), &quot;n&quot;: n})
+        reg(f&quot;{s}_nome&quot;, nome.split(&quot; (&quot;)[0], &quot;testo&quot;, f&quot;Nome dell&#x27;indice {ticker}&quot;, &quot;config.py, INDICI&quot;)
+        reg(f&quot;{s}_prima_data&quot;, str(date[0].date()), &quot;data_lunga&quot;, f&quot;Primo rendimento giornaliero di {nome}&quot;, &quot;dati/&quot;)
+        reg(f&quot;{s}_prima_anno&quot;, str(date[0].date()), &quot;anno&quot;, f&quot;Anno del primo rendimento di {nome}&quot;, &quot;dati/&quot;)
+        reg(f&quot;{s}_ultima_data&quot;, str(date[-1].date()), &quot;data_lunga&quot;, f&quot;Ultimo rendimento giornaliero di {nome}&quot;, &quot;dati/&quot;)
+        reg(f&quot;{s}_n_sedute&quot;, n, &quot;int&quot;, f&quot;Sedute (rendimenti giornalieri) di {nome}&quot;, &quot;dati/&quot;)
+
+        # ---- vicinanza dei giorni estremi: dati veri contro storie rimescolate ----
+        pe, mi = fx.posizioni_estreme(r, config.QUOTA_ESTREMI)
+        k = len(pe)
+        reg(f&quot;{s}_n_estremi&quot;, k, &quot;int&quot;, f&quot;Giorni peggiori (e altrettanti migliori) di {nome}: l&#x27;1% delle sedute&quot;)
+        vero = fx.statistiche_vicinanza(r, config.QUOTA_ESTREMI, config.FINESTRA_VICINO)
+        med0, qpm0 = vero[&quot;mediana_peggiori_migliori&quot;], vero[&quot;quota_peggiori_con_migliore&quot;]
+        qmp0 = vero[&quot;quota_migliori_con_peggiore&quot;]
+        atop0 = fx.quota_anni_top(r, anni, config.QUOTA_ESTREMI, config.N_ANNI_TOP)
+        principale = ticker == config.INDICE_PRINCIPALE
+        med, qpm, qmp, atop, curva = nulla(r, anni, config.N_RIMESCOLATE, rng, griglia if principale else None)
+        reg(f&quot;{s}_med_dist&quot;, med0, &quot;num1&quot;, f&quot;Distanza mediana (sedute) tra un giorno peggiore e il giorno migliore più vicino, {nome}&quot;)
+        reg(f&quot;{s}_null_med_dist&quot;, float(med.mean()), &quot;num1&quot;, f&quot;Stessa distanza mediana, media delle storie rimescolate, {nome}&quot;)
+        reg(f&quot;{s}_quota_pm&quot;, qpm0, &quot;pct0&quot;, f&quot;Quota di giorni peggiori con un giorno migliore entro {config.FINESTRA_VICINO} sedute, {nome}&quot;)
+        reg(f&quot;{s}_null_quota_pm&quot;, float(qpm.mean()), &quot;pct0&quot;, f&quot;Stessa quota, media delle storie rimescolate, {nome}&quot;)
+        reg(f&quot;{s}_null_quota_pm_lo&quot;, float(np.quantile(qpm, a)), &quot;pct0&quot;, f&quot;Stessa quota, estremo basso della fascia 95% delle storie rimescolate, {nome}&quot;)
+        reg(f&quot;{s}_null_quota_pm_hi&quot;, float(np.quantile(qpm, 1 - a)), &quot;pct0&quot;, f&quot;Stessa quota, estremo alto della fascia 95% delle storie rimescolate, {nome}&quot;)
+        reg(f&quot;{s}_rapporto_pm&quot;, qpm0 / qpm.mean(), &quot;num1&quot;, f&quot;Rapporto tra quota vera e quota media del caso (giorni peggiori con un migliore vicino), {nome}&quot;)
+        reg(f&quot;{s}_quota_mp&quot;, qmp0, &quot;pct0&quot;, f&quot;Quota di giorni migliori con un giorno peggiore entro {config.FINESTRA_VICINO} sedute, {nome}&quot;)
+        reg(f&quot;{s}_null_quota_mp&quot;, float(qmp.mean()), &quot;pct0&quot;, f&quot;Stessa quota, media delle storie rimescolate, {nome}&quot;)
+        p_med = (1 + np.sum(med &lt;= med0)) / (1 + config.N_RIMESCOLATE)
+        p_grezzi[f&quot;{s}_raw&quot;] = p_med
+        reg(f&quot;{s}_p_med_grezzo&quot;, p_med, &quot;pval&quot;, f&quot;p-value (non corretto): quante storie rimescolate hanno una distanza mediana pari o minore, {nome}&quot;)
+        reg(f&quot;{s}_anni_top_quota&quot;, atop0, &quot;pct0&quot;, f&quot;Quota dei giorni estremi che cade nei {config.N_ANNI_TOP} anni con più giorni estremi, {nome}&quot;)
+        reg(f&quot;{s}_null_anni_top_quota&quot;, float(atop.mean()), &quot;pct0&quot;, f&quot;Stessa quota, media delle storie rimescolate, {nome}&quot;)
+        reg(f&quot;{s}_quota_consecutivi&quot;, float(np.mean(fx.distanza_vicino(pe, mi) &lt;= 1)), &quot;pct0&quot;, f&quot;Quota di giorni peggiori con un giorno migliore nella seduta prima o dopo, {nome}&quot;)
+        if principale:
+            curva_df = pd.DataFrame({&quot;d&quot;: griglia, &quot;vera&quot;: [np.mean(fx.distanza_vicino(pe, mi) &lt;= d) for d in griglia],
+                                     &quot;caso_media&quot;: curva.mean(axis=0), &quot;caso_lo&quot;: np.quantile(curva, a, axis=0),
+                                     &quot;caso_hi&quot;: np.quantile(curva, 1 - a, axis=0)})
+            curva_df.to_csv(config.RISULTATI / &quot;curva_distanza.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+
+        # ---- anni con più giorni estremi ----
+        tutti = np.concatenate([pe, mi])
+        per_anno = pd.DataFrame({&quot;anno&quot;: anni[tutti], &quot;tipo&quot;: [&quot;peggiore&quot;] * k + [&quot;migliore&quot;] * k})
+        tab = per_anno.groupby([&quot;anno&quot;, &quot;tipo&quot;]).size().unstack(fill_value=0)
+        for c in (&quot;peggiore&quot;, &quot;migliore&quot;):
+            if c not in tab:
+                tab[c] = 0
+        tab = tab.reindex(range(int(anni.min()), int(anni.max()) + 1), fill_value=0)
+        for anno, rr in tab.iterrows():
+            righe_anni.append({&quot;ticker&quot;: ticker, &quot;anno&quot;: int(anno), &quot;peggiori&quot;: int(rr[&quot;peggiore&quot;]), &quot;migliori&quot;: int(rr[&quot;migliore&quot;])})
+        tot_anno = tab.sum(axis=1)
+        reg(f&quot;{s}_anno_max&quot;, str(int(tot_anno.idxmax())), &quot;testo&quot;, f&quot;Anno con più giorni estremi, {nome}&quot;, &quot;anni_estremi.csv&quot;)
+        reg(f&quot;{s}_anno_max_n&quot;, int(tot_anno.max()), &quot;int&quot;, f&quot;Giorni estremi nell&#x27;anno che ne ha di più, {nome}&quot;, &quot;anni_estremi.csv&quot;)
+        reg(f&quot;{s}_anni_senza&quot;, int((tot_anno == 0).sum()), &quot;int&quot;, f&quot;Anni senza nessun giorno estremo, {nome}&quot;, &quot;anni_estremi.csv&quot;)
+        reg(f&quot;{s}_anni_totali&quot;, int(len(tot_anno)), &quot;int&quot;, f&quot;Anni di dati, {nome}&quot;, &quot;anni_estremi.csv&quot;)
+
+        # ---- rendimenti standardizzati per la volatilità di ieri ----
+        sig = fx.vol_ewma_ieri(r, config.LAMBDA_EWMA, config.RODAGGIO)
+        z = (r / sig)[config.RODAGGIO:]
+        anni_z = anni[config.RODAGGIO:]
+        vz = fx.statistiche_vicinanza(z, config.QUOTA_ESTREMI, config.FINESTRA_VICINO)
+        _, qpm_z, _, _, _ = nulla(z, anni_z, config.N_RIMESCOLATE, rng)
+        reg(f&quot;{s}_z_quota_pm&quot;, vz[&quot;quota_peggiori_con_migliore&quot;], &quot;pct0&quot;, f&quot;Come {s}_quota_pm, ma sui rendimenti divisi per la volatilità di ieri, {nome}&quot;)
+        reg(f&quot;{s}_z_null_quota_pm&quot;, float(qpm_z.mean()), &quot;pct0&quot;, f&quot;Stessa quota standardizzata, media delle storie rimescolate, {nome}&quot;)
+        rap_z = vz[&quot;quota_peggiori_con_migliore&quot;] / qpm_z.mean()
+        reg(f&quot;{s}_z_rapporto_pm&quot;, rap_z, &quot;num1&quot;, f&quot;Rapporto vero/caso dopo la standardizzazione, {nome}&quot;)
+        p_z = (1 + np.sum(qpm_z &gt;= vz[&quot;quota_peggiori_con_migliore&quot;])) / (1 + config.N_RIMESCOLATE)
+        p_grezzi[f&quot;{s}_z&quot;] = p_z
+        reg(f&quot;{s}_z_p_grezzo&quot;, p_z, &quot;pval&quot;, f&quot;p-value (non corretto) della vicinanza dopo la standardizzazione, {nome}&quot;)
+        ecc_raw = qpm0 / qpm.mean() - 1
+        ecc_z = rap_z - 1
+        reg(f&quot;{s}_eccesso_raw&quot;, ecc_raw, &quot;num2&quot;, f&quot;Eccesso di vicinanza sul caso (rapporto meno uno), dati grezzi, {nome}&quot;)
+        reg(f&quot;{s}_eccesso_z&quot;, ecc_z, &quot;num2&quot;, f&quot;Eccesso di vicinanza sul caso (rapporto meno uno), dati standardizzati, {nome}&quot;)
+        reg(f&quot;{s}_eccesso_spiegato&quot;, 1 - ecc_z / ecc_raw, &quot;pct0&quot;, f&quot;Quota dell&#x27;eccesso di vicinanza che sparisce standardizzando, {nome}&quot;)
+
+        # ---- volatilità di ieri (deviazione standard delle ultime sedute) ----
+        vol = fx.vol_mobile_ieri(r, config.FINESTRA_VOL)
+        qp = fx.quote_per_quintile(vol, pe)
+        qm = fx.quote_per_quintile(vol, mi)
+        qt = fx.quote_per_quintile(vol, np.concatenate([pe, mi]))
+        for j in range(5):
+            righe_quint.append({&quot;ticker&quot;: ticker, &quot;quinto&quot;: j + 1, &quot;peggiori&quot;: qp[j], &quot;migliori&quot;: qm[j], &quot;tutti&quot;: qt[j]})
+        reg(f&quot;{s}_q_peggiori_top&quot;, float(qp[4]), &quot;pct0&quot;, f&quot;Quota dei giorni peggiori nel quinto di sedute con volatilità di ieri più alta, {nome}&quot;)
+        reg(f&quot;{s}_q_migliori_top&quot;, float(qm[4]), &quot;pct0&quot;, f&quot;Quota dei giorni migliori nel quinto con volatilità di ieri più alta, {nome}&quot;)
+        reg(f&quot;{s}_q_estremi_top&quot;, float(qt[4]), &quot;pct0&quot;, f&quot;Quota dei giorni estremi nel quinto con volatilità di ieri più alta, {nome}&quot;)
+        reg(f&quot;{s}_q_estremi_bassa&quot;, float(qt[0]), &quot;pct0&quot;, f&quot;Quota dei giorni estremi nel quinto con volatilità di ieri più bassa, {nome}&quot;)
+
+        # ---- il filtro ----
+        liq = fx.segnale_filtro(r, config.FINESTRA_FILTRO, config.PERCENTILE_FILTRO, config.STORIA_MINIMA)
+        sel = slice(config.STORIA_MINIMA, None)
+        r_p, liq_p = r[sel], liq[sel]
+        anni_cal = (date[-1] - date[config.STORIA_MINIMA]).days / 365.25
+        in_per = lambda pos: pos[pos &gt;= config.STORIA_MINIMA] - config.STORIA_MINIMA
+        ev_pe = float(np.mean(liq_p[in_per(pe)]))
+        ev_mi = float(np.mean(liq_p[in_per(mi)]))
+        lordo = np.where(liq_p, 0.0, r_p)
+        netto = fx.rendimenti_filtro(r_p, liq_p, config.COSTO_CAMBIO)
+        c_bh, c_l, c_n = fx.cagr(r_p, anni_cal), fx.cagr(lordo, anni_cal), fx.cagr(netto, anni_cal)
+        scim = fx.cagr_scimmie(r_p, int(liq_p.sum()), anni_cal, config.N_SCIMMIE, rng)
+        reg(f&quot;{s}_filtro_quota_liq&quot;, float(liq_p.mean()), &quot;pct0&quot;, f&quot;Quota di sedute in liquidità con il filtro, {nome}&quot;)
+        reg(f&quot;{s}_filtro_cambi&quot;, int(np.sum(liq_p[1:] != liq_p[:-1])), &quot;int&quot;, f&quot;Passaggi tra mercato e liquidità, {nome}&quot;)
+        reg(f&quot;{s}_evitati_peggiori&quot;, ev_pe, &quot;pct0&quot;, f&quot;Quota dei giorni peggiori evitati dal filtro (in liquidità quel giorno), {nome}&quot;)
+        reg(f&quot;{s}_evitati_migliori&quot;, ev_mi, &quot;pct0&quot;, f&quot;Quota dei giorni migliori evitati dal filtro, {nome}&quot;)
+        reg(f&quot;{s}_rapporto_evitati&quot;, ev_pe / ev_mi if ev_mi &gt; 0 else 99.0, &quot;num2&quot;, f&quot;Rapporto tra quota di peggiori evitati e di migliori evitati, {nome}&quot;)
+        reg(f&quot;{s}_cagr_bh&quot;, c_bh, &quot;pct2&quot;, f&quot;Rendimento annuo composto del buy &amp; hold (indice di prezzo, dalla storia minima), {nome}&quot;)
+        reg(f&quot;{s}_cagr_filtro&quot;, c_l, &quot;pct2&quot;, f&quot;Rendimento annuo composto del filtro senza costi, {nome}&quot;)
+        reg(f&quot;{s}_cagr_filtro_netto&quot;, c_n, &quot;pct2&quot;, f&quot;Rendimento annuo composto del filtro con costo di {config.COSTO_CAMBIO * 100:.1f}% a ogni passaggio, {nome}&quot;)
+        reg(f&quot;{s}_diff_pp&quot;, (c_l - c_bh) * 100, &quot;num2&quot;, f&quot;Filtro senza costi meno buy &amp; hold, punti percentuali di rendimento annuo, {nome}&quot;)
+        reg(f&quot;{s}_diff_netto_pp&quot;, (c_n - c_bh) * 100, &quot;num2&quot;, f&quot;Filtro con costi meno buy &amp; hold, punti percentuali, {nome}&quot;)
+        reg(f&quot;{s}_scimmie_mediana&quot;, float(np.median(scim)), &quot;pct2&quot;, f&quot;Rendimento annuo composto della scimmia mediana (stesse sedute fuori), {nome}&quot;)
+        reg(f&quot;{s}_scimmie_battute&quot;, float(np.mean(c_l &gt; scim)), &quot;pct1&quot;, f&quot;Quota di scimmie battute dal filtro senza costi, {nome}&quot;)
+        reg(f&quot;{s}_scimmie_battute_netto&quot;, float(np.mean(c_n &gt; scim)), &quot;pct1&quot;, f&quot;Quota di scimmie battute dal filtro con costi, {nome}&quot;)
+        reg(f&quot;{s}_vol_bh&quot;, float(r_p.std() * np.sqrt(252)), &quot;pct1&quot;, f&quot;Volatilità annua del buy &amp; hold, {nome}&quot;)
+        reg(f&quot;{s}_vol_filtro&quot;, float(lordo.std() * np.sqrt(252)), &quot;pct1&quot;, f&quot;Volatilità annua del filtro, {nome}&quot;)
+        reg(f&quot;{s}_dd_bh&quot;, massimo_calo(r_p), &quot;pct0&quot;, f&quot;Massimo calo dal picco del buy &amp; hold, {nome}&quot;)
+        reg(f&quot;{s}_dd_filtro&quot;, massimo_calo(lordo), &quot;pct0&quot;, f&quot;Massimo calo dal picco del filtro, {nome}&quot;)
+        righe_filtro.append({&quot;ticker&quot;: ticker, &quot;cagr_bh&quot;: c_bh, &quot;cagr_filtro&quot;: c_l, &quot;cagr_filtro_netto&quot;: c_n, &quot;scimmie_mediana&quot;: float(np.median(scim))})
+        if principale:
+            pd.DataFrame({&quot;cagr&quot;: scim}).to_csv(config.RISULTATI / &quot;scimmie_sp500.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+            reg(f&quot;{s}_n_fuori&quot;, int(liq_p.sum()), &quot;int&quot;, f&quot;Sedute in liquidità del filtro, {nome}&quot;)
+            reg(f&quot;{s}_anni_filtro&quot;, anni_cal, &quot;num1&quot;, f&quot;Anni del periodo di confronto del filtro, {nome}&quot;)
+            # i giorni più estremi
+            ordine = np.argsort(r)
+            righe = [{&quot;tipo&quot;: &quot;peggiore&quot;, &quot;data&quot;: str(date[i].date()), &quot;rendimento&quot;: r[i]} for i in ordine[:10]]
+            righe += [{&quot;tipo&quot;: &quot;migliore&quot;, &quot;data&quot;: str(date[i].date()), &quot;rendimento&quot;: r[i]} for i in ordine[::-1][:10]]
+            pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;estremi_sp500.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+            i_p, i_m = ordine[0], ordine[-1]
+            reg(f&quot;{s}_peggiore_data&quot;, str(date[i_p].date()), &quot;data_lunga&quot;, f&quot;Data del giorno peggiore di sempre, {nome}&quot;)
+            reg(f&quot;{s}_peggiore_ret&quot;, r[i_p], &quot;pct1&quot;, f&quot;Rendimento del giorno peggiore, {nome}&quot;)
+            reg(f&quot;{s}_migliore_data&quot;, str(date[i_m].date()), &quot;data_lunga&quot;, f&quot;Data del giorno migliore di sempre, {nome}&quot;)
+            reg(f&quot;{s}_migliore_ret&quot;, r[i_m], &quot;pct1&quot;, f&quot;Rendimento del giorno migliore, {nome}&quot;)
+            d_pe = fx.distanza_vicino(np.array([i_p]), mi)[0]
+            j = mi[np.argmin(np.abs(mi - i_p))]
+            reg(f&quot;{s}_peggiore_dist&quot;, int(d_pe), &quot;int&quot;, f&quot;Sedute tra il giorno peggiore e il giorno migliore (tra l&#x27;1% migliori) più vicino, {nome}&quot;)
+            reg(f&quot;{s}_peggiore_vicino_data&quot;, str(date[j].date()), &quot;data_lunga&quot;, f&quot;Data di quel giorno migliore vicino, {nome}&quot;)
+            reg(f&quot;{s}_peggiore_vicino_ret&quot;, r[j], &quot;pct1&quot;, f&quot;Rendimento di quel giorno migliore vicino, {nome}&quot;)
+            reg(f&quot;{s}_soglia_peggiori&quot;, float(np.sort(r)[k - 1]), &quot;pct1&quot;, f&quot;Rendimento sotto il quale una seduta è tra l&#x27;1% peggiore, {nome}&quot;)
+            reg(f&quot;{s}_soglia_migliori&quot;, float(np.sort(r)[-k]), &quot;pct1&quot;, f&quot;Rendimento sopra il quale una seduta è tra l&#x27;1% migliore, {nome}&quot;)
+
+    # ---- correzione di Holm sui test (indici x due versioni) ----
+    holm = fx.holm(p_grezzi)
+    for chiave, v in holm.items():
+        reg(f&quot;{chiave.rsplit(&#x27;_&#x27;, 1)[0]}_p_holm_{chiave.rsplit(&#x27;_&#x27;, 1)[1]}&quot;, v, &quot;pval&quot;, f&quot;p-value corretto per Holm ({chiave})&quot;)
+    reg(&quot;n_test_holm&quot;, len(p_grezzi), &quot;int&quot;, &quot;Test corretti con Holm (indici per due versioni dei dati)&quot;)
+    reg(&quot;n_indici&quot;, len(usati), &quot;int&quot;, &quot;Indici usati&quot;, &quot;config.py, INDICI&quot;)
+    reg(&quot;quota_estremi&quot;, config.QUOTA_ESTREMI, &quot;pct0&quot;, &quot;Quota di sedute definite giorni estremi, per lato&quot;, &quot;config.py, QUOTA_ESTREMI&quot;)
+    reg(&quot;finestra&quot;, config.FINESTRA_VICINO, &quot;int&quot;, &quot;Finestra (sedute) che definisce «vicino»&quot;, &quot;config.py, FINESTRA_VICINO&quot;)
+    reg(&quot;n_top_anni&quot;, config.N_ANNI_TOP, &quot;int&quot;, &quot;Numero di anni con più giorni estremi&quot;, &quot;config.py, N_ANNI_TOP&quot;)
+    reg(&quot;lambda_ewma&quot;, config.LAMBDA_EWMA, &quot;num2&quot;, &quot;Parametro della volatilità EWMA&quot;, &quot;config.py, LAMBDA_EWMA&quot;)
+    reg(&quot;finestra_vol&quot;, config.FINESTRA_VOL, &quot;int&quot;, &quot;Sedute della volatilità usata per i quintili&quot;, &quot;config.py, FINESTRA_VOL&quot;)
+    reg(&quot;finestra_filtro&quot;, config.FINESTRA_FILTRO, &quot;int&quot;, &quot;Sedute della volatilità usata dal filtro&quot;, &quot;config.py, FINESTRA_FILTRO&quot;)
+    reg(&quot;percentile_filtro&quot;, config.PERCENTILE_FILTRO, &quot;pct0&quot;, &quot;Percentile della soglia del filtro&quot;, &quot;config.py, PERCENTILE_FILTRO&quot;)
+    reg(&quot;storia_minima&quot;, config.STORIA_MINIMA, &quot;int&quot;, &quot;Sedute di storia prima che il filtro possa scattare&quot;, &quot;config.py, STORIA_MINIMA&quot;)
+    reg(&quot;costo_cambio&quot;, config.COSTO_CAMBIO, &quot;pct1&quot;, &quot;Costo per passaggio tra mercato e liquidità&quot;, &quot;config.py, COSTO_CAMBIO&quot;)
+    reg(&quot;n_rimescolate&quot;, config.N_RIMESCOLATE, &quot;int&quot;, &quot;Storie rimescolate per indice&quot;, &quot;config.py, N_RIMESCOLATE&quot;)
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Scimmie del filtro&quot;, &quot;config.py, N_SCIMMIE&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello delle fasce del caso&quot;, &quot;config.py, LIVELLO_CONFIDENZA&quot;)
+    S = config.SOGLIE
+    reg(&quot;s_ip1_alfa&quot;, S[&quot;ip1_alfa&quot;], &quot;num2&quot;, &quot;Soglia di significatività dopo Holm&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip2_rapporto&quot;, S[&quot;ip2_rapporto&quot;], &quot;int&quot;, &quot;Soglia della seconda ipotesi: rapporto tra quota vera e caso&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip3_quota&quot;, S[&quot;ip3_quota&quot;], &quot;pct0&quot;, &quot;Soglia della terza ipotesi: quota di giorni estremi nel quinto più volatile&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip4_dimezza&quot;, S[&quot;ip4_dimezza&quot;], &quot;pct0&quot;, &quot;Soglia della quarta ipotesi: quota dell&#x27;eccesso che sparisce&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip5_evitati&quot;, S[&quot;ip5_evitati&quot;], &quot;pct0&quot;, &quot;Soglia della quinta ipotesi: quota di giorni evitati&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip5_rapp_lo&quot;, S[&quot;ip5_rapp_lo&quot;], &quot;num1&quot;, &quot;Estremo basso del rapporto della quinta ipotesi&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip5_rapp_hi&quot;, S[&quot;ip5_rapp_hi&quot;], &quot;num1&quot;, &quot;Estremo alto del rapporto della quinta ipotesi&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip6_perc&quot;, S[&quot;ip6_perc&quot;], &quot;pct0&quot;, &quot;Soglia della sesta ipotesi: quota di scimmie battute&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip6_cagr&quot;, S[&quot;ip6_cagr_pp&quot;], &quot;int&quot;, &quot;Soglia della sesta ipotesi: vantaggio massimo sul buy &amp; hold (punti)&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip7_top&quot;, S[&quot;ip7_top&quot;], &quot;pct0&quot;, &quot;Soglia della settima ipotesi: quota di giorni estremi nei cinque anni peggiori&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;data_scarico&quot;, META[&quot;scaricato_il_utc&quot;][:10], &quot;data&quot;, &quot;Data del download dei dati&quot;, &quot;dati/metadati.json&quot;)
+
+    pd.DataFrame(righe_quint).to_csv(config.RISULTATI / &quot;quintili.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    pd.DataFrame(righe_anni).to_csv(config.RISULTATI / &quot;anni_estremi.csv&quot;, index=False)
+    pd.DataFrame(righe_filtro).to_csv(config.RISULTATI / &quot;filtro.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    (config.RISULTATI / &quot;indici_usati.json&quot;).write_text(json.dumps(usati, ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri su {len(usati)} indici&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i cinque grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_vicinanza_indici.png   quota di giorni peggiori con un giorno migliore entro 10 sedute: vera contro caso, per indice
+  fig2_curva_distanza.png     S&amp;P 500: quota entro d sedute, vera contro storie rimescolate
+  fig3_quinti_volatilita.png  S&amp;P 500: dove cadono i giorni estremi rispetto alla volatilità di ieri
+  fig4_anni_estremi.png       S&amp;P 500: giorni estremi per anno
+  fig5_filtro_scimmie.png     S&amp;P 500: rendimento annuo del filtro, del buy &amp; hold e delle scimmie
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    ind = json.loads((R / &quot;indici_usati.json&quot;).read_text(encoding=&quot;utf-8&quot;))
+    v = lambda k: V[k][&quot;valore&quot;]
+    nomi = {i[&quot;slug&quot;]: i[&quot;nome&quot;].split(&quot; (&quot;)[0] for i in ind}
+    slugs = [i[&quot;slug&quot;] for i in ind]
+    tk_p = config.INDICE_PRINCIPALE
+    sp = [i[&quot;slug&quot;] for i in ind if i[&quot;ticker&quot;] == tk_p][0]
+
+    # --- Figura 1 -----------------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(8.4, 4.8))
+    x = np.arange(len(slugs))
+    larg = 0.36
+    for j, (chiave, nulla, col, lab) in enumerate(((&quot;quota_pm&quot;, &quot;null_quota_pm&quot;, BLU, &quot;Storia vera&quot;), (&quot;z_quota_pm&quot;, &quot;z_null_quota_pm&quot;, &quot;#7fa6d1&quot;, &quot;Storia vera, divisa per la volatilità di ieri&quot;))):
+        pos = x + (j - 0.5) * larg
+        q = [v(f&quot;{s}_{chiave}&quot;) * 100 for s in slugs]
+        ax.bar(pos, q, larg * 0.92, color=col, label=lab)
+        for xi, s, qq in zip(pos, slugs, q):
+            nm = v(f&quot;{s}_{nulla}&quot;) * 100
+            ax.plot([xi - larg * 0.46, xi + larg * 0.46], [nm, nm], color=ARANCIO, lw=2, ls=&quot;--&quot;)
+            ax.text(xi, 1.5, f&quot;{qq:.0f}%&quot;, ha=&quot;center&quot;, fontsize=11, color=&quot;white&quot;, fontweight=&quot;bold&quot;)
+    ax.plot([], [], color=ARANCIO, lw=2, ls=&quot;--&quot;, label=&quot;Caso (media delle storie rimescolate)&quot;)
+    ax.set_xticks(x, [nomi[s] for s in slugs])
+    ax.set_ylabel(&quot;Giorni peggiori con un migliore entro 10 sedute (%)&quot;)
+    ax.legend(loc=&quot;upper center&quot;, bbox_to_anchor=(0.5, -0.1), ncol=1, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig1_vicinanza_indici.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 2 -----------------------------------------------------------------------------------------------
+    c = pd.read_csv(R / &quot;curva_distanza.csv&quot;)
+    fig, ax = plt.subplots(figsize=(8.4, 4.6))
+    ax.fill_between(c.d, c.caso_lo * 100, c.caso_hi * 100, color=ARANCIO, alpha=0.25, lw=0, label=&quot;Caso: fascia 95%&quot;)
+    ax.plot(c.d, c.caso_media * 100, color=ARANCIO, ls=&quot;--&quot;, lw=2, label=&quot;Caso: media&quot;)
+    ax.plot(c.d, c.vera * 100, color=BLU, lw=2.5, label=&quot;Storia vera&quot;)
+    ax.axvline(config.FINESTRA_VICINO, color=GRIGIO, lw=1)
+    ax.set_xscale(&quot;log&quot;)
+    ax.set_xlabel(&quot;Distanza in sedute (scala logaritmica)&quot;)
+    ax.set_ylabel(&quot;Giorni peggiori con un migliore a distanza ≤ d (%)&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig2_curva_distanza.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 3 -----------------------------------------------------------------------------------------------
+    qn = pd.read_csv(R / &quot;quintili.csv&quot;)
+    qn = qn[qn.ticker == tk_p]
+    fig, ax = plt.subplots(figsize=(8.4, 4.6))
+    xs = np.arange(1, 6)
+    ax.bar(xs - larg / 2, qn.peggiori * 100, larg * 0.92, color=ARANCIO, hatch=&quot;//&quot;, edgecolor=&quot;white&quot;, label=&quot;Giorni peggiori&quot;)
+    ax.bar(xs + larg / 2, qn.migliori * 100, larg * 0.92, color=BLU, label=&quot;Giorni migliori&quot;)
+    ax.axhline(20, color=GRIGIO, lw=1.5, ls=&quot;--&quot;)
+    ax.text(0.55, 21, &quot;caso: 20%&quot;, color=GRIGIO, fontsize=10)
+    ax.set_xticks(xs, [&quot;1° (calmo)&quot;, &quot;2°&quot;, &quot;3°&quot;, &quot;4°&quot;, &quot;5° (agitato)&quot;])
+    ax.set_xlabel(&quot;Quinto delle sedute, ordinate per volatilità di ieri&quot;)
+    ax.set_ylabel(&quot;Giorni estremi (%)&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig3_quinti_volatilita.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 4 -----------------------------------------------------------------------------------------------
+    an = pd.read_csv(R / &quot;anni_estremi.csv&quot;)
+    an = an[an.ticker == tk_p]
+    fig, ax = plt.subplots(figsize=(9.2, 4.4))
+    ax.bar(an.anno, an.peggiori, color=ARANCIO, hatch=&quot;//&quot;, edgecolor=&quot;white&quot;, label=&quot;Giorni peggiori&quot;)
+    ax.bar(an.anno, an.migliori, bottom=an.peggiori, color=BLU, label=&quot;Giorni migliori&quot;)
+    ax.set_ylabel(&quot;Giorni estremi nell&#x27;anno&quot;)
+    ax.legend(loc=&quot;upper right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig4_anni_estremi.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 5 -----------------------------------------------------------------------------------------------
+    sc = pd.read_csv(R / &quot;scimmie_sp500.csv&quot;)[&quot;cagr&quot;] * 100
+    fig, ax = plt.subplots(figsize=(8.4, 4.4))
+    ax.hist(sc, bins=40, color=GRIGIO, edgecolor=&quot;white&quot;, label=&quot;Scimmie (stesse sedute in liquidità, a caso)&quot;)
+    for val, col, lab, ls in ((v(f&quot;{sp}_cagr_bh&quot;) * 100, &quot;black&quot;, &quot;Buy &amp; hold&quot;, &quot;-&quot;), (v(f&quot;{sp}_cagr_filtro&quot;) * 100, BLU, &quot;Filtro di volatilità&quot;, &quot;--&quot;)):
+        ax.axvline(val, color=col, lw=2.5, ls=ls, label=lab)
+    ax.set_xlabel(&quot;Rendimento annuo composto (%), indice di prezzo&quot;)
+    ax.set_ylabel(&quot;Scimmie&quot;)
+    ax.legend(loc=&quot;upper right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig5_filtro_scimmie.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate in&quot;, config.FIGURE)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 525 - &quot;I giorni migliori e peggiori sono vicini: perché?&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Si chiamano «giorni estremi» l&#x27;1% di sedute con il rendimento più alto (i giorni migliori) e l&#x27;1% con il rendimento
+più basso (i giorni peggiori) di ciascun indice. Si misura quanto sono vicini nel tempo, si confronta con il caso
+(le stesse sedute con i rendimenti rimescolati), e si cerca la spiegazione nella volatilità di ieri.
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati: indici di prezzo (ticker Yahoo Finance, nome, valuta) -----------------------------------------------
+INDICI = [
+    (&quot;^GSPC&quot;, &quot;S&amp;P 500 (Stati Uniti)&quot;, &quot;USD&quot;),
+    (&quot;^GDAXI&quot;, &quot;DAX (Germania)&quot;, &quot;EUR&quot;),
+    (&quot;^FTSE&quot;, &quot;FTSE 100 (Regno Unito)&quot;, &quot;GBP&quot;),
+    (&quot;^N225&quot;, &quot;Nikkei 225 (Giappone)&quot;, &quot;JPY&quot;),
+]
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere di quattro indici azionari (S&amp;P 500, DAX, FTSE 100, Nikkei 225)&quot;
+NOMI_ESENTI = (&quot;S&amp;P&quot;, &quot;DAX&quot;, &quot;FTSE 100&quot;, &quot;Nikkei 225&quot;, &quot;FTSE&quot;, &quot;525&quot;, &quot;Nikkei&quot;, &quot;2009&quot;, &quot;1982&quot;, &quot;1963&quot;, &quot;987-1008&quot;, &quot;50(4)&quot;, &quot;80%&quot;, &quot;294632&quot;, &quot;1928&quot;)
+INDICE_PRINCIPALE = &quot;^GSPC&quot;
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+# --- Definizioni ----------------------------------------------------------------------------------------------
+QUOTA_ESTREMI = 0.01          # l&#x27;1% delle sedute con rendimento più alto e l&#x27;1% con quello più basso
+FINESTRA_VICINO = 10          # &quot;vicino&quot; = entro 10 sedute (prima o dopo)
+LAMBDA_EWMA = 0.94            # volatilità di ieri: media mobile esponenziale dei quadrati (RiskMetrics), solo dati fino a ieri
+RODAGGIO = 60                 # sedute iniziali scartate dalla serie standardizzata
+FINESTRA_VOL = 60             # volatilità &quot;di ieri&quot; per la classificazione in quintili: deviazione standard delle ultime 60 sedute fino a ieri
+N_ANNI_TOP = 5                # i cinque anni con più giorni estremi
+
+# --- Il caso ------------------------------------------------------------------------------------------------------
+SEME = 20261026
+N_RIMESCOLATE = 2000          # storie finte: gli stessi rendimenti giornalieri in ordine casuale
+N_SCIMMIE = 1000              # scimmie che stanno fuori dal mercato per lo stesso numero di sedute, scelte a caso
+LIVELLO_CONFIDENZA = 0.95
+
+# --- Il filtro (strategia di prova) --------------------------------------------------------------------------------
+FINESTRA_FILTRO = 20          # volatilità = deviazione standard degli ultimi 20 rendimenti fino a ieri
+PERCENTILE_FILTRO = 0.80      # liquidità se la volatilità supera l&#x27;80° percentile della propria storia fino a ieri (storia espandente)
+STORIA_MINIMA = 500           # sedute di storia prima che il filtro possa scattare
+COSTO_CAMBIO = 0.001          # 0,1% per ogni passaggio tra mercato e liquidità (scenario con costi)
+LIQUIDITA_RENDE = 0.0         # la liquidità non rende
+
+SOGLIE = {&quot;ip1_alfa&quot;: 0.05, &quot;ip2_rapporto&quot;: 2.0, &quot;ip3_quota&quot;: 0.40, &quot;ip4_dimezza&quot;: 0.5,
+          &quot;ip5_evitati&quot;: 0.50, &quot;ip5_rapp_lo&quot;: 0.8, &quot;ip5_rapp_hi&quot;: 1.5, &quot;ip6_perc&quot;: 0.95, &quot;ip6_cagr_pp&quot;: 1.0,
+          &quot;ip7_top&quot;: 0.35}
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) In ciascuno dei quattro indici, la distanza mediana tra un giorno peggiore e il giorno migliore più vicino è più &quot;
+    &quot;corta di quella delle storie rimescolate: il caso viene rifiutato (p corretto per Holm sotto 0,05). &quot;
+    &quot;2) Nell&#x27;S&amp;P 500, la quota di giorni peggiori con almeno un giorno migliore entro 10 sedute è almeno il doppio di quella &quot;
+    &quot;delle storie rimescolate. &quot;
+    &quot;3) Nell&#x27;S&amp;P 500, almeno il 40% dei giorni estremi (migliori e peggiori) cade nel quinto di sedute con la volatilità di &quot;
+    &quot;ieri più alta (il caso ne darebbe il 20%): i giorni estremi sono vicini perché la volatilità resta alta. &quot;
+    &quot;4) Se si dividono i rendimenti per la volatilità di ieri (rendimenti standardizzati), l&#x27;eccesso di vicinanza rispetto &quot;
+    &quot;al caso (rapporto meno uno, nell&#x27;S&amp;P 500) si dimezza almeno: la volatilità spiega più di metà del fenomeno. &quot;
+    &quot;5) Un filtro «fuori dal mercato quando la volatilità è nel quinto più alto della sua storia» evita almeno la metà dei &quot;
+    &quot;giorni peggiori, ma anche almeno la metà dei giorni migliori: il rapporto tra le due quote evitate sta tra 0,8 e 1,5 &quot;
+    &quot;(i giorni migliori abitano nello stesso quartiere dei peggiori). &quot;
+    &quot;6) Nell&#x27;S&amp;P 500 il filtro batte almeno il 95% delle scimmie (stesso numero di sedute in liquidità, scelte a caso), &quot;
+    &quot;ma il suo rendimento annuo composto non supera il buy &amp; hold di più di un punto percentuale, nemmeno senza costi. &quot;
+    &quot;7) Nell&#x27;S&amp;P 500 almeno il 35% dei giorni estremi sta nei cinque anni con più giorni estremi (il caso ne darebbe una quota molto più bassa).&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>giorni estremi, distanze, volatilità di ieri, filtro, scimmie, Holm</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;esperimento: giorni estremi, distanze, volatilità di ieri, rimescolamento, filtro, scimmie.
+
+Convenzioni: r[t] è il rendimento semplice della seduta t (da chiusura t-1 a chiusura t). Ogni stima di volatilità
+&quot;di ieri&quot; per la seduta t usa solo rendimenti fino a t-1: nessun look-ahead.
+&quot;&quot;&quot;
+import bisect
+
+import numpy as np
+import pandas as pd
+
+
+def rendimenti(chiusure: pd.Series) -&gt; pd.Series:
+    s = chiusure.sort_index()
+    return s.pct_change().dropna()
+
+
+def posizioni_estreme(r: np.ndarray, quota: float) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Posizioni (ordinate) dei k giorni peggiori e dei k giorni migliori, con k = quota * numero di sedute.&quot;&quot;&quot;
+    k = max(1, int(round(quota * len(r))))
+    peggiori = np.sort(np.argpartition(r, k - 1)[:k])
+    migliori = np.sort(np.argpartition(-r, k - 1)[:k])
+    return peggiori, migliori
+
+
+def distanza_vicino(a: np.ndarray, b: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Per ogni posizione di a, distanza in sedute dalla posizione più vicina di b (entrambi ordinati).&quot;&quot;&quot;
+    i = np.searchsorted(b, a)
+    sx = np.where(i &gt; 0, a - b[np.maximum(i - 1, 0)], np.iinfo(np.int64).max // 4)
+    dx = np.where(i &lt; len(b), b[np.minimum(i, len(b) - 1)] - a, np.iinfo(np.int64).max // 4)
+    return np.minimum(sx, dx)
+
+
+def statistiche_vicinanza(r: np.ndarray, quota: float, finestra: int) -&gt; dict:
+    pe, mi = posizioni_estreme(r, quota)
+    d_pm = distanza_vicino(pe, mi)
+    d_mp = distanza_vicino(mi, pe)
+    return {&quot;mediana_peggiori_migliori&quot;: float(np.median(d_pm)),
+            &quot;quota_peggiori_con_migliore&quot;: float(np.mean(d_pm &lt;= finestra)),
+            &quot;quota_migliori_con_peggiore&quot;: float(np.mean(d_mp &lt;= finestra)),
+            &quot;n_estremi&quot;: int(len(pe))}
+
+
+def quota_anni_top(r: np.ndarray, anni: np.ndarray, quota: float, n_top: int) -&gt; float:
+    &quot;&quot;&quot;Quota dei giorni estremi (migliori e peggiori) che cade nei n_top anni con più giorni estremi.&quot;&quot;&quot;
+    pe, mi = posizioni_estreme(r, quota)
+    tutti = np.concatenate([pe, mi])
+    conti = np.bincount(anni[tutti] - anni.min())
+    return float(np.sort(conti)[::-1][:n_top].sum() / conti.sum())
+
+
+def vol_ewma_ieri(r: np.ndarray, lam: float, rodaggio: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;sigma[t] = volatilità EWMA stimata con i rendimenti fino a t-1. Le prime `rodaggio` sedute sono usate per innescarla.&quot;&quot;&quot;
+    s2 = np.empty(len(r))
+    s2[0] = np.var(r[:rodaggio])
+    for t in range(1, len(r)):
+        s2[t] = lam * s2[t - 1] + (1 - lam) * r[t - 1] ** 2
+    return np.sqrt(s2)
+
+
+def vol_mobile_ieri(r: np.ndarray, finestra: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Deviazione standard degli ultimi `finestra` rendimenti fino a t-1 (NaN se non ci sono abbastanza sedute).&quot;&quot;&quot;
+    return pd.Series(r).rolling(finestra).std().shift(1).to_numpy()
+
+
+def quote_per_quintile(vol: np.ndarray, posizioni: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Quota delle posizioni date che cade in ciascun quinto (0 = volatilità più bassa .. 4 = più alta) delle sedute con vol valida.&quot;&quot;&quot;
+    valide = ~np.isnan(vol)
+    soglie = np.quantile(vol[valide], [0.2, 0.4, 0.6, 0.8])
+    p = posizioni[valide[posizioni]]
+    q = np.searchsorted(soglie, vol[p], side=&quot;right&quot;)
+    return np.bincount(q, minlength=5) / len(p)
+
+
+def segnale_filtro(r: np.ndarray, finestra: int, percentile: float, storia_minima: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;True = in liquidità alla seduta t. La soglia è il percentile della volatilità osservata fino a t-1 (storia espandente).&quot;&quot;&quot;
+    vol = vol_mobile_ieri(r, finestra)
+    liq = np.zeros(len(r), dtype=bool)
+    storia: list[float] = []
+    for t in range(len(r)):
+        if t &gt; finestra and not np.isnan(vol[t - 1]):
+            bisect.insort(storia, vol[t - 1])
+        if t &gt;= storia_minima and not np.isnan(vol[t]) and len(storia) &gt; 20:
+            soglia = storia[int(np.floor(percentile * (len(storia) - 1)))]
+            liq[t] = vol[t] &gt; soglia
+    return liq
+
+
+def rendimenti_filtro(r: np.ndarray, liq: np.ndarray, costo: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimento giornaliero della strategia: 0 in liquidità, r altrimenti; il costo si paga a ogni cambio di stato.&quot;&quot;&quot;
+    out = np.where(liq, 0.0, r)
+    cambi = np.r_[False, liq[1:] != liq[:-1]]
+    return out - costo * cambi
+
+
+def cagr(r: np.ndarray, anni: float) -&gt; float:
+    return float(np.exp(np.sum(np.log1p(r)) / anni) - 1.0)
+
+
+def cagr_scimmie(r: np.ndarray, n_fuori: int, anni: float, n: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Scimmie che stanno in liquidità per n_fuori sedute scelte a caso (stesso periodo): rendimento annuo composto di ciascuna.&quot;&quot;&quot;
+    lr = np.log1p(r)
+    tot = lr.sum()
+    out = np.empty(n)
+    for k in range(n):
+        fuori = rng.choice(len(r), n_fuori, replace=False)
+        out[k] = np.exp((tot - lr[fuori].sum()) / anni) - 1.0
+    return out
+
+
+def holm(p: dict) -&gt; dict:
+    ordine = sorted(p, key=p.get)
+    m = len(ordine)
+    out, massimo = {}, 0.0
+    for k, nome in enumerate(ordine):
+        massimo = max(massimo, min(1.0, (m - k) * p[nome]))
+        out[nome] = massimo
+    return out
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+# 1. Estremi
+r = np.zeros(200)
+r[10], r[50] = -0.10, 0.08
+r[11], r[120] = -0.09, 0.07
+pe, mi = fx.posizioni_estreme(r, 0.01)
+controlla(&quot;k = 2 su 200 sedute&quot;, len(pe) == 2 and len(mi) == 2)
+controlla(&quot;peggiori = {10, 11}&quot;, list(pe) == [10, 11])
+controlla(&quot;migliori = {50, 120}&quot;, list(mi) == [50, 120])
+
+# 2. Distanza dal più vicino
+d = fx.distanza_vicino(np.array([10, 11]), np.array([50, 120]))
+controlla(&quot;distanze dal più vicino = 40 e 39&quot;, list(d) == [40, 39])
+d2 = fx.distanza_vicino(np.array([5, 100]), np.array([0, 98, 200]))
+controlla(&quot;distanze da entrambi i lati&quot;, list(d2) == [5, 2])
+controlla(&quot;b prima di a e dopo&quot;, list(fx.distanza_vicino(np.array([30]), np.array([10, 33]))) == [3])
+
+# 3. Statistiche di vicinanza
+st = fx.statistiche_vicinanza(r, 0.01, 10)
+controlla(&quot;mediana 39,5&quot;, np.isclose(st[&quot;mediana_peggiori_migliori&quot;], 39.5))
+controlla(&quot;nessun giorno peggiore ha un migliore entro 10&quot;, st[&quot;quota_peggiori_con_migliore&quot;] == 0.0)
+r2 = r.copy(); r2[12] = 0.09
+st2 = fx.statistiche_vicinanza(r2, 0.01, 10)
+controlla(&quot;un migliore a 1-2 sedute dai peggiori: quota 1&quot;, st2[&quot;quota_peggiori_con_migliore&quot;] == 1.0)
+
+# 4. Anni
+anni = np.repeat(np.arange(2000, 2010), 20)
+rr = np.zeros(200); rr[[0, 1, 2, 3]] = [-0.1, -0.09, 0.1, 0.09]
+controlla(&quot;tutti gli estremi in un anno: quota 1&quot;, np.isclose(fx.quota_anni_top(rr, anni, 0.01, 1), 1.0))
+
+# 5. Volatilità di ieri: nessun look-ahead
+x = np.zeros(100); x[50] = 0.5
+v = fx.vol_ewma_ieri(x, 0.94, 10)
+controlla(&quot;EWMA: la seduta 50 non conosce il proprio shock&quot;, np.isclose(v[50], v[49]) and v[51] &gt; v[50])
+m = fx.vol_mobile_ieri(x, 20)
+controlla(&quot;vol mobile: il giorno 50 è escluso, il 51 lo include&quot;, np.isclose(m[50], 0.0) and m[51] &gt; 0)
+controlla(&quot;vol mobile: NaN all&#x27;inizio&quot;, np.isnan(m[10]))
+
+# 6. Quintili
+vol = np.arange(1, 101, dtype=float)
+q = fx.quote_per_quintile(vol, np.array([0, 99, 99, 50]))
+controlla(&quot;quintili: 1 nel più basso, 2 nel più alto, 1 al centro&quot;, np.allclose(q, [0.25, 0, 0.25, 0, 0.5]))
+controlla(&quot;le quote dei quintili sommano a 1&quot;, np.isclose(q.sum(), 1.0))
+
+# 7. Filtro: mercato calmo, un periodo agitato -&gt; liquidità solo nel periodo agitato, nessun look-ahead
+rng = np.random.default_rng(3)
+y = rng.normal(0, 0.005, 1500); y[1000:1030] = rng.normal(0, 0.05, 30)
+liq = fx.segnale_filtro(y, 20, 0.8, 500)
+controlla(&quot;filtro: mai in liquidità prima della storia minima&quot;, not liq[:500].any())
+controlla(&quot;filtro: in liquidità durante il periodo agitato (dopo i primi giorni)&quot;, liq[1005:1030].mean() &gt; 0.8)
+y2 = y.copy(); y2[1200:] = 99.0
+controlla(&quot;filtro: cambiare il futuro non cambia il passato&quot;, np.array_equal(fx.segnale_filtro(y2, 20, 0.8, 500)[:1200], liq[:1200]))
+
+# 8. Rendimenti del filtro e costi
+liq3 = np.array([False, False, True, True, False])
+rf = fx.rendimenti_filtro(np.full(5, 0.01), liq3, 0.001)
+controlla(&quot;liquidità vale zero; costo a ogni cambio (2 cambi)&quot;, np.allclose(rf, [0.01, 0.01, -0.001, 0.0, 0.01 - 0.001]))
+
+# 9. CAGR e scimmie
+controlla(&quot;CAGR: +10% in un anno&quot;, np.isclose(fx.cagr(np.array([0.10]), 1.0), 0.10))
+sc = fx.cagr_scimmie(np.full(100, 0.001), 0, 1.0, 3, rng)
+controlla(&quot;scimmie senza sedute fuori = buy &amp; hold&quot;, np.allclose(sc, fx.cagr(np.full(100, 0.001), 1.0)))
+sc2 = fx.cagr_scimmie(np.full(100, 0.001), 100, 1.0, 3, rng)
+controlla(&quot;scimmie sempre fuori = 0&quot;, np.allclose(sc2, 0.0))
+
+# 10. Rendimenti
+s = pd.Series([100.0, 110.0, 99.0], index=pd.to_datetime([&quot;2020-01-01&quot;, &quot;2020-01-02&quot;, &quot;2020-01-03&quot;]))
+controlla(&quot;rendimenti semplici&quot;, np.allclose(fx.rendimenti(s).values, [0.10, -0.10]))
+
+# 11. Rimescolamento di dati i.i.d.: nessuna vicinanza oltre il caso
+iid = np.random.default_rng(7).standard_t(4, 6000) * 0.01
+a = fx.statistiche_vicinanza(iid, 0.01, 10)[&quot;quota_peggiori_con_migliore&quot;]
+controlla(&quot;dati i.i.d.: quota di vicinanza vicina a quella attesa dal caso&quot;, 0.05 &lt; a &lt; 0.35)
+
+# 12. Holm
+h = fx.holm({&quot;a&quot;: 0.01, &quot;b&quot;: 0.02, &quot;c&quot;: 0.5})
+controlla(&quot;Holm: valori attesi&quot;, np.isclose(h[&quot;a&quot;], 0.03) and np.isclose(h[&quot;b&quot;], 0.04) and np.isclose(h[&quot;c&quot;], 0.5))
+
+print(f&quot;\n{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
