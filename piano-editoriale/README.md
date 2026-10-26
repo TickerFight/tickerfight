@@ -2,10 +2,12 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-24 pubblicati, 2 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+26 pubblicati, 0 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
+| [I giorni migliori e peggiori della Borsa sono vicini: perché?](https://tickerfight.github.io/tickerfight/articoli/i-giorni-migliori-e-peggiori-della-borsa-sono-vicini-perche/) | Pubblicato | 26/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/i-giorni-migliori-e-peggiori-della.html) |
+| [I buffer ETF limitano davvero le perdite? Cosa si protegge e cosa si cede in 12 mesi](https://tickerfight.github.io/tickerfight/articoli/i-buffer-etf-limitano-davvero-le-perdite-cosa-si-protegge-e-cosa-si-cede-in-12-mesi/) | Pubblicato | 26/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/i-buffer-etf-limitano-davvero-le.html) |
 | [«Vendi a maggio e vai via»: otto indici europei, la fortuna e il buy & hold](https://tickerfight.github.io/tickerfight/articoli/vendi-a-maggio-e-vai-via-otto-indici-europei-la-fortuna-e-il-buy-hold/) | Pubblicato | 25/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/vendi-maggio-e-vai-via-otto-indici.html) |
 | [Volatility targeting: ridurre le azioni quando il mercato trema migliora il portafoglio?](https://tickerfight.github.io/tickerfight/articoli/volatility-targeting-ridurre-le-azioni-quando-il-mercato-trema-migliora-il-portafoglio/) | Pubblicato | 25/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/volatility-targeting-ridurre-le-azioni.html) |
 | [USA, Europa o mercati emergenti: chi ha vinto davvero negli ultimi vent'anni, e il primato è stabile?](https://tickerfight.github.io/tickerfight/articoli/usa-europa-o-mercati-emergenti-chi-ha-vinto-davvero-negli-ultimi-vent-anni-e-il-primato-e-stabile/) | Pubblicato | 25/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/usa-europa-o-mercati-emergenti-chi-ha.html) |
@@ -30,5 +32,3 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [Il cono della fortuna: la regola 50/200 sull'S&P 500 contro diecimila scimmie](https://tickerfight.github.io/tickerfight/articoli/il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/il-cono-della-fortuna-la-regola-50200.html) |
 | [500 euro su Apple con le medie mobili: cinque anni di operazioni, commissioni e tasse](https://tickerfight.github.io/tickerfight/articoli/500-euro-su-apple-con-le-medie-mobili-cinque-anni-di-operazioni-commissioni-e-tasse/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/500-euro-su-apple-con-le-medie-mobili.html) |
 | [50 titoli dell'S&P 500, medie mobili contro buy & hold: la classifica](https://tickerfight.github.io/tickerfight/articoli/50-titoli-dell-sp-500-medie-mobili-contro-buy-hold-la-classifica/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/50-titoli-dells-500-medie-mobili-contro.html) |
-| [I buffer ETF limitano davvero le perdite? Cosa si protegge e cosa si cede in 12 mesi](https://tickerfight.github.io/tickerfight/articoli/i-buffer-etf-limitano-davvero-le-perdite-cosa-si-protegge-e-cosa-si-cede-in-12-mesi/) | In revisione | — | — |
-| [I giorni migliori e peggiori della Borsa sono vicini: perché?](https://tickerfight.github.io/tickerfight/articoli/i-giorni-migliori-e-peggiori-della-borsa-sono-vicini-perche/) | In revisione | — | — |

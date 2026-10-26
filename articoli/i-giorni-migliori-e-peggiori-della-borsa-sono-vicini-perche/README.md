@@ -2,7 +2,7 @@
 
 **Domanda:** i giorni di Borsa migliori e peggiori (l'1% più alto e l'1% più basso dei rendimenti giornalieri) cadono vicini nel tempo? Quanto più del caso? E la spiegazione sta nella volatilità di ieri?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [I giorni migliori e peggiori della Borsa sono vicini: perché?](https://ticker-fight.blogspot.com/2026/10/i-giorni-migliori-e-peggiori-della.html).
 
 ## Il disegno
 

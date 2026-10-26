@@ -2,7 +2,7 @@
 
 **Domanda:** i buffer ETF (serie Innovator U.S. Equity Buffer) riducono davvero le perdite dell'S&P 500 su 12 mesi? Quanto rendimento cedono nei rialzi? E un portafoglio 80% azioni e 20% liquidità farebbe lo stesso?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [I buffer ETF limitano davvero le perdite? Cosa si protegge e cosa si cede in 12 mesi](https://ticker-fight.blogspot.com/2026/10/i-buffer-etf-limitano-davvero-le.html).
 
 ## Il disegno
 
