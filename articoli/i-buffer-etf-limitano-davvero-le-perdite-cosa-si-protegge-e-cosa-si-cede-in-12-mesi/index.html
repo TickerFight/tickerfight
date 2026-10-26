@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I buffer ETF limitano davvero le perdite? Cosa si protegge e cosa si cede in 12 mesi · il codice · TickerFight</title>
+<meta name="description" content="i buffer ETF (serie Innovator U.S. Equity Buffer) riducono davvero le perdite dell&#x27;S&amp;P 500 su 12 mesi? Quanto rendimento cedono nei rialzi? E un portafoglio 80% azioni e 20% liquidità farebbe lo stesso?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>I buffer ETF limitano davvero le perdite? Cosa si protegge e cosa si cede in 12 mesi</h1>
+<p class="domanda">I buffer ETF (serie Innovator U.S. Equity Buffer) riducono davvero le perdite dell&#x27;S&amp;P 500 su 12 mesi? Quanto rendimento cedono nei rialzi? E un portafoglio 80% azioni e 20% liquidità farebbe lo stesso?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="i-buffer-etf-limitano-davvero-le-perdite-cosa-si-protegge-e-cosa-si-cede-in-12-mesi.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Dati:</strong> prezzi giornalieri aggiustati da Yahoo Finance di PJAN, PFEB, …, PDEC (un fondo per mese di partenza), di SPY (S&amp;P 500 total return) e <code>^IRX</code> (tasso a 3 mesi).</li>
+<li><strong>Periodo:</strong> dal primo giorno di borsa del mese di partenza del fondo al primo giorno di borsa dello stesso mese dell'anno dopo; solo periodi completi. Il confronto vale per chi compra al primo giorno e tiene fino alla fine.</li>
+<li><strong>Confronti:</strong> S&amp;P 500 total return nelle stesse date; portafoglio 80% SPY e 20% liquidità, ribilanciato all'inizio.</li>
+<li><strong>Limiti noti:</strong> pochi anni indipendenti (i fondi di mesi diversi si sovrappongono), nessuna tassa, un giorno di scarto possibile sul punto di partenza.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>i-buffer-etf-limitano-davvero-le-perdite-cosa-si-protegge-e-cosa-si-cede-in-12-mesi/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica i dodici fondi, SPY e il tasso a 3 mesi
+    ├── 02_backtest_e_test.py  i test delle cinque ipotesi e il registro dei numeri
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            finestre di 12 mesi per fondo e portafoglio di confronto
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd i-buffer-etf-limitano-davvero-le-perdite-cosa-si-protegge-e-cosa-si-cede-in-12-mesi
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance i dodici buffer ETF, SPY (S&amp;P 500 total return) e il tasso a 3 mesi (^IRX).
+
+Salva:
+  dati/serie_giornaliere.csv   colonne Date, un prezzo di chiusura aggiustato per fondo, SPY, IRX (% annuo)
+  dati/serie_metadati.json     fonte, data del download, versione di yfinance, righe per serie, impronta SHA-256
+Gli script successivi leggono SOLO il file salvato. I fondi senza dati su Yahoo Finance sono segnalati e saltati.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str, aggiustato: bool) -&gt; pd.Series:
+    try:
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=aggiustato)
+    except Exception as e:  # noqa: BLE001
+        print(f&quot;{ticker}: errore {e}&quot;)
+        return pd.Series(dtype=float)
+    if grezzo.empty:
+        print(f&quot;{ticker}: nessun dato&quot;)
+        return pd.Series(dtype=float)
+    s = grezzo[&quot;Close&quot;].copy()
+    s.index = pd.to_datetime(s.index).tz_localize(None).normalize()
+    s = s[~s.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna()
+    print(f&quot;{ticker}: {len(s)} righe, da {s.index[0].date()} a {s.index[-1].date()}&quot;)
+    return s
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    spy = scarica(config.TICKER_INDICE, True)
+    irx = scarica(config.TICKER_3M, False)
+    if len(spy) &lt; 1000 or len(irx) &lt; 1000:
+        raise SystemExit(&quot;SPY o ^IRX senza storia sufficiente su Yahoo Finance.&quot;)
+    if not (-1 &lt; irx.median() &lt; 25):
+        raise SystemExit(f&quot;IRX: scala dei tassi inattesa (mediana {irx.median():.2f}); attesi valori in % annuo.&quot;)
+    colonne = {&quot;SPY&quot;: spy}
+    for tk in config.FONDI:
+        s = scarica(tk, True)
+        if len(s) &gt;= 250:
+            colonne[tk] = s
+    if len(colonne) - 1 &lt; 6:
+        raise SystemExit(f&quot;Solo {len(colonne) - 1} fondi con almeno un anno di storia: troppo pochi per l&#x27;articolo.&quot;)
+    colonne[&quot;IRX&quot;] = irx
+    df = pd.concat(colonne, axis=1).sort_index()
+    df[&quot;IRX&quot;] = df[&quot;IRX&quot;].ffill()
+    df = df.dropna(subset=[&quot;SPY&quot;])
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+    df.index.name = &quot;Date&quot;
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    meta = {
+        &quot;ticker&quot;: {&quot;indice&quot;: config.TICKER_INDICE, &quot;3_mesi&quot;: config.TICKER_3M, &quot;fondi&quot;: [c for c in df.columns if c in config.FONDI]},
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: config.URL_FONTE,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;righe_per_serie&quot;: {c: int(df[c].notna().sum()) for c in df.columns},
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonne&quot;: &quot;prezzi di chiusura aggiustati (SPY comprende i dividendi); IRX = rendimento annuo in %&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(json.dumps(meta, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>i test delle cinque ipotesi e il registro dei numeri</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Buffer ETF contro S&amp;P 500: finestre di 12 mesi per ogni fondo, test delle ipotesi.
+
+Legge SOLO dati/serie_giornaliere.csv e produce in risultati/:
+  metriche.json   ogni numero dell&#x27;articolo, con descrizione e origine
+  finestre.csv    una riga per fondo e anno di partenza: date, rendimento del fondo, dell&#x27;S&amp;P 500 TR, della liquidità e del portafoglio 80/20
+  classi.csv      differenza media (fondo meno indice) per classe di rendimento dell&#x27;indice
+Il periodo di un fondo va dal primo giorno di borsa del suo mese di partenza al primo giorno di borsa dello stesso mese dell&#x27;anno dopo.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    g = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    w = fx.finestre(g, config.FONDI, config.MESI_PERIODO)
+    if len(w) &lt; 20:
+        raise SystemExit(f&quot;Solo {len(w)} finestre complete: troppo poche.&quot;)
+    w[&quot;r_mix&quot;] = fx.mix(w[&quot;r_spy&quot;].to_numpy(), w[&quot;r_cash&quot;].to_numpy(), config.QUOTA_AZIONI_MIX)
+    w[&quot;diff&quot;] = w[&quot;r_fondo&quot;] - w[&quot;r_spy&quot;]
+    w.to_csv(config.RISULTATI / &quot;finestre.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    N = len(w)
+    giu = w[w[&quot;r_spy&quot;] &lt; 0]
+    forte = w[w[&quot;r_spy&quot;] &gt; config.SOGLIA_FORTE]
+    medio = w[(w[&quot;r_spy&quot;] &gt;= 0) &amp; (w[&quot;r_spy&quot;] &lt;= config.SOGLIA_FORTE)]
+    anni_p = sorted(w[&quot;anno_partenza&quot;].unique())
+    fondi_ok = sorted(w[&quot;fondo&quot;].unique())
+
+    reg(&quot;prima_data&quot;, str(w[&quot;inizio&quot;].min().date()) if hasattr(w[&quot;inizio&quot;].min(), &quot;date&quot;) else str(w[&quot;inizio&quot;].min())[:10], &quot;data_lunga&quot;, &quot;Primo giorno di partenza di una finestra completa&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;data_ultima&quot;, str(pd.Timestamp(w[&quot;fine&quot;].max()).date()), &quot;data_lunga&quot;, &quot;Ultimo giorno di fine di una finestra completa&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;n_fondi&quot;, len(fondi_ok), &quot;int&quot;, &quot;Buffer ETF con almeno un periodo completo di 12 mesi&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;n_finestre&quot;, N, &quot;int&quot;, &quot;Periodi completi di 12 mesi (un fondo e un anno di partenza)&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;n_anni_partenza&quot;, len(anni_p), &quot;int&quot;, &quot;Anni di partenza distinti dei periodi&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;anno_primo&quot;, int(anni_p[0]), &quot;annonum&quot;, &quot;Primo anno di partenza&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;anno_ultimo&quot;, int(anni_p[-1]), &quot;annonum&quot;, &quot;Ultimo anno di partenza&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;rend_medio_fondo&quot;, float(w[&quot;r_fondo&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento medio dei fondi sui periodi di 12 mesi&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;rend_medio_spy&quot;, float(w[&quot;r_spy&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento medio dell&#x27;S&amp;P 500 TR sulle stesse finestre&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;diff_media&quot;, float(w[&quot;diff&quot;].mean()), &quot;pp1&quot;, &quot;Rendimento medio del fondo meno quello dell&#x27;indice (punti percentuali)&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;fondo_min&quot;, float(w[&quot;r_fondo&quot;].min()), &quot;pct1&quot;, &quot;Rendimento peggiore di un fondo su un periodo&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;spy_min&quot;, float(w[&quot;r_spy&quot;].min()), &quot;pct1&quot;, &quot;Rendimento peggiore dell&#x27;S&amp;P 500 TR su un periodo&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;fondo_max&quot;, float(w[&quot;r_fondo&quot;].max()), &quot;pct1&quot;, &quot;Rendimento migliore di un fondo su un periodo&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;spy_max&quot;, float(w[&quot;r_spy&quot;].max()), &quot;pct1&quot;, &quot;Rendimento migliore dell&#x27;S&amp;P 500 TR su un periodo&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;h4_ok&quot;, int(w[&quot;diff&quot;].mean() &lt; 0), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 4 è rispettata (i fondi rendono in media meno dell&#x27;indice)&quot;, &quot;finestre.csv&quot;)
+
+    # Ipotesi 1 e 2: periodi di ribasso
+    reg(&quot;n_giu&quot;, len(giu), &quot;int&quot;, &quot;Periodi in cui l&#x27;S&amp;P 500 TR perde&quot;, &quot;finestre.csv&quot;)
+    if len(giu):
+        q1 = float((giu[&quot;r_fondo&quot;] &gt; giu[&quot;r_spy&quot;]).mean())
+        rid = float((giu[&quot;r_fondo&quot;] - giu[&quot;r_spy&quot;]).mean())
+        reg(&quot;giu_quota_meglio&quot;, q1, &quot;pct0&quot;, &quot;Quota dei periodi di ribasso in cui il fondo perde meno dell&#x27;indice&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;giu_riduzione&quot;, rid, &quot;pp1&quot;, &quot;Riduzione media della perdita (fondo meno indice) nei periodi di ribasso, punti percentuali&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;giu_spy_medio&quot;, float(giu[&quot;r_spy&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento medio dell&#x27;S&amp;P 500 TR nei periodi di ribasso&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;giu_fondo_medio&quot;, float(giu[&quot;r_fondo&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento medio dei fondi nei periodi di ribasso&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;giu_n_meglio&quot;, int((giu[&quot;r_fondo&quot;] &gt; giu[&quot;r_spy&quot;]).sum()), &quot;int&quot;, &quot;Periodi di ribasso in cui il fondo perde meno dell&#x27;indice&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;giu_anni&quot;, &quot;, &quot;.join(str(int(a)) for a in sorted(giu[&quot;anno_partenza&quot;].unique())), &quot;testo&quot;, &quot;Anni di partenza dei periodi di ribasso&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;giu_fondo_peggio&quot;, float(giu[&quot;r_fondo&quot;].min()), &quot;pct1&quot;, &quot;Perdita peggiore di un fondo nei periodi di ribasso&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;giu_spy_peggio&quot;, float(giu[&quot;r_spy&quot;].min()), &quot;pct1&quot;, &quot;Perdita peggiore dell&#x27;indice nei periodi di ribasso&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;giu_fondo_positivi&quot;, int((giu[&quot;r_fondo&quot;] &gt; 0).sum()), &quot;int&quot;, &quot;Periodi di ribasso dell&#x27;indice chiusi in positivo dal fondo&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;h1_ok&quot;, int(q1 &gt;= config.H1_QUOTA_MIN), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 1 è rispettata&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;h2_ok&quot;, int(rid &gt;= config.H2_RIDUZIONE_MIN), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 2 è rispettata&quot;, &quot;finestre.csv&quot;)
+    else:
+        raise SystemExit(&quot;Nessun periodo di ribasso dell&#x27;indice: ipotesi 1 e 2 non verificabili.&quot;)
+    reg(&quot;h1_min&quot;, config.H1_QUOTA_MIN, &quot;pct0&quot;, &quot;Soglia dell&#x27;ipotesi 1&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_min&quot;, config.H2_RIDUZIONE_MIN, &quot;pp1&quot;, &quot;Soglia dell&#x27;ipotesi 2 (punti percentuali)&quot;, &quot;config.py&quot;)
+
+    # Ipotesi 3: forti rialzi
+    reg(&quot;soglia_forte&quot;, config.SOGLIA_FORTE, &quot;pct0&quot;, &quot;Rendimento dell&#x27;indice oltre il quale il periodo è «di forte rialzo»&quot;, &quot;config.py&quot;)
+    reg(&quot;n_forte&quot;, len(forte), &quot;int&quot;, &quot;Periodi di forte rialzo dell&#x27;indice&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;n_medio&quot;, len(medio), &quot;int&quot;, &quot;Periodi con l&#x27;indice tra 0 e la soglia di forte rialzo&quot;, &quot;finestre.csv&quot;)
+    if len(forte):
+        q3 = float((forte[&quot;r_fondo&quot;] &lt; forte[&quot;r_spy&quot;]).mean())
+        reg(&quot;forte_quota_meno&quot;, q3, &quot;pct0&quot;, &quot;Quota dei periodi di forte rialzo in cui il fondo rende meno dell&#x27;indice&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;forte_diff&quot;, float((forte[&quot;r_fondo&quot;] - forte[&quot;r_spy&quot;]).mean()), &quot;pp1&quot;, &quot;Differenza media (fondo meno indice) nei forti rialzi, punti percentuali&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;forte_spy_medio&quot;, float(forte[&quot;r_spy&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento medio dell&#x27;indice nei forti rialzi&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;forte_fondo_medio&quot;, float(forte[&quot;r_fondo&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento medio dei fondi nei forti rialzi&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;h3_ok&quot;, int(q3 &gt;= config.H3_QUOTA_MIN), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 3 è rispettata&quot;, &quot;finestre.csv&quot;)
+    else:
+        raise SystemExit(&quot;Nessun periodo di forte rialzo: ipotesi 3 non verificabile.&quot;)
+    reg(&quot;h3_min&quot;, config.H3_QUOTA_MIN, &quot;pct0&quot;, &quot;Soglia dell&#x27;ipotesi 3&quot;, &quot;config.py&quot;)
+    if len(medio):
+        reg(&quot;medio_diff&quot;, float((medio[&quot;r_fondo&quot;] - medio[&quot;r_spy&quot;]).mean()), &quot;pp1&quot;, &quot;Differenza media (fondo meno indice) nei periodi di rialzo moderato, punti percentuali&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;medio_spy_medio&quot;, float(medio[&quot;r_spy&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento medio dell&#x27;indice nei periodi di rialzo moderato&quot;, &quot;finestre.csv&quot;)
+        reg(&quot;medio_fondo_medio&quot;, float(medio[&quot;r_fondo&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento medio dei fondi nei periodi di rialzo moderato&quot;, &quot;finestre.csv&quot;)
+    classi = pd.DataFrame({
+        &quot;classe&quot;: [&quot;indice in ribasso&quot;, &quot;indice tra 0 e soglia&quot;, &quot;indice oltre soglia&quot;],
+        &quot;n&quot;: [len(giu), len(medio), len(forte)],
+        &quot;diff_media&quot;: [float((x[&quot;r_fondo&quot;] - x[&quot;r_spy&quot;]).mean()) if len(x) else np.nan for x in (giu, medio, forte)]})
+    classi.to_csv(config.RISULTATI / &quot;classi.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    # Ipotesi 5: portafoglio 80/20
+    quota_meglio_mix = float((w[&quot;r_fondo&quot;] &gt; w[&quot;r_mix&quot;]).mean())
+    reg(&quot;quota_mix&quot;, config.QUOTA_AZIONI_MIX, &quot;pct0&quot;, &quot;Quota di S&amp;P 500 nel portafoglio semplice di confronto (il resto in liquidità)&quot;, &quot;config.py&quot;)
+    reg(&quot;rend_medio_mix&quot;, float(w[&quot;r_mix&quot;].mean()), &quot;pct1&quot;, &quot;Rendimento medio del portafoglio 80/20 sui periodi&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;mix_min&quot;, float(w[&quot;r_mix&quot;].min()), &quot;pct1&quot;, &quot;Rendimento peggiore del portafoglio 80/20 su un periodo&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;fondo_batte_mix&quot;, quota_meglio_mix, &quot;pct0&quot;, &quot;Quota dei periodi in cui il fondo rende più del portafoglio 80/20&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;mix_batte_fondo&quot;, 1 - quota_meglio_mix, &quot;pct0&quot;, &quot;Quota dei periodi in cui il portafoglio 80/20 rende almeno quanto il fondo&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;quota_cash&quot;, 1 - config.QUOTA_AZIONI_MIX, &quot;pct0&quot;, &quot;Quota di liquidità nel portafoglio semplice di confronto&quot;, &quot;config.py&quot;)
+    reg(&quot;mesi_periodo&quot;, config.MESI_PERIODO, &quot;int&quot;, &quot;Mesi di un periodo (outcome period) dei buffer ETF&quot;, &quot;config.py&quot;)
+    reg(&quot;anno_hill&quot;, 2006, &quot;annonum&quot;, &quot;Anno di pubblicazione di Hill, Balasubramanian, Gregory e Tierens&quot;, &quot;Financial Analysts Journal, vol. 62&quot;)
+    reg(&quot;anno_in&quot;, 2015, &quot;annonum&quot;, &quot;Anno di pubblicazione di Israelov e Nielsen&quot;, &quot;Financial Analysts Journal, vol. 71&quot;)
+    reg(&quot;h5_min&quot;, config.H5_QUOTA_MIN, &quot;pct0&quot;, &quot;Soglia dell&#x27;ipotesi 5&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_ok&quot;, int((1 - quota_meglio_mix) &gt;= config.H5_QUOTA_MIN), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 5 è rispettata (il portafoglio 80/20 rende almeno quanto il fondo in metà o più dei periodi)&quot;, &quot;finestre.csv&quot;)
+    giu_mix = giu[&quot;r_mix&quot;]
+    reg(&quot;giu_mix_medio&quot;, float(giu_mix.mean()), &quot;pct1&quot;, &quot;Rendimento medio del portafoglio 80/20 nei periodi di ribasso dell&#x27;indice&quot;, &quot;finestre.csv&quot;)
+    reg(&quot;giu_fondo_meglio_mix&quot;, float((giu[&quot;r_fondo&quot;] &gt; giu[&quot;r_mix&quot;]).mean()), &quot;pct0&quot;, &quot;Quota dei periodi di ribasso in cui il fondo rende più del portafoglio 80/20&quot;, &quot;finestre.csv&quot;)
+
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri su {N} finestre ({len(fondi_ok)} fondi, anni {anni_p[0]}-{anni_p[-1]})&quot;)
+    print(f&quot;H1 {q1:.0%} su {len(giu)}; H2 {rid:+.2%}; H3 {q3:.0%} su {len(forte)}; H4 diff {w[&#x27;diff&#x27;].mean():+.2%}; H5 mix&gt;=fondo {1-quota_meglio_mix:.0%}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_fondo_contro_indice.png   rendimento di ogni periodo: fondo contro S&amp;P 500 TR (il «profilo» del buffer)
+  fig2_per_classe.png            differenza media fondo meno indice per classe di rendimento dell&#x27;indice
+  fig3_per_anno.png              rendimento medio per anno di partenza: fondi e S&amp;P 500 TR
+  fig4_contro_80_20.png          rendimento di ogni periodo: fondo contro portafoglio 80% indice e 20% liquidità
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    w = pd.read_csv(R / &quot;finestre.csv&quot;, parse_dates=[&quot;inizio&quot;, &quot;fine&quot;])
+    C = pd.read_csv(R / &quot;classi.csv&quot;)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+
+    # Figura 1: profilo di rendimento
+    x, y = w[&quot;r_spy&quot;] * 100, w[&quot;r_fondo&quot;] * 100
+    fig, ax = plt.subplots(figsize=(7.5, 7))
+    ax.scatter(x, y, s=22, color=GRIGIO, alpha=0.75)
+    lim = [min(x.min(), y.min()) - 2, max(x.max(), y.max()) + 2]
+    ax.plot(lim, lim, color=ARANCIO, lw=1.6, label=&quot;fondo = indice&quot;)
+    ax.axhline(0, color=&quot;#555&quot;, lw=0.8)
+    ax.axvline(0, color=&quot;#555&quot;, lw=0.8)
+    ax.axvline(config.SOGLIA_FORTE * 100, color=BLU, lw=1.2, ls=&quot;--&quot;, label=&quot;soglia di forte rialzo&quot;)
+    ax.set_xlabel(&quot;rendimento a 12 mesi dell&#x27;S&amp;P 500 total return (%)&quot;)
+    ax.set_ylabel(&quot;rendimento a 12 mesi del buffer ETF (%)&quot;)
+    ax.set_xlim(lim)
+    ax.set_ylim(lim)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_fondo_contro_indice.png&quot;)
+    plt.close(fig)
+
+    # Figura 2: differenza per classe
+    fig, ax = plt.subplots(figsize=(9, 5))
+    etichette = [f&quot;indice in ribasso\n({int(n)} periodi)&quot; if i == 0 else
+                 (f&quot;indice tra 0 e {config.SOGLIA_FORTE:.0%}\n({int(n)} periodi)&quot; if i == 1 else f&quot;indice oltre {config.SOGLIA_FORTE:.0%}\n({int(n)} periodi)&quot;)
+                 for i, n in enumerate(C[&quot;n&quot;])]
+    vals = C[&quot;diff_media&quot;].fillna(0) * 100
+    ax.bar(etichette, vals, color=[BLU if v &gt;= 0 else ARANCIO for v in vals], width=0.55)
+    for i, v in enumerate(vals):
+        ax.text(i, v + (0.4 if v &gt;= 0 else -1.2), f&quot;{v:+.1f}&quot;.replace(&quot;.&quot;, &quot;,&quot;), ha=&quot;center&quot;, fontsize=11)
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_ylabel(&quot;fondo meno indice (punti percentuali)&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig2_per_classe.png&quot;)
+    plt.close(fig)
+
+    # Figura 3: per anno di partenza
+    a = w.groupby(&quot;anno_partenza&quot;)[[&quot;r_fondo&quot;, &quot;r_spy&quot;]].mean() * 100
+    fig, ax = plt.subplots(figsize=(11, 5))
+    xx = np.arange(len(a))
+    ax.bar(xx - 0.2, a[&quot;r_spy&quot;], width=0.4, color=GRIGIO, label=&quot;S&amp;P 500 total return&quot;)
+    ax.bar(xx + 0.2, a[&quot;r_fondo&quot;], width=0.4, color=BLU, label=&quot;buffer ETF (media dei fondi)&quot;)
+    ax.set_xticks(xx, [str(int(i)) for i in a.index])
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_xlabel(&quot;anno di partenza del periodo di 12 mesi&quot;)
+    ax.set_ylabel(&quot;rendimento medio (%)&quot;)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_per_anno.png&quot;)
+    plt.close(fig)
+
+    # Figura 4: contro il portafoglio 80/20
+    x, y = w[&quot;r_mix&quot;] * 100, w[&quot;r_fondo&quot;] * 100
+    fig, ax = plt.subplots(figsize=(7.5, 7))
+    ax.scatter(x, y, s=22, color=GRIGIO, alpha=0.75)
+    lim = [min(x.min(), y.min()) - 2, max(x.max(), y.max()) + 2]
+    ax.plot(lim, lim, color=ARANCIO, lw=1.6, label=&quot;fondo = 80% indice e 20% liquidità&quot;)
+    ax.axhline(0, color=&quot;#555&quot;, lw=0.8)
+    ax.axvline(0, color=&quot;#555&quot;, lw=0.8)
+    ax.set_xlabel(&quot;rendimento a 12 mesi del portafoglio 80/20 (%)&quot;)
+    ax.set_ylabel(&quot;rendimento a 12 mesi del buffer ETF (%)&quot;)
+    ax.set_xlim(lim)
+    ax.set_ylim(lim)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig4_contro_80_20.png&quot;)
+    plt.close(fig)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 482 - &quot;Gli ETF a ribasso limitato (buffer ETF)&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Idea: i buffer ETF di Innovator (serie «U.S. Equity Buffer» sull&#x27;S&amp;P 500, un fondo per ogni mese di partenza) promettono di assorbire
+i primi ribassi dell&#x27;indice in cambio di un tetto ai rialzi, ma solo se si tiene il fondo per l&#x27;intero periodo di 12 mesi. Per ogni fondo
+e per ogni anno si misura il rendimento sull&#x27;intero periodo (dal primo giorno di borsa del mese di partenza al primo giorno di borsa dello
+stesso mese dell&#x27;anno dopo) e lo si confronta con quello dell&#x27;S&amp;P 500 total return (SPY, dividendi reinvestiti) nelle stesse date e con
+un portafoglio semplice 80% SPY e 20% liquidità (tasso a 3 mesi, ^IRX).
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER_INDICE = &quot;SPY&quot;
+TICKER_3M = &quot;^IRX&quot;
+# Un fondo per ogni mese di partenza del periodo di 12 mesi (numero del mese di partenza)
+FONDI = {&quot;PJAN&quot;: 1, &quot;PFEB&quot;: 2, &quot;PMAR&quot;: 3, &quot;PAPR&quot;: 4, &quot;PMAY&quot;: 5, &quot;PJUN&quot;: 6,
+         &quot;PJUL&quot;: 7, &quot;PAUG&quot;: 8, &quot;PSEP&quot;: 9, &quot;POCT&quot;: 10, &quot;PNOV&quot;: 11, &quot;PDEC&quot;: 12}
+INIZIO_DOWNLOAD = &quot;2018-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;serie_giornaliere.csv&quot;
+FILE_METADATI = DATI / &quot;serie_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;i prezzi giornalieri dei dodici buffer ETF di Innovator, di SPY (S&amp;P 500 total return) e il tasso a 3 mesi&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+NOTA_COLONNA = &quot;Prezzi di mercato aggiustati; nessuna tassa, nessuna commissione di negoziazione&quot;
+NOMI_ESENTI = (&quot;ETF&quot;, &quot;SPY&quot;, &quot;IRX&quot;, &quot;PJAN&quot;, &quot;PFEB&quot;, &quot;PMAR&quot;, &quot;PAPR&quot;, &quot;PMAY&quot;, &quot;PJUN&quot;, &quot;PJUL&quot;, &quot;PAUG&quot;, &quot;PSEP&quot;, &quot;POCT&quot;, &quot;PNOV&quot;, &quot;PDEC&quot;)
+MESI_ANNO = 12
+
+# --- Definizioni (fissate prima dei risultati) --------------------------------------------------------------------
+MESI_PERIODO = 12                 # lunghezza del periodo di un buffer ETF
+QUOTA_AZIONI_MIX = 0.80           # portafoglio semplice di confronto: 80% SPY, 20% liquidità
+SOGLIA_FORTE = 0.15               # un periodo è «di forte rialzo» se l&#x27;S&amp;P 500 TR rende più del 15%
+SEME = 20261026
+
+# --- Soglie delle ipotesi ------------------------------------------------------------------------------------------
+H1_QUOTA_MIN = 0.90               # ipotesi 1: nei periodi di ribasso il fondo perde meno dell&#x27;indice in almeno il 90% dei casi
+H2_RIDUZIONE_MIN = 0.05           # ipotesi 2: la perdita media si riduce di almeno 5 punti percentuali
+H3_QUOTA_MIN = 0.90               # ipotesi 3: nei periodi di forte rialzo il fondo rende meno dell&#x27;indice in almeno il 90% dei casi
+H5_QUOTA_MIN = 0.50               # ipotesi 5: il fondo batte il portafoglio 80/20 in meno della metà dei periodi
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati ----------------------------------------------------------------
+IPOTESI = (
+    &quot;1) Nei periodi di 12 mesi in cui l&#x27;S&amp;P 500 total return perde, il buffer ETF perde meno dell&#x27;indice in almeno il 90% dei casi. &quot;
+    &quot;2) In quei periodi la perdita si riduce in media di almeno 5 punti percentuali rispetto all&#x27;indice. &quot;
+    &quot;3) Nei periodi in cui l&#x27;S&amp;P 500 total return guadagna più del 15%, il buffer ETF rende meno dell&#x27;indice in almeno il 90% dei casi (il tetto ai rialzi si fa sentire). &quot;
+    &quot;4) Sull&#x27;insieme dei periodi, il rendimento medio dei buffer ETF è più basso di quello dell&#x27;indice: la protezione si paga. &quot;
+    &quot;5) Un portafoglio semplice, 80% S&amp;P 500 e 20% liquidità, ottiene un rendimento almeno pari a quello del buffer ETF nella metà o più dei periodi: &quot;
+    &quot;per ridurre il rischio non serve un derivato.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>finestre di 12 mesi per fondo e portafoglio di confronto</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 482: finestre di 12 mesi per ogni fondo, rendimenti a confronto.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def primo_giorno(indice: pd.DatetimeIndex, anno: int, mese: int):
+    &quot;&quot;&quot;Primo giorno di borsa dell&#x27;anno/mese dati, oppure None se la serie non lo contiene.&quot;&quot;&quot;
+    sel = indice[(indice.year == anno) &amp; (indice.month == mese)]
+    return sel[0] if len(sel) else None
+
+
+def finestre(prezzi: pd.DataFrame, fondi: dict, mesi: int) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Una riga per ogni fondo e anno di partenza: date, rendimenti del fondo, dell&#x27;indice e della liquidità.
+
+    `prezzi` ha le colonne dei fondi, &#x27;SPY&#x27; e &#x27;IRX&#x27; (% annuo). Sono tenute solo le finestre complete: il fondo ha un prezzo nel primo
+    giorno di borsa del mese di partenza e nel primo giorno di borsa dello stesso mese `mesi`/12 anni dopo.
+    &quot;&quot;&quot;
+    righe = []
+    idx = prezzi.index
+    for tk, mese in fondi.items():
+        if tk not in prezzi.columns:
+            continue
+        serie = prezzi[tk].dropna()
+        for anno in range(idx[0].year, idx[-1].year + 1):
+            a = primo_giorno(idx, anno, mese)
+            b = primo_giorno(idx, anno + mesi // 12, mese)
+            if a is None or b is None:
+                continue
+            if a not in serie.index or b not in serie.index:
+                continue
+            giorni = (b - a).days
+            cash = (1 + prezzi.loc[a, &quot;IRX&quot;] / 100) ** (giorni / 365.0) - 1
+            righe.append({&quot;fondo&quot;: tk, &quot;anno_partenza&quot;: anno, &quot;inizio&quot;: a, &quot;fine&quot;: b, &quot;giorni&quot;: giorni,
+                          &quot;r_fondo&quot;: serie[b] / serie[a] - 1,
+                          &quot;r_spy&quot;: prezzi.loc[b, &quot;SPY&quot;] / prezzi.loc[a, &quot;SPY&quot;] - 1,
+                          &quot;r_cash&quot;: cash})
+    return pd.DataFrame(righe)
+
+
+def mix(r_spy: np.ndarray, r_cash: np.ndarray, quota: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimento di un portafoglio con `quota` in indice e il resto in liquidità, ribilanciato all&#x27;inizio del periodo.&quot;&quot;&quot;
+    return quota * r_spy + (1 - quota) * r_cash
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome, cond):
+    global n_ok
+    print((&quot;OK   &quot; if cond else &quot;FAIL &quot;) + nome)
+    if not cond:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+idx = pd.bdate_range(&quot;2019-01-01&quot;, &quot;2021-03-31&quot;)
+n = len(idx)
+spy = pd.Series(100.0 * 1.001 ** np.arange(n), index=idx)
+fondo = pd.Series(50.0 * 1.0005 ** np.arange(n), index=idx)
+df = pd.DataFrame({&quot;SPY&quot;: spy, &quot;FJAN&quot;: fondo, &quot;IRX&quot;: 2.0}, index=idx)
+w = fx.finestre(df, {&quot;FJAN&quot;: 1, &quot;FJUL&quot;: 7}, 12)
+controlla(&quot;finestre: un fondo assente è ignorato&quot;, set(w[&quot;fondo&quot;]) == {&quot;FJAN&quot;})
+controlla(&quot;finestre: solo finestre complete (gennaio 2019 e gennaio 2020)&quot;, list(w[&quot;anno_partenza&quot;]) == [2019, 2020])
+a, b = w.loc[0, &quot;inizio&quot;], w.loc[0, &quot;fine&quot;]
+controlla(&quot;finestre: date al primo giorno di borsa di gennaio&quot;, a == pd.Timestamp(&quot;2019-01-01&quot;) and b == pd.Timestamp(&quot;2020-01-01&quot;))
+controlla(&quot;finestre: rendimento del fondo&quot;, abs(w.loc[0, &quot;r_fondo&quot;] - (fondo[b] / fondo[a] - 1)) &lt; 1e-12)
+controlla(&quot;finestre: liquidità al 2% annuo su un anno&quot;, abs(w.loc[0, &quot;r_cash&quot;] - 0.02) &lt; 5e-4)
+controlla(&quot;mix: tutto indice&quot;, np.allclose(fx.mix(np.array([0.1]), np.array([0.02]), 1.0), 0.1))
+controlla(&quot;mix: 80/20&quot;, np.allclose(fx.mix(np.array([0.1]), np.array([0.02]), 0.8), 0.084))
+print(f&quot;{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
