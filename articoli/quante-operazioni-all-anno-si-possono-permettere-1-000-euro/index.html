@@ -1,0 +1,876 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quante operazioni all&#x27;anno si possono permettere 1.000 euro? · il codice · TickerFight</title>
+<meta name="description" content="con 1.000 € di capitale, 2 € a ordine (o 0,1%) e la tassa del 26%, quanti ordini all&#x27;anno si possono fare prima che i costi si mangino il rendimento? Per misurare solo il peso della frequenza si usa una «regola a cicli» senza alcun segnale di mercato: si è investiti tutte le sedute tranne una ogni L; la si prova a sei frequenze e la si confronta con il buy &amp; hold e con le scimmie.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Quante operazioni all&#x27;anno si possono permettere 1.000 euro?</h1>
+<p class="domanda">Con 1.000 € di capitale, 2 € a ordine (o 0,1%) e la tassa del 26%, quanti ordini all&#x27;anno si possono fare prima che i costi si mangino il rendimento? Per misurare solo il peso della frequenza si usa una «regola a cicli» senza alcun segnale di mercato: si è investiti tutte le sedute tranne una ogni L; la si prova a sei frequenze e la si confronta con il buy &amp; hold e con le scimmie.</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="quante-operazioni-all-anno-si-possono-permettere-1-000-euro.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Regola a cicli:</strong> ciclo di L sedute (252, 126, 63, 21, 10, 5): L−1 sedute investite e una fuori; vendita e riacquisto alla chiusura. Nessun segnale di mercato, nessun look-ahead.</li>
+<li><strong>Strumenti:</strong> un ETF azionario mondiale e un ETF sull'S&amp;P 500 (euro, Milano), più l'indice S&amp;P 500 in dollari convertito in euro.</li>
+<li><strong>Condizioni:</strong> 1.000 €; commissione 0 €, 2 € a ordine e 0,1%; tassa 26% con minusvalenze riportate; dividendi, bollo e spread non considerati.</li>
+<li><strong>Soglia di sostenibilità (scritta prima):</strong> perdita di rendimento annuo netto, rispetto al buy &amp; hold, non sopra 0,5 punti con 2 € a ordine.</li>
+<li><strong>Test:</strong> scimmie (stesso numero di periodi e stessa durata totale), 18 test con la correzione di Holm.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>quante-operazioni-all-anno-si-possono-permettere-1-000-euro/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica due ETF, l'indice S&amp;P 500 e il cambio euro-dollaro
+    ├── 02_backtest_e_test.py  buy &amp; hold, sei frequenze, scimmie, correzione di Holm
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              strumenti, parametri e ipotesi, scritti prima dei risultati
+    ├── simulazione.py         motore in euro: ordini, commissioni, tassa, minusvalenze, scimmie
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd quante-operazioni-all-anno-si-possono-permettere-1-000-euro
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance le serie giornaliere degli strumenti e del cambio euro-dollaro.
+
+Salva dati/&lt;ticker&gt;.csv (Date, Open, High, Low, Close, Volume) e dati/metadati.json con la fonte, la data del download,
+la versione di yfinance e l&#x27;impronta SHA-256 di ogni file. Gli script successivi leggono SOLO i file salvati: i risultati
+restano riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;strumenti&quot;: []}
+    elenco = [(t, n, v) for t, n, v in config.STRUMENTI] + [(config.TICKER_CAMBIO, &quot;cambio euro-dollaro&quot;, &quot;USD&quot;)]
+    for ticker, nome, valuta in elenco:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nome, &quot;valuta&quot;: valuta}
+        grezzo = scarica(ticker)
+        if grezzo.empty:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;strumenti&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;])
+        df = df[df[&quot;Close&quot;] &gt; 0]
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:       # seduta in corso: barra incompleta
+            df = df.iloc[:-1]
+        salti = (df[&quot;Close&quot;].pct_change().abs() &gt; 0.25).sum()
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;variazioni_giornaliere_oltre_25_per_cento&quot;: int(salti),
+                     &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;strumenti&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}, salti oltre il 25%: {salti}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    ok = {r[&quot;ticker&quot;] for r in meta[&quot;strumenti&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;}
+    if config.TICKER_CAMBIO not in ok and any(v == &quot;USD&quot; for _, _, v in config.STRUMENTI):
+        print(&quot;Attenzione: cambio non scaricato, gli strumenti in dollari verranno scartati.&quot;)
+    if sum(1 for t, _, _ in config.STRUMENTI if t in ok) &lt; 1:
+        raise SystemExit(&quot;Nessuno strumento scaricato.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>buy &amp; hold, sei frequenze, scimmie, correzione di Holm</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - La regola a cicli a sei frequenze, con le condizioni di chi parte con 1.000 euro.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json     ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  prove.csv         per strumento, frequenza e scenario: valore finale, rendimento annuo, ordini, costi, tasse
+  scimmie_finali.csv  valore finale netto di ogni scimmia (scenario 2 euro), per strumento e frequenza
+
+Regole: buy &amp; hold (&quot;bh&quot;); &quot;cNN&quot; = regola a cicli con ciclo di NN sedute (NN-1 dentro, 1 fuori).
+Quattro scenari: lordo (nessun costo, nessuna tassa) e tre scenari di commissione, tutti con la tassa del 26%.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import simulazione as s
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con simulazione.py&quot;
+SCEN = [(&quot;lordo&quot;, 0.0, 0.0, 0.0)] + [(f&quot;c{k}&quot;, f, p, config.ALIQUOTA) for k, (_, f, p) in enumerate(config.SCENARI_COSTO)]
+M = f&quot;c{config.SCENARIO_PRINCIPALE}&quot;
+NOME_SCEN = {f&quot;c{k}&quot;: nome for k, (nome, _, _) in enumerate(config.SCENARI_COSTO)}
+NOME_SCEN[&quot;lordo&quot;] = &quot;lordo&quot;
+RID = [f&quot;y{L}&quot; for L in config.CICLI]          # y252, y126, ...
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def holm(p: dict) -&gt; dict:
+    ordine = sorted(p, key=p.get)
+    m = len(ordine)
+    out, massimo = {}, 0.0
+    for k, nome in enumerate(ordine):
+        massimo = max(massimo, min(1.0, (m - k) * p[nome]))
+        out[nome] = massimo
+    return out
+
+
+def agenda(n: int, i0: int, L: int) -&gt; np.ndarray:
+    return np.array([(i - i0) % L != L - 1 for i in range(n)])
+
+
+def analizza(k_str, tk, nome, valuta, meta, fx_df):
+    riga = [r for r in meta[&quot;strumenti&quot;] if r[&quot;ticker&quot;] == tk][0]
+    if riga[&quot;stato&quot;] != &quot;ok&quot;:
+        print(f&quot;{tk}: scartato, {riga[&#x27;stato&#x27;]}&quot;)
+        return None
+    t = s.carica_csv(config.file_dati(tk))
+    if valuta == &quot;USD&quot;:
+        if fx_df is None:
+            return None
+        df = s.prepara(t, fx_df, 1)
+    else:
+        df = s.prepara(t, None, 1)
+    i0 = s.primo_indice(df)
+    anni_test = (df.index[-1] - df.index[i0]).days / 365.25
+    if anni_test &lt; config.STORIA_MINIMA_ANNI:
+        print(f&quot;{tk}: scartato, solo {anni_test:.1f} anni&quot;)
+        return None
+    n = len(df)
+    C, FX = df[&quot;Close&quot;].to_numpy(float), df[&quot;fx&quot;].to_numpy(float)
+    anni_idx = df.index.year.to_numpy()
+    sim, prove = {}, []
+    for rid in [&quot;bh&quot;] + RID:
+        ob = None if rid == &quot;bh&quot; else agenda(n, i0, int(rid[1:]))
+        for sid, f, p, al in SCEN:
+            sim[(rid, sid)] = s.simula(df, i0, config.CAPITALE, f, p, al, rid != &quot;bh&quot;, obiettivo=ob)
+    for (rid, sid), r in sim.items():
+        prove.append({&quot;strumento&quot;: tk, &quot;regola&quot;: rid, &quot;scenario&quot;: sid, &quot;finale&quot;: r[&quot;valore_finale_eur&quot;], &quot;cagr&quot;: r[&quot;cagr&quot;],
+                      &quot;ordini&quot;: r[&quot;n_acquisti&quot;] + r[&quot;n_vendite&quot;], &quot;commissioni&quot;: r[&quot;commissioni_eur&quot;], &quot;tasse&quot;: r[&quot;tasse_eur&quot;],
+                      &quot;quota_investito&quot;: r[&quot;quota_giorni_investito&quot;]})
+    rng = np.random.default_rng([config.SEME, k_str, 1])
+    N = n - i0
+    scim = {}
+    f1, p1, a1 = [(f, p, al) for sid, f, p, al in SCEN if sid == M][0]
+    for rid in RID:
+        a, b = s.blocchi(sim[(rid, &quot;lordo&quot;)])
+        k, D = len(a), int((b - a).sum())
+        fin = np.empty(config.N_SCIMMIE)
+        for j in range(config.N_SCIMMIE):
+            ia, ib = s.scimmia(k, D, N, rng)
+            fin[j] = s.valuta_blocchi(C, FX, anni_idx, ia + i0, ib + i0, config.CAPITALE, f1, p1, a1)[0]
+        scim[rid] = {&quot;k&quot;: k, &quot;finali&quot;: fin}
+    return dict(tk=tk, sl=config.slug(tk), nome=nome, df=df, i0=i0, sim=sim, prove=prove, scim=scim, anni=anni_test)
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    meta = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    cambio_ok = any(r[&quot;ticker&quot;] == config.TICKER_CAMBIO and r[&quot;stato&quot;] == &quot;ok&quot; for r in meta[&quot;strumenti&quot;])
+    fx_df = s.carica_csv(config.file_dati(config.TICKER_CAMBIO)) if cambio_ok else None
+    res = []
+    for k, (tk, nome, valuta) in enumerate(config.STRUMENTI):
+        r = analizza(k, tk, nome, valuta, meta, fx_df)
+        if r:
+            res.append(r)
+            print(f&quot;{tk}: {r[&#x27;anni&#x27;]:.1f} anni; netto 2 euro: bh {r[&#x27;sim&#x27;][(&#x27;bh&#x27;, M)][&#x27;valore_finale_eur&#x27;]:.0f}, &quot; +
+                  &quot;, &quot;.join(f&quot;{x} {r[&#x27;sim&#x27;][(x, M)][&#x27;valore_finale_eur&#x27;]:.0f}&quot; for x in RID))
+    if len(res) &lt; 2:
+        raise SystemExit(&quot;Troppo pochi strumenti utilizzabili.&quot;)
+
+    pgrezzo = {}
+    for r in res:
+        for rid in RID:
+            reale = r[&quot;sim&quot;][(rid, M)][&quot;valore_finale_eur&quot;]
+            pgrezzo[(r[&quot;tk&quot;], rid)] = (int((r[&quot;scim&quot;][rid][&quot;finali&quot;] &gt;= reale).sum()) + 1) / (config.N_SCIMMIE + 1)
+    ph = holm(pgrezzo)
+
+    for r in res:
+        sl, nome, sm = r[&quot;sl&quot;], r[&quot;nome&quot;], r[&quot;sim&quot;]
+        reg(f&quot;{sl}_nome&quot;, nome, &quot;testo&quot;, &quot;Nome dello strumento&quot;, &quot;config.py, STRUMENTI&quot;)
+        reg(f&quot;{sl}_data_inizio&quot;, str(r[&quot;df&quot;].index[r[&quot;i0&quot;]].date()), &quot;data_lunga&quot;, f&quot;Prima seduta del test su {nome}&quot;, &quot;dati/&quot;)
+        reg(f&quot;{sl}_anni&quot;, r[&quot;anni&quot;], &quot;num1&quot;, f&quot;Anni del test su {nome}&quot;)
+        ordini_anno = {}
+        for rid in [&quot;bh&quot;] + RID:
+            for sid in NOME_SCEN:
+                x = sm[(rid, sid)]
+                reg(f&quot;{sl}_{rid}_{sid}_finale&quot;, x[&quot;valore_finale_eur&quot;], &quot;int&quot;, f&quot;Valore finale di {config.CAPITALE:.0f} euro ({rid}, scenario {NOME_SCEN[sid]}), {nome}&quot;)
+                reg(f&quot;{sl}_{rid}_{sid}_cagr&quot;, x[&quot;cagr&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo composto ({rid}, scenario {NOME_SCEN[sid]}), {nome}&quot;)
+                if sid != &quot;lordo&quot;:
+                    reg(f&quot;{sl}_{rid}_{sid}_costo&quot;, x[&quot;commissioni_eur&quot;], &quot;int&quot;, f&quot;Commissioni pagate in tutto ({rid}, scenario {NOME_SCEN[sid]}), {nome}&quot;)
+                    reg(f&quot;{sl}_{rid}_{sid}_tasse&quot;, x[&quot;tasse_eur&quot;], &quot;int&quot;, f&quot;Tasse pagate in tutto ({rid}, scenario {NOME_SCEN[sid]}), {nome}&quot;)
+                    reg(f&quot;{sl}_{rid}_{sid}_perdita&quot;, sm[(&quot;bh&quot;, sid)][&quot;cagr&quot;] - x[&quot;cagr&quot;], &quot;pp1&quot;, f&quot;Rendimento annuo netto del buy &amp; hold meno quello della frequenza {rid}, scenario {NOME_SCEN[sid]}, in punti percentuali, {nome}&quot;)
+            x = sm[(rid, M)]
+            oa = (x[&quot;n_acquisti&quot;] + x[&quot;n_vendite&quot;]) / r[&quot;anni&quot;]
+            nom = 2 * config.SEDUTE_ANNO / int(rid[1:]) if rid != &quot;bh&quot; else 2 / r[&quot;anni&quot;]
+            ordini_anno[rid] = nom
+            eq = x[&quot;equity&quot;]
+            morto = np.flatnonzero(eq &lt;= 1e-9)
+            vita = (r[&quot;df&quot;].index[r[&quot;i0&quot;] + int(morto[0])] - r[&quot;df&quot;].index[r[&quot;i0&quot;]]).days / 365.25 if len(morto) else r[&quot;anni&quot;]
+            reg(f&quot;{sl}_{rid}_ordini_nom&quot;, nom, &quot;num1&quot;, f&quot;Ordini all&#x27;anno previsti dalla regola se il capitale non si esaurisce ({rid}), {nome}&quot;, &quot;config.py, CICLI&quot;)
+            reg(f&quot;{sl}_{rid}_anni_vita&quot;, vita, &quot;num1&quot;, f&quot;Anni dopo i quali il capitale è esaurito (scenario principale, {rid}); se non si esaurisce, gli anni del test, {nome}&quot;)
+            reg(f&quot;{sl}_{rid}_esaurito&quot;, int(len(morto) &gt; 0), &quot;int&quot;, f&quot;1 se il capitale si esaurisce nello scenario principale ({rid}), {nome}&quot;)
+            reg(f&quot;{sl}_{rid}_ordini_anno&quot;, oa, &quot;num1&quot;, f&quot;Ordini all&#x27;anno ({rid}), {nome}&quot;)
+            reg(f&quot;{sl}_{rid}_ordini&quot;, x[&quot;n_acquisti&quot;] + x[&quot;n_vendite&quot;], &quot;int&quot;, f&quot;Ordini totali ({rid}), {nome}&quot;)
+            reg(f&quot;{sl}_{rid}_quota&quot;, x[&quot;quota_giorni_investito&quot;], &quot;pct1&quot;, f&quot;Quota di sedute investite ({rid}), {nome}&quot;)
+            reg(f&quot;{sl}_{rid}_costo_anno_quota&quot;, x[&quot;commissioni_eur&quot;] / r[&quot;anni&quot;] / config.CAPITALE, &quot;pct1&quot;, f&quot;Commissioni pagate in media ogni anno, in quota del capitale iniziale ({rid}, scenario principale), {nome}&quot;)
+            reg(f&quot;{sl}_{rid}_tasse_anno&quot;, x[&quot;tasse_eur&quot;] / r[&quot;anni&quot;], &quot;num1&quot;, f&quot;Tasse pagate in media ogni anno in euro ({rid}, scenario principale), {nome}&quot;)
+            reg(f&quot;{sl}_{rid}_costo_anno&quot;, x[&quot;commissioni_eur&quot;] / r[&quot;anni&quot;], &quot;num1&quot;, f&quot;Commissioni pagate in media ogni anno in euro ({rid}, scenario principale), {nome}&quot;)
+        for rid in RID:
+            fin = r[&quot;scim&quot;][rid][&quot;finali&quot;]
+            reale = sm[(rid, M)][&quot;valore_finale_eur&quot;]
+            reg(f&quot;{sl}_{rid}_sc_mediana&quot;, float(np.median(fin)), &quot;int&quot;, f&quot;Valore finale mediano delle scimmie ({rid}, scenario principale), {nome}&quot;, &quot;scimmie_finali.csv&quot;)
+            reg(f&quot;{sl}_{rid}_sc_p5&quot;, float(np.quantile(fin, 0.05)), &quot;int&quot;, f&quot;5° percentile del valore finale delle scimmie ({rid}), {nome}&quot;, &quot;scimmie_finali.csv&quot;)
+            reg(f&quot;{sl}_{rid}_sc_p95&quot;, float(np.quantile(fin, 0.95)), &quot;int&quot;, f&quot;95° percentile del valore finale delle scimmie ({rid}), {nome}&quot;, &quot;scimmie_finali.csv&quot;)
+            reg(f&quot;{sl}_{rid}_p_sc&quot;, pgrezzo[(r[&quot;tk&quot;], rid)], &quot;pval&quot;, f&quot;p-value a una coda: quota di scimmie che fanno almeno quanto la regola ({rid}), {nome}&quot;, &quot;scimmie_finali.csv&quot;)
+            reg(f&quot;{sl}_{rid}_p_holm&quot;, ph[(r[&quot;tk&quot;], rid)], &quot;pval&quot;, f&quot;p-value delle scimmie corretto con Holm sui 18 test ({rid}), {nome}&quot;, &quot;scimmie_finali.csv&quot;)
+        # frequenza massima sostenibile (perdita netta con 2 euro non sopra la soglia)
+        buone = [rid for rid in RID if sm[(&quot;bh&quot;, M)][&quot;cagr&quot;] - sm[(rid, M)][&quot;cagr&quot;] &lt;= config.SOGLIA_SOSTENIBILE]
+        sost = max((ordini_anno[x] for x in buone), default=0.0)
+        r[&quot;sost&quot;] = sost
+        r[&quot;buone&quot;] = buone
+        reg(f&quot;{sl}_sost_ordini&quot;, sost, &quot;num1&quot;, f&quot;Ordini all&#x27;anno della frequenza più alta provata con perdita netta (2 euro) sotto la soglia, {nome}; zero se nessuna lo è&quot;)
+        reg(f&quot;{sl}_pareggio_ordini&quot;, sm[(&quot;bh&quot;, &quot;lordo&quot;)][&quot;cagr&quot;] * config.CAPITALE / config.SCENARI_COSTO[config.SCENARIO_PRINCIPALE][1], &quot;num1&quot;, f&quot;Ordini all&#x27;anno con cui le commissioni fisse (non composte) eguagliano il rendimento annuo lordo del buy &amp; hold su {config.CAPITALE:.0f} euro, {nome}&quot;, &quot;rendimento lordo del buy &amp; hold diviso la commissione, per 1.000 euro&quot;)
+
+    # --- Tabella teorica (nessun dato di mercato) --------------------------------------------------------------------
+    fissa = config.SCENARI_COSTO[config.SCENARIO_PRINCIPALE][1]
+    perc = config.SCENARI_COSTO[2][2]
+    for n_ord in config.ORDINI_TABELLA:
+        reg(f&quot;ana_{n_ord}_ordini&quot;, n_ord, &quot;int&quot;, &quot;Ordini all&#x27;anno nella tabella teorica&quot;, &quot;config.py, ORDINI_TABELLA&quot;)
+        reg(f&quot;ana_{n_ord}_fisso&quot;, n_ord * fissa / config.CAPITALE, &quot;pct1&quot;, f&quot;Costo annuo di {n_ord} ordini da {fissa:.0f} euro su {config.CAPITALE:.0f} euro, in quota del capitale&quot;, &quot;ordini x commissione / capitale&quot;)
+        reg(f&quot;ana_{n_ord}_perc&quot;, n_ord * perc, &quot;pct1&quot;, f&quot;Costo annuo di {n_ord} ordini con commissione proporzionale su capitale invariato, in quota del capitale&quot;, &quot;ordini x aliquota&quot;)
+    reg(&quot;ana_ordini_soglia&quot;, config.SOGLIA_SOSTENIBILE * config.CAPITALE / fissa, &quot;num1&quot;, &quot;Ordini all&#x27;anno che consumano da soli la soglia di sostenibilità con la commissione fissa&quot;, &quot;soglia x capitale / commissione&quot;)
+
+    # --- Ipotesi ----------------------------------------------------------------------------------------------------
+    nS = len(res)
+    reg(&quot;n_strumenti&quot;, nS, &quot;int&quot;, &quot;Strumenti utilizzabili&quot;, &quot;config.py e dati/&quot;)
+    reg(&quot;n_scartati&quot;, len(config.STRUMENTI) - nS, &quot;int&quot;, &quot;Strumenti scartati&quot;, &quot;metadati.json&quot;)
+    reg(&quot;n_h1&quot;, sum(r[&quot;sim&quot;][(&quot;y10&quot;, M)][&quot;cagr&quot;] &lt; 0 for r in res), &quot;int&quot;, &quot;Strumenti in cui il rendimento annuo netto (2 euro) del ciclo da 10 sedute è negativo&quot;)
+    reg(&quot;n_h2&quot;, sum(r[&quot;sim&quot;][(&quot;bh&quot;, M)][&quot;cagr&quot;] - r[&quot;sim&quot;][(&quot;y252&quot;, M)][&quot;cagr&quot;] &lt;= config.SOGLIA_SOSTENIBILE for r in res), &quot;int&quot;, &quot;Strumenti in cui il ciclo annuale perde meno della soglia rispetto al buy &amp; hold (2 euro)&quot;)
+    reg(&quot;n_h3&quot;, sum(r[&quot;sost&quot;] &lt; 10 for r in res), &quot;int&quot;, &quot;Strumenti in cui gli ordini all&#x27;anno sostenibili sono meno di 10&quot;)
+    reg(&quot;n_h4&quot;, sum(r[&quot;sim&quot;][(&quot;y5&quot;, &quot;c0&quot;)][&quot;cagr&quot;] &lt; r[&quot;sim&quot;][(&quot;bh&quot;, &quot;c0&quot;)][&quot;cagr&quot;] for r in res), &quot;int&quot;, &quot;Strumenti in cui, con commissione zero e tassa, il ciclo da 5 sedute rende meno del buy &amp; hold&quot;)
+    reg(&quot;n_h5&quot;, sum(all(r[&quot;sim&quot;][(&quot;bh&quot;, &quot;c2&quot;)][&quot;cagr&quot;] - r[&quot;sim&quot;][(x, &quot;c2&quot;)][&quot;cagr&quot;] &lt; r[&quot;sim&quot;][(&quot;bh&quot;, &quot;c1&quot;)][&quot;cagr&quot;] - r[&quot;sim&quot;][(x, &quot;c1&quot;)][&quot;cagr&quot;] for x in (&quot;y21&quot;, &quot;y10&quot;, &quot;y5&quot;)) for r in res), &quot;int&quot;, &quot;Strumenti in cui la commissione 0,1% perde meno della commissione da 2 euro alle tre frequenze alte (21, 10, 5 sedute)&quot;)
+    reg(&quot;n_h6_signif&quot;, sum(v &lt; 0.05 for v in ph.values()), &quot;int&quot;, &quot;Test sulle scimmie significativi dopo Holm (su 18)&quot;, &quot;scimmie_finali.csv&quot;)
+    reg(&quot;n_h6_grezzo&quot;, sum(v &lt; 0.05 for v in pgrezzo.values()), &quot;int&quot;, &quot;Test sulle scimmie con p-value sotto 0,05 senza correzione (su 18)&quot;, &quot;scimmie_finali.csv&quot;)
+    for x in (&quot;y10&quot;, &quot;y5&quot;):
+        reg(f&quot;n_esaurito_{x}&quot;, sum(int(r[&quot;sim&quot;][(x, M)][&quot;equity&quot;].min() &lt;= 1e-9) for r in res), &quot;int&quot;, f&quot;Strumenti in cui il capitale si esaurisce con la frequenza {x}, scenario principale&quot;)
+    reg(&quot;n_prove&quot;, nS * (1 + len(RID)) * len(NOME_SCEN), &quot;int&quot;, &quot;Simulazioni complete: strumenti x (buy &amp; hold + frequenze) x scenari&quot;, &quot;config.py&quot;)
+    reg(&quot;n_test&quot;, nS * len(RID), &quot;int&quot;, &quot;Test di ipotesi con correzione di Holm&quot;, &quot;config.py&quot;)
+    reg(&quot;n_frequenze&quot;, len(RID), &quot;int&quot;, &quot;Frequenze provate&quot;, &quot;config.py, CICLI&quot;)
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Scimmie per strumento e frequenza&quot;, &quot;config.py&quot;)
+    reg(&quot;seme&quot;, config.SEME, &quot;annonum&quot;, &quot;Seme dei sorteggi&quot;, &quot;config.py&quot;)
+    reg(&quot;capitale&quot;, config.CAPITALE, &quot;int&quot;, &quot;Capitale iniziale in euro&quot;, &quot;config.py&quot;)
+    reg(&quot;commissione_fissa&quot;, fissa, &quot;int&quot;, &quot;Commissione fissa per ordine, scenario principale, in euro&quot;, &quot;config.py&quot;)
+    reg(&quot;commissione_perc&quot;, perc, &quot;pct1&quot;, &quot;Commissione proporzionale, terzo scenario&quot;, &quot;config.py&quot;)
+    reg(&quot;aliquota&quot;, config.ALIQUOTA, &quot;pct0&quot;, &quot;Aliquota sulle plusvalenze&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia&quot;, config.SOGLIA_SOSTENIBILE, &quot;pp1&quot;, &quot;Soglia di sostenibilità: perdita annua massima rispetto al buy &amp; hold, in punti percentuali&quot;, &quot;config.py&quot;)
+    for L in config.CICLI:
+        reg(f&quot;ciclo_{L}&quot;, L, &quot;int&quot;, &quot;Sedute di un ciclo&quot;, &quot;config.py, CICLI&quot;)
+    reg(&quot;data_scarico&quot;, meta[&quot;scaricato_il_utc&quot;][:10], &quot;data&quot;, &quot;Data del download dei dati&quot;, &quot;dati/metadati.json&quot;)
+    reg(&quot;data_ultima&quot;, max(str(r[&quot;df&quot;].index[-1].date()) for r in res), &quot;data_lunga&quot;, &quot;Ultima seduta presente nei dati&quot;, &quot;dati/&quot;)
+
+    pd.DataFrame([x for r in res for x in r[&quot;prove&quot;]]).to_csv(config.RISULTATI / &quot;prove.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    colonne = {f&quot;{r[&#x27;sl&#x27;]}_{rid}&quot;: r[&quot;scim&quot;][rid][&quot;finali&quot;] for r in res for rid in RID}
+    pd.DataFrame(colonne).to_csv(config.RISULTATI / &quot;scimmie_finali.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+    (config.RISULTATI / &quot;strumenti_usati.json&quot;).write_text(json.dumps(
+        [{&quot;ticker&quot;: r[&quot;tk&quot;], &quot;slug&quot;: r[&quot;sl&quot;], &quot;nome&quot;: r[&quot;nome&quot;]} for r in res], ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_lordo_netto.png      rendimento annuo al crescere degli ordini: lordo, netto con tre scenari di costo
+  fig2_costi.png            commissioni e tasse pagate ogni anno, per frequenza
+  fig3_soglia.png           perdita di rendimento annuo rispetto al buy &amp; hold (2 euro) e soglia di sostenibilità
+  fig4_scimmie.png          regola a cicli contro scimmie (stesso numero di periodi): differenza dal valore mediano
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False, &quot;axes.grid&quot;: True,
+                     &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;, &quot;savefig.facecolor&quot;: &quot;white&quot;,
+                     &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+M = f&quot;c{config.SCENARIO_PRINCIPALE}&quot;
+RID = [f&quot;y{L}&quot; for L in config.CICLI]
+
+
+def breve(n):
+    return n.split(&quot; (&quot;)[0]
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    ind = json.loads((R / &quot;strumenti_usati.json&quot;).read_text(encoding=&quot;utf-8&quot;))
+    v = lambda sl, k: V[f&quot;{sl}_{k}&quot;][&quot;valore&quot;]
+    slugs = [i[&quot;slug&quot;] for i in ind]
+    nomi = {i[&quot;slug&quot;]: breve(i[&quot;nome&quot;]) for i in ind}
+    ns = len(slugs)
+
+    # --- Fig. 1 ------------------------------------------------------------------------------------------------------
+    fig, assi = plt.subplots(1, ns, figsize=(5.2 * ns, 5), sharey=True, squeeze=False)
+    scen = [(&quot;lordo&quot;, &quot;lordo&quot;, GRIGIO, &quot;-&quot;), (&quot;c0&quot;, &quot;netto, commissione 0&quot;, BLU, &quot;:&quot;), (&quot;c1&quot;, &quot;netto, 2 euro a ordine&quot;, BLU, &quot;-&quot;),
+            (&quot;c2&quot;, &quot;netto, 0,1%&quot;, ARANCIO, &quot;-&quot;)]
+    for ax, sl in zip(assi[0], slugs):
+        x = [v(sl, f&quot;{r}_ordini_nom&quot;) for r in RID]
+        for sid, nome, col, ls in scen:
+            y = [v(sl, f&quot;{r}_{sid}_cagr&quot;) * 100 for r in RID]
+            ax.plot(x, y, color=col, ls=ls, marker=&quot;o&quot;, label=nome)
+            ax.axhline(v(sl, f&quot;bh_{sid}_cagr&quot;) * 100, color=col, ls=&quot;--&quot;, lw=0.8, alpha=0.5)
+        ax.set_xscale(&quot;log&quot;)
+        ax.set_title(nomi[sl], fontsize=12)
+        ax.set_xlabel(&quot;ordini all&#x27;anno (scala logaritmica)&quot;)
+        ax.axhline(0, color=&quot;black&quot;, lw=0.8)
+        ax.set_ylim(-12, 20)
+    assi[0][0].set_ylabel(&quot;rendimento annuo composto (%)&quot;)
+    assi[0][0].legend(fontsize=9, loc=&quot;lower left&quot;)
+    fig.suptitle(&quot;Il rendimento cala al crescere degli ordini (trattini: buy &amp; hold; punti sotto il bordo = capitale esaurito)&quot;, y=1.02)
+    fig.savefig(config.FIGURE / &quot;fig1_lordo_netto.png&quot;); plt.close(fig)
+
+    # --- Fig. 2 ------------------------------------------------------------------------------------------------------
+    fig, assi = plt.subplots(1, ns, figsize=(5.2 * ns, 5), sharey=True, squeeze=False)
+    for ax, sl in zip(assi[0], slugs):
+        pos = np.arange(len(RID))
+        com = [v(sl, f&quot;{r}_costo_anno&quot;) for r in RID]
+        tas = [v(sl, f&quot;{r}_tasse_anno&quot;) for r in RID]
+        ax.bar(pos, com, color=ARANCIO, label=&quot;commissioni (2 euro)&quot;)
+        ax.bar(pos, tas, bottom=com, color=BLU, label=&quot;tasse (26%)&quot;)
+        ax.set_xticks(pos, [f&quot;{v(sl, f&#x27;{r}_ordini_nom&#x27;):.0f}&quot; for r in RID])
+        ax.set_xlabel(&quot;ordini all&#x27;anno&quot;)
+        ax.set_title(nomi[sl], fontsize=12)
+        ax.axhline(config.CAPITALE * 0.02, color=GRIGIO, ls=&quot;--&quot;, lw=1)
+    assi[0][0].set_ylabel(&quot;euro pagati ogni anno&quot;)
+    assi[0][0].legend(fontsize=9)
+    fig.suptitle(&quot;Commissioni e tasse pagate ogni anno su 1.000 euro (trattini: 2% del capitale)&quot;, y=1.02)
+    fig.savefig(config.FIGURE / &quot;fig2_costi.png&quot;); plt.close(fig)
+
+    # --- Fig. 3 ------------------------------------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(8, 5))
+    for sl, col, mk in zip(slugs, (BLU, ARANCIO, GRIGIO), (&quot;o&quot;, &quot;s&quot;, &quot;^&quot;)):
+        ax.plot([v(sl, f&quot;{r}_ordini_nom&quot;) for r in RID], [max(v(sl, f&quot;{r}_{M}_perdita&quot;) * 100, 0.01) for r in RID],
+                color=col, marker=mk, label=nomi[sl])
+    ax.axhline(config.SOGLIA_SOSTENIBILE * 100, color=&quot;black&quot;, ls=&quot;--&quot;, lw=1.2)
+    ax.text(0.97, config.SOGLIA_SOSTENIBILE * 100 * 1.15, &quot;soglia di sostenibilità&quot;, ha=&quot;right&quot;, va=&quot;bottom&quot;,
+            transform=ax.get_yaxis_transform(), fontsize=10)
+    ax.set_xscale(&quot;log&quot;); ax.set_yscale(&quot;log&quot;)
+    ax.set_xlabel(&quot;ordini all&#x27;anno (scala logaritmica)&quot;)
+    ax.set_ylabel(&quot;perdita di rendimento annuo\nrispetto al buy &amp; hold (punti, log)&quot;)
+    ax.set_title(&quot;Perdita rispetto al buy &amp; hold con 2 euro a ordine&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig3_soglia.png&quot;); plt.close(fig)
+
+    # --- Fig. 4 ------------------------------------------------------------------------------------------------------
+    fig, assi = plt.subplots(1, ns, figsize=(5.2 * ns, 5), sharey=False, squeeze=False)
+    for ax, sl in zip(assi[0], slugs):
+        pos = np.arange(len(RID))
+        med = np.array([v(sl, f&quot;{r}_sc_mediana&quot;) for r in RID])
+        lo = np.array([v(sl, f&quot;{r}_sc_p5&quot;) for r in RID]) - med
+        hi = np.array([v(sl, f&quot;{r}_sc_p95&quot;) for r in RID]) - med
+        reale = np.array([v(sl, f&quot;{r}_{M}_finale&quot;) for r in RID]) - med
+        ax.fill_between(pos, lo, hi, color=GRIGIO, alpha=0.3, label=&quot;scimmie, dal 5° al 95° percentile&quot;)
+        ax.plot(pos, reale, color=BLU, marker=&quot;o&quot;, label=&quot;regola a cicli&quot;)
+        ax.axhline(0, color=&quot;black&quot;, lw=0.8)
+        ax.set_xticks(pos, [f&quot;{v(sl, f&#x27;{r}_ordini_nom&#x27;):.0f}&quot; for r in RID])
+        ax.set_xlabel(&quot;ordini all&#x27;anno&quot;)
+        ax.set_title(nomi[sl], fontsize=12)
+    assi[0][0].set_ylabel(&quot;euro finali meno la mediana delle scimmie&quot;)
+    assi[0][0].legend(fontsize=9)
+    fig.suptitle(&quot;La regola a cicli contro le scimmie (stesso numero di periodi investiti)&quot;, y=1.02)
+    fig.savefig(config.FIGURE / &quot;fig4_scimmie.png&quot;); plt.close(fig)
+    print(&quot;Figure salvate&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>strumenti, parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 578 - &quot;Quante operazioni all&#x27;anno si possono permettere 1.000 euro?&quot; (rubrica «trading con poco capitale»).
+
+Tutti i parametri dell&#x27;analisi stanno qui, scritti PRIMA di guardare qualunque risultato.
+
+Che cosa si misura. Non si valuta una regola che prevede i prezzi, ma il solo peso della frequenza. La «regola a cicli» è
+un&#x27;agenda di posizione stabilita in anticipo, senza alcun segnale di mercato: si è investiti tutte le sedute tranne una ogni
+L sedute. Alla chiusura della seduta fuori si vende, alla chiusura della seduta successiva si ricompra. Ogni ciclo costa quindi
+due ordini (una vendita e un acquisto) e si resta fuori dal mercato una seduta su L. Cambiando L cambia solo la frequenza degli
+ordini: le previsioni sono assenti per costruzione, e ciò che separa la regola dal buy &amp; hold è il costo di operare (più la
+tassa pagata ogni volta che si realizza una plusvalenza). Il confronto con le scimmie dice se la scelta del giorno in cui si
+sta fuori conta (stesso numero di periodi investiti e stessa durata totale, piazzati a caso).
+Ordini e segnale: nessun look-ahead (l&#x27;agenda dipende solo dal numero della seduta); ordini eseguiti alla chiusura.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# Strumenti scelti a priori (gli stessi delle puntate precedenti della rubrica, per poter confrontare i numeri).
+STRUMENTI = [
+    (&quot;SWDA.MI&quot;, &quot;ETF azionario mondiale (MSCI World, in euro)&quot;, &quot;EUR&quot;),
+    (&quot;CSSPX.MI&quot;, &quot;ETF sull&#x27;S&amp;P 500 (in euro)&quot;, &quot;EUR&quot;),
+    (&quot;^GSPC&quot;, &quot;indice S&amp;P 500 (in dollari, convertito in euro)&quot;, &quot;USD&quot;),
+]
+TICKER_CAMBIO = &quot;EURUSD=X&quot;
+INIZIO_DOWNLOAD = &quot;1995-01-01&quot;
+STORIA_MINIMA_ANNI = 8
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;, &quot;MSCI World&quot;, &quot;EUR/USD&quot;, &quot;buy &amp; hold&quot;)
+FUSO_BORSA = &quot;Europe/Rome&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;chiusure giornaliere di due ETF quotati a Milano, dell&#x27;indice S&amp;P 500 e del cambio euro-dollaro&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;).replace(&quot;=&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+def slug(ticker: str) -&gt; str:
+    return ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;).replace(&quot;=&quot;, &quot;_&quot;).lower()
+
+
+# --- Condizioni della rubrica ---------------------------------------------------------------------------------------
+CAPITALE = 1000.0
+SCENARI_COSTO = [(&quot;0 euro&quot;, 0.0, 0.0), (&quot;2 euro&quot;, 2.0, 0.0), (&quot;0,1%&quot;, 0.0, 0.001)]
+SCENARIO_PRINCIPALE = 1       # «2 euro»
+ALIQUOTA = 0.26
+MODO = &quot;chiusura&quot;
+
+# --- La regola a cicli ------------------------------------------------------------------------------------------------
+# Lunghezza del ciclo in sedute: L-1 sedute investite e 1 fuori. Circa 252 sedute l&#x27;anno.
+CICLI = (252, 126, 63, 21, 10, 5)
+SEDUTE_ANNO = 252
+SOGLIA_SOSTENIBILE = 0.005    # perdita massima di rendimento annuo netto rispetto al buy &amp; hold (scenario 2 euro): 0,5 punti
+ORDINI_TABELLA = (2, 12, 52, 104, 250)   # tabella teorica: ordini all&#x27;anno e costo in quota del capitale (nessun dato di mercato)
+
+# --- Test statistici -------------------------------------------------------------------------------------------------
+SEME = 20261027
+N_SCIMMIE = 2000
+LIVELLO_CONFIDENZA = 0.95
+# Prove dichiarate: 3 strumenti x (buy &amp; hold + 6 frequenze) x 4 scenari (lordo + 3 di costo) = 84 simulazioni.
+# Test di ipotesi: le scimmie, 3 strumenti x 6 frequenze = 18 test (scenario 2 euro), corretti con Holm.
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------------------------------
+IPOTESI = (
+    &quot;1) Con 2 euro a ordine, a un ciclo ogni 10 sedute (circa 50 ordini l&#x27;anno) il rendimento annuo netto è negativo in tutti &quot;
+    &quot;gli strumenti. &quot;
+    &quot;2) Con un solo ciclo l&#x27;anno (2 ordini) la perdita di rendimento annuo netto rispetto al buy &amp; hold con 2 euro a ordine è &quot;
+    &quot;sotto la soglia di 0,5 punti percentuali in tutti gli strumenti (soglia di sostenibilità scritta prima). &quot;
+    &quot;3) Il numero massimo di ordini all&#x27;anno sostenibile (perdita sotto 0,5 punti, 2 euro a ordine) tra le frequenze provate &quot;
+    &quot;è inferiore a 10 in tutti gli strumenti. &quot;
+    &quot;4) Anche con commissione zero, la sola tassa del 26% pagata a ogni plusvalenza realizzata fa rendere meno la frequenza più &quot;
+    &quot;alta (un ciclo ogni 5 sedute) del buy &amp; hold, in tutti gli strumenti. &quot;
+    &quot;5) Con 1.000 euro la commissione dello 0,1% pesa meno di quella da 2 euro (a 1.000 euro 2 euro valgono lo 0,2%): la perdita &quot;
+    &quot;di rendimento annuo con 0,1% è inferiore a quella con 2 euro alle frequenze di almeno un ciclo al mese, in tutti gli strumenti. &quot;
+    &quot;6) Dopo la correzione di Holm sui 18 test, nessuna frequenza batte le scimmie: scegliere il giorno in cui stare fuori &quot;
+    &quot;non aggiunge né toglie nulla.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/simulazione.py<small>motore in euro: ordini, commissioni, tassa, minusvalenze, scimmie</small></summary><pre><code class="language-python">&quot;&quot;&quot;Motore di simulazione in euro di una regola su un singolo strumento (trend con stop loss facoltativo, oppure un&#x27;agenda di
+posizione stabilita in anticipo, `obiettivo`).
+
+Regole (da dichiarare nell&#x27;articolo):
+  - segnale: investito se la chiusura sta sopra la media mobile semplice (calcolata sulle chiusure);
+  - il segnale a fine seduta t decide l&#x27;ordine della seduta t+1, eseguito alla chiusura di t+1 (nessun look-ahead),
+    con il cambio della stessa seduta;
+  - stop loss: se alla chiusura di t la chiusura è scesa dello `stop` o più sotto il prezzo di acquisto (nella valuta
+    dello strumento) e il segnale di trend è ancora vero, si vende alla chiusura di t+1; si rientra solo dopo che il
+    segnale è tornato falso e poi vero (se il segnale è già falso, l&#x27;uscita è quella del trend, senza blocco);
+  - azioni frazionate, si investe tutta la cassa; commissione per ogni ordine = parte fissa + parte proporzionale
+    all&#x27;importo investito o incassato;
+  - la cassa non rende nulla; i dividendi non sono considerati;
+  - tassa sulle plusvalenze calcolate in euro (cambio incluso), pagata a ogni vendita come nel regime amministrato;
+    la commissione si somma al costo di acquisto e si sottrae dall&#x27;incasso; le minusvalenze compensano le plusvalenze
+    successive fino al quarto anno seguente;
+  - a fine periodo si vende tutto, con commissione e tassa, per confrontare cifre nette.
+Non modellati: imposta di bollo, tassa sulle transazioni finanziarie, spread di cambio, scarto tra denaro e lettera.
+&quot;&quot;&quot;
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+
+class Zaino:
+    &quot;&quot;&quot;Minusvalenze compensabili con le plusvalenze successive, fino al 4° anno seguente.&quot;&quot;&quot;
+
+    def __init__(self, aliquota: float):
+        self.aliquota = aliquota
+        self.voci: list[list[float]] = []   # [ultimo anno utilizzabile, importo residuo]
+
+    def tassa(self, anno: int, guadagno: float) -&gt; float:
+        if guadagno &lt; 0:
+            self.voci.append([anno + 4, -guadagno])
+            return 0.0
+        residuo = guadagno
+        for voce in sorted(self.voci, key=lambda v: v[0]):      # prima le più vecchie
+            if voce[0] &lt; anno or voce[1] &lt;= 0:
+                continue
+            usa = min(voce[1], residuo)
+            voce[1] -= usa
+            residuo -= usa
+            if residuo &lt;= 0:
+                break
+        return self.aliquota * residuo
+
+
+def carica_csv(percorso: Path) -&gt; pd.DataFrame:
+    df = pd.read_csv(percorso, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    if (df[&quot;Close&quot;] &lt;= 0).any() or df[&quot;Close&quot;].isna().any():
+        raise SystemExit(f&quot;{percorso}: chiusure mancanti o non positive.&quot;)
+    return df
+
+
+def prepara(titolo: pd.DataFrame, cambio: pd.DataFrame | None, media: int) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Chiusure, cambio (dollari per euro; 1 per gli strumenti in euro), media mobile e segnale di trend.&quot;&quot;&quot;
+    df = titolo[[&quot;Close&quot;]].astype(float).copy()
+    if cambio is None:
+        df[&quot;fx&quot;] = 1.0
+    else:
+        fx = cambio[&quot;Close&quot;].astype(float)
+        df[&quot;fx&quot;] = fx.reindex(df.index.union(fx.index)).ffill().reindex(df.index)
+        df = df.dropna(subset=[&quot;fx&quot;])
+    df[&quot;sma&quot;] = df[&quot;Close&quot;].rolling(media).mean()
+    df[&quot;segnale&quot;] = (df[&quot;Close&quot;] &gt; df[&quot;sma&quot;]) &amp; df[&quot;sma&quot;].notna()
+    return df
+
+
+def primo_indice(df: pd.DataFrame) -&gt; int:
+    &quot;&quot;&quot;Prima seduta il cui segnale precedente è calcolabile con la media completa.&quot;&quot;&quot;
+    return int(np.flatnonzero(df[&quot;sma&quot;].notna().to_numpy())[0]) + 1
+
+
+def _compra_importo(cassa: float, fissa: float, perc: float) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Dalla cassa all&#x27;importo investito e alla commissione pagata: cassa = investito + fissa + perc*investito.&quot;&quot;&quot;
+    investito = (cassa - fissa) / (1.0 + perc)
+    return investito, fissa + perc * investito
+
+
+def valuta_blocchi(C: np.ndarray, FX: np.ndarray, anni: np.ndarray, acquisti, vendite, capitale: float,
+                   fissa: float, perc: float, aliquota: float) -&gt; tuple[float, float, float]:
+    &quot;&quot;&quot;Valore finale, commissioni e tasse di una sequenza di blocchi (acquisto alla chiusura a[j], vendita alla chiusura
+    b[j]). È la stessa contabilità di `simula`, senza il registro: serve alle scimmie.&quot;&quot;&quot;
+    cassa = capitale
+    zaino = Zaino(aliquota)
+    comm_tot = tasse_tot = 0.0
+    for a, b in zip(acquisti, vendite):
+        investito, comm = _compra_importo(cassa, fissa, perc)
+        if investito &lt;= 0:
+            continue
+        base = cassa
+        azioni = investito / (C[a] / FX[a])
+        lordo = azioni * C[b] / FX[b]
+        comm_v = min(fissa + perc * lordo, lordo)
+        netto = lordo - comm_v
+        tassa = zaino.tassa(int(anni[b]), netto - base)
+        comm_tot += comm + comm_v
+        tasse_tot += tassa
+        cassa = netto - tassa
+    return cassa, comm_tot, tasse_tot
+
+
+def simula(df: pd.DataFrame, i0: int, capitale: float, fissa: float, perc: float, aliquota: float,
+           strategia: bool, stop: float | None = None, obiettivo=None) -&gt; dict:
+    &quot;&quot;&quot;strategia=True: regola di trend (con stop loss se `stop` è un numero); False: buy &amp; hold (compra a i0, vende alla fine).&quot;&quot;&quot;
+    C, FX = (df[c].to_numpy(float) for c in (&quot;Close&quot;, &quot;fx&quot;))
+    SEG = df[&quot;segnale&quot;].to_numpy(bool)
+    date = df.index
+    n = len(df)
+    cassa, azioni, base = float(capitale), 0.0, 0.0
+    entrata_locale = 0.0
+    bloccato = False
+    zaino = Zaino(aliquota)
+    log: list[dict] = []
+    tot = {&quot;commissioni&quot;: 0.0, &quot;tasse&quot;: 0.0}
+    equity = np.empty(n - i0)
+    in_posizione = np.zeros(n - i0, dtype=bool)
+
+    def compra(i, motivo):
+        nonlocal cassa, azioni, base, entrata_locale
+        investito, comm = _compra_importo(cassa, fissa, perc)
+        if investito &lt;= 0:
+            return
+        px_eur = C[i] / FX[i]
+        azioni = investito / px_eur
+        base = cassa
+        entrata_locale = C[i]
+        tot[&quot;commissioni&quot;] += comm
+        log.append(dict(i=i, data=str(date[i].date()), lato=&quot;acquisto&quot;, motivo=motivo, prezzo=C[i], cambio=FX[i],
+                        prezzo_eur=px_eur, azioni=azioni, commissione=comm, spesa_eur=cassa,
+                        incasso_netto_eur=0.0, plusvalenza_eur=0.0, tassa_eur=0.0))
+        cassa = 0.0
+
+    def vendi(i, motivo):
+        nonlocal cassa, azioni, base
+        px_eur = C[i] / FX[i]
+        lordo = azioni * px_eur
+        comm = min(fissa + perc * lordo, lordo)       # la commissione non può superare l&#x27;incasso: il capitale non va sotto zero
+        netto = lordo - comm
+        guadagno = netto - base
+        tassa = zaino.tassa(int(date[i].year), guadagno)
+        tot[&quot;commissioni&quot;] += comm
+        tot[&quot;tasse&quot;] += tassa
+        log.append(dict(i=i, data=str(date[i].date()), lato=&quot;vendita&quot;, motivo=motivo, prezzo=C[i], cambio=FX[i],
+                        prezzo_eur=px_eur, azioni=azioni, commissione=comm, spesa_eur=0.0,
+                        incasso_netto_eur=netto, plusvalenza_eur=guadagno, tassa_eur=tassa))
+        cassa = netto - tassa
+        azioni, base = 0.0, 0.0
+
+    for i in range(i0, n):
+        if strategia:
+            sig = bool(SEG[i - 1]) if obiettivo is None else bool(obiettivo[i])
+            if bloccato and not sig:
+                bloccato = False
+            # uno stop che scatta nella stessa seduta in cui il trend chiede comunque di uscire è un&#x27;uscita di trend
+            colpito = stop is not None and azioni &gt; 0.0 and sig and C[i - 1] &lt;= entrata_locale * (1.0 - stop)
+            if colpito:
+                vendi(i, &quot;stop loss&quot;)
+                bloccato = True
+            elif sig and not bloccato and azioni == 0.0:
+                compra(i, &quot;segnale&quot;)
+            elif (not sig) and azioni &gt; 0.0:
+                vendi(i, &quot;segnale&quot;)
+        elif i == i0:
+            compra(i, &quot;acquisto iniziale&quot;)
+        equity[i - i0] = cassa + azioni * C[i] / FX[i]
+        in_posizione[i - i0] = azioni &gt; 0.0
+    if azioni &gt; 0.0:
+        vendi(n - 1, &quot;liquidazione finale&quot;)
+
+    picco = np.maximum.accumulate(equity)
+    anni = (date[-1] - date[i0]).days / 365.25
+    finale = cassa
+    return {
+        &quot;valore_finale_eur&quot;: finale,
+        &quot;rendimento_totale&quot;: finale / capitale - 1,
+        &quot;cagr&quot;: (finale / capitale) ** (1 / anni) - 1 if finale &gt; 0 else -1.0,
+        &quot;anni&quot;: anni,
+        &quot;n_acquisti&quot;: sum(1 for r in log if r[&quot;lato&quot;] == &quot;acquisto&quot;),
+        &quot;n_vendite&quot;: sum(1 for r in log if r[&quot;lato&quot;] == &quot;vendita&quot;),
+        &quot;n_stop&quot;: sum(1 for r in log if r[&quot;motivo&quot;] == &quot;stop loss&quot;),
+        &quot;commissioni_eur&quot;: tot[&quot;commissioni&quot;],
+        &quot;tasse_eur&quot;: tot[&quot;tasse&quot;],
+        &quot;quota_giorni_investito&quot;: float(in_posizione.mean()),
+        &quot;giorni_investito&quot;: int(in_posizione.sum()),
+        &quot;perdita_massima&quot;: float((equity / picco - 1).min()),
+        &quot;operazioni&quot;: log,
+        &quot;equity&quot;: equity,
+        &quot;in_posizione&quot;: in_posizione,
+    }
+
+
+def blocchi(res: dict) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Indici di acquisto e di vendita (nelle sedute del dataframe) dei periodi investiti di una simulazione.&quot;&quot;&quot;
+    a = np.array([r[&quot;i&quot;] for r in res[&quot;operazioni&quot;] if r[&quot;lato&quot;] == &quot;acquisto&quot;], dtype=int)
+    b = np.array([r[&quot;i&quot;] for r in res[&quot;operazioni&quot;] if r[&quot;lato&quot;] == &quot;vendita&quot;], dtype=int)
+    return a, b
+
+
+def scimmia(k: int, durata_totale: int, n_sedute: int, rng) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Una scimmia: k periodi investiti, la cui durata totale (sedute tra acquisto e vendita) è `durata_totale`, piazzati
+    a caso nelle `n_sedute` sedute disponibili, senza sovrapposizioni. Restituisce gli indici relativi di acquisto e vendita.&quot;&quot;&quot;
+    if k == 1:
+        durate = np.array([durata_totale])
+    else:
+        tagli = np.sort(rng.choice(durata_totale - 1, size=k - 1, replace=False)) + 1
+        durate = np.diff(np.r_[0, tagli, durata_totale])               # k durate, ciascuna almeno 1
+    libere = n_sedute - durata_totale - k                              # sedute rimaste fuori dai blocchi (b - a + 1 sedute l&#x27;uno)
+    if libere &lt; 0:
+        raise ValueError(&quot;blocchi troppo lunghi per le sedute disponibili&quot;)
+    tagli_l = np.sort(rng.choice(libere + k, size=k, replace=False)) - np.arange(k)    # k+1 vuoti non negativi
+    vuoti = np.diff(np.r_[0, tagli_l, libere])
+    inizi = np.cumsum(np.r_[vuoti[0], vuoti[1:k] + durate[:-1] + 1])
+    return inizi, inizi + durate
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli del motore sulla regola a cicli. Usa SOLO dati inventati: nessun numero qui è un risultato.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import simulazione as s
+
+ok = 0
+
+
+def verifica(nome, cond, det=&quot;&quot;):
+    global ok
+    if not cond:
+        raise SystemExit(f&quot;FALLITO: {nome} {det}&quot;)
+    ok += 1
+    print(f&quot;  ok  {nome}&quot;)
+
+
+def uguali(a, b, tol=1e-9):
+    return abs(a - b) &lt;= tol * max(1.0, abs(a), abs(b))
+
+
+def serie(chiusure, fx=1.0):
+    return pd.DataFrame({&quot;Close&quot;: np.array(chiusure, float), &quot;fx&quot;: fx, &quot;segnale&quot;: True},
+                        index=pd.bdate_range(&quot;2022-03-01&quot;, periods=len(chiusure)))
+
+
+def agenda(n, i0, L):
+    return np.array([(i - i0) % L != L - 1 for i in range(n)])
+
+
+print(&quot;Regola a cicli&quot;)
+d = serie([100.0] * 12)
+ob = agenda(12, 1, 4)           # sedute 1,2,3 dentro, 4 fuori, 5,6,7 dentro, 8 fuori, 9,10,11 dentro
+r = s.simula(d, 1, 1000, 2.0, 0.0, 0.26, True, obiettivo=ob)
+verifica(&quot;ordini: 3 acquisti e 3 vendite (compresa la liquidazione finale)&quot;, (r[&quot;n_acquisti&quot;], r[&quot;n_vendite&quot;]) == (3, 3), (r[&quot;n_acquisti&quot;], r[&quot;n_vendite&quot;]))
+verifica(&quot;prezzi fermi: ogni ordine costa 2 euro e la cassa cala di 12 euro&quot;, uguali(r[&quot;valore_finale_eur&quot;], 988.0) and uguali(r[&quot;commissioni_eur&quot;], 12.0), r[&quot;valore_finale_eur&quot;])
+verifica(&quot;nessuna tassa se non ci sono plusvalenze&quot;, r[&quot;tasse_eur&quot;] == 0.0)
+verifica(&quot;quota di sedute investite&quot;, uguali(r[&quot;quota_giorni_investito&quot;], 9 / 11), r[&quot;quota_giorni_investito&quot;])
+
+# Prezzo che sale del 10% tra l&#x27;acquisto e la prima vendita, poi fermo: 1.000 -&gt; 998 investiti -&gt; 1.097,8 -&gt; 1.095,8 netti
+d = serie([100, 100, 100, 110, 110, 110, 110, 110, 110])
+ob = np.array([1, 1, 1, 0, 1, 1, 1, 1, 1], bool)
+r = s.simula(d, 1, 1000, 2.0, 0.0, 0.26, True, obiettivo=ob)
+az = 998 / 100
+inc = az * 110 - 2
+tassa = 0.26 * (inc - 1000)
+verifica(&quot;prima plusvalenza tassata alla vendita del ciclo&quot;, uguali(r[&quot;operazioni&quot;][1][&quot;tassa_eur&quot;], tassa), r[&quot;operazioni&quot;][1][&quot;tassa_eur&quot;])
+
+# Nessun look-ahead: l&#x27;agenda dipende solo dall&#x27;indice, cambiare i prezzi futuri non cambia gli ordini già dati
+a = serie(list(np.linspace(100, 120, 30)))
+b = a.copy(); b.loc[b.index[20:], &quot;Close&quot;] *= 0.5
+ob = agenda(30, 1, 5)
+ra = s.simula(a, 1, 1000, 2.0, 0.0, 0.26, True, obiettivo=ob)
+rb = s.simula(b, 1, 1000, 2.0, 0.0, 0.26, True, obiettivo=ob)
+ia = [(o[&quot;i&quot;], o[&quot;lato&quot;]) for o in ra[&quot;operazioni&quot;] if o[&quot;i&quot;] &lt; 20]
+ib = [(o[&quot;i&quot;], o[&quot;lato&quot;]) for o in rb[&quot;operazioni&quot;] if o[&quot;i&quot;] &lt; 20]
+verifica(&quot;nessun look-ahead&quot;, ia == ib)
+
+# Coerenza con il contabile delle scimmie: stessi blocchi, stesso valore finale
+rng = np.random.default_rng(1)
+C = 100 * np.cumprod(1 + rng.normal(0.0004, 0.01, 400)); d = serie(C)
+ob = agenda(400, 1, 10)
+r = s.simula(d, 1, 1000, 2.0, 0.001, 0.26, True, obiettivo=ob)
+ia, ib = s.blocchi(r)
+fin = s.valuta_blocchi(C, np.ones(400), d.index.year.to_numpy(), ia, ib, 1000, 2.0, 0.001, 0.26)[0]
+verifica(&quot;motore completo e contabile delle scimmie coincidono&quot;, uguali(fin, r[&quot;valore_finale_eur&quot;]), (fin, r[&quot;valore_finale_eur&quot;]))
+for _ in range(50):
+    k, D = 7, 120
+    x, y = s.scimmia(k, D, 400, rng)
+    assert len(x) == k and (y - x).sum() == D and (x[1:] &gt; y[:-1]).all() and x[0] &gt;= 0 and y[-1] &lt; 400
+verifica(&quot;scimmie: k periodi, durata totale D, senza sovrapposizioni&quot;, True)
+print(f&quot;Tutti i controlli superati: {ok}&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
