@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PAC mensile: conta il giorno del mese in cui compri? · il codice · TickerFight</title>
+<meta name="description" content="in un piano di accumulo con versamento mensile fisso, comprare il 3 o il 25 del mese cambia davvero il risultato, o la differenza è rumore?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>PAC mensile: conta il giorno del mese in cui compri?</h1>
+<p class="domanda">In un piano di accumulo con versamento mensile fisso, comprare il 3 o il 25 del mese cambia davvero il risultato, o la differenza è rumore?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="pac-mensile-conta-il-giorno-del-mese-in-cui-compri.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Piano:</strong> ogni mese si versano 100 unità di valuta e si comprano quote frazionate dell'indice alla chiusura della prima seduta uguale o successiva al giorno scelto (da 1 a 28). Commissione di 2 per acquisto, tassa del 26% sulla plusvalenza alla vendita finale di tutto. Nessun look-ahead: il giorno è fissato in anticipo.</li>
+<li><strong>Indici:</strong> S&amp;P 500, DAX, CAC 40, Euro Stoxx 50, FTSE MIB, Nikkei 225, scelti prima di guardare i dati. Valuta locale, senza cambio.</li>
+<li><strong>Confronti:</strong> il valore finale dei 28 giorni; mille serie con gli stessi rendimenti giornalieri messi in ordine casuale (stessa media e volatilità, nessun calendario); scimmie che scelgono un giorno a caso ogni mese.</li>
+<li><strong>Test:</strong> scarto tra giorno migliore e peggiore contro le serie rimescolate con correzione di Holm sugli indici; trasferimento del giorno migliore agli altri indici; stabilità tra prima e seconda metà della storia.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>pac-mensile-conta-il-giorno-del-mese-in-cui-compri/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica sei indici azionari
+    ├── 02_backtest_e_test.py  piano per ogni giorno 1-28, serie senza calendario, scimmie, test
+    ├── 03_grafici.py          i tre grafici
+    ├── config.py              indici, parametri e ipotesi, scritti prima dei risultati
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd pac-mensile-conta-il-giorno-del-mese-in-cui-compri
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera di sei indici azionari.
+
+Salva, per ogni indice, dati/&lt;ticker&gt;.csv (Date, Open, High, Low, Close, Volume) e dati/metadati.json con la fonte,
+la data del download, la versione di yfinance e l&#x27;impronta SHA-256 di ogni file. Gli script successivi leggono SOLO
+i file salvati: i risultati restano riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;indici&quot;: []}
+    for ticker, nome, valuta in config.INDICI:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nome, &quot;valuta&quot;: valuta}
+        grezzo = scarica(ticker)
+        if grezzo.empty:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;indici&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;])
+        df = df[df[&quot;Close&quot;] &gt; 0]
+        # seduta ancora in corso: barra incompleta, da scartare
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:
+            df = df.iloc[:-1]
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;indici&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    if sum(1 for r in meta[&quot;indici&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;) &lt; 4:
+        raise SystemExit(&quot;Troppo pochi indici scaricati.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>piano per ogni giorno 1-28, serie senza calendario, scimmie, test</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Piano di accumulo mensile: il giorno del mese conta?
+
+Per ogni indice:
+  - prezzo di acquisto di ogni giorno 1..28 in ogni mese completo (chiusura della prima seduta &gt;= quel giorno);
+  - valore finale netto del piano per ogni giorno (versamento fisso, commissione per acquisto, tassa alla vendita finale);
+  - serie senza calendario: i rendimenti giornalieri vengono rimescolati; lo scarto (migliore - peggiore) osservato
+    viene confrontato con quelli ottenuti sulle serie rimescolate (stessa media e volatilità, nessun calendario);
+  - scimmie: ogni mese un giorno a caso;
+  - confronto prima/seconda metà della storia e trasferimento del giorno migliore sugli altri indici.
+Scrive risultati/metriche.json (ogni numero dell&#x27;articolo) e i csv di supporto.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+
+RIS: dict = {}
+SORGENTE = &quot;risultati/ (calcolato da 02_backtest_e_test.py)&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.integer,)):
+        valore = int(valore)
+    elif isinstance(valore, (np.floating,)):
+        valore = float(valore)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def slug(ticker: str) -&gt; str:
+    return ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;).lower()
+
+
+def indici_acquisto(close: pd.Series):
+    &quot;&quot;&quot;Posizioni (mesi, 28) delle sedute di acquisto e posizione della seduta finale.
+
+    Si usano solo i mesi completi: dal primo mese intero all&#x27;ultimo mese chiuso. Per ogni mese e giorno d si prende la
+    prima seduta con giorno &gt;= d. Seduta finale = ultima seduta dell&#x27;ultimo mese incluso.
+    &quot;&quot;&quot;
+    c = close.dropna()
+    c = c[c &gt; 0]
+    ym = c.index.to_period(&quot;M&quot;)
+    primo = c.index[0].to_period(&quot;M&quot;) + 1                     # il primo mese può essere parziale
+    ultimo = c.index[-1].to_period(&quot;M&quot;) - 1                   # l&#x27;ultimo mese può essere in corso
+    righe, ok_mesi = [], []
+    for m in pd.period_range(primo, ultimo, freq=&quot;M&quot;):
+        pos = np.flatnonzero(ym == m)
+        if len(pos) == 0:
+            continue
+        giorni = c.index[pos].day.values
+        r = []
+        for d in config.GIORNI:
+            k = np.searchsorted(giorni, d, side=&quot;left&quot;)
+            r.append(pos[k] if k &lt; len(pos) else -1)
+        if min(r) &lt; 0:
+            continue
+        righe.append(r)
+        ok_mesi.append(m)
+    ultima_pos = int(np.flatnonzero(ym == ultimo)[-1])
+    return c.values.astype(float), np.array(righe, dtype=int), pd.PeriodIndex(ok_mesi), ultima_pos
+
+
+def valore_netto(quote: np.ndarray, n_acquisti: int, prezzo_finale: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Valore finale netto: quote * prezzo - tassa sulla plusvalenza (la commissione è già nelle quote).&quot;&quot;&quot;
+    versato = n_acquisti * config.VERSAMENTO
+    lordo = quote * prezzo_finale
+    plus = lordo - versato - config.COMMISSIONE   # commissione di vendita finale
+    tassa = np.where(plus &gt; 0, config.ALIQUOTA * plus, 0.0)
+    return lordo - config.COMMISSIONE - tassa
+
+
+def quote_per_giorno(P: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Quote acquistate per ogni giorno: ogni mese si versa VERSAMENTO e si paga la commissione (si compra con il resto).&quot;&quot;&quot;
+    return ((config.VERSAMENTO - config.COMMISSIONE) / P).sum(axis=0)
+
+
+def holm(p: dict) -&gt; dict:
+    chiavi = sorted(p, key=lambda k: p[k])
+    m = len(chiavi)
+    out, massimo = {}, 0.0
+    for i, k in enumerate(chiavi):
+        massimo = max(massimo, min(1.0, (m - i) * p[k]))
+        out[k] = massimo
+    return out
+
+
+def scarto(valori: np.ndarray) -&gt; float:
+    return float((valori.max() - valori.min()) / valori.mean())
+
+
+def analizza(tk: str, nome: str, valuta: str, rng) -&gt; dict | None:
+    df = pd.read_csv(config.file_dati(tk), index_col=0, parse_dates=True)
+    prezzo, IDX, mesi, ultima = indici_acquisto(df[&quot;Close&quot;])
+    if len(mesi) &lt; config.MESI_MINIMI:
+        return None
+    P = prezzo[IDX]
+    finale = float(prezzo[ultima])
+    n = len(mesi)
+    inv = (config.VERSAMENTO - config.COMMISSIONE) / P                      # quote per mese e giorno
+    quote = inv.sum(axis=0)
+    val = valore_netto(quote, n, finale)
+    sc = scarto(val)
+    giorno_mig, giorno_peg = int(np.argmax(val)) + 1, int(np.argmin(val)) + 1
+
+    # serie senza calendario: i rendimenti giornalieri vengono rimescolati nell&#x27;intera storia (stessa media e
+    # stessa volatilità, ma nessun giorno del mese è speciale); su ogni serie si rifà tutto il confronto
+    lr = np.diff(np.log(prezzo))
+    scarti_perm = np.empty(config.N_PERMUTAZIONI)
+    for k in range(config.N_PERMUTAZIONI):
+        pr = prezzo[0] * np.exp(np.concatenate([[0.0], np.cumsum(rng.permutation(lr))]))
+        q = ((config.VERSAMENTO - config.COMMISSIONE) / pr[IDX]).sum(axis=0)
+        v = valore_netto(q, n, float(pr[ultima]))
+        scarti_perm[k] = scarto(v)
+    p_perm = float((np.sum(scarti_perm &gt;= sc) + 1) / (config.N_PERMUTAZIONI + 1))
+
+    # scimmie: ogni mese un giorno a caso
+    sg = rng.integers(0, len(config.GIORNI), size=(config.N_SCIMMIE, n))
+    q_sc = np.take_along_axis(np.broadcast_to(inv, (config.N_SCIMMIE, n, len(config.GIORNI))), sg[:, :, None], axis=2).sum(axis=(1, 2))
+    v_sc = valore_netto(q_sc, n, finale)
+
+    # prima e seconda metà della storia
+    meta = n // 2
+    # per ogni metà si confrontano le quote comprate per ogni unità versata (il prezzo finale è comune)
+    q1 = inv[:meta].sum(axis=0) / meta
+    q2 = inv[meta:].sum(axis=0) / (n - meta)
+    g1, g2 = int(np.argmax(q1)) + 1, int(np.argmax(q2)) + 1
+
+    q_fine = inv[:, [d - 1 for d in config.GIORNI_FINE_MESE]].sum() / (n * len(config.GIORNI_FINE_MESE))
+    q_inizio = inv[:, [d - 1 for d in config.GIORNI_INIZIO_MESE]].sum() / (n * len(config.GIORNI_INIZIO_MESE))
+    return {&quot;tk&quot;: tk, &quot;sl&quot;: slug(tk), &quot;nome&quot;: nome, &quot;valuta&quot;: valuta, &quot;n&quot;: n, &quot;val&quot;: val, &quot;scarto&quot;: sc,
+            &quot;gm&quot;: giorno_mig, &quot;gp&quot;: giorno_peg, &quot;p_perm&quot;: p_perm, &quot;scarti_perm&quot;: scarti_perm,
+            &quot;sc_mediana&quot;: float(np.median(v_sc)), &quot;sc_p5&quot;: float(np.percentile(v_sc, 5)), &quot;sc_p95&quot;: float(np.percentile(v_sc, 95)),
+            &quot;v_sc&quot;: v_sc, &quot;g1&quot;: g1, &quot;g2&quot;: g2, &quot;fine_su_inizio&quot;: float(q_fine / q_inizio - 1),
+            &quot;prima_data&quot;: str(mesi[0]), &quot;ultimo_mese&quot;: str(mesi[-1]), &quot;finale&quot;: finale,
+            &quot;versato&quot;: n * config.VERSAMENTO, &quot;rango_mediana_giorni&quot;: float(np.median(val)),
+            &quot;inv_tot&quot;: quote}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    meta_dati = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    rng = np.random.default_rng(config.SEME)
+    res = []
+    for riga in meta_dati[&quot;indici&quot;]:
+        if riga.get(&quot;stato&quot;) != &quot;ok&quot;:
+            continue
+        r = analizza(riga[&quot;ticker&quot;], riga[&quot;nome&quot;], riga[&quot;valuta&quot;], rng)
+        if r is not None:
+            res.append(r)
+            print(f&quot;{r[&#x27;nome&#x27;]}: {r[&#x27;n&#x27;]} mesi, scarto {r[&#x27;scarto&#x27;]:.3%}, giorno migliore {r[&#x27;gm&#x27;]}, p perm {r[&#x27;p_perm&#x27;]:.4f}&quot;)
+    if len(res) &lt; 4:
+        raise SystemExit(&quot;Troppi pochi indici utilizzabili.&quot;)
+    ph = holm({r[&quot;tk&quot;]: r[&quot;p_perm&quot;] for r in res})
+
+    # trasferimento del giorno migliore: percentile del giorno migliore di A dentro la distribuzione dei 28 giorni di B
+    trasf = []
+    for a in res:
+        for b in res:
+            if a[&quot;tk&quot;] == b[&quot;tk&quot;]:
+                continue
+            ordine = np.argsort(np.argsort(b[&quot;val&quot;]))                        # 0 = peggiore, 27 = migliore
+            trasf.append({&quot;da&quot;: a[&quot;nome&quot;], &quot;su&quot;: b[&quot;nome&quot;], &quot;posizione&quot;: int(ordine[a[&quot;gm&quot;] - 1]) + 1,
+                          &quot;sopra_mediana&quot;: bool(b[&quot;val&quot;][a[&quot;gm&quot;] - 1] &gt; np.median(b[&quot;val&quot;]))})
+    trasf = pd.DataFrame(trasf)
+
+    for r in res:
+        sl = r[&quot;sl&quot;]
+        reg(f&quot;{sl}_nome&quot;, r[&quot;nome&quot;], &quot;testo&quot;, &quot;Nome dell&#x27;indice&quot;, &quot;config.py, INDICI&quot;)
+        reg(f&quot;{sl}_valuta&quot;, r[&quot;valuta&quot;], &quot;testo&quot;, &quot;Valuta dell&#x27;indice&quot;, &quot;config.py, INDICI&quot;)
+        reg(f&quot;{sl}_mesi&quot;, r[&quot;n&quot;], &quot;int&quot;, f&quot;Mesi completi di versamento del piano, {r[&#x27;nome&#x27;]}&quot;, &quot;giorni.csv&quot;)
+        reg(f&quot;{sl}_anni&quot;, r[&quot;n&quot;] / 12, &quot;num1&quot;, f&quot;Anni di versamenti, {r[&#x27;nome&#x27;]}&quot;, &quot;giorni.csv&quot;)
+        reg(f&quot;{sl}_inizio&quot;, r[&quot;prima_data&quot;], &quot;testo&quot;, f&quot;Primo mese di versamento, {r[&#x27;nome&#x27;]} (anno-mese)&quot;, &quot;dati/&quot;)
+        reg(f&quot;{sl}_versato&quot;, r[&quot;versato&quot;], &quot;int&quot;, f&quot;Totale versato nel piano, {r[&#x27;nome&#x27;]}&quot;, &quot;giorni.csv&quot;)
+        reg(f&quot;{sl}_val_mig&quot;, float(r[&quot;val&quot;].max()), &quot;int&quot;, f&quot;Valore finale netto del giorno migliore, {r[&#x27;nome&#x27;]}&quot;, &quot;giorni.csv&quot;)
+        reg(f&quot;{sl}_val_peg&quot;, float(r[&quot;val&quot;].min()), &quot;int&quot;, f&quot;Valore finale netto del giorno peggiore, {r[&#x27;nome&#x27;]}&quot;, &quot;giorni.csv&quot;)
+        reg(f&quot;{sl}_val_med&quot;, float(np.median(r[&quot;val&quot;])), &quot;int&quot;, f&quot;Valore finale netto mediano tra i 28 giorni, {r[&#x27;nome&#x27;]}&quot;, &quot;giorni.csv&quot;)
+        reg(f&quot;{sl}_giorno_mig&quot;, r[&quot;gm&quot;], &quot;int&quot;, f&quot;Giorno del mese con il valore finale più alto, {r[&#x27;nome&#x27;]}&quot;, &quot;giorni.csv&quot;)
+        reg(f&quot;{sl}_giorno_peg&quot;, r[&quot;gp&quot;], &quot;int&quot;, f&quot;Giorno del mese con il valore finale più basso, {r[&#x27;nome&#x27;]}&quot;, &quot;giorni.csv&quot;)
+        reg(f&quot;{sl}_scarto&quot;, r[&quot;scarto&quot;], &quot;pct1&quot;, f&quot;Scarto tra giorno migliore e peggiore, in percentuale del valore medio, {r[&#x27;nome&#x27;]}&quot;, &quot;giorni.csv&quot;)
+        reg(f&quot;{sl}_perm_mediana&quot;, float(np.median(r[&quot;scarti_perm&quot;])), &quot;pct1&quot;, f&quot;Scarto mediano ottenuto su serie con i rendimenti giornalieri rimescolati, {r[&#x27;nome&#x27;]}&quot;, &quot;serie rimescolate&quot;)
+        reg(f&quot;{sl}_p_perm&quot;, r[&quot;p_perm&quot;], &quot;pval&quot;, f&quot;p-value: quota di serie rimescolate con scarto almeno pari a quello osservato, {r[&#x27;nome&#x27;]}&quot;, &quot;serie rimescolate&quot;)
+        reg(f&quot;{sl}_p_holm&quot;, ph[r[&quot;tk&quot;]], &quot;pval&quot;, f&quot;p-value delle serie rimescolate corretto con il metodo di Holm sugli indici, {r[&#x27;nome&#x27;]}&quot;, &quot;serie rimescolate&quot;)
+        reg(f&quot;{sl}_sc_mediana&quot;, r[&quot;sc_mediana&quot;], &quot;int&quot;, f&quot;Valore finale netto mediano delle scimmie (giorno a caso ogni mese), {r[&#x27;nome&#x27;]}&quot;, &quot;scimmie&quot;)
+        reg(f&quot;{sl}_sc_p5&quot;, r[&quot;sc_p5&quot;], &quot;int&quot;, f&quot;Quinto percentile del valore finale delle scimmie, {r[&#x27;nome&#x27;]}&quot;, &quot;scimmie&quot;)
+        reg(f&quot;{sl}_sc_p95&quot;, r[&quot;sc_p95&quot;], &quot;int&quot;, f&quot;Novantacinquesimo percentile del valore finale delle scimmie, {r[&#x27;nome&#x27;]}&quot;, &quot;scimmie&quot;)
+        reg(f&quot;{sl}_mig_sopra_sc&quot;, float((r[&quot;v_sc&quot;] &lt; r[&quot;val&quot;].max()).mean()), &quot;pct0&quot;, f&quot;Quota di scimmie sotto il giorno migliore, {r[&#x27;nome&#x27;]}&quot;, &quot;scimmie&quot;)
+        reg(f&quot;{sl}_g_prima&quot;, r[&quot;g1&quot;], &quot;int&quot;, f&quot;Giorno migliore nella prima metà della storia, {r[&#x27;nome&#x27;]}&quot;, &quot;giorni.csv&quot;)
+        reg(f&quot;{sl}_g_dopo&quot;, r[&quot;g2&quot;], &quot;int&quot;, f&quot;Giorno migliore nella seconda metà della storia, {r[&#x27;nome&#x27;]}&quot;, &quot;giorni.csv&quot;)
+        reg(f&quot;{sl}_fine_su_inizio&quot;, r[&quot;fine_su_inizio&quot;], &quot;pct1&quot;, f&quot;Quote in più (+) o in meno (-) comprando il 24-28 invece che il 1-5 del mese, per ogni somma versata, {r[&#x27;nome&#x27;]}&quot;, &quot;giorni.csv&quot;)
+    n_ind = len(res)
+    reg(&quot;n_indici&quot;, n_ind, &quot;int&quot;, &quot;Indici utilizzabili nel test&quot;, &quot;config.py, INDICI e dati/&quot;)
+    reg(&quot;n_scartati&quot;, len(config.INDICI) - n_ind, &quot;int&quot;, &quot;Indici scartati (nessun dato o storia troppo corta)&quot;, &quot;metadati.json&quot;)
+    reg(&quot;n_scarto_sotto&quot;, sum(r[&quot;scarto&quot;] &lt; config.SOGLIA_SCARTO for r in res), &quot;int&quot;, &quot;Indici in cui lo scarto tra giorno migliore e peggiore è sotto la soglia&quot;, &quot;giorni.csv&quot;)
+    reg(&quot;scarto_max&quot;, max(r[&quot;scarto&quot;] for r in res), &quot;pct1&quot;, &quot;Scarto massimo tra giorno migliore e peggiore, tra gli indici&quot;, &quot;giorni.csv&quot;)
+    reg(&quot;scarto_min&quot;, min(r[&quot;scarto&quot;] for r in res), &quot;pct1&quot;, &quot;Scarto minimo tra giorno migliore e peggiore, tra gli indici&quot;, &quot;giorni.csv&quot;)
+    reg(&quot;n_holm_signif&quot;, sum(ph[r[&quot;tk&quot;]] &lt; 0.05 for r in res), &quot;int&quot;, &quot;Indici in cui lo scarto osservato supera quello delle serie rimescolate, con p-value corretto sotto il cinque per cento&quot;, &quot;serie rimescolate&quot;)
+    reg(&quot;n_trasf_coppie&quot;, len(trasf), &quot;int&quot;, &quot;Coppie ordinate di indici per il test di trasferimento&quot;, &quot;trasferimento.csv&quot;)
+    reg(&quot;n_trasf_sopra&quot;, int(trasf[&quot;sopra_mediana&quot;].sum()), &quot;int&quot;, &quot;Coppie in cui il giorno migliore di un indice, usato sull&#x27;altro, supera la mediana dei 28 giorni&quot;, &quot;trasferimento.csv&quot;)
+    reg(&quot;n_trasf_sotto&quot;, int((~trasf[&quot;sopra_mediana&quot;]).sum()), &quot;int&quot;, &quot;Coppie in cui il giorno migliore di un indice, usato sull&#x27;altro, non supera la mediana dei 28 giorni&quot;, &quot;trasferimento.csv&quot;)
+    reg(&quot;quota_trasf_sopra&quot;, float(trasf[&quot;sopra_mediana&quot;].mean()), &quot;pct0&quot;, &quot;Quota di coppie in cui il giorno migliore trasferito supera la mediana&quot;, &quot;trasferimento.csv&quot;)
+    reg(&quot;posizione_media_trasf&quot;, float(trasf[&quot;posizione&quot;].mean()), &quot;num1&quot;, &quot;Posizione media (da 1 peggiore a 28 migliore) del giorno migliore trasferito su un altro indice&quot;, &quot;trasferimento.csv&quot;)
+    reg(&quot;n_instabile&quot;, sum(abs(r[&quot;g1&quot;] - r[&quot;g2&quot;]) &gt; config.TOLLERANZA_GIORNI for r in res), &quot;int&quot;, &quot;Indici in cui il giorno migliore delle due metà differisce di più della tolleranza&quot;, &quot;giorni.csv&quot;)
+    reg(&quot;n_fine_meglio&quot;, sum(r[&quot;fine_su_inizio&quot;] &gt; 0 for r in res), &quot;int&quot;, &quot;Indici in cui comprare a fine mese dà più quote che comprare a inizio mese&quot;, &quot;giorni.csv&quot;)
+    reg(&quot;fine_su_inizio_media&quot;, float(np.mean([r[&quot;fine_su_inizio&quot;] for r in res])), &quot;pct1&quot;, &quot;Media, sugli indici, della differenza di quote tra fine e inizio mese&quot;, &quot;giorni.csv&quot;)
+    reg(&quot;versamento&quot;, config.VERSAMENTO, &quot;int&quot;, &quot;Versamento mensile, nella valuta dell&#x27;indice&quot;, &quot;config.py, VERSAMENTO&quot;)
+    reg(&quot;commissione&quot;, config.COMMISSIONE, &quot;num2&quot;, &quot;Commissione per ogni acquisto, nella valuta dell&#x27;indice&quot;, &quot;config.py, COMMISSIONE&quot;)
+    reg(&quot;aliquota&quot;, config.ALIQUOTA, &quot;pct0&quot;, &quot;Aliquota sulle plusvalenze&quot;, &quot;config.py, ALIQUOTA&quot;)
+    reg(&quot;n_permutazioni&quot;, config.N_PERMUTAZIONI, &quot;int&quot;, &quot;Serie rimescolate per indice&quot;, &quot;config.py, N_PERMUTAZIONI&quot;)
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Scimmie simulate per ogni indice&quot;, &quot;config.py, N_SCIMMIE&quot;)
+    reg(&quot;n_giorni&quot;, len(config.GIORNI), &quot;int&quot;, &quot;Giorni del mese provati&quot;, &quot;config.py, GIORNI&quot;)
+    reg(&quot;soglia_scarto&quot;, config.SOGLIA_SCARTO, &quot;pct0&quot;, &quot;Soglia dell&#x27;ipotesi sullo scarto&quot;, &quot;config.py, SOGLIA_SCARTO&quot;)
+    reg(&quot;tolleranza_giorni&quot;, config.TOLLERANZA_GIORNI, &quot;int&quot;, &quot;Tolleranza in giorni dell&#x27;ipotesi sulla stabilità&quot;, &quot;config.py, TOLLERANZA_GIORNI&quot;)
+    reg(&quot;seme&quot;, config.SEME, &quot;annonum&quot;, &quot;Seme dei sorteggi&quot;, &quot;config.py, SEME&quot;)
+    reg(&quot;anno_tur&quot;, 2008, &quot;annonum&quot;, &quot;Anno dell&#x27;articolo di McConnell e Xu&quot;, &quot;McConnell e Xu, Financial Analysts Journal 64(2)&quot;)
+    reg(&quot;lit_tur_paesi&quot;, 31, &quot;int&quot;, &quot;Paesi in cui compare l&#x27;effetto di fine mese, secondo l&#x27;abstract di McConnell e Xu&quot;, &quot;McConnell e Xu (2008), abstract&quot;)
+    reg(&quot;lit_tur_campione&quot;, 35, &quot;int&quot;, &quot;Paesi del campione di McConnell e Xu&quot;, &quot;McConnell e Xu (2008), abstract&quot;)
+    reg(&quot;lit_tur_giorni&quot;, 4, &quot;int&quot;, &quot;Giorni del turn of the month nell&#x27;abstract di McConnell e Xu&quot;, &quot;McConnell e Xu (2008), abstract&quot;)
+    reg(&quot;anno_ros&quot;, 2004, &quot;annonum&quot;, &quot;Anno dell&#x27;articolo di Rosenberg&quot;, &quot;Rosenberg, The American Economist 48(2)&quot;)
+    meta = meta_dati
+    reg(&quot;data_scarico&quot;, meta[&quot;scaricato_il_utc&quot;][:10], &quot;data&quot;, &quot;Data del download dei dati&quot;, &quot;dati/metadati.json&quot;)
+    MESI_IT = [&quot;gennaio&quot;, &quot;febbraio&quot;, &quot;marzo&quot;, &quot;aprile&quot;, &quot;maggio&quot;, &quot;giugno&quot;, &quot;luglio&quot;, &quot;agosto&quot;, &quot;settembre&quot;, &quot;ottobre&quot;, &quot;novembre&quot;, &quot;dicembre&quot;]
+    u = pd.Period(max(r[&quot;ultimo_mese&quot;] for r in res), freq=&quot;M&quot;)
+    reg(&quot;data_ultima&quot;, f&quot;{MESI_IT[u.month - 1]} {u.year}&quot;, &quot;testo&quot;, &quot;Ultimo mese di versamento incluso nei test&quot;, &quot;dati/&quot;)
+
+    pd.DataFrame({r[&quot;nome&quot;]: r[&quot;val&quot;] for r in res}, index=config.GIORNI).rename_axis(&quot;giorno&quot;).to_csv(config.RISULTATI / &quot;giorni.csv&quot;, float_format=&quot;%.2f&quot;)
+    trasf.to_csv(config.RISULTATI / &quot;trasferimento.csv&quot;, index=False)
+    pd.DataFrame({r[&quot;tk&quot;]: r[&quot;scarti_perm&quot;] for r in res}).to_csv(config.RISULTATI / &quot;scarti_permutati.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    (config.RISULTATI / &quot;indici_usati.json&quot;).write_text(json.dumps([{&quot;ticker&quot;: r[&quot;tk&quot;], &quot;slug&quot;: r[&quot;sl&quot;], &quot;nome&quot;: r[&quot;nome&quot;]} for r in res], ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i tre grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_giorni.png        valore finale netto di ogni giorno del mese rispetto alla mediana, con la fascia delle scimmie
+  fig2_scarto.png        scarto osservato tra giorno migliore e peggiore contro quello delle serie senza calendario
+  fig3_stabilita.png     giorno migliore nella prima e nella seconda metà della storia
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    ind = json.loads((R / &quot;indici_usati.json&quot;).read_text(encoding=&quot;utf-8&quot;))
+    v = lambda sl, k: V[f&quot;{sl}_{k}&quot;][&quot;valore&quot;]
+    giorni = pd.read_csv(R / &quot;giorni.csv&quot;, index_col=&quot;giorno&quot;)
+    scarti = pd.read_csv(R / &quot;scarti_permutati.csv&quot;)
+
+    # --- Figura 1: giorni del mese ---------------------------------------------------------------------------
+    n = len(ind)
+    righe = (n + 2) // 3
+    fig, assi = plt.subplots(righe, 3, figsize=(13, 3.6 * righe), sharex=True, squeeze=False)
+    for ax, i in zip(assi.ravel(), ind):
+        sl, nome = i[&quot;slug&quot;], i[&quot;nome&quot;]
+        val = giorni[nome].values
+        med = float(np.median(val))
+        rel = (val / med - 1) * 100
+        lo, hi = (v(sl, &quot;sc_p5&quot;) / med - 1) * 100, (v(sl, &quot;sc_p95&quot;) / med - 1) * 100
+        ax.axhspan(lo, hi, color=GRIGIO, alpha=0.25, lw=0, label=&quot;scimmie (5°-95° percentile)&quot;)
+        colori = [ARANCIO if g == v(sl, &quot;giorno_mig&quot;) else BLU for g in giorni.index]
+        ax.bar(giorni.index, rel, color=colori, width=0.8)
+        ax.axhline(0, color=&quot;black&quot;, lw=0.8)
+        ax.set_title(nome, fontsize=11)
+        ax.set_ylabel(&quot;rispetto alla mediana (%)&quot;)
+    for ax in assi.ravel()[n:]:
+        ax.axis(&quot;off&quot;)
+    for ax in assi[-1]:
+        ax.set_xlabel(&quot;giorno del mese&quot;)
+    assi.ravel()[0].legend(loc=&quot;upper right&quot;, fontsize=9)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_giorni.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 2: scarto osservato contro serie senza calendario -----------------------------------------------
+    fig, ax = plt.subplots(figsize=(9, 4.8))
+    for k, i in enumerate(ind):
+        sl, tk = i[&quot;slug&quot;], i[&quot;ticker&quot;]
+        s = scarti[tk].values * 100
+        ax.vlines(k, np.percentile(s, 5), np.percentile(s, 95), color=GRIGIO, lw=10, alpha=0.5)
+        ax.plot(k, np.median(s), &quot;_&quot;, color=&quot;black&quot;, ms=18)
+        oss = v(sl, &quot;scarto&quot;) * 100
+        ax.plot(k, oss, &quot;o&quot;, color=ARANCIO if v(sl, &quot;p_holm&quot;) &lt; 0.05 else BLU, ms=9)
+    ax.set_xticks(range(n))
+    ax.set_xticklabels([i[&quot;nome&quot;].split(&quot; (&quot;)[0] for i in ind], rotation=20, ha=&quot;right&quot;)
+    ax.set_ylabel(&quot;scarto tra giorno migliore e peggiore (%)&quot;)
+    ax.set_ylim(bottom=0)
+    fig.savefig(config.FIGURE / &quot;fig2_scarto.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 3: stabilità del giorno migliore ------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(9, 4.8))
+    for k, i in enumerate(ind):
+        sl = i[&quot;slug&quot;]
+        g1, g2 = v(sl, &quot;g_prima&quot;), v(sl, &quot;g_dopo&quot;)
+        ax.plot([k, k], [g1, g2], color=GRIGIO, lw=2, zorder=1)
+        ax.plot(k, g1, &quot;o&quot;, color=BLU, ms=9, zorder=2, label=&quot;prima metà&quot; if k == 0 else None)
+        ax.plot(k, g2, &quot;s&quot;, color=ARANCIO, ms=9, zorder=2, label=&quot;seconda metà&quot; if k == 0 else None)
+    ax.set_xticks(range(n))
+    ax.set_xticklabels([i[&quot;nome&quot;].split(&quot; (&quot;)[0] for i in ind], rotation=20, ha=&quot;right&quot;)
+    ax.set_ylabel(&quot;giorno migliore del mese&quot;)
+    ax.set_ylim(0, 29)
+    ax.legend(loc=&quot;upper right&quot;)
+    fig.savefig(config.FIGURE / &quot;fig3_stabilita.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate in&quot;, config.FIGURE)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>indici, parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 421 - &quot;PAC mensile: conta il giorno del mese?&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Piano di accumulo: ogni mese si versa la stessa somma e si comprano quote dell&#x27;indice (frazionate) alla chiusura
+della prima seduta uguale o successiva al giorno scelto. Si prova ogni giorno del mese da 1 a 28 e si confronta il
+valore finale. Confronti: le serie con i rendimenti giornalieri rimescolati (stessa media e stessa volatilità, nessun calendario) e le scimmie, che scelgono il giorno a caso ogni mese.
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati: indici azionari (ticker Yahoo Finance, nome, valuta) -----------------------------------------------
+# Scelti a priori, prima di guardare i dati. Indici di prezzo, nella valuta locale, senza cambio: il confronto è
+# sempre fatto dentro lo stesso indice.
+INDICI = [
+    (&quot;^GSPC&quot;, &quot;S&amp;P 500 (Stati Uniti)&quot;, &quot;USD&quot;),
+    (&quot;^GDAXI&quot;, &quot;DAX (Germania)&quot;, &quot;EUR&quot;),
+    (&quot;^FCHI&quot;, &quot;CAC 40 (Francia)&quot;, &quot;EUR&quot;),
+    (&quot;^STOXX50E&quot;, &quot;Euro Stoxx 50&quot;, &quot;EUR&quot;),
+    (&quot;FTSEMIB.MI&quot;, &quot;FTSE MIB (Italia)&quot;, &quot;EUR&quot;),
+    (&quot;^N225&quot;, &quot;Nikkei 225 (Giappone)&quot;, &quot;JPY&quot;),
+]
+INIZIO_DOWNLOAD = &quot;1980-01-01&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;, &quot;CAC 40&quot;, &quot;Euro Stoxx 50&quot;, &quot;Nikkei 225&quot;)   # nomi di indici con cifre: non sono dati
+FUSO_BORSA = &quot;Europe/Berlin&quot;
+MESI_MINIMI = 120            # sotto questa soglia (dieci anni di versamenti) l&#x27;indice viene scartato
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;chiusure giornaliere di sei indici azionari&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure.&quot;
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+# --- Il piano di accumulo ----------------------------------------------------------------------------------
+VERSAMENTO = 100.0           # somma versata ogni mese, nella valuta dell&#x27;indice
+COMMISSIONE = 2.0            # per ogni acquisto (uguale per tutti i giorni)
+ALIQUOTA = 0.26              # sulla plusvalenza, pagata alla vendita finale di tutto
+GIORNI = list(range(1, 29))  # giorno del mese in cui si compra: 1..28 (esiste in ogni mese)
+GIORNI_FINE_MESE = (24, 25, 26, 27, 28)
+GIORNI_INIZIO_MESE = (1, 2, 3, 4, 5)
+SOGLIA_SCARTO = 0.03         # ipotesi 1: scarto tra giorno migliore e peggiore sotto il 3%
+TOLLERANZA_GIORNI = 3        # ipotesi 4: giorno migliore &quot;stabile&quot; se prima e dopo differiscono al massimo di tre giorni
+
+# --- Test statistici -------------------------------------------------------------------------------------
+SEME = 20261027
+N_PERMUTAZIONI = 1000
+N_SCIMMIE = 5000
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------------------
+IPOTESI = (
+    &quot;1) Lo scarto tra il valore finale del giorno migliore e quello del giorno peggiore è sotto il 3% in almeno cinque &quot;
+    &quot;indici su sei: scegliere il giorno conta poco in euro. &quot;
+    &quot;2) Il giorno migliore di un indice, usato sugli altri indici, non fa meglio della mediana dei giorni in almeno la &quot;
+    &quot;metà dei casi: il giorno &#x27;giusto&#x27; non si trasferisce. &quot;
+    &quot;3) Dopo la correzione di Holm, lo scarto osservato è più grande di quello che si ottiene su serie con gli stessi &quot;
+    &quot;rendimenti giornalieri messi in ordine casuale (cioè il calendario conta davvero) in meno della metà degli indici. &quot;
+    &quot;4) Il giorno migliore della prima metà della storia e quello della seconda metà differiscono di più di tre giorni &quot;
+    &quot;in almeno la metà degli indici: non è stabile nel tempo.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli del motore del piano di accumulo su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import importlib.util
+import sys
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import config  # noqa: E402
+
+spec = importlib.util.spec_from_file_location(&quot;backtest&quot;, Path(__file__).resolve().parent / &quot;02_backtest_e_test.py&quot;)
+bt = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(bt)
+
+ERRORI = []
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    print((&quot;ok    &quot; if condizione else &quot;FALLITO&quot;), nome)
+    if not condizione:
+        ERRORI.append(nome)
+
+
+def serie(valori, inizio=&quot;2000-01-03&quot;):
+    idx = pd.bdate_range(inizio, periods=len(valori))
+    return pd.Series(valori, index=idx, dtype=float)
+
+
+# 1) prezzo costante: tutti i giorni identici, nessuna plusvalenza, nessuna tassa
+s = serie(np.full(1200, 100.0))
+prezzo, IDX, mesi, ultima = bt.indici_acquisto(s)
+q = bt.quote_per_giorno(prezzo[IDX])
+v = bt.valore_netto(q, len(mesi), float(prezzo[ultima]))
+controlla(&quot;prezzo costante: tutti i giorni valgono uguale&quot;, np.allclose(v, v[0]))
+versato = len(mesi) * config.VERSAMENTO
+controlla(&quot;prezzo costante: valore finale = versato - commissioni - commissione finale&quot;,
+          abs(v[0] - (versato - (len(mesi) + 1) * config.COMMISSIONE)) &lt; 1e-6)
+
+# 2) prezzo che sale ogni giorno: comprare prima nel mese è sempre meglio
+s = serie(100 * 1.001 ** np.arange(1200))
+prezzo, IDX, mesi, ultima = bt.indici_acquisto(s)
+v = bt.valore_netto(bt.quote_per_giorno(prezzo[IDX]), len(mesi), float(prezzo[ultima]))
+controlla(&quot;prezzo crescente: il giorno 1 batte il giorno 28&quot;, v[0] &gt; v[-1])
+controlla(&quot;prezzo crescente: il valore scende (quasi) sempre col giorno&quot;, bool(np.all(np.diff(v) &lt;= 1e-9)))
+
+# 3) prezzo che scende: nessuna tassa e il giorno 28 batte il giorno 1
+s = serie(100 * 0.999 ** np.arange(1200))
+prezzo, IDX, mesi, ultima = bt.indici_acquisto(s)
+v = bt.valore_netto(bt.quote_per_giorno(prezzo[IDX]), len(mesi), float(prezzo[ultima]))
+controlla(&quot;prezzo decrescente: il giorno 28 batte il giorno 1&quot;, v[-1] &gt; v[0])
+lordo = bt.quote_per_giorno(prezzo[IDX]) * prezzo[ultima] - config.COMMISSIONE
+controlla(&quot;perdita: nessuna tassa (netto = lordo - commissione finale)&quot;, np.allclose(v, lordo))
+
+# 4) tassa su una plusvalenza nota
+q = np.array([1.0])
+netto = bt.valore_netto(q, 10, 200.0)[0]       # versati 1000, valore 200 -&gt; perdita, nessuna tassa
+controlla(&quot;tassa: nessuna imposta con perdita&quot;, abs(netto - (200.0 - config.COMMISSIONE)) &lt; 1e-9)
+q = np.array([20.0])
+netto = bt.valore_netto(q, 10, 100.0)[0]       # lordo 2000, versato 1000
+atteso = 2000 - config.COMMISSIONE - config.ALIQUOTA * (2000 - 1000 - config.COMMISSIONE)
+controlla(&quot;tassa: 26% sulla plusvalenza al netto della commissione finale&quot;, abs(netto - atteso) &lt; 1e-9)
+
+# 5) scelta della seduta: prima seduta con giorno &gt;= d
+s = serie(np.arange(1, 1201, dtype=float))
+prezzo, IDX, mesi, ultima = bt.indici_acquisto(s)
+giorni_ok = all(s.index[IDX[m, d - 1]].day &gt;= d for m in range(len(mesi)) for d in (1, 15, 28))
+controlla(&quot;acquisto: la seduta scelta ha giorno &gt;= giorno richiesto&quot;, giorni_ok)
+dentro = all(s.index[IDX[m, 5]].to_period(&quot;M&quot;) == mesi[m] for m in range(len(mesi)))
+controlla(&quot;acquisto: la seduta resta dentro il mese&quot;, dentro)
+controlla(&quot;mesi: il primo mese parziale e l&#x27;ultimo in corso sono esclusi&quot;,
+          mesi[0] &gt; s.index[0].to_period(&quot;M&quot;) and mesi[-1] &lt; s.index[-1].to_period(&quot;M&quot;))
+
+# 6) Holm
+ph = bt.holm({&quot;a&quot;: 0.01, &quot;b&quot;: 0.04, &quot;c&quot;: 0.5})
+controlla(&quot;Holm: valori attesi&quot;, abs(ph[&quot;a&quot;] - 0.03) &lt; 1e-9 and abs(ph[&quot;b&quot;] - 0.08) &lt; 1e-9 and abs(ph[&quot;c&quot;] - 0.5) &lt; 1e-9)
+
+if ERRORI:
+    raise SystemExit(f&quot;{len(ERRORI)} controlli falliti&quot;)
+print(&quot;Tutti i controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
