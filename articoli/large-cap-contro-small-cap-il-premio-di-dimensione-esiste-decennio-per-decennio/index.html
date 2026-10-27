@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Large cap contro small cap: il premio di dimensione esiste, decennio per decennio? · il codice · TickerFight</title>
+<meta name="description" content="il premio di dimensione, cioè il vantaggio storico delle aziende piccole su quelle grandi, c&#x27;è davvero, decennio per decennio?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Large cap contro small cap: il premio di dimensione esiste, decennio per decennio?</h1>
+<p class="domanda">Il premio di dimensione, cioè il vantaggio storico delle aziende piccole su quelle grandi, c&#x27;è davvero, decennio per decennio?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="large-cap-contro-small-cap-il-premio-di-dimensione-esiste-decennio-per-decennio.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Sfidanti:</strong> S&amp;P 500 (grandi) contro S&amp;P MidCap 400, Russell 2000 e S&amp;P SmallCap 600, scelti prima di guardare i dati. Indici di prezzo in dollari (nessun dividendo), sempre confrontati a coppie sulla storia in comune.</li>
+<li><strong>Confronti:</strong> rendimento annuo composto; differenza media mensile con bootstrap per anni; quota di mesi vinti; decenni; finestre mobili di cinque e dieci anni; scimmie che ogni mese scelgono a caso tra grandi e piccole.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>large-cap-contro-small-cap-il-premio-di-dimensione-esiste-decennio-per-decennio/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica i quattro indici
+    ├── 02_backtest_e_test.py  coppie, decenni, finestre mobili, bootstrap, scimmie
+    ├── 03_grafici.py          i tre grafici
+    ├── config.py              indici, parametri e ipotesi, scritti prima dei risultati
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd large-cap-contro-small-cap-il-premio-di-dimensione-esiste-decennio-per-decennio
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera di quattro indici azionari.
+
+Salva, per ogni indice, dati/&lt;ticker&gt;.csv (Date, Open, High, Low, Close, Volume) e dati/metadati.json con la fonte,
+la data del download, la versione di yfinance e l&#x27;impronta SHA-256 di ogni file. Gli script successivi leggono SOLO
+i file salvati: i risultati restano riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;indici&quot;: []}
+    for ticker, nome, valuta in config.INDICI:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nome, &quot;valuta&quot;: valuta}
+        grezzo = scarica(ticker)
+        if grezzo.empty:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;indici&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;])
+        df = df[df[&quot;Close&quot;] &gt; 0]
+        # seduta ancora in corso: barra incompleta, da scartare
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:
+            df = df.iloc[:-1]
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;indici&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    if sum(1 for r in meta[&quot;indici&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;) &lt; 3:
+        raise SystemExit(&quot;Troppo pochi indici scaricati.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>coppie, decenni, finestre mobili, bootstrap, scimmie</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Large cap contro small cap, coppia per coppia.
+
+Per ogni coppia (S&amp;P 500, indice di aziende più piccole), sulla storia in comune dei prezzi di fine mese:
+  - rendimento annuo composto di grandi e piccole e differenza;
+  - differenza media mensile con bootstrap per anni;
+  - quota di mesi vinti dalle piccole;
+  - decennio per decennio: differenza dei rendimenti annui composti;
+  - finestre mobili di cinque e dieci anni: quota in cui le piccole battono le grandi;
+  - scimmie: ogni mese grandi o piccole a caso.
+Scrive risultati/metriche.json (ogni numero dell&#x27;articolo) e i csv di supporto.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+
+RIS: dict = {}
+SORGENTE = &quot;risultati/ (calcolato da 02_backtest_e_test.py)&quot;
+MESI_IT = [&quot;gennaio&quot;, &quot;febbraio&quot;, &quot;marzo&quot;, &quot;aprile&quot;, &quot;maggio&quot;, &quot;giugno&quot;, &quot;luglio&quot;, &quot;agosto&quot;, &quot;settembre&quot;, &quot;ottobre&quot;, &quot;novembre&quot;, &quot;dicembre&quot;]
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, np.integer):
+        valore = int(valore)
+    elif isinstance(valore, np.floating):
+        valore = float(valore)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def slug(ticker: str) -&gt; str:
+    return ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;).lower()
+
+
+def fine_mese(csv) -&gt; pd.Series:
+    df = pd.read_csv(csv, index_col=0, parse_dates=True)
+    c = df[&quot;Close&quot;].dropna()
+    c = c[c &gt; 0]
+    m = c.groupby(c.index.to_period(&quot;M&quot;)).last()
+    # l&#x27;ultimo mese è escluso se ancora in corso
+    return m.iloc[:-1]
+
+
+def cagr(rend: np.ndarray) -&gt; float:
+    if len(rend) == 0:
+        return float(&quot;nan&quot;)
+    return float(np.exp(np.log1p(rend).sum() / (len(rend) / 12)) - 1)
+
+
+def finestre(rg: np.ndarray, rp: np.ndarray, w: int) -&gt; np.ndarray:
+    cg = np.concatenate([[0.0], np.cumsum(np.log1p(rg))])
+    cp = np.concatenate([[0.0], np.cumsum(np.log1p(rp))])
+    return (cp[w:] - cp[:-w]) - (cg[w:] - cg[:-w])      # log-differenza per ogni finestra
+
+
+def analizza(pic, mg: pd.Series, rng):
+    tk, nome, _ = pic
+    mp = fine_mese(config.file_dati(tk))
+    df = pd.concat([mg.rename(&quot;g&quot;), mp.rename(&quot;p&quot;)], axis=1).dropna()
+    rg = df[&quot;g&quot;].pct_change().dropna()
+    rp = df[&quot;p&quot;].pct_change().dropna()
+    if len(rg) &lt; config.MESI_MINIMI:
+        return None
+    n = len(rg)
+    d = (rp - rg).values
+    anni = rg.index.year.values
+    ua = np.unique(anni)
+    # bootstrap per anni sulla differenza media mensile
+    gruppi = [d[anni == a] for a in ua]
+    medie = np.empty(config.N_BOOTSTRAP)
+    for k in range(config.N_BOOTSTRAP):
+        sc = rng.integers(0, len(ua), len(ua))
+        medie[k] = np.concatenate([gruppi[i] for i in sc]).mean()
+    alpha = (1 - config.LIVELLO_CONFIDENZA) / 2
+    lo, hi = np.percentile(medie, [100 * alpha, 100 * (1 - alpha)])
+    p_due = float(min(1.0, 2 * min((medie &lt;= 0).mean(), (medie &gt;= 0).mean())))
+    # decenni
+    dec = {}
+    for dd in config.DECENNI:
+        mask = (anni &gt;= dd) &amp; (anni &lt; dd + 10)
+        if mask.sum() &gt;= config.MESI_DECENNIO_MINIMI:
+            dec[dd] = (cagr(rp.values[mask]), cagr(rg.values[mask]), int(mask.sum()))
+    mask20 = anni &gt;= 2020
+    dec20 = (cagr(rp.values[mask20]), cagr(rg.values[mask20]), int(mask20.sum())) if mask20.sum() &gt;= 12 else None
+    # finestre mobili
+    quote_fin = {}
+    for w in config.FINESTRE:
+        if n &gt;= w:
+            ld = finestre(rg.values, rp.values, w)
+            quote_fin[w] = (float((ld &gt; 0).mean()), int(len(ld)))
+    # scimmie: ogni mese grandi o piccole a caso; confronto con piccole sempre
+    sc = rng.integers(0, 2, size=(config.N_SCIMMIE, n))
+    ls = np.where(sc == 1, np.log1p(rp.values), np.log1p(rg.values)).sum(axis=1)
+    fin_p, fin_g = float(np.exp(np.log1p(rp.values).sum())), float(np.exp(np.log1p(rg.values).sum()))
+    fin_s = np.exp(ls)
+    return {&quot;tk&quot;: tk, &quot;sl&quot;: slug(tk), &quot;nome&quot;: nome, &quot;n&quot;: n, &quot;inizio&quot;: str(df.index[0]), &quot;fine&quot;: str(df.index[-1]),
+            &quot;cagr_p&quot;: cagr(rp.values), &quot;cagr_g&quot;: cagr(rg.values), &quot;media_d&quot;: float(d.mean()), &quot;lo&quot;: float(lo), &quot;hi&quot;: float(hi),
+            &quot;p&quot;: p_due, &quot;quota_mesi&quot;: float((d &gt; 0).mean()), &quot;dec&quot;: dec, &quot;dec20&quot;: dec20, &quot;fin&quot;: quote_fin,
+            &quot;fin_p&quot;: fin_p, &quot;fin_g&quot;: fin_g, &quot;sc_med&quot;: float(np.median(fin_s)),
+            &quot;sc_sotto_p&quot;: float((fin_s &lt; fin_p).mean()), &quot;sc_sotto_g&quot;: float((fin_s &lt; fin_g).mean()),
+            &quot;serie&quot;: pd.DataFrame({&quot;data&quot;: df.index.astype(str)[1:], &quot;grandi&quot;: rg.values, &quot;piccole&quot;: rp.values})}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    meta = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    ok = {r[&quot;ticker&quot;] for r in meta[&quot;indici&quot;] if r.get(&quot;stato&quot;) == &quot;ok&quot;}
+    if config.GRANDI[0] not in ok:
+        raise SystemExit(&quot;Manca l&#x27;S&amp;P 500.&quot;)
+    mg = fine_mese(config.file_dati(config.GRANDI[0]))
+    rng = np.random.default_rng(config.SEME)
+    res = []
+    for pic in config.PICCOLE:
+        if pic[0] not in ok:
+            print(f&quot;{pic[0]}: non disponibile&quot;)
+            continue
+        r = analizza(pic, mg, rng)
+        if r:
+            res.append(r)
+            print(f&quot;{r[&#x27;nome&#x27;]}: {r[&#x27;n&#x27;]} mesi dal {r[&#x27;inizio&#x27;]}, cagr piccole {r[&#x27;cagr_p&#x27;]:.3%} grandi {r[&#x27;cagr_g&#x27;]:.3%}&quot;)
+    if not res:
+        raise SystemExit(&quot;Nessuna coppia utilizzabile.&quot;)
+    for r in res:
+        sl = r[&quot;sl&quot;]
+        reg(f&quot;{sl}_nome&quot;, r[&quot;nome&quot;], &quot;testo&quot;, &quot;Nome dell&#x27;indice di aziende più piccole&quot;, &quot;config.py, PICCOLE&quot;)
+        reg(f&quot;{sl}_mesi&quot;, r[&quot;n&quot;], &quot;int&quot;, f&quot;Mesi di storia in comune con l&#x27;S&amp;P 500, {r[&#x27;nome&#x27;]}&quot;, &quot;coppie.csv&quot;)
+        reg(f&quot;{sl}_anni&quot;, r[&quot;n&quot;] / 12, &quot;num1&quot;, f&quot;Anni di storia in comune con l&#x27;S&amp;P 500, {r[&#x27;nome&#x27;]}&quot;, &quot;coppie.csv&quot;)
+        reg(f&quot;{sl}_inizio&quot;, r[&quot;inizio&quot;], &quot;testo&quot;, f&quot;Primo mese della storia in comune (anno-mese), {r[&#x27;nome&#x27;]}&quot;, &quot;dati/&quot;)
+        reg(f&quot;{sl}_cagr_p&quot;, r[&quot;cagr_p&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo composto dell&#x27;indice piccolo (prezzi), {r[&#x27;nome&#x27;]}&quot;)
+        reg(f&quot;{sl}_cagr_g&quot;, r[&quot;cagr_g&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo composto dell&#x27;S&amp;P 500 sullo stesso periodo, {r[&#x27;nome&#x27;]}&quot;)
+        reg(f&quot;{sl}_cagr_diff&quot;, r[&quot;cagr_p&quot;] - r[&quot;cagr_g&quot;], &quot;pp1&quot;, f&quot;Differenza di rendimento annuo composto (piccole meno grandi), in punti percentuali, {r[&#x27;nome&#x27;]}&quot;)
+        reg(f&quot;{sl}_val_p&quot;, config.CAPITALE * r[&quot;fin_p&quot;], &quot;int&quot;, f&quot;Valore finale di 10.000 dollari sull&#x27;indice piccolo (prezzi, senza tasse), {r[&#x27;nome&#x27;]}&quot;)
+        reg(f&quot;{sl}_val_g&quot;, config.CAPITALE * r[&quot;fin_g&quot;], &quot;int&quot;, f&quot;Valore finale di 10.000 dollari sull&#x27;S&amp;P 500 nello stesso periodo, {r[&#x27;nome&#x27;]}&quot;)
+        reg(f&quot;{sl}_media_d&quot;, r[&quot;media_d&quot;], &quot;pp2&quot;, f&quot;Differenza media mensile (piccole meno grandi), in punti percentuali, {r[&#x27;nome&#x27;]}&quot;)
+        reg(f&quot;{sl}_d_lo&quot;, r[&quot;lo&quot;], &quot;pp2&quot;, f&quot;Estremo inferiore dell&#x27;intervallo bootstrap per anni, in punti percentuali, {r[&#x27;nome&#x27;]}&quot;, &quot;bootstrap per anni&quot;)
+        reg(f&quot;{sl}_d_hi&quot;, r[&quot;hi&quot;], &quot;pp2&quot;, f&quot;Estremo superiore dell&#x27;intervallo bootstrap per anni, in punti percentuali, {r[&#x27;nome&#x27;]}&quot;, &quot;bootstrap per anni&quot;)
+        reg(f&quot;{sl}_p_d&quot;, r[&quot;p&quot;], &quot;pval&quot;, f&quot;p-value a due code della differenza media mensile (bootstrap per anni), {r[&#x27;nome&#x27;]}&quot;, &quot;bootstrap per anni&quot;)
+        reg(f&quot;{sl}_quota_mesi&quot;, r[&quot;quota_mesi&quot;], &quot;pct0&quot;, f&quot;Quota di mesi in cui le piccole battono le grandi, {r[&#x27;nome&#x27;]}&quot;, &quot;coppie.csv&quot;)
+        for w, (q, nf) in r[&quot;fin&quot;].items():
+            reg(f&quot;{sl}_fin{w // 12}_quota&quot;, q, &quot;pct0&quot;, f&quot;Quota di finestre mobili di {w // 12} anni in cui le piccole battono le grandi, {r[&#x27;nome&#x27;]}&quot;, &quot;coppie.csv&quot;)
+            reg(f&quot;{sl}_fin{w // 12}_n&quot;, nf, &quot;int&quot;, f&quot;Finestre mobili di {w // 12} anni, {r[&#x27;nome&#x27;]}&quot;, &quot;coppie.csv&quot;)
+        for dd, (cp_, cg_, m) in r[&quot;dec&quot;].items():
+            reg(f&quot;{sl}_dec{dd}_diff&quot;, cp_ - cg_, &quot;pp1&quot;, f&quot;Differenza di rendimento annuo composto nel decennio che inizia nel {dd} (piccole meno grandi), punti percentuali, {r[&#x27;nome&#x27;]}&quot;, &quot;coppie.csv&quot;)
+        if r[&quot;dec20&quot;]:
+            reg(f&quot;{sl}_dec2020_diff&quot;, r[&quot;dec20&quot;][0] - r[&quot;dec20&quot;][1], &quot;pp1&quot;, f&quot;Differenza di rendimento annuo composto dal 2020 (piccole meno grandi), punti percentuali, {r[&#x27;nome&#x27;]}&quot;, &quot;coppie.csv&quot;)
+            reg(f&quot;{sl}_dec2020_anni&quot;, r[&quot;dec20&quot;][2] / 12, &quot;num1&quot;, f&quot;Anni dal 2020 nei dati, {r[&#x27;nome&#x27;]}&quot;, &quot;coppie.csv&quot;)
+        reg(f&quot;{sl}_sc_mediana&quot;, config.CAPITALE * r[&quot;sc_med&quot;], &quot;int&quot;, f&quot;Valore finale mediano delle scimmie (grandi o piccole a caso ogni mese), {r[&#x27;nome&#x27;]}&quot;, &quot;scimmie&quot;)
+        reg(f&quot;{sl}_sc_sotto_p&quot;, r[&quot;sc_sotto_p&quot;], &quot;pct0&quot;, f&quot;Quota di scimmie sotto chi è rimasto sempre sulle piccole, {r[&#x27;nome&#x27;]}&quot;, &quot;scimmie&quot;)
+        reg(f&quot;{sl}_sc_sotto_g&quot;, r[&quot;sc_sotto_g&quot;], &quot;pct0&quot;, f&quot;Quota di scimmie sotto chi è rimasto sempre sulle grandi, {r[&#x27;nome&#x27;]}&quot;, &quot;scimmie&quot;)
+    n = len(res)
+    reg(&quot;n_coppie&quot;, n, &quot;int&quot;, &quot;Coppie utilizzabili&quot;, &quot;config.py, PICCOLE e dati/&quot;)
+    reg(&quot;n_scartate&quot;, len(config.PICCOLE) - n, &quot;int&quot;, &quot;Coppie scartate (nessun dato o storia troppo corta)&quot;, &quot;metadati.json&quot;)
+    reg(&quot;n_piccole_vincono_cagr&quot;, sum(r[&quot;cagr_p&quot;] &gt; r[&quot;cagr_g&quot;] for r in res), &quot;int&quot;, &quot;Coppie in cui le piccole hanno un rendimento annuo composto più alto delle grandi&quot;, &quot;coppie.csv&quot;)
+    # ipotesi 1
+    def ip1(r):
+        v = [cp_ - cg_ for cp_, cg_, _ in r[&quot;dec&quot;].values()]
+        return len(v) &gt;= 2 and max(v) &gt; 0 and min(v) &lt; 0
+    val1 = [r for r in res if len(r[&quot;dec&quot;]) &gt;= 2]
+    reg(&quot;n_ip1_valutabili&quot;, len(val1), &quot;int&quot;, &quot;Coppie con almeno due decenni valutabili&quot;, &quot;coppie.csv&quot;)
+    reg(&quot;n_ip1_segno_misto&quot;, sum(ip1(r) for r in val1), &quot;int&quot;, &quot;Coppie con almeno un decennio positivo e uno negativo per le piccole&quot;, &quot;coppie.csv&quot;)
+    reg(&quot;n_ip2_include_zero&quot;, sum(r[&quot;lo&quot;] &lt;= 0 &lt;= r[&quot;hi&quot;] for r in res), &quot;int&quot;, &quot;Coppie in cui l&#x27;intervallo bootstrap della differenza media include lo zero&quot;, &quot;bootstrap per anni&quot;)
+    v3 = [r for r in res if 120 in r[&quot;fin&quot;] and True]
+    reg(&quot;n_ip3_valutabili&quot;, len(v3), &quot;int&quot;, &quot;Coppie con almeno una finestra di dieci anni&quot;, &quot;coppie.csv&quot;)
+    reg(&quot;n_ip3_dentro&quot;, sum(config.SOGLIA_FINESTRE[0] &lt;= r[&quot;fin&quot;][120][0] &lt;= config.SOGLIA_FINESTRE[1] for r in v3), &quot;int&quot;, &quot;Coppie in cui la quota di finestre decennali vinte dalle piccole sta nell&#x27;intervallo dell&#x27;ipotesi&quot;, &quot;coppie.csv&quot;)
+    reg(&quot;n_ip4_dentro&quot;, sum(config.SOGLIA_QUOTA[0] &lt;= r[&quot;quota_mesi&quot;] &lt;= config.SOGLIA_QUOTA[1] for r in res), &quot;int&quot;, &quot;Coppie in cui la quota di mesi vinti dalle piccole sta nell&#x27;intervallo dell&#x27;ipotesi&quot;, &quot;coppie.csv&quot;)
+    reg(&quot;n_ip3_fuori&quot;, len(v3) - sum(config.SOGLIA_FINESTRE[0] &lt;= r[&quot;fin&quot;][120][0] &lt;= config.SOGLIA_FINESTRE[1] for r in v3), &quot;int&quot;, &quot;Coppie in cui la quota di finestre decennali vinte dalle piccole sta fuori dall&#x27;intervallo dell&#x27;ipotesi&quot;, &quot;coppie.csv&quot;)
+    reg(&quot;lit_sp600_lancio&quot;, 1994, &quot;annonum&quot;, &quot;Anno di lancio dell&#x27;S&amp;P SmallCap 600, secondo S&amp;P Dow Jones Indices&quot;, &quot;S&amp;P Dow Jones Indices, Celebrating 30 years of the S&amp;P SmallCap 600&quot;)
+    reg(&quot;soglia_fin_lo&quot;, config.SOGLIA_FINESTRE[0], &quot;pct0&quot;, &quot;Estremo inferiore dell&#x27;ipotesi sulle finestre&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_fin_hi&quot;, config.SOGLIA_FINESTRE[1], &quot;pct0&quot;, &quot;Estremo superiore dell&#x27;ipotesi sulle finestre&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_mesi_lo&quot;, config.SOGLIA_QUOTA[0], &quot;pct0&quot;, &quot;Estremo inferiore dell&#x27;ipotesi sui mesi&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_mesi_hi&quot;, config.SOGLIA_QUOTA[1], &quot;pct0&quot;, &quot;Estremo superiore dell&#x27;ipotesi sui mesi&quot;, &quot;config.py&quot;)
+    reg(&quot;capitale&quot;, config.CAPITALE, &quot;int&quot;, &quot;Capitale iniziale dell&#x27;esempio, in dollari&quot;, &quot;config.py&quot;)
+    reg(&quot;n_bootstrap&quot;, config.N_BOOTSTRAP, &quot;int&quot;, &quot;Ricampionamenti bootstrap&quot;, &quot;config.py&quot;)
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Scimmie per coppia&quot;, &quot;config.py&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello degli intervalli di confidenza&quot;, &quot;config.py&quot;)
+    reg(&quot;seme&quot;, config.SEME, &quot;annonum&quot;, &quot;Seme dei sorteggi&quot;, &quot;config.py&quot;)
+    reg(&quot;anno_ass&quot;, 2018, &quot;annonum&quot;, &quot;Anno dell&#x27;articolo di Asness e coautori&quot;, &quot;Asness et al., Journal of Financial Economics&quot;)
+    reg(&quot;lit_ass_industrie&quot;, 30, &quot;int&quot;, &quot;Industrie in cui, secondo l&#x27;abstract, i risultati di Asness e coautori reggono&quot;, &quot;Asness et al. (2018), abstract&quot;)
+    reg(&quot;lit_ass_paesi&quot;, 24, &quot;int&quot;, &quot;Mercati azionari internazionali in cui, secondo l&#x27;abstract, i risultati reggono&quot;, &quot;Asness et al. (2018), abstract&quot;)
+    reg(&quot;data_scarico&quot;, meta[&quot;scaricato_il_utc&quot;][:10], &quot;data&quot;, &quot;Data del download dei dati&quot;, &quot;dati/metadati.json&quot;)
+    u = pd.Period(max(r[&quot;fine&quot;] for r in res), freq=&quot;M&quot;)
+    reg(&quot;data_ultima&quot;, f&quot;{MESI_IT[u.month - 1]} {u.year}&quot;, &quot;testo&quot;, &quot;Ultimo mese completo nei dati&quot;, &quot;dati/&quot;)
+
+    righe = []
+    for r in res:
+        righe.append({&quot;coppia&quot;: r[&quot;nome&quot;], &quot;mesi&quot;: r[&quot;n&quot;], &quot;inizio&quot;: r[&quot;inizio&quot;], &quot;cagr_piccole&quot;: r[&quot;cagr_p&quot;], &quot;cagr_grandi&quot;: r[&quot;cagr_g&quot;],
+                      &quot;quota_mesi&quot;: r[&quot;quota_mesi&quot;], **{f&quot;dec{k}&quot;: v[0] - v[1] for k, v in r[&quot;dec&quot;].items()},
+                      **({&quot;dec2020&quot;: r[&quot;dec20&quot;][0] - r[&quot;dec20&quot;][1]} if r[&quot;dec20&quot;] else {}),
+                      **{f&quot;fin{w // 12}&quot;: v[0] for w, v in r[&quot;fin&quot;].items()}})
+    pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;coppie.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    for r in res:
+        r[&quot;serie&quot;].to_csv(config.RISULTATI / f&quot;serie_{r[&#x27;sl&#x27;]}.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    (config.RISULTATI / &quot;coppie_usate.json&quot;).write_text(json.dumps([{&quot;ticker&quot;: r[&quot;tk&quot;], &quot;slug&quot;: r[&quot;sl&quot;], &quot;nome&quot;: r[&quot;nome&quot;]} for r in res], ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i tre grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_relativa.png    valore di 100 dollari sulle piccole diviso quello sulle grandi, nel tempo, per coppia
+  fig2_decenni.png     differenza di rendimento annuo composto per decennio, per coppia
+  fig3_dieci_anni.png  differenza di rendimento nelle finestre mobili di dieci anni, per coppia
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def breve(nome: str) -&gt; str:
+    return nome.split(&quot; (&quot;)[0]
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    coppie = json.loads((R / &quot;coppie_usate.json&quot;).read_text(encoding=&quot;utf-8&quot;))
+    tab = pd.read_csv(R / &quot;coppie.csv&quot;)
+    serie = {c[&quot;slug&quot;]: pd.read_csv(R / f&quot;serie_{c[&#x27;slug&#x27;]}.csv&quot;) for c in coppie}
+
+    # Figura 1: performance relativa
+    fig, ax = plt.subplots(figsize=(9.5, 5))
+    colori = [BLU, ARANCIO, GRIGIO]
+    for c, col in zip(coppie, colori):
+        s = serie[c[&quot;slug&quot;]]
+        rel = np.exp(np.cumsum(np.log1p(s[&quot;piccole&quot;]) - np.log1p(s[&quot;grandi&quot;]))) * 100
+        ax.plot(pd.to_datetime(s[&quot;data&quot;]), rel, color=col, lw=1.8, label=breve(c[&quot;nome&quot;]))
+    ax.axhline(100, color=&quot;black&quot;, lw=0.8)
+    ax.set_ylabel(&quot;piccole rispetto alle grandi (partenza = 100)&quot;)
+    ax.legend(loc=&quot;best&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_relativa.png&quot;)
+    plt.close(fig)
+
+    # Figura 2: decenni
+    colonne = [c for c in (&quot;dec1990&quot;, &quot;dec2000&quot;, &quot;dec2010&quot;, &quot;dec2020&quot;) if c in tab.columns]
+    etichette = {&quot;dec1990&quot;: &quot;anni Novanta&quot;, &quot;dec2000&quot;: &quot;anni Duemila&quot;, &quot;dec2010&quot;: &quot;anni Dieci&quot;, &quot;dec2020&quot;: &quot;dal 2020&quot;}
+    fig, ax = plt.subplots(figsize=(9.5, 5))
+    larg = 0.8 / max(1, len(coppie))
+    for k, (c, col) in enumerate(zip(coppie, colori)):
+        riga = tab.iloc[k]
+        vals = [riga[cl] * 100 if pd.notna(riga[cl]) else np.nan for cl in colonne]
+        pos = np.arange(len(colonne)) + k * larg
+        ax.bar(pos, vals, width=larg, color=col, label=breve(c[&quot;nome&quot;]))
+    ax.axhline(0, color=&quot;black&quot;, lw=0.8)
+    ax.set_xticks(np.arange(len(colonne)) + larg * (len(coppie) - 1) / 2)
+    ax.set_xticklabels([etichette[c] for c in colonne])
+    ax.set_ylabel(&quot;piccole meno grandi (punti percentuali all&#x27;anno)&quot;)
+    ax.legend(loc=&quot;best&quot;)
+    fig.savefig(config.FIGURE / &quot;fig2_decenni.png&quot;)
+    plt.close(fig)
+
+    # Figura 3: finestre mobili di dieci anni
+    fig, assi = plt.subplots(len(coppie), 1, figsize=(9.5, 3.2 * len(coppie)), sharex=True, squeeze=False)
+    for ax, c in zip(assi.ravel(), coppie):
+        s = serie[c[&quot;slug&quot;]]
+        lp, lg = np.log1p(s[&quot;piccole&quot;].values), np.log1p(s[&quot;grandi&quot;].values)
+        w = 120
+        if len(lp) &lt; w:
+            ax.axis(&quot;off&quot;)
+            continue
+        cp, cg = np.concatenate([[0], np.cumsum(lp)]), np.concatenate([[0], np.cumsum(lg)])
+        diff = ((cp[w:] - cp[:-w]) - (cg[w:] - cg[:-w])) / (w / 12) * 100          # punti log all&#x27;anno
+        x = pd.to_datetime(s[&quot;data&quot;]).iloc[w - 1:].values
+        ax.fill_between(x, 0, diff, where=diff &gt;= 0, color=BLU, alpha=0.8, lw=0)
+        ax.fill_between(x, 0, diff, where=diff &lt; 0, color=ARANCIO, alpha=0.8, lw=0)
+        ax.axhline(0, color=&quot;black&quot;, lw=0.8)
+        ax.set_title(breve(c[&quot;nome&quot;]), fontsize=11)
+        ax.set_ylabel(&quot;punti all&#x27;anno&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_dieci_anni.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate in&quot;, config.FIGURE)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>indici, parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 203 - &quot;Large cap contro small cap: il premio di dimensione, decennio per decennio&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Round di TickerFight: lo sfidante «grandi» è l&#x27;S&amp;P 500, gli sfidanti «piccole» sono tre indici di aziende più piccole
+(S&amp;P MidCap 400, Russell 2000, S&amp;P SmallCap 600). Si confrontano a coppie, sulla storia in comune, mese per mese,
+decennio per decennio e su finestre mobili. Il caso: una scimmia che ogni mese sceglie a caso tra grandi e piccole.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# Indici di prezzo (niente dividendi), in dollari, scelti prima di guardare i dati. La prima voce è il riferimento.
+GRANDI = (&quot;^GSPC&quot;, &quot;S&amp;P 500 (grandi aziende)&quot;, &quot;USD&quot;)
+PICCOLE = [
+    (&quot;^MID&quot;, &quot;S&amp;P MidCap 400 (medie aziende)&quot;, &quot;USD&quot;),
+    (&quot;^RUT&quot;, &quot;Russell 2000 (piccole aziende)&quot;, &quot;USD&quot;),
+    (&quot;^SP600&quot;, &quot;S&amp;P SmallCap 600 (piccole aziende)&quot;, &quot;USD&quot;),
+]
+INDICI = [GRANDI] + PICCOLE
+INIZIO_DOWNLOAD = &quot;1980-01-01&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;, &quot;S&amp;P MidCap 400&quot;, &quot;Russell 2000&quot;, &quot;S&amp;P SmallCap 600&quot;, &quot;S&amp;P&quot;, &quot;203&quot;, &quot;TickerFight&quot;)
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere di quattro indici azionari americani (S&amp;P 500, S&amp;P MidCap 400, Russell 2000, S&amp;P SmallCap 600)&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+MESI_MINIMI = 120            # sotto dieci anni di storia in comune la coppia viene scartata
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+CAPITALE = 10000.0           # capitale iniziale dell&#x27;esempio in dollari
+FINESTRE = (60, 120)         # finestre mobili in mesi: cinque e dieci anni
+DECENNI = (1990, 2000, 2010) # decenni di calendario completi; il 2020 è parziale e si mostra a parte
+MESI_DECENNIO_MINIMI = 60    # un decennio entra nella tabella se ha almeno cinque anni di dati della coppia
+SOGLIA_QUOTA = (0.45, 0.55)  # ipotesi sulla quota di mesi vinti
+SOGLIA_FINESTRE = (0.35, 0.65)
+
+SEME = 20261027
+N_BOOTSTRAP = 5000
+N_SCIMMIE = 5000
+LIVELLO_CONFIDENZA = 0.95
+
+IPOTESI = (
+    &quot;1) Il premio di dimensione non ha lo stesso segno in tutti i decenni: per ogni coppia con almeno due decenni valutabili, &quot;
+    &quot;c&#x27;è almeno un decennio in cui le piccole battono le grandi e almeno uno in cui perdono. &quot;
+    &quot;2) Sulla storia in comune, la differenza media mensile tra piccole e grandi non è significativa: l&#x27;intervallo di confidenza al &quot;
+    &quot;95% (bootstrap per anni) include lo zero in tutte e tre le coppie. &quot;
+    &quot;3) Nelle finestre mobili di dieci anni la quota di finestre in cui le piccole battono le grandi sta tra il 35% e il 65% in tutte &quot;
+    &quot;e tre le coppie: nessuno dei due vince sempre. &quot;
+    &quot;4) La quota di mesi in cui le piccole battono le grandi sta tra il 45% e il 55% in tutte e tre le coppie: il mese singolo è &quot;
+    &quot;quasi una moneta.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli del motore su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import importlib.util
+import sys
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import config  # noqa: E402
+
+spec = importlib.util.spec_from_file_location(&quot;bt&quot;, Path(__file__).resolve().parent / &quot;02_backtest_e_test.py&quot;)
+bt = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(bt)
+ERR = []
+
+
+def ok(nome, cond):
+    print(&quot;ok     &quot; if cond else &quot;FALLITO&quot;, nome)
+    if not cond:
+        ERR.append(nome)
+
+
+r = np.full(120, 0.01)
+ok(&quot;cagr: 1% al mese = (1,01^12)-1&quot;, abs(bt.cagr(r) - (1.01 ** 12 - 1)) &lt; 1e-12)
+ok(&quot;cagr: serie vuota = nan&quot;, np.isnan(bt.cagr(np.array([]))))
+rg, rp = np.full(24, 0.01), np.full(24, 0.02)
+ld = bt.finestre(rg, rp, 12)
+ok(&quot;finestre: numero di finestre = n - w + 1&quot;, len(ld) == 13)
+ok(&quot;finestre: differenza costante positiva&quot;, np.allclose(ld, 12 * (np.log(1.02) - np.log(1.01))))
+ld2 = bt.finestre(rp, rg, 12)
+ok(&quot;finestre: segno invertito se si scambiano le serie&quot;, np.allclose(ld2, -ld))
+idx = pd.date_range(&quot;2000-01-31&quot;, periods=30, freq=&quot;ME&quot;)
+s = pd.DataFrame({&quot;Close&quot;: np.arange(1, 31, dtype=float)}, index=idx)
+tmp = Path(__file__).resolve().parent / &quot;_prova.csv&quot;
+s.to_csv(tmp)
+m = bt.fine_mese(tmp)
+tmp.unlink()
+ok(&quot;fine_mese: esclude l&#x27;ultimo mese&quot;, len(m) == 29 and m.iloc[-1] == 29.0)
+if ERR:
+    raise SystemExit(f&quot;{len(ERR)} controlli falliti&quot;)
+print(&quot;Tutti i controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
