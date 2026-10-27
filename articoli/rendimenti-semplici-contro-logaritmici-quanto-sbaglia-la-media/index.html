@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rendimenti semplici contro logaritmici: quanto sbaglia la media? · il codice · TickerFight</title>
+<meta name="description" content="quando la differenza tra rendimento semplice e logaritmico conta, e quanto si sbaglia a usare la media dei rendimenti semplici come se fosse il rendimento che un investitore ha davvero ottenuto?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Rendimenti semplici contro logaritmici: quanto sbaglia la media?</h1>
+<p class="domanda">Quando la differenza tra rendimento semplice e logaritmico conta, e quanto si sbaglia a usare la media dei rendimenti semplici come se fosse il rendimento che un investitore ha davvero ottenuto?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="rendimenti-semplici-contro-logaritmici-quanto-sbaglia-la-media.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Finestra:</strong> dall'ultima chiusura del primo anno solare all'ultima chiusura dell'ultimo anno solare completo, così rendimenti giornalieri, mensili e annuali coprono lo stesso periodo.</li>
+<li><strong>Media semplice contro rendimento composto:</strong> media dei rendimenti semplici giornalieri per le sedute in un anno, contro il rendimento annuo composto del buy &amp; hold.</li>
+<li><strong>Mezza varianza:</strong> il divario tra media semplice e media logaritmica dovrebbe essere circa la varianza annua divisa per due.</li>
+<li><strong>Decenni, frequenze, giorno per giorno:</strong> il divario per decennio (segue la volatilità?), calcolato con dati giornalieri, mensili e annuali, e la differenza tra i due rendimenti seduta per seduta.</li>
+<li><strong>Nessuna strategia:</strong> il confronto è con il buy &amp; hold, cioè con ciò che l'investitore ha davvero ottenuto.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>rendimenti-semplici-contro-logaritmici-quanto-sbaglia-la-media/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica l'S&amp;P 500 dal 1927
+    ├── 02_backtest_e_test.py  divario su tutto il periodo, per decennio, per frequenza e giorno per giorno
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── motore_vettoriale.py   rendimenti semplici e logaritmici, media e varianza annua, rendimento composto
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd rendimenti-semplici-contro-logaritmici-quanto-sbaglia-la-media
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>divario su tutto il periodo, per decennio, per frequenza e giorno per giorno</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Rendimenti semplici contro logaritmici: quanto vale la differenza, e da dove viene.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json    ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  curve.csv        valore di 500 euro in buy &amp; hold e valore &quot;promesso&quot; dalla media aritmetica annua (una seduta su 21)
+  decenni.csv      per ogni decennio: media aritmetica, rendimento composto, divario, mezza varianza
+  frequenze.csv    il divario calcolato con rendimenti giornalieri, mensili e annuali
+  giorni.csv       differenza tra rendimento semplice e logaritmico giorno per giorno (campione + peggiori sedute)
+
+Nessuna strategia da testare: il confronto è tra la media dei rendimenti semplici, il rendimento annuo composto del buy &amp; hold
+(che è quello che l&#x27;investitore ha davvero ottenuto) e il valore della media dei logaritmi.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import motore_vettoriale as m
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con motore_vettoriale.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def importo(x: float) -&gt; str:
+    &quot;&quot;&quot;Un importo in euro; se è assurdamente grande si dice solo quante cifre ha.&quot;&quot;&quot;
+    if x &lt; 1e9:
+        return f&quot;{x:,.0f}&quot;.replace(&quot;,&quot;, &quot;.&quot;) + &quot; euro&quot;
+    return f&quot;un numero con {int(np.floor(np.log10(x))) + 1} cifre&quot;
+
+
+def finestra(close: pd.Series):
+    &quot;&quot;&quot;Dal primo 31 dicembre all&#x27;ultimo anno solare completo: restituisce la serie delle chiusure e il numero di anni.&quot;&quot;&quot;
+    anni_dati = close.index.year
+    ultimo_anno_dati = int(anni_dati[-1])
+    fine_anno = close.groupby(anni_dati).apply(lambda s: s.index[-1])
+    complete = [a for a in fine_anno.index if a &lt; ultimo_anno_dati]
+    a0, a1 = int(complete[0]), int(complete[-1])
+    c = close.loc[fine_anno[a0]:fine_anno[a1]]
+    return c, a1 - a0
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    c, anni = finestra(close)
+    r, l = m.rend_sempl(c), m.rend_log(c)
+    n = len(r)
+    spa = n / anni
+    tot = float(c.iloc[-1] / c.iloc[0])
+    cagr = tot ** (1.0 / anni) - 1.0
+    assert abs(cagr - m.cagr_da_rend(r, anni)) &lt; 1e-9
+
+    A, L, V = m.media_annua(r, spa), m.media_annua(l, spa), m.varianza_annua(r, spa)
+    gap, gap_log, mezza = A - cagr, A - L, V / 2.0
+    err = gap_log - mezza
+
+    reg(&quot;prima_data&quot;, str(c.index[0].date()), &quot;data_lunga&quot;, &quot;Chiusura da cui parte il calcolo (ultima seduta del primo anno solare)&quot;, &quot;dati/gspc_giornaliero.csv&quot;)
+    reg(&quot;data_fine&quot;, str(c.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta del calcolo (fine dell&#x27;ultimo anno solare completo)&quot;, &quot;dati/gspc_giornaliero.csv&quot;)
+    reg(&quot;anni_test&quot;, anni, &quot;int&quot;, &quot;Anni solari interi della finestra&quot;, &quot;dati/gspc_giornaliero.csv&quot;)
+    reg(&quot;n_sedute&quot;, n, &quot;int&quot;, &quot;Rendimenti giornalieri nella finestra&quot;, &quot;dati/&quot;)
+    reg(&quot;sedute_anno&quot;, spa, &quot;int&quot;, &quot;Sedute in un anno, in media (rendimenti giornalieri diviso anni)&quot;, &quot;n_sedute / anni_test&quot;)
+    reg(&quot;capitale&quot;, config.CAPITALE, &quot;int&quot;, &quot;Capitale iniziale, solo per dare un&#x27;idea (valori lordi)&quot;, &quot;config.py, CAPITALE&quot;)
+
+    reg(&quot;anno_hudson&quot;, 2015, &quot;annonum&quot;, &quot;Anno di pubblicazione di Hudson e Gregoriou, International Review of Financial Analysis&quot;, &quot;abstract letto su IDEAS/RePEc&quot;)
+    reg(&quot;anno_jacquier&quot;, 2003, &quot;annonum&quot;, &quot;Anno di pubblicazione di Jacquier, Kane e Marcus, Financial Analysts Journal&quot;, &quot;abstract letto su IDEAS/RePEc&quot;)
+    reg(&quot;anno_cooper&quot;, 1996, &quot;annonum&quot;, &quot;Anno di pubblicazione di Cooper, European Financial Management&quot;, &quot;abstract letto su IDEAS/RePEc&quot;)
+
+    # --- esempio da manuale -----------------------------------------------------------------------------------
+    su, giu = config.ESEMPIO_SU, config.ESEMPIO_GIU
+    reg(&quot;es_su&quot;, su, &quot;pct0&quot;, &quot;Rendimento del primo anno dell&#x27;esempio&quot;, &quot;config.py, ESEMPIO_SU&quot;)
+    reg(&quot;es_giu&quot;, giu, &quot;pct0&quot;, &quot;Rendimento del secondo anno dell&#x27;esempio&quot;, &quot;config.py, ESEMPIO_GIU&quot;)
+    reg(&quot;es_dopo_su&quot;, config.CAPITALE * (1 + su), &quot;int&quot;, &quot;Capitale dopo il primo anno dell&#x27;esempio&quot;, &quot;capitale x (1 + rendimento)&quot;)
+    reg(&quot;es_finale&quot;, config.CAPITALE * (1 + su) * (1 + giu), &quot;int&quot;, &quot;Capitale dopo i due anni dell&#x27;esempio&quot;, &quot;capitale x (1 + su) x (1 + giù)&quot;)
+    reg(&quot;es_totale&quot;, (1 + su) * (1 + giu) - 1, &quot;pct0&quot;, &quot;Rendimento complessivo dei due anni dell&#x27;esempio&quot;, &quot;(1 + su) x (1 + giù) - 1&quot;)
+    reg(&quot;es_media_arit&quot;, (su + giu) / 2, &quot;pct0&quot;, &quot;Media aritmetica dei due rendimenti dell&#x27;esempio&quot;, &quot;(su + giù) / 2&quot;)
+    reg(&quot;es_log_su&quot;, float(np.log(1 + su)), &quot;pct2&quot;, &quot;Rendimento logaritmico del primo anno dell&#x27;esempio&quot;, &quot;ln(1 + su)&quot;)
+    reg(&quot;es_log_giu&quot;, float(np.log(1 + giu)), &quot;pct2&quot;, &quot;Rendimento logaritmico del secondo anno dell&#x27;esempio&quot;, &quot;ln(1 + giù)&quot;)
+    reg(&quot;es_log_media&quot;, float((np.log(1 + su) + np.log(1 + giu)) / 2), &quot;pct2&quot;, &quot;Media dei due rendimenti logaritmici dell&#x27;esempio&quot;, &quot;(ln(1 + su) + ln(1 + giù)) / 2&quot;)
+
+    # --- l&#x27;intero periodo, rendimenti giornalieri ---------------------------------------------------------------
+    reg(&quot;media_semplice&quot;, A, &quot;pct2&quot;, &quot;Media dei rendimenti semplici giornalieri per il numero di sedute in un anno&quot;)
+    reg(&quot;media_log&quot;, L, &quot;pct2&quot;, &quot;Media dei rendimenti logaritmici giornalieri per il numero di sedute in un anno&quot;)
+    reg(&quot;cagr&quot;, cagr, &quot;pct2&quot;, &quot;Rendimento annuo composto del buy &amp; hold sul S&amp;P 500 (indice di prezzo), senza costi né tasse&quot;)
+    reg(&quot;cagr_da_log&quot;, float(np.expm1(L)), &quot;pct2&quot;, &quot;e elevato alla media logaritmica annua, meno uno: coincide con il rendimento composto&quot;)
+    reg(&quot;cagr_meno_log&quot;, cagr - L, &quot;pp2&quot;, &quot;Rendimento annuo composto meno media logaritmica annua, punti percentuali l&#x27;anno (circa metà del quadrato della media logaritmica)&quot;)
+    reg(&quot;volatilita&quot;, float(np.sqrt(V)), &quot;pct1&quot;, &quot;Volatilità annua: deviazione standard dei rendimenti giornalieri per la radice delle sedute in un anno&quot;)
+    reg(&quot;mezza_varianza&quot;, mezza, &quot;pct2&quot;, &quot;Varianza annua dei rendimenti diviso due&quot;)
+    reg(&quot;gap&quot;, gap, &quot;pp2&quot;, &quot;Divario tra media dei rendimenti semplici e rendimento annuo composto, punti percentuali l&#x27;anno&quot;)
+    reg(&quot;gap_log&quot;, gap_log, &quot;pp2&quot;, &quot;Divario tra media dei rendimenti semplici e media dei rendimenti logaritmici, punti percentuali l&#x27;anno&quot;)
+    reg(&quot;errore_mezza_var&quot;, err, &quot;pp2&quot;, &quot;Divario tra media semplice e media logaritmica meno la mezza varianza, punti percentuali l&#x27;anno&quot;)
+    reg(&quot;h1_ok&quot;, int(config.GAP_MIN &lt;= gap &lt;= config.GAP_MAX), &quot;int&quot;, &quot;1 se il divario sta nell&#x27;intervallo dell&#x27;ipotesi 1&quot;, &quot;config.py, GAP_MIN e GAP_MAX&quot;)
+    reg(&quot;gap_min&quot;, config.GAP_MIN, &quot;pp1&quot;, &quot;Estremo basso dell&#x27;intervallo dell&#x27;ipotesi 1, punti percentuali&quot;, &quot;config.py&quot;)
+    reg(&quot;gap_max&quot;, config.GAP_MAX, &quot;pp1&quot;, &quot;Estremo alto dell&#x27;intervallo dell&#x27;ipotesi 1, punti percentuali&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_errore&quot;, config.ERRORE_MEZZA_VARIANZA, &quot;pp1&quot;, &quot;Errore massimo tollerato per la mezza varianza, punti percentuali&quot;, &quot;config.py&quot;)
+
+    # --- somme e prodotti ---------------------------------------------------------------------------------------------
+    reg(&quot;totale_reale_pct&quot;, (tot - 1.0) * 100.0, &quot;int&quot;, &quot;Rendimento totale del buy &amp; hold nel periodo, in percentuale&quot;)
+    reg(&quot;somma_semplici_pct&quot;, float(r.sum()) * 100.0, &quot;int&quot;, &quot;Somma dei rendimenti semplici giornalieri, in percentuale&quot;)
+    reg(&quot;somma_log_ok&quot;, int(abs(float(l.sum()) - np.log(tot)) &lt; 1e-9), &quot;int&quot;, &quot;1 se la somma dei logaritmi giornalieri coincide con il logaritmo del rendimento totale (tolleranza 1e-9)&quot;)
+    reg(&quot;prodotto_ok&quot;, int(abs(float((1 + r).prod()) - tot) &lt; 1e-6 * tot), &quot;int&quot;, &quot;1 se il prodotto dei fattori (1 + rendimento) coincide con il rapporto tra ultima e prima chiusura&quot;)
+    finale_reale = config.CAPITALE * tot
+    proiez = config.CAPITALE * (1 + A) ** anni
+    reg(&quot;finale_reale&quot;, importo(finale_reale), &quot;testo&quot;, &quot;Valore finale del buy &amp; hold partendo dal capitale iniziale&quot;)
+    reg(&quot;finale_proiezione&quot;, importo(proiez), &quot;testo&quot;, &quot;Valore che si otterrebbe componendo la media dei rendimenti semplici annua per gli stessi anni&quot;)
+    reg(&quot;rapporto_proiezione&quot;, proiez / finale_reale, &quot;num1&quot;, &quot;Valore promesso dalla media semplice diviso valore reale del buy &amp; hold&quot;)
+
+    # --- decenni ----------------------------------------------------------------------------------------------------
+    rd = []
+    for dec in sorted(set(r.index.year // 10 * 10)):
+        sub = r[(r.index.year // 10 * 10) == dec]
+        nanni = len(set(sub.index.year))
+        if nanni &lt; config.DECENNIO_MIN_ANNI:
+            continue
+        sp = len(sub) / nanni
+        ls = np.log1p(sub)
+        a_d, l_d, v_d = m.media_annua(sub, sp), m.media_annua(ls, sp), m.varianza_annua(sub, sp)
+        cg = m.cagr_da_rend(sub, nanni)
+        rd.append({&quot;decennio&quot;: dec, &quot;etichetta&quot;: f&quot;{sub.index.year.min()}-{sub.index.year.max()}&quot;, &quot;anni&quot;: nanni,
+                   &quot;media_semplice&quot;: a_d, &quot;cagr&quot;: cg, &quot;gap&quot;: a_d - cg, &quot;gap_log&quot;: a_d - l_d,
+                   &quot;volatilita&quot;: float(np.sqrt(v_d)), &quot;mezza_varianza&quot;: v_d / 2, &quot;errore&quot;: (a_d - l_d) - v_d / 2})
+    dd = pd.DataFrame(rd)
+    corr = float(np.corrcoef(dd[&quot;gap&quot;], dd[&quot;mezza_varianza&quot;])[0, 1])
+    iv, ic = dd[&quot;volatilita&quot;].idxmax(), dd[&quot;volatilita&quot;].idxmin()
+    n_err_ok = int((dd[&quot;errore&quot;].abs() &lt; config.ERRORE_MEZZA_VARIANZA).sum())
+    reg(&quot;n_dec_gap_neg&quot;, int((dd[&quot;gap&quot;] &lt; 0).sum()), &quot;int&quot;, &quot;Decenni in cui la media semplice è inferiore al rendimento composto (divario negativo)&quot;, &quot;decenni.csv&quot;)
+    reg(&quot;n_decenni&quot;, len(dd), &quot;int&quot;, &quot;Decenni con abbastanza anni nella finestra&quot;, &quot;decenni.csv&quot;)
+    reg(&quot;decenni_min_anni&quot;, config.DECENNIO_MIN_ANNI, &quot;int&quot;, &quot;Anni minimi perché un decennio entri nel confronto&quot;, &quot;config.py, DECENNIO_MIN_ANNI&quot;)
+    reg(&quot;n_decenni_err_ok&quot;, n_err_ok, &quot;int&quot;, &quot;Decenni in cui l&#x27;errore della mezza varianza è sotto la soglia&quot;, &quot;decenni.csv&quot;)
+    reg(&quot;h2_ok&quot;, int(abs(err) &lt; config.ERRORE_MEZZA_VARIANZA and n_err_ok == len(dd)), &quot;int&quot;, &quot;1 se l&#x27;errore è sotto soglia sull&#x27;intero periodo e in ogni decennio&quot;)
+    reg(&quot;errore_max_dec&quot;, float(dd[&quot;errore&quot;].abs().max()), &quot;pp2&quot;, &quot;Errore assoluto massimo della mezza varianza tra i decenni, punti percentuali l&#x27;anno&quot;, &quot;decenni.csv&quot;)
+    reg(&quot;corr_dec&quot;, corr, &quot;num2&quot;, &quot;Correlazione tra divario e mezza varianza nei decenni&quot;, &quot;decenni.csv&quot;)
+    reg(&quot;soglia_corr&quot;, config.SOGLIA_CORRELAZIONE, &quot;num2&quot;, &quot;Soglia di correlazione dell&#x27;ipotesi 3&quot;, &quot;config.py&quot;)
+    reg(&quot;dec_vol_nome&quot;, dd.loc[iv, &quot;etichetta&quot;], &quot;testo&quot;, &quot;Decennio con la volatilità più alta&quot;, &quot;decenni.csv&quot;)
+    reg(&quot;dec_vol_vol&quot;, dd.loc[iv, &quot;volatilita&quot;], &quot;pct1&quot;, &quot;Volatilità annua del decennio più volatile&quot;, &quot;decenni.csv&quot;)
+    reg(&quot;dec_vol_gap&quot;, dd.loc[iv, &quot;gap&quot;], &quot;pp2&quot;, &quot;Divario nel decennio più volatile, punti percentuali l&#x27;anno&quot;, &quot;decenni.csv&quot;)
+    reg(&quot;dec_calmo_nome&quot;, dd.loc[ic, &quot;etichetta&quot;], &quot;testo&quot;, &quot;Decennio con la volatilità più bassa&quot;, &quot;decenni.csv&quot;)
+    reg(&quot;dec_calmo_vol&quot;, dd.loc[ic, &quot;volatilita&quot;], &quot;pct1&quot;, &quot;Volatilità annua del decennio più calmo&quot;, &quot;decenni.csv&quot;)
+    reg(&quot;dec_calmo_gap&quot;, dd.loc[ic, &quot;gap&quot;], &quot;pp2&quot;, &quot;Divario nel decennio più calmo, punti percentuali l&#x27;anno&quot;, &quot;decenni.csv&quot;)
+    reg(&quot;h3_ok&quot;, int(corr &gt; config.SOGLIA_CORRELAZIONE and dd.loc[iv, &quot;gap&quot;] &gt; dd.loc[ic, &quot;gap&quot;]), &quot;int&quot;, &quot;1 se correlazione sopra soglia e divario del decennio più volatile maggiore di quello del più calmo&quot;)
+    dd.to_csv(config.RISULTATI / &quot;decenni.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    # --- giorno per giorno --------------------------------------------------------------------------------------------
+    diff = r - l
+    quota = float((diff &lt; config.SOGLIA_GIORNO).mean())
+    ip = r.idxmin()
+    reg(&quot;soglia_giorno&quot;, config.SOGLIA_GIORNO, &quot;pp2&quot;, &quot;Differenza giornaliera sotto cui semplice e logaritmico si confondono, punti percentuali&quot;, &quot;config.py, SOGLIA_GIORNO&quot;)
+    reg(&quot;quota_sotto_soglia&quot;, quota, &quot;pct1&quot;, &quot;Quota di sedute con differenza sotto la soglia&quot;)
+    reg(&quot;soglia_quota&quot;, config.SOGLIA_QUOTA_GIORNI, &quot;pct0&quot;, &quot;Quota minima dell&#x27;ipotesi 4&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_peggior&quot;, config.SOGLIA_PEGGIOR_GIORNO, &quot;pp1&quot;, &quot;Differenza minima nella peggior seduta, ipotesi 4, punti percentuali&quot;, &quot;config.py&quot;)
+    reg(&quot;peggior_data&quot;, str(ip.date()), &quot;data_lunga&quot;, &quot;Seduta con il peggior rendimento semplice della finestra&quot;, &quot;dati/&quot;)
+    reg(&quot;peggior_semplice&quot;, float(r[ip]), &quot;pct1&quot;, &quot;Rendimento semplice della peggior seduta&quot;)
+    reg(&quot;peggior_log&quot;, float(l[ip]), &quot;pct1&quot;, &quot;Rendimento logaritmico della peggior seduta&quot;)
+    reg(&quot;peggior_diff&quot;, float(diff[ip]), &quot;pp2&quot;, &quot;Differenza tra rendimento semplice e logaritmico nella peggior seduta, punti percentuali&quot;)
+    reg(&quot;diff_media&quot;, float(diff.mean()), &quot;pp3&quot;, &quot;Differenza media giornaliera tra rendimento semplice e logaritmico, punti percentuali&quot;)
+    reg(&quot;n_oltre_decimo&quot;, int((diff &gt; 0.001).sum()), &quot;int&quot;, &quot;Sedute con differenza sopra un decimo di punto percentuale&quot;)
+    reg(&quot;h4_ok&quot;, int(quota &gt;= config.SOGLIA_QUOTA_GIORNI and diff[ip] &gt; config.SOGLIA_PEGGIOR_GIORNO), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 4 è confermata&quot;)
+    campione = diff.iloc[::7]
+    peggiori = diff.nlargest(10)
+    gg = pd.DataFrame({&quot;data&quot;: pd.concat([campione, peggiori]).index.unique()})
+    gg[&quot;semplice&quot;] = r.loc[gg[&quot;data&quot;]].to_numpy()
+    gg[&quot;logaritmico&quot;] = l.loc[gg[&quot;data&quot;]].to_numpy()
+    gg.sort_values(&quot;data&quot;).to_csv(config.RISULTATI / &quot;giorni.csv&quot;, index=False, float_format=&quot;%.8f&quot;)
+
+    # --- frequenze --------------------------------------------------------------------------------------------------
+    cm = c.groupby([c.index.year, c.index.month]).last()
+    rm, lm = cm.pct_change().dropna(), np.log(cm / cm.shift(1)).dropna()
+    ca = c.groupby(c.index.year).last()
+    ra, la = ca.pct_change().dropna(), np.log(ca / ca.shift(1)).dropna()
+    A_m, L_m, V_m = m.media_annua(rm, config.MESI_ANNO), m.media_annua(lm, config.MESI_ANNO), m.varianza_annua(rm, config.MESI_ANNO)
+    A_y, L_y, V_y = float(ra.mean()), float(la.mean()), float(ra.var(ddof=1))
+    g_d, g_m, g_y = gap, A_m - cagr, A_y - cagr
+    spread = max(g_d, g_m, g_y) - min(g_d, g_m, g_y)
+    reg(&quot;n_mesi&quot;, len(rm), &quot;int&quot;, &quot;Rendimenti mensili nella finestra&quot;, &quot;chiusure di fine mese&quot;)
+    reg(&quot;n_anni_rend&quot;, len(ra), &quot;int&quot;, &quot;Rendimenti annuali (anni solari) nella finestra&quot;, &quot;chiusure di fine anno&quot;)
+    reg(&quot;gap_giorn&quot;, g_d, &quot;pp2&quot;, &quot;Divario con rendimenti giornalieri, punti percentuali l&#x27;anno&quot;)
+    reg(&quot;gap_mens&quot;, g_m, &quot;pp2&quot;, &quot;Divario con rendimenti mensili (media mensile per 12), punti percentuali l&#x27;anno&quot;)
+    reg(&quot;gap_ann&quot;, g_y, &quot;pp2&quot;, &quot;Divario con rendimenti annuali, punti percentuali l&#x27;anno&quot;)
+    reg(&quot;mezza_giorn&quot;, mezza, &quot;pp2&quot;, &quot;Mezza varianza con rendimenti giornalieri, punti percentuali l&#x27;anno&quot;)
+    reg(&quot;mezza_mens&quot;, V_m / 2, &quot;pp2&quot;, &quot;Mezza varianza con rendimenti mensili, punti percentuali l&#x27;anno&quot;)
+    reg(&quot;mezza_ann&quot;, V_y / 2, &quot;pp2&quot;, &quot;Mezza varianza con rendimenti annuali, punti percentuali l&#x27;anno&quot;)
+    reg(&quot;media_ann&quot;, A_y, &quot;pct2&quot;, &quot;Media dei rendimenti annuali dei singoli anni solari&quot;)
+    reg(&quot;spread_freq&quot;, spread, &quot;pp2&quot;, &quot;Differenza tra il divario più alto e quello più basso fra le tre frequenze, punti percentuali l&#x27;anno&quot;)
+    reg(&quot;soglia_freq&quot;, config.SOGLIA_FREQUENZE, &quot;pp1&quot;, &quot;Soglia dell&#x27;ipotesi 5, punti percentuali&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_ok&quot;, int(spread &lt; config.SOGLIA_FREQUENZE), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 5 è confermata&quot;)
+    pd.DataFrame([
+        {&quot;frequenza&quot;: &quot;giornaliera&quot;, &quot;gap&quot;: g_d, &quot;mezza_varianza&quot;: mezza, &quot;media_semplice&quot;: A, &quot;media_log&quot;: L},
+        {&quot;frequenza&quot;: &quot;mensile&quot;, &quot;gap&quot;: g_m, &quot;mezza_varianza&quot;: V_m / 2, &quot;media_semplice&quot;: A_m, &quot;media_log&quot;: L_m},
+        {&quot;frequenza&quot;: &quot;annuale&quot;, &quot;gap&quot;: g_y, &quot;mezza_varianza&quot;: V_y / 2, &quot;media_semplice&quot;: A_y, &quot;media_log&quot;: L_y},
+    ]).to_csv(config.RISULTATI / &quot;frequenze.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    # --- curva: valore reale contro valore promesso dalla media semplice -------------------------------------------
+    k = np.r_[np.arange(0, n + 1, 21), n]
+    k = np.unique(k)
+    t = k / n * anni
+    pd.DataFrame({&quot;data&quot;: c.index[k], &quot;anni&quot;: t, &quot;valore_reale&quot;: config.CAPITALE * (c.to_numpy()[k] / c.iloc[0]),
+                  &quot;valore_promesso&quot;: config.CAPITALE * (1 + A) ** t}).to_csv(config.RISULTATI / &quot;curve.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri&quot;)
+    print(f&quot;media semplice {A:.2%}, media log {L:.2%}, composto {cagr:.2%}, divario {gap:.2%}, mezza varianza {mezza:.2%}&quot;)
+    print(f&quot;ipotesi: H1 {RIS[&#x27;h1_ok&#x27;][&#x27;valore&#x27;]} H2 {RIS[&#x27;h2_ok&#x27;][&#x27;valore&#x27;]} H3 {RIS[&#x27;h3_ok&#x27;][&#x27;valore&#x27;]} &quot;
+          f&quot;H4 {RIS[&#x27;h4_ok&#x27;][&#x27;valore&#x27;]} H5 {RIS[&#x27;h5_ok&#x27;][&#x27;valore&#x27;]}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_valore_promesso.png    500 euro: il valore reale del buy &amp; hold e quello &quot;promesso&quot; dalla media dei rendimenti semplici
+  fig2_decenni.png            per ogni decennio, divario contro mezza varianza
+  fig3_giorno_per_giorno.png  differenza tra rendimento semplice e logaritmico, seduta per seduta
+  fig4_frequenze.png          il divario calcolato con dati giornalieri, mensili e annuali
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def virgola(x: float, dec: int = 1) -&gt; str:
+    return f&quot;{x:.{dec}f}&quot;.replace(&quot;.&quot;, &quot;,&quot;)
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    v = lambda k: V[k][&quot;valore&quot;]
+
+    # --- Figura 1: valore reale e valore promesso -------------------------------------------------------------
+    c = pd.read_csv(R / &quot;curve.csv&quot;, parse_dates=[&quot;data&quot;])
+    fig, ax = plt.subplots(figsize=(11, 5.6))
+    ax.plot(c[&quot;data&quot;], c[&quot;valore_promesso&quot;], color=ARANCIO, lw=2.0, ls=&quot;--&quot;, label=&quot;promesso dalla media dei rendimenti semplici&quot;)
+    ax.plot(c[&quot;data&quot;], c[&quot;valore_reale&quot;], color=BLU, lw=2.2, label=&quot;reale (buy &amp; hold)&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.yaxis.set_major_formatter(lambda x, _: f&quot;{x:,.0f}&quot;.replace(&quot;,&quot;, &quot;.&quot;))
+    ax.set_ylabel(f&quot;valore di {config.CAPITALE:.0f} euro, scala logaritmica&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=11)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_valore_promesso.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 2: decenni -----------------------------------------------------------------------------------
+    d = pd.read_csv(R / &quot;decenni.csv&quot;)
+    fig, ax = plt.subplots(figsize=(8.6, 6))
+    lim = max(d[&quot;gap&quot;].max(), d[&quot;mezza_varianza&quot;].max()) * 100 * 1.12
+    ax.plot([0, lim], [0, lim], color=GRIGIO, lw=1.6, ls=&quot;--&quot;, label=&quot;divario = mezza varianza&quot;)
+    ax.scatter(d[&quot;mezza_varianza&quot;] * 100, d[&quot;gap&quot;] * 100, color=BLU, s=70, zorder=3, label=&quot;decenni&quot;)
+    for _, riga in d.iterrows():
+        ax.annotate(riga[&quot;etichetta&quot;], (riga[&quot;mezza_varianza&quot;] * 100, riga[&quot;gap&quot;] * 100), textcoords=&quot;offset points&quot;,
+                    xytext=(6, -12), fontsize=9)
+    ax.set_xlim(0, lim)
+    ax.set_ylim(min(0.0, float(d[&quot;gap&quot;].min()) * 100 * 1.4), lim)
+    ax.axhline(0, color=&quot;black&quot;, lw=0.8)
+    ax.set_xlabel(&quot;mezza varianza, punti percentuali l&#x27;anno&quot;)
+    ax.set_ylabel(&quot;media semplice meno rendimento composto, punti l&#x27;anno&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig2_decenni.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 3: giorno per giorno ---------------------------------------------------------------------------
+    g = pd.read_csv(R / &quot;giorni.csv&quot;, parse_dates=[&quot;data&quot;])
+    fig, ax = plt.subplots(figsize=(10, 5.6))
+    ax.scatter(g[&quot;semplice&quot;] * 100, (g[&quot;semplice&quot;] - g[&quot;logaritmico&quot;]) * 100, s=6, color=BLU, alpha=0.5)
+    x = np.linspace(g[&quot;semplice&quot;].min(), g[&quot;semplice&quot;].max(), 300)
+    ax.plot(x * 100, (x - np.log1p(x)) * 100, color=ARANCIO, lw=1.6, ls=&quot;--&quot;)
+    ax.axhline(config.SOGLIA_GIORNO * 100, color=GRIGIO, lw=1.2, ls=&quot;:&quot;)
+    ax.set_xlabel(&quot;rendimento semplice della seduta, %&quot;)
+    ax.set_ylabel(&quot;semplice meno logaritmico, punti percentuali&quot;)
+    ax.xaxis.set_major_formatter(lambda x, _: f&quot;{x:.0f}%&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_giorno_per_giorno.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 4: frequenze ---------------------------------------------------------------------------------------
+    f = pd.read_csv(R / &quot;frequenze.csv&quot;)
+    fig, ax = plt.subplots(figsize=(8.6, 5.2))
+    xs = np.arange(len(f))
+    ax.bar(xs, f[&quot;gap&quot;] * 100, color=BLU, width=0.55, label=&quot;media semplice meno rendimento composto&quot;)
+    ax.scatter(xs, f[&quot;mezza_varianza&quot;] * 100, color=ARANCIO, s=90, zorder=3, marker=&quot;D&quot;, label=&quot;mezza varianza&quot;)
+    for k, y in enumerate(f[&quot;gap&quot;] * 100):
+        ax.text(k, y + 0.05, virgola(y, 2), ha=&quot;center&quot;, fontsize=11)
+    ax.set_xticks(xs, [s for s in f[&quot;frequenza&quot;]])
+    ax.set_ylabel(&quot;punti percentuali l&#x27;anno&quot;)
+    ax.set_ylim(0, f[&quot;gap&quot;].max() * 100 * 1.6)
+    ax.grid(axis=&quot;x&quot;, visible=False)
+    ax.legend(loc=&quot;upper center&quot;, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig4_frequenze.png&quot;)
+    plt.close(fig)
+    print(&quot;Grafici salvati in figure/&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 2 - &quot;Rendimenti semplici contro logaritmici&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Idea: il rendimento semplice di una seduta è P(t)/P(t-1) - 1, quello logaritmico è ln(P(t)/P(t-1)). I logaritmi si sommano
+nel tempo, i rendimenti semplici si compongono. La media dei rendimenti semplici è sempre più alta della media dei
+logaritmici, di circa metà della varianza: è la ragione per cui &quot;il rendimento medio&quot; di un indice è più alto di quanto
+l&#x27;indice abbia davvero reso a chi lo ha tenuto. Si misura quanto vale la differenza sul S&amp;P 500, se la regola della
+mezza varianza funziona, e come cambia con la volatilità del periodo e con la frequenza dei dati.
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati ---------------------------------------------------------------
+TICKER = &quot;^GSPC&quot;                  # S&amp;P 500, indice di prezzo (senza dividendi), dal 1927
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+
+# --- Convenzioni di calcolo ---------------------------------------------
+# Finestra: dal primo 31 dicembre (ultima chiusura del primo anno solare) all&#x27;ultima chiusura dell&#x27;ultimo anno solare
+# COMPLETO. Così giornaliero, mensile e annuale coprono esattamente lo stesso periodo e gli anni sono un numero intero.
+MESI_ANNO = 12                   # per annualizzare i rendimenti mensili: media mensile x 12
+DECENNIO_MIN_ANNI = 5            # un decennio entra nel confronto solo se ha almeno questi anni nella finestra
+CAPITALE = 500.0                 # solo per dare un&#x27;idea: valori lordi, senza commissioni né tasse
+ESEMPIO_SU = 0.10                # esempio da manuale: +10% e poi -10%
+ESEMPIO_GIU = -0.10
+SOGLIA_GIORNO = 0.0001           # un centesimo di punto percentuale: sotto, semplice e logaritmico si confondono
+SOGLIA_QUOTA_GIORNI = 0.90       # ipotesi 4: almeno il 90% delle sedute sotto la soglia
+SOGLIA_PEGGIOR_GIORNO = 0.01     # ipotesi 4: nella peggior seduta la differenza supera un punto percentuale
+GAP_MIN, GAP_MAX = 0.005, 0.03   # ipotesi 1: il divario tra media aritmetica e rendimento composto sta tra 0,5 e 3 punti l&#x27;anno
+ERRORE_MEZZA_VARIANZA = 0.003    # ipotesi 2: la mezza varianza spiega il divario con errore sotto 0,3 punti l&#x27;anno
+SOGLIA_CORRELAZIONE = 0.95       # ipotesi 3: correlazione tra divario e mezza varianza, tra decenni
+SOGLIA_FREQUENZE = 0.01          # ipotesi 5: il divario cambia meno di un punto l&#x27;anno tra giornaliero, mensile e annuale
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) La media annua dei rendimenti semplici giornalieri supera il rendimento annuo composto di un valore compreso tra 0,5 e 3 punti percentuali. &quot;
+    &quot;2) La mezza varianza (varianza annua dei rendimenti divisa per due) riproduce il divario tra media semplice e media logaritmica, &quot;
+    &quot;con un errore sotto 0,3 punti l&#x27;anno sull&#x27;intero periodo e in ciascun decennio. &quot;
+    &quot;3) Tra i decenni il divario segue la volatilità: la correlazione tra divario e mezza varianza è sopra 0,95, &quot;
+    &quot;e il divario del decennio più volatile è maggiore di quello del decennio più calmo. &quot;
+    &quot;4) Giorno per giorno la differenza tra rendimento semplice e logaritmico è trascurabile: sotto un centesimo di punto percentuale &quot;
+    &quot;in almeno il 90% delle sedute, ma sopra un punto percentuale nella peggior seduta. &quot;
+    &quot;5) Il divario non dipende dalla frequenza dei dati: calcolato con rendimenti giornalieri, mensili e annuali varia di meno di un punto l&#x27;anno.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/motore_vettoriale.py<small>rendimenti semplici e logaritmici, media e varianza annua, rendimento composto</small></summary><pre><code class="language-python">&quot;&quot;&quot;Motore vettoriale minimo: segnale, posizione, rendimenti. Senza commissioni né tasse, per isolare l&#x27;effetto del look-ahead.
+
+Convenzioni:
+  - rend[t] è il rendimento della seduta t: chiusura di t su chiusura di t-1;
+  - il segnale[t] si calcola con le chiusure fino a t incluse;
+  - posizione(segnale, ritardo): ritardo = 0 usa il segnale di t per il rendimento di t (LOOK-AHEAD: si compra alla
+    chiusura di ieri sapendo la chiusura di oggi); ritardo = 1 usa il segnale di ieri (onesto).
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def rendimenti(close: pd.Series) -&gt; pd.Series:
+    return close.pct_change().fillna(0.0)
+
+
+def segnale_un_giorno(close: pd.Series) -&gt; pd.Series:
+    return close &gt; close.shift(1)
+
+
+def segnale_sopra_media(close: pd.Series, n: int) -&gt; pd.Series:
+    return (close &gt; close.rolling(n).mean()) &amp; close.rolling(n).mean().notna()
+
+
+def segnale_medie(close: pd.Series, veloce: int, lenta: int) -&gt; pd.Series:
+    sl = close.rolling(lenta).mean()
+    return (close.rolling(veloce).mean() &gt; sl) &amp; sl.notna()
+
+
+def posizione(segnale: pd.Series, ritardo: int) -&gt; pd.Series:
+    &quot;&quot;&quot;True se si è investiti nella seduta, dato il ritardo con cui il segnale è noto.&quot;&quot;&quot;
+    if ritardo &lt; 0:
+        raise ValueError(&quot;ritardo negativo: sarebbe usare il futuro&quot;)
+    return segnale.shift(ritardo, fill_value=False).astype(bool)
+
+
+def valore(rend: pd.Series, pos: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Valore di 1 investito, composto giorno per giorno: nei giorni in cassa il rendimento è zero.&quot;&quot;&quot;
+    return (1.0 + rend * pos.astype(float)).cumprod()
+
+
+def cagr(v: pd.Series, anni: float) -&gt; float:
+    return float(v.iloc[-1] ** (1.0 / anni) - 1.0)
+
+
+def perdita_massima(v: pd.Series) -&gt; float:
+    return float((v / v.cummax() - 1.0).min())
+
+
+# --- Rendimenti semplici e logaritmici (articolo n. 2) ---------------------------------------------------------
+def rend_log(close: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Rendimento logaritmico di ogni seduta: ln(chiusura di oggi / chiusura di ieri). La prima seduta non ha rendimento.&quot;&quot;&quot;
+    return np.log(close / close.shift(1)).dropna()
+
+
+def rend_sempl(close: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Rendimento semplice di ogni seduta: chiusura di oggi / chiusura di ieri - 1. La prima seduta non ha rendimento.&quot;&quot;&quot;
+    return close.pct_change().dropna()
+
+
+def media_annua(r: pd.Series, periodi_anno: float) -&gt; float:
+    &quot;&quot;&quot;Media dei rendimenti di periodo moltiplicata per i periodi in un anno (la convenzione &quot;media x 252&quot;).&quot;&quot;&quot;
+    return float(r.mean() * periodi_anno)
+
+
+def varianza_annua(r: pd.Series, periodi_anno: float) -&gt; float:
+    &quot;&quot;&quot;Varianza campionaria dei rendimenti di periodo moltiplicata per i periodi in un anno.&quot;&quot;&quot;
+    return float(r.var(ddof=1) * periodi_anno)
+
+
+def cagr_da_rend(r: pd.Series, anni: float) -&gt; float:
+    &quot;&quot;&quot;Rendimento annuo composto di una serie di rendimenti semplici consecutivi.&quot;&quot;&quot;
+    return float((1.0 + r).prod() ** (1.0 / anni) - 1.0)
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import motore_vettoriale as m
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+def serie(valori) -&gt; pd.Series:
+    return pd.Series(np.asarray(valori, float), index=pd.bdate_range(&quot;2020-01-01&quot;, periods=len(valori)))
+
+
+# 1. Esempio da manuale: +10% e poi -10% non riporta al punto di partenza
+c = serie([100.0, 110.0, 99.0])
+r, l = m.rend_sempl(c), m.rend_log(c)
+controlla(&quot;due rendimenti per tre chiusure&quot;, len(r) == 2 and len(l) == 2)
+controlla(&quot;+10% e -10% fanno -1%&quot;, abs((1 + r).prod() - 1 - (-0.01)) &lt; 1e-12)
+controlla(&quot;la media semplice è zero ma il capitale è sceso&quot;, abs(r.mean()) &lt; 1e-12 and c.iloc[-1] &lt; c.iloc[0])
+controlla(&quot;la media dei logaritmi è negativa&quot;, l.mean() &lt; 0)
+
+# 2. I logaritmi si sommano, i rendimenti semplici si compongono
+rng = np.random.default_rng(5)
+close = serie(100 * np.exp(np.cumsum(rng.normal(0.0004, 0.012, 800))))
+rs, ls = m.rend_sempl(close), m.rend_log(close)
+controlla(&quot;somma dei logaritmi = log del rapporto tra ultima e prima chiusura&quot;, abs(ls.sum() - np.log(close.iloc[-1] / close.iloc[0])) &lt; 1e-9)
+controlla(&quot;prodotto dei fattori = rapporto tra ultima e prima chiusura&quot;, abs((1 + rs).prod() - close.iloc[-1] / close.iloc[0]) &lt; 1e-9)
+controlla(&quot;log(1 + r) = rendimento logaritmico&quot;, np.allclose(np.log1p(rs), ls))
+
+# 3. Il rendimento semplice è sempre maggiore del logaritmico (tranne a zero)
+controlla(&quot;semplice &gt;= logaritmico in ogni seduta&quot;, bool((rs &gt;= ls - 1e-15).all()))
+
+# 4. Media semplice e media logaritmica: il divario è circa metà della varianza
+x = pd.Series(rng.normal(0.0004, 0.012, 200000))
+lx = np.log1p(x)
+div = m.media_annua(x, 252) - m.media_annua(lx, 252)
+mezza = m.varianza_annua(x, 252) / 2
+controlla(&quot;divario tra media semplice e logaritmica = mezza varianza (errore sotto 0,05 punti)&quot;, abs(div - mezza) &lt; 0.0005)
+controlla(&quot;la media semplice supera sempre quella logaritmica&quot;, div &gt; 0)
+
+# 5. Rendimento composto
+anni = 800 / 252
+controlla(&quot;CAGR da rendimenti = CAGR da prezzi&quot;, abs(m.cagr_da_rend(rs, anni) - ((close.iloc[-1] / close.iloc[0]) ** (1 / anni) - 1)) &lt; 1e-9)
+controlla(&quot;e alla media log annua meno uno = CAGR&quot;, abs(np.expm1(ls.mean() * len(ls) / anni) - m.cagr_da_rend(rs, anni)) &lt; 1e-9)
+
+# 6. Rendimento costante: nessuna volatilità, nessun divario
+costante = serie(100 * 1.001 ** np.arange(300))
+rc, lc = m.rend_sempl(costante), m.rend_log(costante)
+controlla(&quot;con rendimento costante la varianza è zero e semplice e logaritmico quasi coincidono&quot;,
+          m.varianza_annua(rc, 252) &lt; 1e-20 and m.media_annua(rc, 252) - m.media_annua(lc, 252) &lt; 0.001)
+
+print(f&quot;\nVerifica del motore: {n_ok} controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
