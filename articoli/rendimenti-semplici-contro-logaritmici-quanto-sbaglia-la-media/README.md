@@ -2,7 +2,7 @@
 
 **Domanda:** quando la differenza tra rendimento semplice e logaritmico conta, e quanto si sbaglia a usare la media dei rendimenti semplici come se fosse il rendimento che un investitore ha davvero ottenuto?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Rendimenti semplici contro logaritmici: quanto sbaglia la media?](https://ticker-fight.blogspot.com/2026/10/rendimenti-semplici-contro-logaritmici.html).
 
 ## Il disegno
 
