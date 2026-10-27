@@ -2,7 +2,7 @@
 
 **Domanda:** stare investiti solo nella seduta del lunedì (o di un altro giorno fisso della settimana) rende qualcosa, con le condizioni di chi parte con 1.000 €? Commissione per ordine in tre scenari, tassa del 26% con minusvalenze riportate, azioni frazionate.
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Operare solo il lunedì: rende qualcosa con 1.000 euro?](https://ticker-fight.blogspot.com/2026/10/operare-solo-il-lunedi-rende-qualcosa.html).
 
 ## Il disegno
 

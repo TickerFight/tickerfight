@@ -2,7 +2,7 @@
 
 **Domanda:** la stessa regola di trend (chiusura sopra la media a 200 sedute) rende di più se il segnale si guarda ogni seduta, una volta a settimana o una volta al mese? Condizioni di chi parte con 1.000 €: commissione per ordine in tre scenari, tassa del 26% con minusvalenze riportate, azioni frazionate.
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Un ordine al mese contro uno a settimana: chi guarda meno guadagna di più?](https://ticker-fight.blogspot.com/2026/10/un-ordine-al-mese-contro-uno-settimana.html).
 
 ## Il disegno
 

@@ -2,7 +2,7 @@
 
 **Domanda:** con 1.000 € di capitale, 2 € a ordine (o 0,1%) e la tassa del 26%, quanti ordini all'anno si possono fare prima che i costi si mangino il rendimento? Per misurare solo il peso della frequenza si usa una «regola a cicli» senza alcun segnale di mercato: si è investiti tutte le sedute tranne una ogni L; la si prova a sei frequenze e la si confronta con il buy & hold e con le scimmie.
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Quante operazioni all'anno si possono permettere 1.000 euro?](https://ticker-fight.blogspot.com/2026/10/quante-operazioni-allanno-si-possono.html).
 
 ## Il disegno
 
