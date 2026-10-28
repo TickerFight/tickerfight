@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-34 pubblicati, 1 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+34 pubblicati, 2 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -40,4 +40,5 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [Il cono della fortuna: la regola 50/200 sull'S&P 500 contro diecimila scimmie](https://tickerfight.github.io/tickerfight/articoli/il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/il-cono-della-fortuna-la-regola-50200.html) |
 | [500 euro su Apple con le medie mobili: cinque anni di operazioni, commissioni e tasse](https://tickerfight.github.io/tickerfight/articoli/500-euro-su-apple-con-le-medie-mobili-cinque-anni-di-operazioni-commissioni-e-tasse/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/500-euro-su-apple-con-le-medie-mobili.html) |
 | [50 titoli dell'S&P 500, medie mobili contro buy & hold: la classifica](https://tickerfight.github.io/tickerfight/articoli/50-titoli-dell-sp-500-medie-mobili-contro-buy-hold-la-classifica/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/50-titoli-dells-500-medie-mobili-contro.html) |
+| [ACF e PACF dei rendimenti: l'S&P 500 ha memoria?](https://tickerfight.github.io/tickerfight/articoli/acf-e-pacf-dei-rendimenti-l-sp-500-ha-memoria/) | In revisione | — | — |
 | [La scimmia con il dardo batte la media mobile? Mille scimmie contro la regola più famosa della Borsa](https://tickerfight.github.io/tickerfight/articoli/la-scimmia-con-il-dardo-batte-la-media-mobile-mille-scimmie-contro-la-regola-piu-famosa-della-borsa/) | In revisione | — | — |
