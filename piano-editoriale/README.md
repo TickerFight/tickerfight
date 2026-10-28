@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-30 pubblicati, 3 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+30 pubblicati, 4 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -37,5 +37,6 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [500 euro su Apple con le medie mobili: cinque anni di operazioni, commissioni e tasse](https://tickerfight.github.io/tickerfight/articoli/500-euro-su-apple-con-le-medie-mobili-cinque-anni-di-operazioni-commissioni-e-tasse/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/500-euro-su-apple-con-le-medie-mobili.html) |
 | [50 titoli dell'S&P 500, medie mobili contro buy & hold: la classifica](https://tickerfight.github.io/tickerfight/articoli/50-titoli-dell-sp-500-medie-mobili-contro-buy-hold-la-classifica/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/50-titoli-dells-500-medie-mobili-contro.html) |
 | [Large cap contro small cap: il premio di dimensione esiste, decennio per decennio?](https://tickerfight.github.io/tickerfight/articoli/large-cap-contro-small-cap-il-premio-di-dimensione-esiste-decennio-per-decennio/) | In revisione | — | — |
+| [Il VIX come segnale: cosa dice davvero dei mesi che verranno?](https://tickerfight.github.io/tickerfight/articoli/il-vix-come-segnale-cosa-dice-davvero-dei-mesi-che-verranno/) | In revisione | — | — |
 | [Rotazione settoriale mensile: venti regole, quante reggono dopo costi e tasse?](https://tickerfight.github.io/tickerfight/articoli/rotazione-settoriale-mensile-venti-regole-quante-reggono-dopo-costi-e-tasse/) | In revisione | — | — |
 | [PAC mensile: conta il giorno del mese in cui compri?](https://tickerfight.github.io/tickerfight/articoli/pac-mensile-conta-il-giorno-del-mese-in-cui-compri/) | In revisione | — | — |
