@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La scimmia con il dardo batte la media mobile? Mille scimmie contro la regola più famosa della Borsa · il codice · TickerFight</title>
+<meta name="description" content="una regola a media mobile semplice (investiti quando la chiusura di ieri è sopra la media) batte migliaia di scimmie che stanno nel mercato per la stessa quota di tempo e con lo stesso numero di operazioni?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>La scimmia con il dardo batte la media mobile? Mille scimmie contro la regola più famosa della Borsa</h1>
+<p class="domanda">Una regola a media mobile semplice (investiti quando la chiusura di ieri è sopra la media) batte migliaia di scimmie che stanno nel mercato per la stessa quota di tempo e con lo stesso numero di operazioni?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="la-scimmia-con-il-dardo-batte-la-media-mobile-mille-scimmie-contro-la-regola-piu-famosa-della-borsa.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Regola:</strong> investiti se la chiusura di ieri è sopra la media a n sedute (n = 50, 100, 150, 200, 250; la principale è 200), altrimenti liquidità senza interessi. Nessun look-ahead.</li>
+<li><strong>Indici:</strong> S&amp;P 500, DAX, FTSE 100, Nikkei 225 (prezzo, senza dividendi, valuta locale). Stesso giorno di partenza per regola, buy &amp; hold e scimmie.</li>
+<li><strong>Scimmie a blocchi:</strong> stesse durate dentro/fuori della regola, in ordine casuale (stessa quota, stesso numero di operazioni). <strong>Scimmie a moneta:</strong> ogni seduta investita con probabilità pari alla quota.</li>
+<li><strong>Metriche:</strong> rendimento annuo composto, rapporto di Sharpe, perdita massima; con e senza costo di 0,1% per operazione.</li>
+<li><strong>Test multipli:</strong> 20 confronti (4 indici per 5 lunghezze) per ciascuna misura, p corretti con Holm.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>la-scimmia-con-il-dardo-batte-la-media-mobile-mille-scimmie-contro-la-regola-piu-famosa-della-borsa/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd la-scimmia-con-il-dardo-batte-la-media-mobile-mille-scimmie-contro-la-regola-piu-famosa-della-borsa
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera di quattro indici azionari (S&amp;P 500, DAX, FTSE 100, Nikkei 225).
+
+Salva, per ogni indice, dati/&lt;ticker&gt;.csv (Date, Open, High, Low, Close, Volume) e dati/metadati.json con la fonte,
+la data del download, la versione di yfinance e l&#x27;impronta SHA-256 di ogni file. Gli script successivi leggono SOLO
+i file salvati: i risultati restano riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;indici&quot;: []}
+    for ticker, nome, valuta in config.INDICI:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nome, &quot;valuta&quot;: valuta}
+        grezzo = scarica(ticker)
+        if grezzo.empty:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;indici&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;])
+        df = df[df[&quot;Close&quot;] &gt; 0]
+        # seduta ancora in corso: barra incompleta, da scartare
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:
+            df = df.iloc[:-1]
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;indici&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    if sum(1 for r in meta[&quot;indici&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;) &lt; len(config.INDICI):
+        raise SystemExit(&quot;Non tutti gli indici sono stati scaricati.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Media mobile contro scimmie.
+
+Legge SOLO dati/*.csv e produce in risultati/:
+  metriche.json     ogni numero dell&#x27;articolo, con descrizione e origine
+  confronti.csv     per indice e lunghezza: regola, buy &amp; hold, scimmie a blocchi e a moneta, percentili, p e p di Holm
+  metà.csv          S&amp;P 500, media principale, prima e dopo lo spartiacque
+  distribuzioni.npz campioni delle scimmie (S&amp;P 500, media principale) per i grafici
+  indici_usati.json
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORG = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORG):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def confronto(rend, pos, rng, costo):
+    &quot;&quot;&quot;Regola, buy &amp; hold, scimmie a blocchi (con e senza costi) e a moneta (senza costi) su una serie.&quot;&quot;&quot;
+    T = len(rend)
+    quota = float(pos.mean())
+    val, lung = fx.blocchi(pos)
+    n_op = int((np.diff(np.concatenate([[0], pos])) != 0).sum())
+    out = {&quot;T&quot;: T, &quot;quota&quot;: quota, &quot;n_operazioni&quot;: n_op}
+    for nome, c in ((&quot;lordo&quot;, 0.0), (&quot;netto&quot;, costo)):
+        cg, sh, md = fx.metriche(rend, pos, c)
+        out[f&quot;regola_cagr_{nome}&quot;], out[f&quot;regola_sharpe_{nome}&quot;], out[f&quot;regola_mdd_{nome}&quot;] = cg[0], sh[0], md[0]
+    cg, sh, md = fx.metriche(rend, np.ones(T, dtype=np.int8), 0.0)
+    out[&quot;bh_cagr&quot;], out[&quot;bh_sharpe&quot;], out[&quot;bh_mdd&quot;] = cg[0], sh[0], md[0]
+    camp = {k: [] for k in (&quot;bl_cagr&quot;, &quot;bl_sharpe&quot;, &quot;bl_mdd&quot;, &quot;bl_cagr_n&quot;, &quot;bl_sharpe_n&quot;, &quot;bl_mdd_n&quot;, &quot;mo_cagr&quot;, &quot;mo_sharpe&quot;, &quot;mo_mdd&quot;)}
+    chunk = 100
+    for i in range(0, config.N_SCIMMIE, chunk):
+        m = min(chunk, config.N_SCIMMIE - i)
+        P = np.array([fx.scimmia_a_blocchi(val, lung, rng) for _ in range(m)])
+        for suff, c in ((&quot;&quot;, 0.0), (&quot;_n&quot;, costo)):
+            a, b, d = fx.metriche(rend, P, c)
+            camp[&quot;bl_cagr&quot; + suff].append(a); camp[&quot;bl_sharpe&quot; + suff].append(b); camp[&quot;bl_mdd&quot; + suff].append(d)
+        a, b, d = fx.metriche(rend, fx.scimmie_a_moneta(T, quota, m, rng), 0.0)
+        camp[&quot;mo_cagr&quot;].append(a); camp[&quot;mo_sharpe&quot;].append(b); camp[&quot;mo_mdd&quot;].append(d)
+    camp = {k: np.concatenate(v) for k, v in camp.items()}
+    for k, v in camp.items():
+        out[k + &quot;_media&quot;] = float(v.mean()); out[k + &quot;_p5&quot;] = float(np.quantile(v, 0.05)); out[k + &quot;_p95&quot;] = float(np.quantile(v, 0.95))
+    for met in (&quot;cagr&quot;, &quot;sharpe&quot;, &quot;mdd&quot;):
+        for tipo in (&quot;bl&quot;, &quot;mo&quot;):
+            out[f&quot;perc_{tipo}_{met}&quot;], out[f&quot;p_{tipo}_{met}&quot;] = fx.percentile_e_p(out[f&quot;regola_{met}_lordo&quot;], camp[f&quot;{tipo}_{met}&quot;])
+        out[f&quot;perc_bln_{met}&quot;], out[f&quot;p_bln_{met}&quot;] = fx.percentile_e_p(out[f&quot;regola_{met}_netto&quot;], camp[f&quot;bl_{met}_n&quot;])
+    return out, camp
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    rng = np.random.default_rng(config.SEME)
+    righe, usati, distr, meta_righe = [], [], {}, []
+    maxn = max(config.LUNGHEZZE)
+    for tk, nome, valuta in config.INDICI:
+        df = pd.read_csv(config.file_dati(tk), parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+        close = df[&quot;Close&quot;].astype(float)
+        if (close &lt;= 0).any() or close.isna().any():
+            raise SystemExit(f&quot;{tk}: chiusure mancanti o non positive&quot;)
+        rend_tot = close.pct_change().fillna(0.0).to_numpy()
+        usati.append({&quot;ticker&quot;: tk, &quot;nome&quot;: nome, &quot;slug&quot;: tk.replace(&quot;^&quot;, &quot;&quot;).lower(), &quot;prima&quot;: str(close.index[maxn].date()),
+                      &quot;ultima&quot;: str(close.index[-1].date()), &quot;sedute&quot;: int(len(close) - maxn)})
+        for n in config.LUNGHEZZE:
+            pos = fx.posizione_sma(close, n)[maxn:]
+            rend = rend_tot[maxn:]
+            r, camp = confronto(rend, pos, rng, config.COSTO_CAMBIO)
+            r.update({&quot;ticker&quot;: tk, &quot;indice&quot;: nome, &quot;lunghezza&quot;: n})
+            righe.append(r)
+            if tk == config.INDICE_PRINCIPALE and n == config.LUNGHEZZA_PRINCIPALE:
+                distr = {k: v.astype(np.float32) for k, v in camp.items()}
+                # metà della storia
+                data = close.index[maxn:]
+                taglio = int(np.searchsorted(data, pd.Timestamp(config.DATA_SPARTIACQUE)))
+                for lab, sl in ((&quot;prima&quot;, slice(0, taglio)), (&quot;dopo&quot;, slice(taglio, None))):
+                    rm, _ = confronto(rend[sl], pos[sl], rng, config.COSTO_CAMBIO)
+                    rm.update({&quot;meta&quot;: lab, &quot;dal&quot;: str(data[sl][0].date()), &quot;al&quot;: str(data[sl][-1].date())})
+                    meta_righe.append(rm)
+    R = pd.DataFrame(righe)
+    for tipo in (&quot;bl&quot;, &quot;mo&quot;):
+        for met in (&quot;cagr&quot;, &quot;sharpe&quot;):
+            h = fx.holm({i: p for i, p in enumerate(R[f&quot;p_{tipo}_{met}&quot;])})
+            R[f&quot;holm_{tipo}_{met}&quot;] = [h[i] for i in range(len(R))]
+    R.to_csv(config.RISULTATI / &quot;confronti.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    M = pd.DataFrame(meta_righe)
+    M.to_csv(config.RISULTATI / &quot;meta.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    np.savez_compressed(config.RISULTATI / &quot;distribuzioni.npz&quot;, **distr)
+    (config.RISULTATI / &quot;indici_usati.json&quot;).write_text(json.dumps(usati, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+
+    S, P = config.SOGLIE, config.LUNGHEZZA_PRINCIPALE
+    sub = R[R.lunghezza == P].set_index(&quot;ticker&quot;)
+    sp = R[(R.ticker == config.INDICE_PRINCIPALE)].set_index(&quot;lunghezza&quot;)
+    s0 = sp.loc[P]
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Scimmie per ogni confronto&quot;, &quot;config.py&quot;)
+    reg(&quot;costo&quot;, config.COSTO_CAMBIO, &quot;pct1&quot;, &quot;Costo per ogni acquisto o vendita, quota del valore&quot;, &quot;config.py&quot;)
+    reg(&quot;lunghezza&quot;, P, &quot;annonum&quot;, &quot;Lunghezza (sedute) della media mobile principale&quot;, &quot;config.py&quot;)
+    reg(&quot;n_lunghezze&quot;, len(config.LUNGHEZZE), &quot;annonum&quot;, &quot;Lunghezze di media mobile provate&quot;, &quot;config.py&quot;)
+    reg(&quot;lung_min&quot;, min(config.LUNGHEZZE), &quot;annonum&quot;, &quot;Media più corta provata&quot;, &quot;config.py&quot;)
+    reg(&quot;lung_max&quot;, max(config.LUNGHEZZE), &quot;annonum&quot;, &quot;Media più lunga provata&quot;, &quot;config.py&quot;)
+    reg(&quot;n_confronti&quot;, len(R), &quot;int&quot;, &quot;Confronti regola contro scimmie (indici per lunghezze), corretti con Holm per ogni misura&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;spartiacque&quot;, config.DATA_SPARTIACQUE, &quot;data_lunga&quot;, &quot;Data che divide in due la storia dell&#x27;S&amp;P 500&quot;, &quot;config.py&quot;)
+    reg(&quot;data_inizio_sp&quot;, usati[0][&quot;prima&quot;], &quot;data_lunga&quot;, &quot;Primo giorno del confronto sull&#x27;S&amp;P 500&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, usati[0][&quot;ultima&quot;], &quot;data_lunga&quot;, &quot;Ultima seduta dell&#x27;S&amp;P 500&quot;, &quot;dati/&quot;)
+    reg(&quot;sedute_sp&quot;, usati[0][&quot;sedute&quot;], &quot;int&quot;, &quot;Sedute del confronto sull&#x27;S&amp;P 500&quot;, &quot;dati/&quot;)
+    reg(&quot;soglia95&quot;, 0.95, &quot;pct0&quot;, &quot;Quota di scimmie da battere nelle ipotesi 3 e 4&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_ip3_alfa&quot;, S[&quot;ip3_alfa&quot;], &quot;num2&quot;, &quot;Soglia di significatività&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_ip2_pp&quot;, S[&quot;ip2_pp&quot;], &quot;pp1&quot;, &quot;Soglia di vantaggio sulla perdita massima&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_ip5&quot;, S[&quot;ip5_perc&quot;], &quot;pct0&quot;, &quot;Percentile minimo dell&#x27;ipotesi 5&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_ip6_pp&quot;, S[&quot;ip6_pp&quot;], &quot;pp1&quot;, &quot;Soglia di perdita da costi (ipotesi 6)&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_ip4_meta&quot;, S[&quot;ip4_meta&quot;], &quot;int&quot;, &quot;Soglia del numero di combinazioni (ipotesi 4)&quot;, &quot;config.py&quot;)
+
+    # --- descrizione per indice (media principale) ------------------------------------------------------------
+    for tk, r in sub.iterrows():
+        s = tk.replace(&quot;^&quot;, &quot;&quot;).lower()
+        reg(f&quot;{s}_quota&quot;, r[&quot;quota&quot;], &quot;pct0&quot;, f&quot;Quota di sedute investite dalla media principale, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_ops_anno&quot;, r[&quot;n_operazioni&quot;] / (r[&quot;T&quot;] / config.SEDUTE_ANNO), &quot;num1&quot;, f&quot;Operazioni (acquisti e vendite) per anno, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_cagr&quot;, r[&quot;regola_cagr_lordo&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo della media principale senza costi, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_cagr_bh&quot;, r[&quot;bh_cagr&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo del buy &amp; hold, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_mdd&quot;, r[&quot;regola_mdd_lordo&quot;], &quot;pct0&quot;, f&quot;Perdita massima della media principale, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_mdd_bh&quot;, r[&quot;bh_mdd&quot;], &quot;pct0&quot;, f&quot;Perdita massima del buy &amp; hold, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_sharpe&quot;, r[&quot;regola_sharpe_lordo&quot;], &quot;num2&quot;, f&quot;Sharpe della media principale, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_sharpe_bh&quot;, r[&quot;bh_sharpe&quot;], &quot;num2&quot;, f&quot;Sharpe del buy &amp; hold, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_sharpe_scimmie&quot;, r[&quot;bl_sharpe_media&quot;], &quot;num2&quot;, f&quot;Sharpe medio delle scimmie a blocchi, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_perc_sharpe&quot;, r[&quot;perc_bl_sharpe&quot;], &quot;pct0&quot;, f&quot;Quota di scimmie a blocchi battute sullo Sharpe, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_holm_sharpe&quot;, r[&quot;holm_bl_sharpe&quot;], &quot;pval&quot;, f&quot;p corretto (Holm) sullo Sharpe contro le scimmie a blocchi, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_cagr_scimmie&quot;, r[&quot;bl_cagr_media&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo medio delle scimmie a blocchi, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_perc_cagr&quot;, r[&quot;perc_bl_cagr&quot;], &quot;pct0&quot;, f&quot;Quota di scimmie a blocchi battute sul rendimento annuo, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_holm_cagr&quot;, r[&quot;holm_bl_cagr&quot;], &quot;pval&quot;, f&quot;p corretto (Holm) sul rendimento annuo contro le scimmie a blocchi, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_perc_mdd&quot;, r[&quot;perc_bl_mdd&quot;], &quot;pct0&quot;, f&quot;Quota di scimmie a blocchi con perdita massima più profonda della regola, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+        reg(f&quot;{s}_mdd_scimmie&quot;, r[&quot;bl_mdd_media&quot;], &quot;pct0&quot;, f&quot;Perdita massima media delle scimmie a blocchi, {r[&#x27;indice&#x27;]}&quot;, &quot;confronti.csv&quot;)
+    # S&amp;P 500: dettagli
+    reg(&quot;sp_cagr_netto&quot;, s0[&quot;regola_cagr_netto&quot;], &quot;pct1&quot;, &quot;Rendimento annuo della media principale con costi, S&amp;P 500&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;sp_costo_pp&quot;, s0[&quot;regola_cagr_lordo&quot;] - s0[&quot;regola_cagr_netto&quot;], &quot;pp2&quot;, &quot;Rendimento annuo perso per i costi, punti percentuali, S&amp;P 500&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;sp_perc_cagr_netto&quot;, s0[&quot;perc_bln_cagr&quot;], &quot;pct0&quot;, &quot;Quota di scimmie a blocchi (con costi) battute sul rendimento annuo con costi, S&amp;P 500&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;sp_perc_sharpe_moneta&quot;, s0[&quot;perc_mo_sharpe&quot;], &quot;pct0&quot;, &quot;Quota di scimmie a moneta battute sullo Sharpe, S&amp;P 500&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;sp_perc_cagr_moneta&quot;, s0[&quot;perc_mo_cagr&quot;], &quot;pct0&quot;, &quot;Quota di scimmie a moneta battute sul rendimento annuo, S&amp;P 500&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;sp_cagr_moneta&quot;, s0[&quot;mo_cagr_media&quot;], &quot;pct1&quot;, &quot;Rendimento annuo medio delle scimmie a moneta, S&amp;P 500&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;sp_sharpe_moneta&quot;, s0[&quot;mo_sharpe_media&quot;], &quot;num2&quot;, &quot;Sharpe medio delle scimmie a moneta, S&amp;P 500&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;sp_cagr_scimmie_p5&quot;, s0[&quot;bl_cagr_p5&quot;], &quot;pct1&quot;, &quot;5° percentile del rendimento annuo delle scimmie a blocchi, S&amp;P 500&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;sp_cagr_scimmie_p95&quot;, s0[&quot;bl_cagr_p95&quot;], &quot;pct1&quot;, &quot;95° percentile del rendimento annuo delle scimmie a blocchi, S&amp;P 500&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;sp_sharpe_scimmie_p5&quot;, s0[&quot;bl_sharpe_p5&quot;], &quot;num2&quot;, &quot;5° percentile dello Sharpe delle scimmie a blocchi, S&amp;P 500&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;sp_sharpe_scimmie_p95&quot;, s0[&quot;bl_sharpe_p95&quot;], &quot;num2&quot;, &quot;95° percentile dello Sharpe delle scimmie a blocchi, S&amp;P 500&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;sp_ops&quot;, int(s0[&quot;n_operazioni&quot;]), &quot;int&quot;, &quot;Operazioni totali della media principale, S&amp;P 500&quot;, &quot;confronti.csv&quot;)
+
+    # --- verdetti ---------------------------------------------------------------------------------------------
+    h1 = int((sub[&quot;regola_cagr_lordo&quot;] &lt; sub[&quot;bh_cagr&quot;]).sum())
+    reg(&quot;h1_n&quot;, h1, &quot;annonum&quot;, &quot;Indici in cui la media principale rende meno del buy &amp; hold (ipotesi 1)&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;h1_ok&quot;, int(h1 &gt;= S[&quot;ip1_indici&quot;]), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 1 è confermata&quot;, &quot;confronti.csv&quot;)
+    vant = (sub[&quot;regola_mdd_lordo&quot;] - sub[&quot;bh_mdd&quot;])
+    reg(&quot;h2_min_pp&quot;, float(vant.min()), &quot;pp1&quot;, &quot;Vantaggio minimo sulla perdita massima tra gli indici, punti percentuali&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;h2_max_pp&quot;, float(vant.max()), &quot;pp1&quot;, &quot;Vantaggio massimo sulla perdita massima tra gli indici, punti percentuali&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;h2_ok&quot;, int((vant &gt;= S[&quot;ip2_pp&quot;]).all()), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 2 è confermata&quot;, &quot;confronti.csv&quot;)
+    h3 = int(((sub[&quot;holm_bl_sharpe&quot;] &lt; S[&quot;ip3_alfa&quot;]) &amp; (sub[&quot;perc_bl_sharpe&quot;] &gt;= 0.95)).sum())
+    reg(&quot;h3_n&quot;, h3, &quot;annonum&quot;, &quot;Indici in cui lo Sharpe batte il 95% delle scimmie con Holm sotto 0,05 (ipotesi 3)&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;h3_ok&quot;, int(h3 &gt;= S[&quot;ip3_indici&quot;]), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 3 è confermata&quot;, &quot;confronti.csv&quot;)
+    h4 = int(((R[&quot;holm_bl_cagr&quot;] &lt; S[&quot;ip3_alfa&quot;]) &amp; (R[&quot;perc_bl_cagr&quot;] &gt;= 0.95)).sum())
+    reg(&quot;h4_n&quot;, h4, &quot;annonum&quot;, &quot;Combinazioni in cui il rendimento annuo batte il 95% delle scimmie con Holm sotto 0,05 (ipotesi 4)&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;h4_ok&quot;, int(h4 &lt; S[&quot;ip4_meta&quot;]), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 4 è confermata&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;h4_n_nominale&quot;, int(((R[&quot;p_bl_cagr&quot;] &lt; 0.05) &amp; (R[&quot;perc_bl_cagr&quot;] &gt;= 0.95)).sum()), &quot;annonum&quot;, &quot;Combinazioni con p non corretto sotto 0,05 sul rendimento annuo&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;h3_n_nominale20&quot;, int(((R[&quot;p_bl_sharpe&quot;] &lt; 0.05) &amp; (R[&quot;perc_bl_sharpe&quot;] &gt;= 0.95)).sum()), &quot;annonum&quot;, &quot;Combinazioni (su 20) con p non corretto sotto 0,05 sullo Sharpe&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;h3_n_holm20&quot;, int(((R[&quot;holm_bl_sharpe&quot;] &lt; 0.05) &amp; (R[&quot;perc_bl_sharpe&quot;] &gt;= 0.95)).sum()), &quot;annonum&quot;, &quot;Combinazioni (su 20) con Holm sotto 0,05 sullo Sharpe&quot;, &quot;confronti.csv&quot;)
+    percs = sp[&quot;perc_bl_sharpe&quot;]
+    reg(&quot;h5_min&quot;, float(percs.min()), &quot;pct0&quot;, &quot;Quota minima di scimmie battute sullo Sharpe tra le 5 lunghezze, S&amp;P 500&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;h5_max&quot;, float(percs.max()), &quot;pct0&quot;, &quot;Quota massima di scimmie battute sullo Sharpe tra le 5 lunghezze, S&amp;P 500&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;h5_ok&quot;, int((percs &gt;= S[&quot;ip5_perc&quot;]).all()), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 5 è confermata&quot;, &quot;confronti.csv&quot;)
+    reg(&quot;h6_ok&quot;, int(s0[&quot;regola_cagr_lordo&quot;] - s0[&quot;regola_cagr_netto&quot;] &lt; S[&quot;ip6_pp&quot;]), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 6 è confermata&quot;, &quot;confronti.csv&quot;)
+    mp, md_ = M[M.meta == &quot;prima&quot;].iloc[0], M[M.meta == &quot;dopo&quot;].iloc[0]
+    for lab, r in ((&quot;m1&quot;, mp), (&quot;m2&quot;, md_)):
+        reg(f&quot;{lab}_dal&quot;, r[&quot;dal&quot;], &quot;data_lunga&quot;, &quot;Inizio della metà&quot;, &quot;meta.csv&quot;)
+        reg(f&quot;{lab}_al&quot;, r[&quot;al&quot;], &quot;data_lunga&quot;, &quot;Fine della metà&quot;, &quot;meta.csv&quot;)
+        reg(f&quot;{lab}_perc_sharpe&quot;, r[&quot;perc_bl_sharpe&quot;], &quot;pct0&quot;, &quot;Quota di scimmie battute sullo Sharpe nella metà&quot;, &quot;meta.csv&quot;)
+        reg(f&quot;{lab}_sharpe&quot;, r[&quot;regola_sharpe_lordo&quot;], &quot;num2&quot;, &quot;Sharpe della regola nella metà&quot;, &quot;meta.csv&quot;)
+        reg(f&quot;{lab}_sharpe_bh&quot;, r[&quot;bh_sharpe&quot;], &quot;num2&quot;, &quot;Sharpe del buy &amp; hold nella metà&quot;, &quot;meta.csv&quot;)
+        reg(f&quot;{lab}_cagr&quot;, r[&quot;regola_cagr_lordo&quot;], &quot;pct1&quot;, &quot;Rendimento annuo della regola nella metà&quot;, &quot;meta.csv&quot;)
+        reg(f&quot;{lab}_cagr_bh&quot;, r[&quot;bh_cagr&quot;], &quot;pct1&quot;, &quot;Rendimento annuo del buy &amp; hold nella metà&quot;, &quot;meta.csv&quot;)
+        reg(f&quot;{lab}_perc_cagr&quot;, r[&quot;perc_bl_cagr&quot;], &quot;pct0&quot;, &quot;Quota di scimmie battute sul rendimento annuo nella metà&quot;, &quot;meta.csv&quot;)
+    reg(&quot;h7_ok&quot;, int(mp[&quot;perc_bl_sharpe&quot;] &gt;= S[&quot;ip7_perc&quot;] and md_[&quot;perc_bl_sharpe&quot;] &gt;= S[&quot;ip7_perc&quot;]), &quot;int&quot;, &quot;1 se l&#x27;ipotesi 7 è confermata&quot;, &quot;meta.csv&quot;)
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri&quot;)
+    print(R[[&quot;indice&quot;, &quot;lunghezza&quot;, &quot;regola_cagr_lordo&quot;, &quot;bh_cagr&quot;, &quot;perc_bl_cagr&quot;, &quot;perc_bl_sharpe&quot;, &quot;regola_mdd_lordo&quot;, &quot;bh_mdd&quot;]].round(3).to_string())
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_quota_scimmie_battute.png   per indice e lunghezza: quota di scimmie battute sullo Sharpe e sul rendimento annuo
+  fig2_sharpe_sp500.png            distribuzione dello Sharpe delle scimmie (S&amp;P 500) con regola e buy &amp; hold
+  fig3_rendimento_sp500.png        distribuzione del rendimento annuo delle scimmie (S&amp;P 500) con regola e buy &amp; hold
+  fig4_perdita_massima.png         perdita massima di regola, scimmie e buy &amp; hold per indice
+&quot;&quot;&quot;
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def istogramma(x, regola, bh, etichetta, nome, fmt, titolo_x):
+    fig, ax = plt.subplots(figsize=(8.4, 4.6))
+    ax.hist(x, bins=40, color=GRIGIO, alpha=0.7, label=f&quot;{len(x):,} scimmie a blocchi&quot;.replace(&quot;,&quot;, &quot;.&quot;))
+    ax.axvline(regola, color=BLU, lw=2.5, label=f&quot;Media a {config.LUNGHEZZA_PRINCIPALE} sedute: {fmt(regola)}&quot;)
+    ax.axvline(bh, color=ARANCIO, lw=2.5, ls=&quot;--&quot;, label=f&quot;Buy &amp; hold: {fmt(bh)}&quot;)
+    ax.set_xlabel(titolo_x)
+    ax.set_ylabel(&quot;Scimmie&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / nome)
+    plt.close(fig)
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    C = pd.read_csv(R / &quot;confronti.csv&quot;)
+    D = np.load(R / &quot;distribuzioni.npz&quot;)
+    sp = C[(C.ticker == config.INDICE_PRINCIPALE) &amp; (C.lunghezza == config.LUNGHEZZA_PRINCIPALE)].iloc[0]
+    nomi = {t: n.split(&quot; (&quot;)[0] for t, n, _ in config.INDICI}
+
+    # --- Figura 1
+    fig, assi = plt.subplots(1, 2, figsize=(11, 4.6), sharey=True)
+    larg = 0.16
+    for ax, col, tit in ((assi[0], &quot;perc_bl_sharpe&quot;, &quot;Rapporto di Sharpe&quot;), (assi[1], &quot;perc_bl_cagr&quot;, &quot;Rendimento annuo&quot;)):
+        for j, n in enumerate(config.LUNGHEZZE):
+            q = [C[(C.ticker == t) &amp; (C.lunghezza == n)][col].iloc[0] * 100 for t, _, _ in config.INDICI]
+            ax.bar(np.arange(len(q)) + (j - 2) * larg, q, larg * 0.92, color=BLU, alpha=0.35 + 0.15 * j, label=f&quot;{n} sedute&quot;)
+        ax.axhline(95, color=ARANCIO, lw=1.5, ls=&quot;--&quot;)
+        ax.axhline(50, color=GRIGIO, lw=1)
+        ax.set_xticks(range(len(config.INDICI)), [nomi[t] for t, _, _ in config.INDICI], fontsize=10)
+        ax.set_title(tit)
+        ax.set_ylim(0, 100)
+    assi[0].set_ylabel(&quot;Scimmie battute dalla regola (%)&quot;)
+    fig.legend(*assi[0].get_legend_handles_labels(), loc=&quot;lower center&quot;, ncol=5, fontsize=10, bbox_to_anchor=(0.5, -0.07))
+    fig.savefig(config.FIGURE / &quot;fig1_quota_scimmie_battute.png&quot;)
+    plt.close(fig)
+
+    istogramma(D[&quot;bl_sharpe&quot;], sp.regola_sharpe_lordo, sp.bh_sharpe, &quot;&quot;, &quot;fig2_sharpe_sp500.png&quot;, lambda v: f&quot;{v:.2f}&quot;.replace(&quot;.&quot;, &quot;,&quot;),
+               &quot;Rapporto di Sharpe annualizzato&quot;)
+    istogramma(D[&quot;bl_cagr&quot;] * 100, sp.regola_cagr_lordo * 100, sp.bh_cagr * 100, &quot;&quot;, &quot;fig3_rendimento_sp500.png&quot;,
+               lambda v: f&quot;{v:.1f}%&quot;.replace(&quot;.&quot;, &quot;,&quot;), &quot;Rendimento annuo composto (%)&quot;)
+
+    # --- Figura 4
+    fig, ax = plt.subplots(figsize=(8.4, 4.8))
+    sub = C[C.lunghezza == config.LUNGHEZZA_PRINCIPALE].set_index(&quot;ticker&quot;).loc[[t for t, _, _ in config.INDICI]]
+    x = np.arange(len(sub))
+    for j, (col, lab, c) in enumerate(((&quot;regola_mdd_lordo&quot;, f&quot;Media a {config.LUNGHEZZA_PRINCIPALE} sedute&quot;, BLU),
+                                       (&quot;bl_mdd_media&quot;, &quot;Scimmie a blocchi (media)&quot;, GRIGIO), (&quot;bh_mdd&quot;, &quot;Buy &amp; hold&quot;, ARANCIO))):
+        ax.bar(x + (j - 1) * 0.27, sub[col] * 100, 0.25, color=c, label=lab)
+    ax.set_xticks(x, [nomi[t] for t in sub.index])
+    ax.set_ylabel(&quot;Perdita massima (%)&quot;)
+    ax.legend(loc=&quot;upper center&quot;, bbox_to_anchor=(0.5, -0.08), ncol=3, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig4_perdita_massima.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 515 - &quot;La scimmia con il dardo contro la media mobile&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui, scritti prima di guardare i risultati.
+
+Regola: si è investiti quando la chiusura di ieri è sopra la sua media mobile semplice (n sedute), altrimenti si sta in
+liquidità (che non rende). Il segnale di ieri decide la posizione di oggi: nessun look-ahead.
+Scimmie: stessa quota di tempo investito della regola.
+  - «scimmie a blocchi»: stesso numero di operazioni e stesse durate dei periodi dentro e fuori, ma messe in ordine casuale;
+  - «scimmie a moneta»: ogni seduta investita con probabilità pari alla quota della regola (molte più operazioni; solo senza costi).
+Tutti i confronti partono dallo stesso giorno (dopo la media più lunga), per regola, buy &amp; hold e scimmie.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+INDICI = [
+    (&quot;^GSPC&quot;, &quot;S&amp;P 500 (Stati Uniti)&quot;, &quot;USD&quot;),
+    (&quot;^GDAXI&quot;, &quot;DAX (Germania)&quot;, &quot;EUR&quot;),
+    (&quot;^FTSE&quot;, &quot;FTSE 100 (Regno Unito)&quot;, &quot;GBP&quot;),
+    (&quot;^N225&quot;, &quot;Nikkei 225 (Giappone)&quot;, &quot;JPY&quot;),
+]
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere di quattro indici azionari (S&amp;P 500, DAX, FTSE 100, Nikkei 225)&quot;
+NOMI_ESENTI = (&quot;S&amp;P&quot;, &quot;DAX&quot;, &quot;FTSE 100&quot;, &quot;Nikkei 225&quot;, &quot;FTSE&quot;, &quot;515&quot;, &quot;Nikkei&quot;, &quot;Holm&quot;, &quot;1992&quot;, &quot;1999&quot;, &quot;1998&quot;, &quot;47(5)&quot;, &quot;54(5)&quot;,
+               &quot;1731-1764&quot;, &quot;1647-1691&quot;, &quot;SMA&quot;, &quot;1897&quot;, &quot;1986&quot;, &quot;N225&quot;)
+INDICE_PRINCIPALE = &quot;^GSPC&quot;
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+# --- La famiglia di regole ----------------------------------------------------------------------------------------
+LUNGHEZZE = (50, 100, 150, 200, 250)   # medie mobili semplici provate (sedute); tutte dichiarate, nessuna scelta dopo
+LUNGHEZZA_PRINCIPALE = 200             # la regola classica, scelta prima di guardare i dati
+COSTO_CAMBIO = 0.001                   # 0,1% del valore a ogni acquisto o vendita (scenario con costi)
+SEDUTE_ANNO = 252
+
+# --- Il caso -------------------------------------------------------------------------------------------------------
+SEME = 20261028
+N_SCIMMIE = 1000
+LIVELLO_CONFIDENZA = 0.95
+DATA_SPARTIACQUE = &quot;1975-01-01&quot;        # per dividere la storia dell&#x27;S&amp;P 500 in due metà
+
+SOGLIE = {&quot;ip1_indici&quot;: 3, &quot;ip2_pp&quot;: 0.10, &quot;ip3_indici&quot;: 3, &quot;ip3_alfa&quot;: 0.05, &quot;ip4_meta&quot;: 10,
+          &quot;ip5_perc&quot;: 0.90, &quot;ip6_pp&quot;: 0.005, &quot;ip7_perc&quot;: 0.90}
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) Senza costi, il rendimento annuo composto della media a 200 sedute è più basso di quello del buy &amp; hold in almeno &quot;
+    &quot;3 indici su 4 (indici di prezzo, senza dividendi). &quot;
+    &quot;2) La perdita massima della media a 200 sedute è meno profonda di quella del buy &amp; hold di almeno 10 punti percentuali &quot;
+    &quot;in tutti e 4 gli indici. &quot;
+    &quot;3) Il rapporto di Sharpe della media a 200 sedute batte il 95% delle scimmie a blocchi (stessa quota e stesso numero di &quot;
+    &quot;operazioni), con p corretto per Holm sotto 0,05, in almeno 3 indici su 4. &quot;
+    &quot;4) Sul rendimento annuo composto la regola batte il 95% delle scimmie a blocchi, con p corretto per Holm sotto 0,05, in &quot;
+    &quot;meno di 10 delle 20 combinazioni (4 indici per 5 lunghezze): la tempistica da sola non regala rendimento. &quot;
+    &quot;5) Nell&#x27;S&amp;P 500 il rapporto di Sharpe della regola sta sopra il 90° percentile delle scimmie a blocchi per tutte e 5 le &quot;
+    &quot;lunghezze: il risultato non dipende dalla lunghezza scelta. &quot;
+    &quot;6) Con un costo dello 0,1% per operazione il rendimento annuo della media a 200 sedute sull&#x27;S&amp;P 500 scende di meno di &quot;
+    &quot;0,5 punti percentuali rispetto al caso senza costi. &quot;
+    &quot;7) Dividendo la storia dell&#x27;S&amp;P 500 al 1975, il rapporto di Sharpe della media a 200 sedute sta sopra il 90° percentile &quot;
+    &quot;delle scimmie a blocchi in entrambe le metà.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;esperimento (media mobile contro scimmie), separate dal flusso per controllarle su dati inventati.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import config
+
+
+def posizione_sma(close: pd.Series, n: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;1 se la chiusura di IERI è sopra la sua media a n sedute (calcolata con dati fino a ieri), altrimenti 0.&quot;&quot;&quot;
+    sma = close.rolling(n).mean()
+    seg = (close &gt; sma) &amp; sma.notna()
+    return seg.shift(1, fill_value=False).astype(np.int8).to_numpy()
+
+
+def metriche(rend: np.ndarray, pos: np.ndarray, costo: float) -&gt; tuple[np.ndarray, np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;rend: (T,) rendimenti dell&#x27;indice; pos: (M,T) posizioni 0/1. Si parte da liquidità: il primo acquisto costa.
+    Restituisce (cagr, sharpe, perdita massima) per ognuna delle M righe.&quot;&quot;&quot;
+    pos = np.atleast_2d(pos)
+    prima = np.concatenate([np.zeros((pos.shape[0], 1), dtype=pos.dtype), pos[:, :-1]], axis=1)
+    cambi = np.abs(pos.astype(np.int8) - prima.astype(np.int8))
+    r = pos * rend[None, :] - costo * cambi
+    anni = r.shape[1] / config.SEDUTE_ANNO
+    logv = np.log1p(r)
+    cagr = np.exp(logv.sum(axis=1) / anni) - 1.0
+    sd = r.std(axis=1, ddof=1)
+    sharpe = np.where(sd &gt; 0, r.mean(axis=1) / np.where(sd &gt; 0, sd, 1) * np.sqrt(config.SEDUTE_ANNO), 0.0)
+    v = np.cumprod(1.0 + r, axis=1)
+    mdd = (v / np.maximum.accumulate(v, axis=1) - 1.0).min(axis=1)
+    return cagr, sharpe, mdd
+
+
+def blocchi(pos: np.ndarray) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Valori (0/1) e lunghezze dei periodi consecutivi di una posizione.&quot;&quot;&quot;
+    cambi = np.flatnonzero(np.diff(pos) != 0) + 1
+    inizi = np.concatenate([[0], cambi])
+    lung = np.diff(np.concatenate([inizi, [len(pos)]]))
+    return pos[inizi], lung
+
+
+def scimmia_a_blocchi(valori: np.ndarray, lung: np.ndarray, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Stessa alternanza dentro/fuori della regola, stesse durate ma rimescolate tra i periodi dello stesso tipo:
+    stessa quota di tempo investito e stesso numero di operazioni.&quot;&quot;&quot;
+    nuove = lung.copy()
+    for v in (0, 1):
+        idx = np.flatnonzero(valori == v)
+        nuove[idx] = lung[idx][rng.permutation(len(idx))]
+    return np.repeat(valori, nuove).astype(np.int8)
+
+
+def scimmie_a_moneta(T: int, quota: float, m: int, rng) -&gt; np.ndarray:
+    return (rng.random((m, T)) &lt; quota).astype(np.int8)
+
+
+def percentile_e_p(valore: float, scimmie: np.ndarray, migliore_se_alto: bool = True) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Quota di scimmie che la regola batte (o pareggia) e p unilaterale (1 + scimmie migliori o uguali)/(M + 1).
+    Per la perdita massima (negativa) più alto = meno profonda = migliore, quindi vale la stessa convenzione.&quot;&quot;&quot;
+    m = len(scimmie)
+    batte = float((scimmie &lt;= valore).mean())
+    p = (1 + int((scimmie &gt;= valore).sum())) / (m + 1)
+    return batte, p
+
+
+def holm(p: dict) -&gt; dict:
+    ordine = sorted(p, key=p.get)
+    out, mx, k = {}, 0.0, len(ordine)
+    for i, nome in enumerate(ordine):
+        mx = max(mx, min(1.0, (k - i) * p[nome]))
+        out[nome] = mx
+    return out
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+rng = np.random.default_rng(1)
+# 1. Serie sempre in salita: la regola è sempre investita dopo il rodaggio; nessun look-ahead (prima posizione dopo n sedute)
+close = pd.Series(100.0 * 1.001 ** np.arange(400))
+pos = fx.posizione_sma(close, 50)
+controlla(&quot;nessuna posizione prima della media + 1 giorno&quot;, pos[:50].sum() == 0 and pos[50:].all())
+
+# 2. Look-ahead: cambiare l&#x27;ultima chiusura non cambia la posizione dell&#x27;ultima seduta
+c2 = close.copy(); c2.iloc[-1] = 1.0
+controlla(&quot;la posizione di oggi non dipende dalla chiusura di oggi&quot;, fx.posizione_sma(close, 50)[-1] == fx.posizione_sma(c2, 50)[-1])
+
+# 3. Metriche: sempre investiti, rendimento costante 0,1% al giorno
+rend = np.full(504, 0.001)
+cg, sh, md = fx.metriche(rend, np.ones((1, 504), dtype=np.int8), 0.0)
+controlla(&quot;cagr di 0,1% al giorno per 2 anni&quot;, np.isclose(cg[0], 1.001 ** 252 - 1))
+controlla(&quot;nessuna perdita massima in salita&quot;, np.isclose(md[0], 0.0))
+
+# 4. Costo: un solo acquisto iniziale costa 0,1% in valore
+cg0, _, _ = fx.metriche(rend, np.ones((1, 504), dtype=np.int8), 0.0)
+cgc, _, _ = fx.metriche(rend, np.ones((1, 504), dtype=np.int8), 0.001)
+controlla(&quot;il costo di un acquisto toglie circa 0,05% l&#x27;anno&quot;, 0 &lt; cg0[0] - cgc[0] &lt; 0.001)
+
+# 5. Perdita massima a mano: +10%, -20%
+r = np.array([0.10, -0.20, 0.05])
+_, _, md = fx.metriche(r, np.ones((1, 3), dtype=np.int8), 0.0)
+controlla(&quot;perdita massima a mano = -20%&quot;, np.isclose(md[0], -0.20))
+
+# 6. Scimmia a blocchi: stessa quota, stesso numero di cambi, stesse durate (come insieme)
+p = np.array([0] * 5 + [1] * 10 + [0] * 3 + [1] * 2 + [0] * 7 + [1] * 8, dtype=np.int8)
+val, lung = fx.blocchi(p)
+s = fx.scimmia_a_blocchi(val, lung, rng)
+controlla(&quot;scimmia a blocchi: stessa lunghezza&quot;, len(s) == len(p))
+controlla(&quot;scimmia a blocchi: stessa quota investita&quot;, s.sum() == p.sum())
+controlla(&quot;scimmia a blocchi: stesso numero di cambi&quot;, (np.diff(s) != 0).sum() == (np.diff(p) != 0).sum())
+controlla(&quot;scimmia a blocchi: stesso inizio&quot;, s[0] == p[0])
+
+# 7. Scimmia a moneta: quota vicina
+m = fx.scimmie_a_moneta(10000, 0.6, 20, rng)
+controlla(&quot;scimmie a moneta: quota media vicina a 0,6&quot;, abs(m.mean() - 0.6) &lt; 0.01)
+
+# 8. Percentile e p
+sc = np.arange(100, dtype=float)
+b, pv = fx.percentile_e_p(99.5, sc)
+controlla(&quot;percentile: batte tutte&quot;, b == 1.0 and np.isclose(pv, 1 / 101))
+
+# 9. Holm
+h = fx.holm({&quot;a&quot;: 0.01, &quot;b&quot;: 0.02, &quot;c&quot;: 0.5})
+controlla(&quot;Holm: valori attesi&quot;, np.isclose(h[&quot;a&quot;], 0.03) and np.isclose(h[&quot;b&quot;], 0.04) and np.isclose(h[&quot;c&quot;], 0.5))
+
+# 10. Su rendimenti i.i.d. senza tendenza la regola non batte sistematicamente le scimmie (p mediano non estremo)
+rr = rng.normal(0.0003, 0.01, 6000)
+cl = pd.Series(100 * np.cumprod(1 + rr))
+ps = fx.posizione_sma(cl, 200)[250:]
+rd = rr[250:]
+val, lung = fx.blocchi(ps)
+sim = np.array([fx.scimmia_a_blocchi(val, lung, rng) for _ in range(200)])
+_, shs, _ = fx.metriche(rd, sim, 0.0)
+_, shr, _ = fx.metriche(rd, ps, 0.0)
+b, _ = fx.percentile_e_p(shr[0], shs)
+controlla(&quot;serie senza memoria: la regola non domina le scimmie&quot;, 0.02 &lt; b &lt; 0.995)
+
+print(f&quot;\n{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
