@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Il VIX come segnale: cosa dice davvero dei mesi che verranno? · il codice · TickerFight</title>
+<meta name="description" content="che cosa dice il VIX dei rendimenti e della volatilità del mese successivo, e una regola semplice basata sul VIX batte il buy &amp; hold sull&#x27;S&amp;P 500 e la fortuna?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Il VIX come segnale: cosa dice davvero dei mesi che verranno?</h1>
+<p class="domanda">Che cosa dice il VIX dei rendimenti e della volatilità del mese successivo, e una regola semplice basata sul VIX batte il buy &amp; hold sull&#x27;S&amp;P 500 e la fortuna?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="il-vix-come-segnale-cosa-dice-davvero-dei-mesi-che-verranno.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Segnale:</strong> a fine mese, percentile del VIX rispetto a tutta la sua storia fino a quel giorno (finestra crescente, minimo 504 giorni di storia).</li>
+<li><strong>Niente look-ahead:</strong> il segnale della chiusura t si scambia alla chiusura t+1 e lavora dal rendimento della seduta t+2.</li>
+<li><strong>Studio:</strong> quintili del percentile contro rendimento e volatilità del mese successivo; correlazione di rango con test di permutazione; differenza tra quinto e primo quintile con bootstrap.</li>
+<li><strong>Regole:</strong> A (in azioni solo se il percentile è sotto l'80%) e B (in azioni solo se è almeno al 50%), contro buy &amp; hold e contro 5.000 scimmie (stessa quota di mesi in azioni, mesi a caso). Sei varianti di soglia, tutte riportate.</li>
+<li><strong>Costi:</strong> 5 punti base su ogni scambio. Le tasse non sono modellate.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>il-vix-come-segnale-cosa-dice-davvero-dei-mesi-che-verranno/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica S&amp;P 500 e VIX
+    ├── 02_backtest_e_test.py  studio per quintili, regole A e B, scimmie, bootstrap, varianti
+    ├── 03_grafici.py          i cinque grafici
+    ├── config.py              dati, parametri, varianti e ipotesi, scritti prima dei risultati
+    ├── motore.py              percentile del VIX, segnale ritardato, regole, costi, metriche, test
+    └── verifica_motore.py     controlli su dati inventati (conti a mano, assenza di look-ahead)
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd il-vix-come-segnale-cosa-dice-davvero-dei-mesi-che-verranno
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera di l&#x27;indice e il VIX.
+
+Salva, per ogni indice, dati/&lt;ticker&gt;.csv (Date, Open, High, Low, Close, Volume) e dati/metadati.json con la fonte,
+la data del download, la versione di yfinance e l&#x27;impronta SHA-256 di ogni file. Gli script successivi leggono SOLO
+i file salvati: i risultati restano riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;indici&quot;: []}
+    for ticker, nome, valuta in config.INDICI:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nome, &quot;valuta&quot;: valuta}
+        grezzo = scarica(ticker)
+        if grezzo.empty:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;indici&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;])
+        df = df[df[&quot;Close&quot;] &gt; 0]
+        # seduta ancora in corso: barra incompleta, da scartare
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:
+            df = df.iloc[:-1]
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;indici&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    if sum(1 for r in meta[&quot;indici&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;) &lt; 2:
+        raise SystemExit(&quot;Dati insufficienti.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>studio per quintili, regole A e B, scimmie, bootstrap, varianti</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Il VIX come segnale: studio mese per mese e due regole contro buy &amp; hold e scimmie.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json     ogni numero dell&#x27;articolo, con descrizione e origine
+  quintili.csv      per quintile del percentile del VIX: mesi, rendimento medio, quota positiva, volatilità, peggiore
+  mesi.csv          un record per mese (percentile, rendimento, volatilità del mese dopo)
+  varianti.csv      le sei varianti di robustezza, tutte
+  scimmie_sharpe.csv, bootstrap.csv     Sharpe delle scimmie e differenze di Sharpe ricampionate (regole A e B)
+  curve.csv         curve delle due regole e del buy &amp; hold (una seduta su cinque)
+Scimmia: stessa quota di mesi in azioni della regola, ma mesi scelti a caso (confronto lordo di costi).
+&quot;&quot;&quot;
+import json
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import motore as m
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con motore.py&quot;
+GA = config.GIORNI_ANNO
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def carica(ticker):
+    df = pd.read_csv(config.file_dati(ticker), parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    c = df[&quot;Close&quot;].astype(float)
+    if (c &lt;= 0).any() or c.isna().any():
+        raise SystemExit(f&quot;{ticker}: chiusure mancanti o non positive.&quot;)
+    return c
+
+
+def esegui_regola(d, tipo, soglia, rng):
+    s = m.serie_regola(d, tipo, soglia, config.COSTO_BP)
+    anni = (d.index[-1] - d.index[0]).days / 365.25
+    rs, rb = s[&quot;strategia&quot;], s[&quot;buyhold&quot;]
+    out = dict(s=s, anni=anni, cagr_s=m.cagr(rs, anni), cagr_b=m.cagr(rb, anni), vol_s=m.vol_annua(rs, GA), vol_b=m.vol_annua(rb, GA),
+               dd_s=m.perdita_massima(rs), dd_b=m.perdita_massima(rb), sh_s=m.sharpe(rs, GA), sh_b=m.sharpe(rb, GA),
+               quota=float(s[&quot;peso&quot;].mean()), scambi=float(s[&quot;scambio&quot;].sum() / anni))
+    if rng is not None:
+        boot = m.bootstrap_dsharpe(rs.to_numpy(), rb.to_numpy(), config.N_BOOTSTRAP, config.BLOCCO_BOOTSTRAP, GA, rng)
+        a = (1 - config.LIVELLO_CONFIDENZA) / 2
+        out[&quot;boot&quot;] = boot
+        out[&quot;lo&quot;], out[&quot;hi&quot;] = [float(x) for x in np.quantile(boot, [a, 1 - a])]
+        g = s.groupby(&quot;periodo&quot;)
+        w = g[&quot;peso&quot;].first().to_numpy()
+        s1 = g[&quot;r&quot;].sum().to_numpy()
+        s2 = g[&quot;r&quot;].apply(lambda x: (x ** 2).sum()).to_numpy()
+        n = len(s)
+        out[&quot;sh_lordo&quot;] = float(m.sharpe_da_somme(w, s1, s2, n, GA))
+        perm = rng.permuted(np.tile(w, (config.N_SCIMMIE, 1)), axis=1)
+        out[&quot;sh_sc&quot;] = m.sharpe_da_somme(perm, s1, s2, n, GA)
+        out[&quot;p_sc&quot;] = (int((out[&quot;sh_sc&quot;] &gt;= out[&quot;sh_lordo&quot;]).sum()) + 1) / (config.N_SCIMMIE + 1)
+        crisi = {}
+        for k, (et, ini, fin) in enumerate(config.CRISI):
+            sel = (s.index &gt;= pd.Timestamp(ini)) &amp; (s.index &lt;= pd.Timestamp(fin))
+            crisi[k] = dict(s=float(np.prod(1 + rs.to_numpy()[sel]) - 1), b=float(np.prod(1 + rb.to_numpy()[sel]) - 1),
+                            peso=float(s[&quot;peso&quot;].to_numpy()[sel].mean())) if (s.index[0] &lt;= pd.Timestamp(ini) and sel.sum() &gt; 5) else None
+        out[&quot;crisi&quot;] = crisi
+    return out
+
+
+def main():
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    meta = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    if any(r[&quot;stato&quot;] != &quot;ok&quot; for r in meta[&quot;indici&quot;]):
+        raise SystemExit(&quot;Mancano i dati di S&amp;P 500 o VIX.&quot;)
+    close, vix = carica(config.TICKER_INDICE), carica(config.TICKER_VIX)
+    d = m.tabella_base(close, vix, config.STORIA_MINIMA)
+    anni = (d.index[-1] - d.index[0]).days / 365.25
+    rng = np.random.default_rng(config.SEME)
+    R = config.RISULTATI
+
+    # --- studio mese per mese -----------------------------------------------------------------------
+    ms = m.mesi(d, GA)
+    ms.to_csv(R / &quot;mesi.csv&quot;, float_format=&quot;%.6f&quot;)
+    pct, rend, vol = ms[&quot;pct&quot;].to_numpy(), ms[&quot;rend&quot;].to_numpy(), ms[&quot;vol&quot;].to_numpy()
+    rho_v, p_v = m.spearman_permutazione(pct, vol, config.N_PERMUTAZIONI, rng)
+    rho_r, p_r = m.spearman_permutazione(pct, rend, config.N_PERMUTAZIONI, rng)
+    q = m.quintili(pct, config.N_QUINTILI)
+    righe = []
+    for k in range(config.N_QUINTILI):
+        sel = q == k
+        righe.append(dict(quintile=k + 1, mesi=int(sel.sum()), rend_medio=float(rend[sel].mean()), quota_positivi=float((rend[sel] &gt; 0).mean()),
+                          vol_media=float(vol[sel].mean()), peggiore=float(rend[sel].min()), migliore=float(rend[sel].max())))
+    Q = pd.DataFrame(righe)
+    Q.to_csv(R / &quot;quintili.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    bd = m.bootstrap_diff_medie(rend[q == config.N_QUINTILI - 1], rend[q == 0], config.N_BOOTSTRAP, rng)
+    a = (1 - config.LIVELLO_CONFIDENZA) / 2
+    lo_q, hi_q = [float(x) for x in np.quantile(bd, [a, 1 - a])]
+    diff_q = float(rend[q == config.N_QUINTILI - 1].mean() - rend[q == 0].mean())
+
+    reg(&quot;sp_prima_data&quot;, str(d.index[0].date()), &quot;data&quot;, &quot;Prima seduta con un segnale in vigore&quot;)
+    reg(&quot;sp_ultima_data&quot;, str(d.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/*.csv&quot;)
+    reg(&quot;sp_anni&quot;, anni, &quot;num1&quot;, &quot;Anni di storia usati&quot;)
+    reg(&quot;n_mesi&quot;, len(ms), &quot;int&quot;, &quot;Mesi (periodi tra due segnali) usati nello studio&quot;)
+    reg(&quot;rho_vol&quot;, rho_v, &quot;num2&quot;, &quot;Correlazione di rango tra percentile del VIX e volatilità realizzata del mese successivo&quot;)
+    reg(&quot;p_vol&quot;, p_v, &quot;pval&quot;, &quot;p-value (permutazione, due code) della correlazione con la volatilità del mese successivo&quot;)
+    reg(&quot;rho_rend&quot;, rho_r, &quot;num2&quot;, &quot;Correlazione di rango tra percentile del VIX e rendimento del mese successivo&quot;)
+    reg(&quot;p_rend&quot;, p_r, &quot;pval&quot;, &quot;p-value (permutazione, due code) della correlazione con il rendimento del mese successivo&quot;)
+    for _, r in Q.iterrows():
+        k = int(r[&quot;quintile&quot;])
+        reg(f&quot;q{k}_mesi&quot;, int(r[&quot;mesi&quot;]), &quot;int&quot;, f&quot;Mesi nel quintile {k} del percentile del VIX&quot;)
+        reg(f&quot;q{k}_rend&quot;, r[&quot;rend_medio&quot;], &quot;pct2&quot;, f&quot;Rendimento medio del mese successivo, quintile {k}&quot;)
+        reg(f&quot;q{k}_pos&quot;, r[&quot;quota_positivi&quot;], &quot;pct0&quot;, f&quot;Quota di mesi positivi nel mese successivo, quintile {k}&quot;)
+        reg(f&quot;q{k}_vol&quot;, r[&quot;vol_media&quot;], &quot;pct1&quot;, f&quot;Volatilità annualizzata media del mese successivo, quintile {k}&quot;)
+        reg(f&quot;q{k}_peggio&quot;, r[&quot;peggiore&quot;], &quot;pct1&quot;, f&quot;Peggior mese successivo, quintile {k}&quot;)
+        reg(f&quot;q{k}_meglio&quot;, r[&quot;migliore&quot;], &quot;pct1&quot;, f&quot;Miglior mese successivo, quintile {k}&quot;)
+    reg(&quot;diff_q&quot;, diff_q, &quot;pct2&quot;, &quot;Rendimento medio mensile del quinto quintile meno quello del primo&quot;)
+    reg(&quot;diff_q_lo&quot;, lo_q, &quot;pct2&quot;, &quot;Estremo inferiore dell&#x27;intervallo al 95% della differenza tra quinto e primo quintile&quot;, &quot;bootstrap dei mesi dei due gruppi&quot;)
+    reg(&quot;diff_q_hi&quot;, hi_q, &quot;pct2&quot;, &quot;Estremo superiore dell&#x27;intervallo al 95% della differenza tra quinto e primo quintile&quot;, &quot;bootstrap dei mesi dei due gruppi&quot;)
+    reg(&quot;rend_medio_tutti&quot;, float(rend.mean()), &quot;pct2&quot;, &quot;Rendimento medio mensile di tutti i mesi&quot;)
+    reg(&quot;vol_media_tutti&quot;, float(vol.mean()), &quot;pct1&quot;, &quot;Volatilità annualizzata media del mese successivo, tutti i mesi&quot;)
+
+    # --- le due regole -----------------------------------------------------------------------------
+    cur = {}
+    for nome, tipo, soglia in [(&quot;a&quot;, &quot;A&quot;, config.SOGLIA_A), (&quot;b&quot;, &quot;B&quot;, config.SOGLIA_B)]:
+        r = esegui_regola(d, tipo, soglia, rng)
+        cur[nome] = r
+        s = r[&quot;s&quot;]
+        reg(f&quot;{nome}_soglia&quot;, soglia, &quot;pct0&quot;, f&quot;Soglia del percentile del VIX, regola {tipo}&quot;, &quot;config.py&quot;)
+        reg(f&quot;{nome}_cagr_s&quot;, r[&quot;cagr_s&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo composto netto, regola {tipo}&quot;)
+        reg(f&quot;{nome}_cagr_b&quot;, r[&quot;cagr_b&quot;], &quot;pct1&quot;, &quot;Rendimento annuo composto del buy &amp; hold sullo stesso periodo&quot;)
+        reg(f&quot;{nome}_vol_s&quot;, r[&quot;vol_s&quot;], &quot;pct1&quot;, f&quot;Volatilità annua realizzata, regola {tipo}&quot;)
+        reg(f&quot;{nome}_vol_b&quot;, r[&quot;vol_b&quot;], &quot;pct1&quot;, &quot;Volatilità annua realizzata del buy &amp; hold&quot;)
+        reg(f&quot;{nome}_dd_s&quot;, r[&quot;dd_s&quot;], &quot;pct1&quot;, f&quot;Perdita massima, regola {tipo}&quot;)
+        reg(f&quot;{nome}_dd_b&quot;, r[&quot;dd_b&quot;], &quot;pct1&quot;, &quot;Perdita massima del buy &amp; hold&quot;)
+        reg(f&quot;{nome}_sh_s&quot;, r[&quot;sh_s&quot;], &quot;num2&quot;, f&quot;Indice di Sharpe, regola {tipo} (cassa a rendimento zero)&quot;)
+        reg(f&quot;{nome}_sh_b&quot;, r[&quot;sh_b&quot;], &quot;num2&quot;, &quot;Indice di Sharpe del buy &amp; hold (cassa a rendimento zero)&quot;)
+        reg(f&quot;{nome}_dsh&quot;, r[&quot;sh_s&quot;] - r[&quot;sh_b&quot;], &quot;num2&quot;, f&quot;Differenza di Sharpe, regola {tipo} meno buy &amp; hold&quot;)
+        reg(f&quot;{nome}_dsh_lo&quot;, r[&quot;lo&quot;], &quot;num2&quot;, f&quot;Estremo inferiore dell&#x27;intervallo al 95% della differenza di Sharpe, regola {tipo}&quot;, &quot;bootstrap a blocchi circolari di 21 giorni&quot;)
+        reg(f&quot;{nome}_dsh_hi&quot;, r[&quot;hi&quot;], &quot;num2&quot;, f&quot;Estremo superiore dell&#x27;intervallo al 95% della differenza di Sharpe, regola {tipo}&quot;, &quot;bootstrap a blocchi circolari di 21 giorni&quot;)
+        reg(f&quot;{nome}_quota&quot;, r[&quot;quota&quot;], &quot;pct0&quot;, f&quot;Quota di sedute in azioni, regola {tipo}&quot;)
+        reg(f&quot;{nome}_scambi&quot;, r[&quot;scambi&quot;], &quot;num1&quot;, f&quot;Scambio annuo in multipli del capitale, regola {tipo}&quot;)
+        reg(f&quot;{nome}_finale_s&quot;, config.CAPITALE * m.equity(s[&quot;strategia&quot;])[-1], &quot;int&quot;, f&quot;Valore finale di {config.CAPITALE:.0f} euro con la regola {tipo}, prima delle tasse&quot;)
+        reg(f&quot;{nome}_finale_b&quot;, config.CAPITALE * m.equity(s[&quot;buyhold&quot;])[-1], &quot;int&quot;, f&quot;Valore finale di {config.CAPITALE:.0f} euro con il buy &amp; hold, prima delle tasse&quot;)
+        reg(f&quot;{nome}_sh_lordo&quot;, r[&quot;sh_lordo&quot;], &quot;num2&quot;, f&quot;Sharpe lordo di costi, regola {tipo}, base del confronto con le scimmie&quot;)
+        reg(f&quot;{nome}_sh_sc_med&quot;, float(np.mean(r[&quot;sh_sc&quot;])), &quot;num2&quot;, f&quot;Sharpe lordo medio delle scimmie, regola {tipo}&quot;)
+        reg(f&quot;{nome}_p_sc&quot;, r[&quot;p_sc&quot;], &quot;pval&quot;, f&quot;Quota di scimmie con Sharpe uguale o maggiore, regola {tipo} (p-value)&quot;)
+        reg(f&quot;{nome}_ic_zero&quot;, int(r[&quot;lo&quot;] &lt;= 0 &lt;= r[&quot;hi&quot;]), &quot;int&quot;, f&quot;1 se l&#x27;intervallo della differenza di Sharpe contiene lo zero, regola {tipo}&quot;)
+        for k, (et, _, _) in enumerate(config.CRISI):
+            cr = r[&quot;crisi&quot;][k]
+            if cr:
+                reg(f&quot;{nome}_crisi{k}_s&quot;, cr[&quot;s&quot;], &quot;pct1&quot;, f&quot;Rendimento della regola {tipo} nella finestra «{et}»&quot;)
+                reg(f&quot;{nome}_crisi{k}_b&quot;, cr[&quot;b&quot;], &quot;pct1&quot;, f&quot;Rendimento del buy &amp; hold nella finestra «{et}»&quot;)
+                reg(f&quot;{nome}_crisi{k}_peso&quot;, cr[&quot;peso&quot;], &quot;pct0&quot;, f&quot;Quota di sedute in azioni della regola {tipo} nella finestra «{et}»&quot;)
+    for k, (et, ini, fin) in enumerate(config.CRISI):
+        reg(f&quot;crisi{k}_nome&quot;, et, &quot;testo&quot;, &quot;Nome della finestra di crisi&quot;, &quot;config.py, CRISI&quot;)
+        reg(f&quot;crisi{k}_ini&quot;, ini, &quot;data&quot;, f&quot;Inizio della finestra «{et}»&quot;, &quot;config.py, CRISI&quot;)
+        reg(f&quot;crisi{k}_fin&quot;, fin, &quot;data&quot;, f&quot;Fine della finestra «{et}»&quot;, &quot;config.py, CRISI&quot;)
+
+    # --- varianti -------------------------------------------------------------------------------------
+    var = []
+    for k, (et, tipo, soglia) in enumerate(config.VARIANTI):
+        v = esegui_regola(d, tipo, soglia, None)
+        var.append(dict(variante=et, regola=tipo, soglia=soglia, sharpe_s=v[&quot;sh_s&quot;], sharpe_b=v[&quot;sh_b&quot;], cagr_s=v[&quot;cagr_s&quot;], cagr_b=v[&quot;cagr_b&quot;],
+                        dd_s=v[&quot;dd_s&quot;], dd_b=v[&quot;dd_b&quot;], quota=v[&quot;quota&quot;]))
+        reg(f&quot;var{k}_nome&quot;, et, &quot;testo&quot;, &quot;Nome della variante&quot;, &quot;config.py, VARIANTI&quot;)
+        reg(f&quot;var{k}_sh&quot;, v[&quot;sh_s&quot;], &quot;num2&quot;, f&quot;Sharpe, variante «{et}»&quot;)
+        reg(f&quot;var{k}_cagr&quot;, v[&quot;cagr_s&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo, variante «{et}»&quot;)
+        reg(f&quot;var{k}_dd&quot;, v[&quot;dd_s&quot;], &quot;pct1&quot;, f&quot;Perdita massima, variante «{et}»&quot;)
+        reg(f&quot;var{k}_quota&quot;, v[&quot;quota&quot;], &quot;pct0&quot;, f&quot;Quota di sedute in azioni, variante «{et}»&quot;)
+    pd.DataFrame(var).to_csv(R / &quot;varianti.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    # --- parametri e fonti --------------------------------------------------------------------------
+    reg(&quot;storia_minima&quot;, config.STORIA_MINIMA, &quot;int&quot;, &quot;Giorni di storia del VIX richiesti prima del primo percentile&quot;, &quot;config.py&quot;)
+    reg(&quot;costo_bp&quot;, config.COSTO_BP, &quot;int&quot;, &quot;Costo di ogni scambio in punti base&quot;, &quot;config.py&quot;)
+    reg(&quot;capitale&quot;, config.CAPITALE, &quot;int&quot;, &quot;Capitale iniziale di riferimento in euro&quot;, &quot;config.py&quot;)
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Numero di scimmie&quot;, &quot;config.py&quot;)
+    reg(&quot;n_bootstrap&quot;, config.N_BOOTSTRAP, &quot;int&quot;, &quot;Ricampionamenti del bootstrap&quot;, &quot;config.py&quot;)
+    reg(&quot;n_permutazioni&quot;, config.N_PERMUTAZIONI, &quot;int&quot;, &quot;Permutazioni del test di correlazione&quot;, &quot;config.py&quot;)
+    reg(&quot;blocco&quot;, config.BLOCCO_BOOTSTRAP, &quot;int&quot;, &quot;Giorni per blocco del bootstrap&quot;, &quot;config.py&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello di confidenza&quot;, &quot;config.py&quot;)
+    reg(&quot;giorni_anno&quot;, GA, &quot;int&quot;, &quot;Giorni di borsa in un anno per annualizzare&quot;, &quot;config.py&quot;)
+    reg(&quot;lit_btz_anno&quot;, 2009, &quot;annonum&quot;, &quot;Anno di Bollerslev, Tauchen e Zhou, Review of Financial Studies (volume 22)&quot;, &quot;riferimento bibliografico&quot;)
+    reg(&quot;lit_bh_anno&quot;, 2014, &quot;annonum&quot;, &quot;Anno di Bekaert e Hoerova, ECB Working Paper n. 1675&quot;, &quot;riferimento bibliografico&quot;)
+    reg(&quot;lit_btz_dal&quot;, 1990, &quot;annonum&quot;, &quot;Anno da cui parte il campione di Bollerslev e coautori (post-1990), secondo l&#x27;abstract&quot;, &quot;abstract dell&#x27;articolo&quot;)
+    reg(&quot;run_utc&quot;, datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;testo&quot;, &quot;Data di esecuzione dell&#x27;analisi&quot;)
+
+    json.dump({&quot;valori&quot;: RIS}, open(R / &quot;metriche.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;), indent=1, ensure_ascii=False)
+    pd.DataFrame({&quot;a&quot;: cur[&quot;a&quot;][&quot;sh_sc&quot;], &quot;b&quot;: cur[&quot;b&quot;][&quot;sh_sc&quot;]}).to_csv(R / &quot;scimmie_sharpe.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    pd.DataFrame({&quot;a&quot;: cur[&quot;a&quot;][&quot;boot&quot;], &quot;b&quot;: cur[&quot;b&quot;][&quot;boot&quot;]}).to_csv(R / &quot;bootstrap.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    n = len(d)
+    camp = np.arange(0, n, 5)
+    sa, sb = cur[&quot;a&quot;][&quot;s&quot;], cur[&quot;b&quot;][&quot;s&quot;]
+    ea, eb, ebh = m.equity(sa[&quot;strategia&quot;]), m.equity(sb[&quot;strategia&quot;]), m.equity(sa[&quot;buyhold&quot;])
+    dd = lambda e: e / np.maximum.accumulate(np.r_[1.0, e])[1:] - 1
+    pd.DataFrame({&quot;data&quot;: d.index[camp], &quot;regola_a&quot;: ea[camp], &quot;regola_b&quot;: eb[camp], &quot;buyhold&quot;: ebh[camp],
+                  &quot;dd_a&quot;: dd(ea)[camp], &quot;dd_b&quot;: dd(eb)[camp], &quot;dd_buyhold&quot;: dd(ebh)[camp],
+                  &quot;pct&quot;: d[&quot;pct&quot;].to_numpy()[camp]}).to_csv(R / &quot;curve.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    print(Q.to_string())
+    print(f&quot;rho vol {rho_v:.2f} (p {p_v:.4f}); rho rend {rho_r:.2f} (p {p_r:.4f}); diff Q5-Q1 {diff_q:.4f} [{lo_q:.4f}, {hi_q:.4f}]&quot;)
+    for nome in &quot;ab&quot;:
+        r = cur[nome]
+        print(f&quot;{nome}: Sharpe {r[&#x27;sh_s&#x27;]:.2f} vs {r[&#x27;sh_b&#x27;]:.2f} IC [{r[&#x27;lo&#x27;]:.2f},{r[&#x27;hi&#x27;]:.2f}] dd {r[&#x27;dd_s&#x27;]:.2f} vs {r[&#x27;dd_b&#x27;]:.2f} p scimmie {r[&#x27;p_sc&#x27;]:.3f}&quot;)
+    print(f&quot;Scritti {len(RIS)} numeri in metriche.json&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i cinque grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_volatilita.png   volatilità del mese successivo per quintile del percentile del VIX
+  fig2_rendimento.png   rendimento medio del mese successivo per quintile
+  fig3_valore.png       valore di 1 euro: regola A, regola B, buy &amp; hold
+  fig4_perdite.png      perdite dal massimo: regola A contro buy &amp; hold
+  fig5_scimmie.png      Sharpe delle scimmie contro le due regole
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+ETICHETTE_Q = [&quot;1° (VIX basso)&quot;, &quot;2°&quot;, &quot;3°&quot;, &quot;4°&quot;, &quot;5° (VIX alto)&quot;]
+
+
+def pct_fmt(dec=0):
+    return plt.FuncFormatter(lambda x, _: f&quot;{x * 100:.{dec}f}%&quot;.replace(&quot;.&quot;, &quot;,&quot;))
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    Q = pd.read_csv(R / &quot;quintili.csv&quot;)
+    cur = pd.read_csv(R / &quot;curve.csv&quot;, parse_dates=[&quot;data&quot;])
+
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.bar(Q[&quot;quintile&quot;], Q[&quot;vol_media&quot;], color=BLU, alpha=0.85, hatch=&quot;//&quot;, edgecolor=&quot;white&quot;)
+    ax.set_xticks(Q[&quot;quintile&quot;])
+    ax.set_xticklabels(ETICHETTE_Q, fontsize=10)
+    ax.yaxis.set_major_formatter(pct_fmt())
+    ax.set_xlabel(&quot;Quintile del percentile del VIX a fine mese&quot;)
+    ax.set_ylabel(&quot;Volatilità annua del mese successivo&quot;)
+    ax.set_title(&quot;Con il VIX alto, il mese dopo è più mosso&quot;, loc=&quot;left&quot;, fontsize=13)
+    fig.savefig(config.FIGURE / &quot;fig1_volatilita.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.bar(Q[&quot;quintile&quot;], Q[&quot;rend_medio&quot;], color=ARANCIO, alpha=0.85)
+    ax.axhline(V[&quot;rend_medio_tutti&quot;][&quot;valore&quot;], color=GRIGIO, ls=&quot;--&quot;, lw=1.3, label=&quot;Media di tutti i mesi&quot;)
+    ax.set_xticks(Q[&quot;quintile&quot;])
+    ax.set_xticklabels(ETICHETTE_Q, fontsize=10)
+    ax.yaxis.set_major_formatter(pct_fmt(1))
+    ax.set_xlabel(&quot;Quintile del percentile del VIX a fine mese&quot;)
+    ax.set_ylabel(&quot;Rendimento medio del mese successivo&quot;)
+    ax.set_title(&quot;E il rendimento del mese dopo?&quot;, loc=&quot;left&quot;, fontsize=13)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.savefig(config.FIGURE / &quot;fig2_rendimento.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.plot(cur[&quot;data&quot;], cur[&quot;buyhold&quot;], color=ARANCIO, lw=1.7, label=&quot;Buy &amp; hold&quot;)
+    ax.plot(cur[&quot;data&quot;], cur[&quot;regola_a&quot;], color=BLU, lw=1.8, label=&quot;Regola A: fuori quando il VIX è alto&quot;)
+    ax.plot(cur[&quot;data&quot;], cur[&quot;regola_b&quot;], color=GRIGIO, lw=1.4, ls=&quot;--&quot;, label=&quot;Regola B: dentro solo quando il VIX è alto&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_ylabel(&quot;Valore di 1 euro (scala logaritmica)&quot;)
+    ax.set_title(&quot;S&amp;P 500: quanto vale 1 euro investito all&#x27;inizio&quot;, loc=&quot;left&quot;, fontsize=13)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig3_valore.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.fill_between(cur[&quot;data&quot;], cur[&quot;dd_buyhold&quot;], 0, color=ARANCIO, alpha=0.35, label=&quot;Buy &amp; hold&quot;)
+    ax.fill_between(cur[&quot;data&quot;], cur[&quot;dd_a&quot;], 0, color=BLU, alpha=0.55, label=&quot;Regola A&quot;)
+    ax.yaxis.set_major_formatter(pct_fmt())
+    ax.set_ylabel(&quot;Distanza dal massimo precedente&quot;)
+    ax.set_title(&quot;S&amp;P 500: le perdite dal massimo&quot;, loc=&quot;left&quot;, fontsize=13)
+    ax.legend(loc=&quot;lower left&quot;)
+    fig.savefig(config.FIGURE / &quot;fig4_perdite.png&quot;)
+    plt.close(fig)
+
+    sc = pd.read_csv(R / &quot;scimmie_sharpe.csv&quot;)
+    fig, axs = plt.subplots(1, 2, figsize=(11, 4))
+    for ax, k, tit in zip(axs, [&quot;a&quot;, &quot;b&quot;], [&quot;Regola A&quot;, &quot;Regola B&quot;]):
+        ax.hist(sc[k], bins=40, color=GRIGIO, alpha=0.7)
+        ax.axvline(V[f&quot;{k}_sh_lordo&quot;][&quot;valore&quot;], color=BLU, lw=2.2)
+        ax.set_title(f&quot;{tit}: p = {V[f&#x27;{k}_p_sc&#x27;][&#x27;valore&#x27;]:.3f}&quot;.replace(&quot;.&quot;, &quot;,&quot;), fontsize=12, loc=&quot;left&quot;)
+        ax.set_yticks([])
+        ax.set_xlabel(&quot;Sharpe lordo&quot;)
+    fig.suptitle(&quot;Sharpe delle scimmie (stessa quota in azioni, mesi a caso) e della regola (linea blu)&quot;, x=0.01, ha=&quot;left&quot;, fontsize=13)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig5_scimmie.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate in&quot;, config.FIGURE)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>dati, parametri, varianti e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 242 - &quot;Il VIX come segnale&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui, scritti prima di guardare i risultati.
+
+Domanda: che cosa dice il VIX dei rendimenti e della volatilità del mese successivo, e una regola semplice basata sul
+VIX batte il buy &amp; hold sull&#x27;S&amp;P 500 e la fortuna?
+
+Segnale: alla chiusura dell&#x27;ultima seduta del mese si calcola il percentile del VIX rispetto a TUTTA la sua storia
+fino a quel giorno (finestra crescente: nessuna informazione futura). Il segnale della chiusura t viene scambiato alla
+chiusura t+1 e lavora sul rendimento della seduta t+2 (segnale di ieri, posizione di oggi), fino al segnale successivo.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati ---------------------------------------------------------------------------------
+INDICI = [
+    (&quot;^GSPC&quot;, &quot;S&amp;P 500&quot;, &quot;USD&quot;),
+    (&quot;^VIX&quot;, &quot;VIX&quot;, &quot;punti&quot;),
+]
+TICKER_INDICE = &quot;^GSPC&quot;
+TICKER_VIX = &quot;^VIX&quot;
+INIZIO_DOWNLOAD = &quot;1989-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;S&amp;P 500 e del VIX&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; l&#x27;S&amp;P 500 è l&#x27;indice di prezzo, senza dividendi&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;,)
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+# --- Parametri (fissati prima di guardare i dati) --------------------------------------------
+GIORNI_ANNO = 252
+STORIA_MINIMA = 504         # giorni di VIX necessari prima di calcolare il primo percentile (circa due anni)
+SOGLIA_A = 0.80             # regola A «prudente»: in azioni se il percentile del VIX è sotto la soglia, altrimenti cassa
+SOGLIA_B = 0.50             # regola B «contraria»: in azioni solo se il percentile del VIX è uguale o sopra la soglia
+COSTO_BP = 5.0              # punti base per ogni scambio (scenario)
+CAPITALE = 500.0
+N_QUINTILI = 5
+
+# Varianti di robustezza: si riportano TUTTE
+VARIANTI = [
+    # (etichetta, regola, soglia)
+    (&quot;A con soglia 70%&quot;, &quot;A&quot;, 0.70),
+    (&quot;A con soglia 80% (base)&quot;, &quot;A&quot;, 0.80),
+    (&quot;A con soglia 90%&quot;, &quot;A&quot;, 0.90),
+    (&quot;B con soglia 40%&quot;, &quot;B&quot;, 0.40),
+    (&quot;B con soglia 50% (base)&quot;, &quot;B&quot;, 0.50),
+    (&quot;B con soglia 60%&quot;, &quot;B&quot;, 0.60),
+]
+
+# --- Test statistici ----------------------------------------------------------------------
+SEME = 20261028
+N_SCIMMIE = 5000
+N_BOOTSTRAP = 2000
+N_PERMUTAZIONI = 10000
+BLOCCO_BOOTSTRAP = 21
+LIVELLO_CONFIDENZA = 0.95
+
+CRISI = [
+    (&quot;Crisi finanziaria&quot;, &quot;2008-09-01&quot;, &quot;2009-03-09&quot;),
+    (&quot;Crollo del Covid&quot;, &quot;2020-02-19&quot;, &quot;2020-03-23&quot;),
+]
+
+IPOTESI = (
+    &quot;1) Più il VIX è alto a fine mese, più è alta la volatilità realizzata del mese successivo: la correlazione di rango &quot;
+    &quot;(Spearman) è positiva con p-value sotto 0,01 (test di permutazione). &quot;
+    &quot;2) Sul rendimento del mese successivo la relazione con il VIX non è significativa: p-value della correlazione di rango &quot;
+    &quot;uguale o sopra 0,05. &quot;
+    &quot;3) Il rendimento medio del mese dopo i mesi del quinto quintile del VIX (il più alto) è più alto di quello del primo, &quot;
+    &quot;ma l&#x27;intervallo di confidenza al 95% della differenza contiene lo zero. &quot;
+    &quot;4) Regola A (fuori dalle azioni quando il VIX è alto): perdita massima più piccola del buy &amp; hold, ma Sharpe non più alto &quot;
+    &quot;in modo significativo (l&#x27;intervallo della differenza contiene lo zero) e le scimmie (stessa quota di mesi in azioni, &quot;
+    &quot;mesi a caso) fanno meglio in almeno il cinque per cento dei casi (p-value uguale o sopra 0,05). &quot;
+    &quot;5) Regola B (dentro solo quando il VIX è alto): lo Sharpe non è più alto di quello del buy &amp; hold in modo significativo &quot;
+    &quot;e le scimmie fanno meglio in almeno il cinque per cento dei casi.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/motore.py<small>percentile del VIX, segnale ritardato, regole, costi, metriche, test</small></summary><pre><code class="language-python">&quot;&quot;&quot;Motore delle regole sul VIX. Funzioni pure su serie di prezzi: nessun accesso a file, nessuna rete.
+
+Regole (da dichiarare nell&#x27;articolo):
+  - percentile del VIX: quota delle chiusure del VIX, dalla prima disponibile fino al giorno t compreso, che sono
+    uguali o inferiori alla chiusura di t (finestra crescente, nessuna informazione futura); definito solo dopo
+    `storia_minima` giorni;
+  - il segnale si prende all&#x27;ultima seduta di ogni mese e resta fermo fino al mese dopo;
+  - il segnale della chiusura t è scambiato alla chiusura t+1 e lavora sul rendimento della seduta t+2:
+    la posizione che guadagna il rendimento di t è `segnale[t-2]`;
+  - regola A: 1 (in azioni) se il percentile è sotto la soglia, 0 (cassa, che non rende) altrimenti;
+    regola B: 1 se il percentile è uguale o sopra la soglia, 0 altrimenti;
+  - ogni scambio costa `costo_bp` punti base sul valore scambiato; anche l&#x27;acquisto iniziale.
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def rendimenti(close: pd.Series) -&gt; pd.Series:
+    return close.pct_change()
+
+
+def fine_mese(indice: pd.DatetimeIndex) -&gt; np.ndarray:
+    &quot;&quot;&quot;True nell&#x27;ultima seduta di ogni mese; l&#x27;ultima riga dei dati non conta (il mese può non essere finito).&quot;&quot;&quot;
+    mese = indice.year * 12 + indice.month
+    return np.asarray(np.r_[mese[1:] != mese[:-1], False])
+
+
+def percentile_crescente(vix: pd.Series, storia_minima: int) -&gt; pd.Series:
+    &quot;&quot;&quot;Percentile del VIX rispetto alla sua storia fino a oggi (compreso). NaN nei primi `storia_minima` giorni.&quot;&quot;&quot;
+    v = vix.to_numpy(dtype=float)
+    out = np.full(len(v), np.nan)
+    for i in range(storia_minima - 1, len(v)):
+        out[i] = np.mean(v[: i + 1] &lt;= v[i])
+    return pd.Series(out, index=vix.index)
+
+
+def segnale_percentile(pct: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Percentile preso a fine mese e mantenuto fino al mese successivo.&quot;&quot;&quot;
+    fm = pd.Series(fine_mese(pct.index), index=pct.index)
+    return pct.where(fm).ffill()
+
+
+def regola(pct_ritardato: pd.Series, tipo: str, soglia: float) -&gt; pd.Series:
+    if tipo == &quot;A&quot;:
+        pos = (pct_ritardato &lt; soglia).astype(float)
+    elif tipo == &quot;B&quot;:
+        pos = (pct_ritardato &gt;= soglia).astype(float)
+    else:
+        raise ValueError(tipo)
+    return pos.where(pct_ritardato.notna())
+
+
+def tabella_base(close: pd.Series, vix: pd.Series, storia_minima: int) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Per ogni seduta con segnale definito: rendimento, percentile in vigore (segnale di due sedute prima) e periodo mensile.&quot;&quot;&quot;
+    comune = close.index.intersection(vix.index)
+    close, vix = close.loc[comune], vix.loc[comune]
+    r = rendimenti(close)
+    pct = percentile_crescente(vix, storia_minima)
+    sig = segnale_percentile(pct)
+    pct_in_vigore = sig.shift(2)
+    valido = pct_in_vigore.notna() &amp; r.notna()
+    primo = np.flatnonzero(valido.to_numpy())
+    if len(primo) == 0:
+        raise ValueError(&quot;nessuna seduta con segnale definito&quot;)
+    i0 = int(primo[0])
+    fm = fine_mese(close.index)
+    effettivo = np.r_[False, False, fm[:-2]]          # True nella seduta in cui il nuovo segnale comincia a lavorare
+    periodo = np.cumsum(effettivo)
+    d = pd.DataFrame({&quot;r&quot;: r, &quot;pct&quot;: pct_in_vigore, &quot;periodo&quot;: periodo}, index=close.index).iloc[i0:]
+    return d
+
+
+def serie_regola(d: pd.DataFrame, tipo: str, soglia: float, costo_bp: float) -&gt; pd.DataFrame:
+    pos = regola(d[&quot;pct&quot;], tipo, soglia)
+    prec = pos.shift(1).fillna(0.0)
+    scambio = (pos - prec).abs()
+    c = costo_bp / 1e4
+    out = d.copy()
+    out[&quot;peso&quot;] = pos
+    out[&quot;scambio&quot;] = scambio
+    out[&quot;strategia&quot;] = pos * d[&quot;r&quot;] - c * scambio
+    rb = d[&quot;r&quot;].copy()
+    rb.iloc[0] -= c
+    out[&quot;buyhold&quot;] = rb
+    return out
+
+
+def mesi(d: pd.DataFrame, giorni_anno: int) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Un record per periodo mensile: percentile in vigore, rendimento del periodo, volatilità annualizzata, giorni.&quot;&quot;&quot;
+    g = d.groupby(&quot;periodo&quot;)
+    out = pd.DataFrame({
+        &quot;pct&quot;: g[&quot;pct&quot;].first(),
+        &quot;rend&quot;: g[&quot;r&quot;].apply(lambda x: float(np.prod(1 + x) - 1)),
+        &quot;vol&quot;: g[&quot;r&quot;].apply(lambda x: float(x.std(ddof=1) * np.sqrt(giorni_anno)) if len(x) &gt; 2 else np.nan),
+        &quot;giorni&quot;: g[&quot;r&quot;].size(),
+    })
+    return out.dropna()
+
+
+def rango(x: np.ndarray) -&gt; np.ndarray:
+    return pd.Series(x).rank().to_numpy()
+
+
+def spearman(x: np.ndarray, y: np.ndarray) -&gt; float:
+    return float(np.corrcoef(rango(x), rango(y))[0, 1])
+
+
+def spearman_permutazione(x: np.ndarray, y: np.ndarray, n: int, rng) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Correlazione di rango e p-value a due code con test di permutazione.&quot;&quot;&quot;
+    rx, ry = rango(x), rango(y)
+    rho = float(np.corrcoef(rx, ry)[0, 1])
+    rxc = (rx - rx.mean()) / rx.std()
+    ryc = (ry - ry.mean()) / ry.std()
+    perm = rng.permuted(np.tile(ryc, (n, 1)), axis=1)
+    rhos = (perm * rxc).mean(axis=1)
+    p = (int((np.abs(rhos) &gt;= abs(rho) - 1e-12).sum()) + 1) / (n + 1)
+    return rho, p
+
+
+def quintili(pct: np.ndarray, k: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Indice del quintile (0..k-1) con soglie fisse sul percentile: [0,0.2), [0.2,0.4), ...&quot;&quot;&quot;
+    return np.minimum((np.asarray(pct) * k).astype(int), k - 1)
+
+
+def equity(rend) -&gt; np.ndarray:
+    return np.cumprod(1.0 + np.asarray(rend, dtype=float))
+
+
+def sharpe(rend, giorni_anno: int) -&gt; float:
+    x = np.asarray(rend, dtype=float)
+    sd = x.std(ddof=0)
+    return float(x.mean() / sd * np.sqrt(giorni_anno)) if sd &gt; 0 else float(&quot;nan&quot;)
+
+
+def vol_annua(rend, giorni_anno: int) -&gt; float:
+    return float(np.asarray(rend, dtype=float).std(ddof=0) * np.sqrt(giorni_anno))
+
+
+def perdita_massima(rend) -&gt; float:
+    e = np.r_[1.0, equity(rend)]
+    return float((e / np.maximum.accumulate(e) - 1).min())
+
+
+def cagr(rend, anni: float) -&gt; float:
+    return float(equity(rend)[-1] ** (1 / anni) - 1)
+
+
+def sharpe_da_somme(w: np.ndarray, s1: np.ndarray, s2: np.ndarray, n: int, giorni_anno: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Sharpe lordo di un portafoglio a pesi costanti per periodo (w, s1 = somma r, s2 = somma r^2 per periodo).&quot;&quot;&quot;
+    media = (w * s1).sum(axis=-1) / n
+    m2 = (w ** 2 * s2).sum(axis=-1) / n
+    sd = np.sqrt(np.maximum(m2 - media ** 2, 1e-30))
+    return media / sd * np.sqrt(giorni_anno)
+
+
+def bootstrap_dsharpe(rs: np.ndarray, rb: np.ndarray, n_boot: int, blocco: int, giorni_anno: int,
+                      rng, a_pezzi: int = 100) -&gt; np.ndarray:
+    &quot;&quot;&quot;Differenza di Sharpe (regola - buy &amp; hold) su ricampionamenti a blocchi circolari, coppie di giorni insieme.&quot;&quot;&quot;
+    n = len(rs)
+    nb = int(np.ceil(n / blocco))
+    out = np.empty(n_boot)
+    off = np.arange(blocco)
+    fatti = 0
+    while fatti &lt; n_boot:
+        k = min(a_pezzi, n_boot - fatti)
+        st = rng.integers(0, n, size=(k, nb))
+        idx = ((st[:, :, None] + off) % n).reshape(k, nb * blocco)[:, :n]
+        xs, xb = rs[idx], rb[idx]
+        ss = xs.mean(axis=1) / np.maximum(xs.std(axis=1), 1e-30)
+        sb = xb.mean(axis=1) / np.maximum(xb.std(axis=1), 1e-30)
+        out[fatti:fatti + k] = (ss - sb) * np.sqrt(giorni_anno)
+        fatti += k
+    return out
+
+
+def bootstrap_diff_medie(a: np.ndarray, b: np.ndarray, n_boot: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Differenza tra la media di a e la media di b, ricampionando separatamente i due gruppi.&quot;&quot;&quot;
+    ia = rng.integers(0, len(a), size=(n_boot, len(a)))
+    ib = rng.integers(0, len(b), size=(n_boot, len(b)))
+    return a[ia].mean(axis=1) - b[ib].mean(axis=1)
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati (conti a mano, assenza di look-ahead)</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli del motore. Usa SOLO dati inventati: nessun numero qui è un risultato.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import motore as m
+
+ok = 0
+
+
+def verifica(nome, cond, dett=&quot;&quot;):
+    global ok
+    if not cond:
+        raise SystemExit(f&quot;FALLITO: {nome} {dett}&quot;)
+    ok += 1
+    print(f&quot;  ok  {nome}&quot;)
+
+
+def serie(rend, inizio=&quot;2020-01-01&quot;):
+    idx = pd.bdate_range(inizio, periods=len(rend))
+    return pd.Series(100.0 * np.cumprod(1 + np.asarray(rend, dtype=float)), index=idx)
+
+
+rng = np.random.default_rng(3)
+print(&quot;1. Percentile&quot;)
+v = pd.Series([10.0, 20.0, 15.0, 30.0, 5.0, 25.0], index=pd.bdate_range(&quot;2020-01-01&quot;, periods=6))
+p = m.percentile_crescente(v, 3)
+verifica(&quot;primi giorni non definiti&quot;, p.iloc[:2].isna().all())
+verifica(&quot;percentile del terzo giorno (15 su 10,20,15 = 2/3)&quot;, abs(p.iloc[2] - 2 / 3) &lt; 1e-12)
+verifica(&quot;massimo storico ha percentile 1&quot;, abs(p.iloc[3] - 1.0) &lt; 1e-12)
+verifica(&quot;minimo storico: 1/5&quot;, abs(p.iloc[4] - 1 / 5) &lt; 1e-12)
+v2 = v.copy(); v2.iloc[5] = 1000.0
+verifica(&quot;cambiare il futuro non cambia il passato&quot;, np.allclose(m.percentile_crescente(v2, 3).iloc[:5].fillna(-1), p.iloc[:5].fillna(-1)))
+
+print(&quot;2. Regole e costi&quot;)
+n = 900
+close = serie(rng.normal(0.0004, 0.01, n))
+vix = pd.Series(15 + 10 * np.abs(np.sin(np.arange(n) / 40.0)) + rng.normal(0, 1, n), index=close.index)
+d = m.tabella_base(close, vix, 100)
+a = m.serie_regola(d, &quot;A&quot;, 0.8, 0.0)
+b = m.serie_regola(d, &quot;B&quot;, 0.8, 0.0)
+verifica(&quot;A e B complementari con la stessa soglia&quot;, np.allclose(a[&quot;peso&quot;] + b[&quot;peso&quot;], 1.0))
+verifica(&quot;senza costi: rendimento = peso * indice&quot;, np.allclose(a[&quot;strategia&quot;], a[&quot;peso&quot;] * a[&quot;r&quot;]))
+a1 = m.serie_regola(d, &quot;A&quot;, 0.8, 10.0)
+verifica(&quot;costo totale = 10 punti base * scambi&quot;, abs((a[&quot;strategia&quot;] - a1[&quot;strategia&quot;]).sum() - 0.001 * a[&quot;scambio&quot;].sum()) &lt; 1e-12)
+verifica(&quot;buy &amp; hold paga solo l&#x27;acquisto iniziale&quot;, abs((a[&quot;buyhold&quot;] - a1[&quot;buyhold&quot;]).sum() - 0.001) &lt; 1e-12)
+
+print(&quot;3. Nessun look-ahead&quot;)
+close2 = close.copy(); close2.iloc[-50:] *= 3
+vix2 = vix.copy(); vix2.iloc[-50:] *= 3
+d2 = m.tabella_base(close2, vix2, 100)
+k = len(d) - 60
+verifica(&quot;cambiare gli ultimi 50 giorni non cambia le posizioni precedenti&quot;,
+         np.allclose(m.serie_regola(d, &quot;A&quot;, 0.8, 0)[&quot;peso&quot;].iloc[:k], m.serie_regola(d2, &quot;A&quot;, 0.8, 0)[&quot;peso&quot;].iloc[:k]))
+fm = m.fine_mese(close.index)
+primo_giorno = d.index[0]
+verifica(&quot;la posizione inizia almeno due sedute dopo un fine mese&quot;,
+         close.index.get_loc(primo_giorno) &gt;= 2 and fm[close.index.get_loc(primo_giorno) - 2])
+
+print(&quot;4. Statistiche&quot;)
+x = rng.normal(size=300); y = x + rng.normal(size=300)
+rho, pv = m.spearman_permutazione(x, y, 2000, rng)
+verifica(&quot;correlazione positiva e p-value piccolo su dati legati&quot;, rho &gt; 0.5 and pv &lt; 0.01, (rho, pv))
+rho0, pv0 = m.spearman_permutazione(x, rng.normal(size=300), 2000, rng)
+verifica(&quot;p-value non piccolo su dati indipendenti&quot;, pv0 &gt; 0.01, (rho0, pv0))
+verifica(&quot;quintili&quot;, list(m.quintili(np.array([0.0, 0.19, 0.2, 0.99, 1.0]), 5)) == [0, 0, 1, 4, 4])
+ms = m.mesi(d, 252)
+verifica(&quot;giorni dei mesi sommano alle sedute&quot;, ms[&quot;giorni&quot;].sum() &lt;= len(d) and ms[&quot;giorni&quot;].sum() &gt;= len(d) - 25)
+g = d.groupby(&quot;periodo&quot;)
+s1 = g[&quot;r&quot;].sum().to_numpy(); s2 = g[&quot;r&quot;].apply(lambda z: (z ** 2).sum()).to_numpy()
+sd_somme = float(m.sharpe_da_somme(np.ones(len(s1)), s1, s2, len(d), 252))
+verifica(&quot;sharpe da somme = sharpe diretto&quot;, abs(sd_somme - m.sharpe(d[&quot;r&quot;], 252)) &lt; 1e-9, (sd_somme, m.sharpe(d[&quot;r&quot;], 252)))
+print(f&quot;Tutti i {ok} controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
