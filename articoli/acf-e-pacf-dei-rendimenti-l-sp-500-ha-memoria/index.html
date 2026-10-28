@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ACF e PACF dei rendimenti: l&#x27;S&amp;P 500 ha memoria? · il codice · TickerFight</title>
+<meta name="description" content="i rendimenti giornalieri dell&#x27;S&amp;P 500 hanno memoria? Che cosa dicono l&#x27;autocorrelazione (ACF) e l&#x27;autocorrelazione parziale (PACF), e dove sta davvero la memoria: nel segno o nella grandezza dei movimenti?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>ACF e PACF dei rendimenti: l&#x27;S&amp;P 500 ha memoria?</h1>
+<p class="domanda">I rendimenti giornalieri dell&#x27;S&amp;P 500 hanno memoria? Che cosa dicono l&#x27;autocorrelazione (ACF) e l&#x27;autocorrelazione parziale (PACF), e dove sta davvero la memoria: nel segno o nella grandezza dei movimenti?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="acf-e-pacf-dei-rendimenti-l-sp-500-ha-memoria.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Serie:</strong> rendimenti logaritmici giornalieri dell'S&amp;P 500 (indice di prezzo, senza dividendi), il loro valore assoluto e il loro quadrato.</li>
+<li><strong>Misure:</strong> ACF e PACF ai ritardi 1–20 (fino a 100 per i movimenti); banda al 99% di una serie senza memoria; Ljung-Box su 20 ritardi; correzione di Holm sui 20 test.</li>
+<li><strong>Caso:</strong> 1.000 rimescolamenti dei rendimenti su tutta la storia (stessa distribuzione, nessuna memoria).</li>
+<li><strong>Finestre:</strong> decenni di 2.520 sedute non sovrapposti; quota di varianza spiegata da un AR(1) (ACF1 al quadrato).</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>acf-e-pacf-dei-rendimenti-l-sp-500-ha-memoria/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica l'S&amp;P 500 dal 1927 (i dati sono quelli già usati nell'articolo 301)
+    ├── 02_backtest_e_test.py  ACF/PACF su intero periodo e finestre di dieci anni, Ljung-Box, rimescolamenti
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            ACF, PACF (Durbin-Levinson), Ljung-Box, Holm, finestre
+    └── verifica_motore.py     controlli su dati inventati (rumore bianco, AR(1), AR(2), grappoli di volatilità)
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd acf-e-pacf-dei-rendimenti-l-sp-500-ha-memoria
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>ACF/PACF su intero periodo e finestre di dieci anni, Ljung-Box, rimescolamenti</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - ACF e PACF dei rendimenti dell&#x27;S&amp;P 500.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json        ogni numero dell&#x27;articolo, con descrizione e origine
+  acf_intero.csv       per ogni ritardo: ACF e PACF dei rendimenti, ACF dei valori assoluti e dei quadrati, p-value, Holm
+  acf_finestre.csv     per ogni finestra di dieci anni: ACF al primo ritardo di rendimenti e valori assoluti, R2 di un AR(1), Ljung-Box
+  permutazioni.csv     ACF al primo ritardo di rendimenti e valori assoluti per ciascun rimescolamento
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    date = close.index
+    r = fx.log_rendimenti(close)
+    x = r.to_numpy()
+    N = len(x)
+    L = config.NLAG
+    rng = np.random.default_rng(config.SEME)
+
+    reg(&quot;prima_data&quot;, str(date[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(date[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;n_sedute&quot;, len(close), &quot;int&quot;, &quot;Sedute (chiusure giornaliere) nei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;n_rend&quot;, N, &quot;int&quot;, &quot;Rendimenti giornalieri usati (sedute meno una)&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_totali&quot;, len(close) / config.SEDUTE_ANNO, &quot;num1&quot;, &quot;Anni di borsa nei dati (sedute diviso 252)&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_finestra&quot;, config.SEDUTE_FINESTRA / config.SEDUTE_ANNO, &quot;annonum&quot;, &quot;Anni di ciascuna finestra&quot;, &quot;config.py, SEDUTE_FINESTRA&quot;)
+    reg(&quot;nlag&quot;, L, &quot;int&quot;, &quot;Ritardi guardati&quot;, &quot;config.py, NLAG&quot;)
+    reg(&quot;nlag_lungo&quot;, config.NLAG_LUNGO, &quot;int&quot;, &quot;Ritardi guardati per la persistenza dei movimenti&quot;, &quot;config.py, NLAG_LUNGO&quot;)
+    reg(&quot;soglia&quot;, config.SOGLIA, &quot;pct0&quot;, &quot;Livello di significatività dei test&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_forte&quot;, config.SOGLIA_FORTE, &quot;pct0&quot;, &quot;Livello di significatività forte&quot;, &quot;config.py&quot;)
+    reg(&quot;h1_max&quot;, config.H1_ACF_MAX, &quot;num2&quot;, &quot;Ipotesi 1: soglia di autocorrelazione in valore assoluto&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_rapporto&quot;, config.H3_RAPPORTO, &quot;int&quot;, &quot;Ipotesi 3: rapporto minimo tra autocorrelazioni&quot;, &quot;config.py&quot;)
+    reg(&quot;h4_diff&quot;, config.H4_DIFFERENZA, &quot;num2&quot;, &quot;Ipotesi 4: differenza minima tra finestre&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_r2&quot;, config.H5_R2_MAX, &quot;pct0&quot;, &quot;Ipotesi 5: quota massima di varianza spiegata&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_quota&quot;, config.H5_QUOTA_FINESTRE, &quot;pct0&quot;, &quot;Ipotesi 5: quota minima di finestre&quot;, &quot;config.py&quot;)
+    reg(&quot;h6_max&quot;, config.H6_PACF_MAX, &quot;num2&quot;, &quot;Ipotesi 6: soglia di autocorrelazione parziale&quot;, &quot;config.py&quot;)
+    reg(&quot;livello_banda&quot;, 0.99, &quot;pct0&quot;, &quot;Livello della banda attorno allo zero e dell&#x27;intervallo dei rimescolamenti&quot;, &quot;convenzione (99%)&quot;)
+    reg(&quot;n_perm&quot;, config.N_PERM, &quot;int&quot;, &quot;Rimescolamenti dei rendimenti&quot;, &quot;config.py, N_PERM&quot;)
+    reg(&quot;media_rend&quot;, float(x.mean()), &quot;pct2&quot;, &quot;Rendimento logaritmico medio giornaliero&quot;, &quot;dati/&quot;)
+    reg(&quot;vol_giorn&quot;, float(x.std(ddof=1)), &quot;pct2&quot;, &quot;Deviazione standard dei rendimenti giornalieri&quot;, &quot;dati/&quot;)
+
+    # --- Intero periodo ---------------------------------------------------------------------------------------
+    M = config.NLAG_LUNGO
+    ar = fx.acf(x, M)
+    aa = fx.acf(np.abs(x), M)
+    aq = fx.acf(x ** 2, M)
+    pr = fx.pacf_da_acf(ar[: L + 1])
+    pa = fx.pacf_da_acf(aa[: L + 1])
+    se = 1 / np.sqrt(N)
+    z = ar[1: L + 1] / se
+    p_r = np.array([fx.p_normale(v) for v in z])
+    h_r = fx.holm(p_r)
+    tab = pd.DataFrame({&quot;ritardo&quot;: np.arange(1, L + 1), &quot;acf_rend&quot;: ar[1: L + 1], &quot;pacf_rend&quot;: pr[1:],
+                        &quot;acf_abs&quot;: aa[1: L + 1], &quot;pacf_abs&quot;: pa[1:], &quot;acf_quad&quot;: aq[1: L + 1],
+                        &quot;p_rend&quot;: p_r, &quot;p_rend_holm&quot;: h_r})
+    tab.to_csv(config.RISULTATI / &quot;acf_intero.csv&quot;, index=False)
+    pd.DataFrame({&quot;ritardo&quot;: np.arange(1, M + 1), &quot;acf_rend&quot;: ar[1:], &quot;acf_abs&quot;: aa[1:], &quot;acf_quad&quot;: aq[1:]}) \
+        .to_csv(config.RISULTATI / &quot;acf_lunga.csv&quot;, index=False)
+
+    reg(&quot;se&quot;, se, &quot;num3&quot;, &quot;Errore standard dell&#x27;autocorrelazione di una serie senza memoria (1 diviso radice di N)&quot;, &quot;formula di Bartlett&quot;)
+    reg(&quot;banda99&quot;, 2.5758 * se, &quot;num3&quot;, &quot;Ampiezza della banda al 99% attorno allo zero&quot;, &quot;2,5758 per l&#x27;errore standard&quot;)
+    reg(&quot;acf1&quot;, ar[1], &quot;num3&quot;, &quot;Autocorrelazione dei rendimenti al ritardo 1, intero periodo&quot;, &quot;funzioni.acf&quot;)
+    reg(&quot;acf2&quot;, ar[2], &quot;num3&quot;, &quot;Autocorrelazione dei rendimenti al ritardo 2&quot;, &quot;funzioni.acf&quot;)
+    reg(&quot;acf_max_ass&quot;, float(np.abs(ar[1: L + 1]).max()), &quot;num3&quot;, &quot;Autocorrelazione massima in valore assoluto tra i ritardi 1-20 dei rendimenti&quot;, &quot;funzioni.acf&quot;)
+    reg(&quot;acf_max_rit&quot;, int(np.abs(ar[1: L + 1]).argmax() + 1), &quot;int&quot;, &quot;Ritardo in cui l&#x27;autocorrelazione dei rendimenti è massima in valore assoluto&quot;, &quot;funzioni.acf&quot;)
+    reg(&quot;n_sign_nom&quot;, int((p_r &lt; config.SOGLIA).sum()), &quot;int&quot;, &quot;Ritardi (su 20) con autocorrelazione dei rendimenti oltre il 5% senza correzione&quot;, &quot;z-test, 5%&quot;)
+    reg(&quot;n_sign_holm&quot;, int((h_r &lt; config.SOGLIA).sum()), &quot;int&quot;, &quot;Ritardi (su 20) significativi al 5% dopo la correzione di Holm&quot;, &quot;Holm&quot;)
+    reg(&quot;n_neg&quot;, int((ar[1: L + 1] &lt; 0).sum()), &quot;int&quot;, &quot;Ritardi (su 20) con autocorrelazione dei rendimenti negativa&quot;, &quot;funzioni.acf&quot;)
+    qr, pq = fx.ljung_box(ar, N, L)
+    reg(&quot;lb_stat&quot;, qr, &quot;num1&quot;, &quot;Statistica di Ljung-Box sui rendimenti (20 ritardi)&quot;, &quot;funzioni.ljung_box&quot;)
+    reg(&quot;lb_p&quot;, pq, &quot;pval&quot;, &quot;P-value di Ljung-Box sui rendimenti (20 ritardi)&quot;, &quot;chi quadro con 20 gradi di libertà&quot;)
+    qa, pqa = fx.ljung_box(aa, N, L)
+    reg(&quot;lb_abs_stat&quot;, qa, &quot;num1&quot;, &quot;Statistica di Ljung-Box sui valori assoluti (20 ritardi)&quot;, &quot;funzioni.ljung_box&quot;)
+    reg(&quot;lb_abs_p&quot;, pqa, &quot;pval&quot;, &quot;P-value di Ljung-Box sui valori assoluti (20 ritardi)&quot;, &quot;chi quadro con 20 gradi di libertà&quot;)
+    reg(&quot;r2_ar1&quot;, ar[1] ** 2, &quot;pct2&quot;, &quot;Quota di varianza dei rendimenti spiegata da un AR(1) (ACF1 al quadrato), intero periodo&quot;, &quot;ACF1 al quadrato&quot;)
+
+    # PACF
+    reg(&quot;pacf1&quot;, pr[1], &quot;num3&quot;, &quot;Autocorrelazione parziale al ritardo 1&quot;, &quot;Durbin-Levinson&quot;)
+    reg(&quot;pacf2&quot;, pr[2], &quot;num3&quot;, &quot;Autocorrelazione parziale al ritardo 2&quot;, &quot;Durbin-Levinson&quot;)
+    reg(&quot;pacf_max_ass&quot;, float(np.abs(pr[2:]).max()), &quot;num3&quot;, &quot;Autocorrelazione parziale massima in valore assoluto tra i ritardi 2-20&quot;, &quot;Durbin-Levinson&quot;)
+    reg(&quot;pacf_max_rit&quot;, int(np.abs(pr[2:]).argmax() + 2), &quot;int&quot;, &quot;Ritardo in cui l&#x27;autocorrelazione parziale (da 2) è massima in valore assoluto&quot;, &quot;Durbin-Levinson&quot;)
+
+    # Valori assoluti e quadrati
+    reg(&quot;acf1_abs&quot;, aa[1], &quot;num3&quot;, &quot;Autocorrelazione dei valori assoluti al ritardo 1&quot;, &quot;funzioni.acf&quot;)
+    reg(&quot;acf10_abs&quot;, aa[10], &quot;num3&quot;, &quot;Autocorrelazione dei valori assoluti al ritardo 10&quot;, &quot;funzioni.acf&quot;)
+    reg(&quot;acf20_abs&quot;, aa[20], &quot;num3&quot;, &quot;Autocorrelazione dei valori assoluti al ritardo 20&quot;, &quot;funzioni.acf&quot;)
+    reg(&quot;acf100_abs&quot;, aa[100], &quot;num3&quot;, &quot;Autocorrelazione dei valori assoluti al ritardo 100&quot;, &quot;funzioni.acf&quot;)
+    reg(&quot;acf1_quad&quot;, aq[1], &quot;num3&quot;, &quot;Autocorrelazione dei quadrati al ritardo 1&quot;, &quot;funzioni.acf&quot;)
+    reg(&quot;n_pos_abs&quot;, int((aa[1: L + 1] &gt; 0).sum()), &quot;int&quot;, &quot;Ritardi (su 20) con autocorrelazione dei valori assoluti positiva&quot;, &quot;funzioni.acf&quot;)
+    reg(&quot;n_oltre_banda_abs&quot;, int((np.abs(aa[1:]) &gt; 2.5758 * se).sum()), &quot;int&quot;, &quot;Ritardi (su 100) dei valori assoluti oltre la banda al 99%&quot;, &quot;funzioni.acf&quot;)
+    reg(&quot;rapporto_abs_rend&quot;, abs(aa[1]) / abs(ar[1]), &quot;num1&quot;, &quot;Autocorrelazione dei valori assoluti diviso quella dei rendimenti, ritardo 1 (valori assoluti)&quot;, &quot;rapporto&quot;)
+    reg(&quot;lb_abs_stat_rapp&quot;, qa / qr, &quot;num1&quot;, &quot;Statistica di Ljung-Box dei valori assoluti diviso quella dei rendimenti&quot;, &quot;rapporto&quot;)
+    reg(&quot;pacf1_abs&quot;, pa[1], &quot;num3&quot;, &quot;Autocorrelazione parziale dei valori assoluti al ritardo 1&quot;, &quot;Durbin-Levinson&quot;)
+    reg(&quot;pacf_abs_n_pos&quot;, int((pa[1:] &gt; 0).sum()), &quot;int&quot;, &quot;Ritardi (su 20) con autocorrelazione parziale dei valori assoluti positiva&quot;, &quot;Durbin-Levinson&quot;)
+
+    # --- Rimescolamenti --------------------------------------------------------------------------------------
+    a1 = np.empty(config.N_PERM)
+    a1a = np.empty(config.N_PERM)
+    for i in range(config.N_PERM):
+        s = rng.permutation(x)
+        a1[i] = fx.acf(s, 1)[1]
+        a1a[i] = fx.acf(np.abs(s), 1)[1]
+    pd.DataFrame({&quot;acf1_rend&quot;: a1, &quot;acf1_abs&quot;: a1a}).to_csv(config.RISULTATI / &quot;permutazioni.csv&quot;, index=False)
+    lo, hi = np.percentile(a1, [0.5, 99.5])
+    reg(&quot;perm_lo&quot;, lo, &quot;num3&quot;, &quot;Estremo inferiore del 99% delle ACF1 dei rendimenti rimescolati (percentile 0,5)&quot;, &quot;numpy.percentile&quot;)
+    reg(&quot;perm_hi&quot;, hi, &quot;num3&quot;, &quot;Estremo superiore del 99% delle ACF1 dei rendimenti rimescolati (percentile 99,5)&quot;, &quot;numpy.percentile&quot;)
+    reg(&quot;perm_max_ass&quot;, float(np.abs(a1).max()), &quot;num3&quot;, &quot;ACF1 massima in valore assoluto tra i rimescolamenti dei rendimenti&quot;, &quot;numpy&quot;)
+    reg(&quot;perm_fuori&quot;, bool(ar[1] &lt; lo or ar[1] &gt; hi) and 1 or 0, &quot;int&quot;, &quot;1 se l&#x27;ACF1 reale dei rendimenti cade fuori dal 99% dei rimescolamenti, 0 altrimenti&quot;, &quot;confronto&quot;)
+    reg(&quot;perm_p&quot;, float((np.sum(np.abs(a1) &gt;= abs(ar[1])) + 1) / (config.N_PERM + 1)), &quot;pval&quot;, &quot;P-value del rimescolamento per l&#x27;ACF1 dei rendimenti (con correzione +1)&quot;, &quot;permutazioni&quot;)
+    reg(&quot;perm_abs_max&quot;, float(a1a.max()), &quot;num3&quot;, &quot;ACF1 massima dei valori assoluti rimescolati&quot;, &quot;numpy&quot;)
+    reg(&quot;perm_abs_n_oltre&quot;, int((a1a &gt;= aa[1]).sum()), &quot;int&quot;, &quot;Rimescolamenti con ACF1 dei valori assoluti pari o superiore a quella reale&quot;, &quot;permutazioni&quot;)
+
+    # --- Finestre di dieci anni -------------------------------------------------------------------------------
+    righe = []
+    for a, b in fx.finestre(N, config.SEDUTE_FINESTRA):
+        w = x[a:b]
+        rw = fx.acf(w, L)
+        aw = fx.acf(np.abs(w), 1)
+        q, p = fx.ljung_box(rw, len(w), L)
+        righe.append({&quot;inizio&quot;: r.index[a], &quot;fine&quot;: r.index[b - 1], &quot;acf1_rend&quot;: rw[1], &quot;acf1_abs&quot;: aw[1],
+                      &quot;r2_ar1&quot;: rw[1] ** 2, &quot;lb_p&quot;: p})
+    W = pd.DataFrame(righe)
+    W.to_csv(config.RISULTATI / &quot;acf_finestre.csv&quot;, index=False)
+    k = len(W)
+    iM, im = int(W[&quot;acf1_rend&quot;].idxmax()), int(W[&quot;acf1_rend&quot;].idxmin())
+    reg(&quot;n_fin&quot;, k, &quot;int&quot;, &quot;Finestre di dieci anni non sovrapposte&quot;, &quot;funzioni.finestre&quot;)
+    reg(&quot;fin_max&quot;, W.loc[iM, &quot;acf1_rend&quot;], &quot;num3&quot;, &quot;ACF1 dei rendimenti più alta tra le finestre&quot;, &quot;acf_finestre.csv&quot;)
+    reg(&quot;fin_max_anno&quot;, str(W.loc[iM, &quot;inizio&quot;].date()), &quot;anno&quot;, &quot;Anno di inizio della finestra con l&#x27;ACF1 più alta&quot;, &quot;acf_finestre.csv&quot;)
+    reg(&quot;fin_min&quot;, W.loc[im, &quot;acf1_rend&quot;], &quot;num3&quot;, &quot;ACF1 dei rendimenti più bassa tra le finestre&quot;, &quot;acf_finestre.csv&quot;)
+    reg(&quot;fin_min_anno&quot;, str(W.loc[im, &quot;inizio&quot;].date()), &quot;anno&quot;, &quot;Anno di inizio della finestra con l&#x27;ACF1 più bassa&quot;, &quot;acf_finestre.csv&quot;)
+    reg(&quot;fin_diff&quot;, W[&quot;acf1_rend&quot;].max() - W[&quot;acf1_rend&quot;].min(), &quot;num3&quot;, &quot;Differenza tra l&#x27;ACF1 più alta e la più bassa tra le finestre&quot;, &quot;acf_finestre.csv&quot;)
+    reg(&quot;fin_n_pos&quot;, int((W[&quot;acf1_rend&quot;] &gt; 0).sum()), &quot;int&quot;, &quot;Finestre con ACF1 dei rendimenti positiva&quot;, &quot;acf_finestre.csv&quot;)
+    reg(&quot;fin_n_neg&quot;, int((W[&quot;acf1_rend&quot;] &lt; 0).sum()), &quot;int&quot;, &quot;Finestre con ACF1 dei rendimenti negativa&quot;, &quot;acf_finestre.csv&quot;)
+    reg(&quot;fin_n_lb&quot;, int((W[&quot;lb_p&quot;] &lt; config.SOGLIA).sum()), &quot;int&quot;, &quot;Finestre in cui Ljung-Box (20 ritardi) rifiuta al 5%&quot;, &quot;acf_finestre.csv&quot;)
+    reg(&quot;fin_r2_max&quot;, W[&quot;r2_ar1&quot;].max(), &quot;pct2&quot;, &quot;Quota di varianza spiegata da un AR(1) nella finestra migliore&quot;, &quot;acf_finestre.csv&quot;)
+    reg(&quot;fin_r2_n_sotto&quot;, int((W[&quot;r2_ar1&quot;] &lt; config.H5_R2_MAX).sum()), &quot;int&quot;, &quot;Finestre in cui l&#x27;AR(1) spiega meno dell&#x27;1% della varianza&quot;, &quot;acf_finestre.csv&quot;)
+    reg(&quot;fin_abs_min&quot;, W[&quot;acf1_abs&quot;].min(), &quot;num3&quot;, &quot;ACF1 dei valori assoluti più bassa tra le finestre&quot;, &quot;acf_finestre.csv&quot;)
+    reg(&quot;fin_abs_max&quot;, W[&quot;acf1_abs&quot;].max(), &quot;num3&quot;, &quot;ACF1 dei valori assoluti più alta tra le finestre&quot;, &quot;acf_finestre.csv&quot;)
+    reg(&quot;fin_abs_n_pos&quot;, int((W[&quot;acf1_abs&quot;] &gt; 0).sum()), &quot;int&quot;, &quot;Finestre con ACF1 dei valori assoluti positiva&quot;, &quot;acf_finestre.csv&quot;)
+
+    # --- Verdetti sulle ipotesi -------------------------------------------------------------------------------
+    h1 = np.abs(ar[1: L + 1]).max() &lt;= config.H1_ACF_MAX
+    h2 = (pq &lt; config.SOGLIA_FORTE) and (ar[1] &lt; lo or ar[1] &gt; hi)
+    h3 = (abs(aa[1]) &gt;= config.H3_RAPPORTO * abs(ar[1])) and bool((aa[1: L + 1] &gt; 0).all())
+    h4 = (W[&quot;acf1_rend&quot;].max() - W[&quot;acf1_rend&quot;].min()) &gt;= config.H4_DIFFERENZA
+    h5 = (ar[1] ** 2 &lt; config.H5_R2_MAX) and ((W[&quot;r2_ar1&quot;] &lt; config.H5_R2_MAX).mean() &gt;= config.H5_QUOTA_FINESTRE)
+    h6 = np.abs(pr[2:]).max() &lt;= config.H6_PACF_MAX
+    for i, v in enumerate([h1, h2, h3, h4, h5, h6], 1):
+        reg(f&quot;h{i}_esito&quot;, int(bool(v)), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(bool(v) for v in [h1, h2, h3, h4, h5, h6])), &quot;int&quot;, &quot;Ipotesi confermate (su 6)&quot;, &quot;confronto con config.py&quot;)
+
+    meta = {&quot;generato&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+            &quot;numpy&quot;: np.__version__, &quot;pandas&quot;: pd.__version__, &quot;seme&quot;: config.SEME, &quot;ipotesi&quot;: config.IPOTESI}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps({&quot;meta&quot;: meta, &quot;valori&quot;: RIS}, ensure_ascii=False, indent=1),
+                                                    encoding=&quot;utf-8&quot;)
+    print(f&quot;Scritte {len(RIS)} metriche.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO dati/ e risultati/ e salva i PNG in figure/.
+
+  fig1_acf_pacf_rendimenti.png   ACF e PACF dei rendimenti, ritardi 1-20, con la banda al 99%
+  fig2_memoria_dei_movimenti.png ACF dei rendimenti e dei valori assoluti fino al ritardo 100
+  fig3_acf_per_finestra.png      ACF al ritardo 1 dei rendimenti in ogni finestra di dieci anni
+  fig4_rimescolamenti.png        ACF al ritardo 1 dei rendimenti rimescolati contro quella reale
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    m = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    banda = m[&quot;banda99&quot;][&quot;valore&quot;]
+    T = pd.read_csv(R / &quot;acf_intero.csv&quot;)
+    Lg = pd.read_csv(R / &quot;acf_lunga.csv&quot;)
+    W = pd.read_csv(R / &quot;acf_finestre.csv&quot;, parse_dates=[&quot;inizio&quot;, &quot;fine&quot;])
+    P = pd.read_csv(R / &quot;permutazioni.csv&quot;)
+
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(10, 7), sharex=True)
+    for ax, col, tit in ((a1, &quot;acf_rend&quot;, &quot;Autocorrelazione (ACF)&quot;), (a2, &quot;pacf_rend&quot;, &quot;Autocorrelazione parziale (PACF)&quot;)):
+        ax.bar(T[&quot;ritardo&quot;], T[col], color=BLU, width=0.6)
+        ax.axhspan(-banda, banda, color=GRIGIO, alpha=0.25, lw=0)
+        ax.axhline(0, color=&quot;#555&quot;, lw=1)
+        ax.set_ylabel(tit)
+    a2.set_xlabel(&quot;Ritardo (sedute)&quot;)
+    a2.set_xticks(range(1, config.NLAG + 1, 1))
+    fig.savefig(config.FIGURE / &quot;fig1_acf_pacf_rendimenti.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    ax.plot(Lg[&quot;ritardo&quot;], Lg[&quot;acf_abs&quot;], color=ARANCIO, lw=1.8, label=&quot;Valori assoluti dei rendimenti&quot;)
+    ax.plot(Lg[&quot;ritardo&quot;], Lg[&quot;acf_rend&quot;], color=BLU, lw=1.8, label=&quot;Rendimenti&quot;)
+    ax.axhspan(-banda, banda, color=GRIGIO, alpha=0.25, lw=0)
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_xlabel(&quot;Ritardo (sedute)&quot;)
+    ax.set_ylabel(&quot;Autocorrelazione&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig2_memoria_dei_movimenti.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    x = np.arange(len(W))
+    ax.bar(x, W[&quot;acf1_rend&quot;], color=[BLU if v &gt;= 0 else ARANCIO for v in W[&quot;acf1_rend&quot;]], width=0.7)
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_xticks(x)
+    ax.set_xticklabels([f&quot;{d.year}&quot; for d in W[&quot;inizio&quot;]], rotation=45, ha=&quot;right&quot;)
+    ax.set_ylabel(&quot;ACF al ritardo 1 dei rendimenti&quot;)
+    ax.set_xlabel(&quot;Inizio della finestra di dieci anni&quot;)
+    fig.savefig(config.FIGURE / &quot;fig3_acf_per_finestra.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    ax.hist(P[&quot;acf1_rend&quot;], bins=40, color=GRIGIO, alpha=0.8)
+    ax.axvline(m[&quot;acf1&quot;][&quot;valore&quot;], color=ARANCIO, lw=2.5, label=&quot;Dati reali&quot;)
+    ax.set_xlabel(&quot;ACF al ritardo 1 dei rendimenti rimescolati&quot;)
+    ax.set_ylabel(&quot;Rimescolamenti&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig4_rimescolamenti.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    import json
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 302 - &quot;ACF e PACF dei rendimenti&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Idea: l&#x27;autocorrelazione (ACF) misura quanto un rendimento è legato a quelli dei giorni precedenti; l&#x27;autocorrelazione parziale (PACF)
+misura il legame con il rendimento di k giorni prima tolta l&#x27;influenza dei giorni in mezzo. Le si calcola sui rendimenti logaritmici
+giornalieri dell&#x27;S&amp;P 500, sul loro valore assoluto e sul loro quadrato (la grandezza dei movimenti, senza il segno), sull&#x27;intero periodo
+e in finestre di dieci anni non sovrapposte. Il confronto con il caso si fa rimescolando i rendimenti (la «scimmia»): rimescolati su
+tutta la storia, i rendimenti perdono ogni memoria ma conservano la stessa distribuzione.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;ACF&quot;, &quot;PACF&quot;, &quot;AR(1)&quot;, &quot;Ljung-Box&quot;)
+
+# --- Misure ----------------------------------------------------------------------------------------------------
+NLAG = 20                         # ritardi guardati: da 1 a 20 sedute (circa un mese di borsa)
+NLAG_LUNGO = 100                  # per il grafico della persistenza della grandezza dei movimenti
+SOGLIA = 0.05                     # livello di significatività dei test
+SOGLIA_FORTE = 0.01
+H1_ACF_MAX = 0.10                 # ipotesi 1: nessuna autocorrelazione dei rendimenti supera 0,10 in valore assoluto
+H3_RAPPORTO = 5                   # ipotesi 3: rapporto minimo tra l&#x27;autocorrelazione dei rendimenti assoluti e quella dei rendimenti
+H4_DIFFERENZA = 0.10              # ipotesi 4: differenza minima tra la finestra con l&#x27;autocorrelazione più alta e quella più bassa
+H5_R2_MAX = 0.01                  # ipotesi 5: quota di varianza spiegata dal ritardo 1 sotto l&#x27;1%
+H5_QUOTA_FINESTRE = 0.50          # ipotesi 5: in almeno metà delle finestre
+H6_PACF_MAX = 0.05                # ipotesi 6: nessuna autocorrelazione parziale dei ritardi da 2 in poi supera 0,05 in valore assoluto
+SEDUTE_FINESTRA = 2520            # dieci anni di borsa
+SEDUTE_ANNO = 252
+
+# --- Confronto con il caso -------------------------------------------------------------------------------------
+N_PERM = 1000                     # rimescolamenti dei rendimenti su tutta la storia
+SEME = 20261028
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati ------------------------------------------------------------
+IPOTESI = (
+    &quot;1) Sull&#x27;intero periodo nessuna delle prime venti autocorrelazioni dei rendimenti giornalieri supera 0,10 in valore assoluto. &quot;
+    &quot;2) Piccola non vuol dire nulla: il test di Ljung-Box sui primi venti ritardi rifiuta l&#x27;assenza di autocorrelazione dei rendimenti &quot;
+    &quot;(p-value sotto 0,01) e l&#x27;autocorrelazione al primo ritardo reale cade fuori dal 99% di quelle ottenute rimescolando i rendimenti. &quot;
+    &quot;3) La memoria sta nella grandezza dei movimenti, non nel segno: l&#x27;autocorrelazione al primo ritardo dei rendimenti assoluti è almeno &quot;
+    &quot;cinque volte quella dei rendimenti (in valore assoluto) ed è positiva in tutti i primi venti ritardi. &quot;
+    &quot;4) La memoria dei rendimenti non è stabile: tra le finestre di dieci anni, l&#x27;autocorrelazione al primo ritardo più alta supera quella &quot;
+    &quot;più bassa di almeno 0,10. &quot;
+    &quot;5) La memoria dei rendimenti vale poco: un modello AR(1) spiega meno dell&#x27;1% della varianza dei rendimenti sull&#x27;intero periodo e in &quot;
+    &quot;almeno la metà delle finestre. &quot;
+    &quot;6) Dopo il primo ritardo la PACF non aggiunge memoria: nessuno dei ritardi da 2 a 20 ha un&#x27;autocorrelazione parziale oltre 0,05 in &quot;
+    &quot;valore assoluto sull&#x27;intero periodo.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>ACF, PACF (Durbin-Levinson), Ljung-Box, Holm, finestre</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 302: autocorrelazione, autocorrelazione parziale, test di Ljung-Box, Holm, finestre.&quot;&quot;&quot;
+import math
+
+import numpy as np
+import pandas as pd
+from scipy.stats import chi2
+
+
+def log_rendimenti(close: pd.Series) -&gt; pd.Series:
+    return np.log(close).diff().dropna()
+
+
+def acf(x, nlags: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Autocorrelazione campionaria ai ritardi 0..nlags (stimatore consueto, con la varianza totale al denominatore).&quot;&quot;&quot;
+    d = np.asarray(x, float)
+    d = d - d.mean()
+    ss = float(d @ d)
+    return np.array([1.0] + [float(d[k:] @ d[:-k]) / ss for k in range(1, nlags + 1)])
+
+
+def pacf_da_acf(rho: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Autocorrelazione parziale ai ritardi 0..m con la ricorsione di Durbin-Levinson, a partire da rho[0..m].&quot;&quot;&quot;
+    m = len(rho) - 1
+    phi = np.zeros((m + 1, m + 1))
+    out = np.zeros(m + 1)
+    out[0] = 1.0
+    if m &gt;= 1:
+        phi[1, 1] = rho[1]
+        out[1] = rho[1]
+    for k in range(2, m + 1):
+        num = rho[k] - sum(phi[k - 1, j] * rho[k - j] for j in range(1, k))
+        den = 1.0 - sum(phi[k - 1, j] * rho[j] for j in range(1, k))
+        phi[k, k] = num / den
+        for j in range(1, k):
+            phi[k, j] = phi[k - 1, j] - phi[k, k] * phi[k - 1, k - j]
+        out[k] = phi[k, k]
+    return out
+
+
+def p_normale(z: float) -&gt; float:
+    &quot;&quot;&quot;P-value a due code di una statistica normale standard.&quot;&quot;&quot;
+    return math.erfc(abs(z) / math.sqrt(2))
+
+
+def ljung_box(rho: np.ndarray, n: int, h: int) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Statistica Q e p-value del test di Ljung-Box sui primi h ritardi (ipotesi nulla: nessuna autocorrelazione).&quot;&quot;&quot;
+    q = n * (n + 2) * sum(rho[k] ** 2 / (n - k) for k in range(1, h + 1))
+    return float(q), float(chi2.sf(q, h))
+
+
+def holm(p) -&gt; np.ndarray:
+    &quot;&quot;&quot;P-value corretti con il metodo di Holm.&quot;&quot;&quot;
+    p = np.asarray(p, float)
+    m = len(p)
+    adj = np.empty(m)
+    corrente = 0.0
+    for rango, i in enumerate(np.argsort(p)):
+        corrente = max(corrente, (m - rango) * p[i])
+        adj[i] = min(1.0, corrente)
+    return adj
+
+
+def finestre(n: int, ampiezza: int) -&gt; list[tuple[int, int]]:
+    &quot;&quot;&quot;Finestre consecutive non sovrapposte; l&#x27;ultima parte incompleta è scartata.&quot;&quot;&quot;
+    return [(a, a + ampiezza) for a in range(0, n - ampiezza + 1, ampiezza)]
+
+
+def ar1(rng, n: int, phi: float, sigma: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;AR(1) stazionario (media zero), partendo dalla distribuzione stazionaria.&quot;&quot;&quot;
+    e = rng.normal(0.0, sigma, n)
+    x = np.empty(n)
+    x[0] = rng.normal(0.0, sigma / np.sqrt(1 - phi ** 2))
+    for t in range(1, n):
+        x[t] = phi * x[t - 1] + e[t]
+    return x
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati (rumore bianco, AR(1), AR(2), grappoli di volatilità)</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+from statsmodels.tsa.stattools import acf as acf_sm
+
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome, cond):
+    global n_ok
+    print((&quot;OK   &quot; if cond else &quot;FAIL &quot;) + nome)
+    if not cond:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+rng = np.random.default_rng(1)
+controlla(&quot;finestre non sovrapposte e complete&quot;, fx.finestre(10, 3) == [(0, 3), (3, 6), (6, 9)])
+c = pd.Series(100 * 1.01 ** np.arange(5))
+controlla(&quot;log-rendimento di un +1% costante&quot;, np.allclose(fx.log_rendimenti(c).to_numpy(), np.log(1.01)))
+
+x = rng.normal(0, 0.01, 4000)
+controlla(&quot;l&#x27;ACF coincide con quella di statsmodels&quot;, np.allclose(fx.acf(x, 10), acf_sm(x, nlags=10, fft=True), atol=1e-8))
+bianco = fx.acf(x, 20)
+controlla(&quot;rumore bianco: tutte le autocorrelazioni dentro quattro errori standard&quot;, np.all(np.abs(bianco[1:]) &lt; 4 / np.sqrt(len(x))))
+q, p = fx.ljung_box(bianco, len(x), 20)
+controlla(&quot;rumore bianco: Ljung-Box non rifiuta a livello 0,001&quot;, p &gt; 0.001)
+
+a = fx.ar1(rng, 20000, 0.5, 0.01)
+ra = fx.acf(a, 5)
+controlla(&quot;AR(1) con phi 0,5: ACF al primo ritardo vicino a 0,5&quot;, abs(ra[1] - 0.5) &lt; 0.02)
+controlla(&quot;AR(1) con phi 0,5: ACF al secondo ritardo vicino a 0,25&quot;, abs(ra[2] - 0.25) &lt; 0.02)
+pa = fx.pacf_da_acf(ra)
+controlla(&quot;AR(1): la PACF al primo ritardo uguaglia l&#x27;ACF&quot;, abs(pa[1] - ra[1]) &lt; 1e-12)
+controlla(&quot;AR(1): la PACF dopo il primo ritardo è quasi zero&quot;, np.all(np.abs(pa[2:]) &lt; 0.03))
+q2, p2 = fx.ljung_box(fx.acf(a, 20), len(a), 20)
+controlla(&quot;AR(1): Ljung-Box rifiuta con decisione&quot;, p2 &lt; 1e-10)
+
+ar2 = np.zeros(20000)
+e = rng.normal(0, 1, 20000)
+for t in range(2, len(ar2)):
+    ar2[t] = 0.5 * ar2[t - 1] - 0.3 * ar2[t - 2] + e[t]
+pa2 = fx.pacf_da_acf(fx.acf(ar2, 5))
+controlla(&quot;AR(2): la PACF al secondo ritardo vicino a -0,3&quot;, abs(pa2[2] + 0.3) &lt; 0.03)
+controlla(&quot;AR(2): la PACF dal terzo ritardo è quasi zero&quot;, np.all(np.abs(pa2[3:]) &lt; 0.03))
+
+h = fx.holm([0.01, 0.04, 0.03])
+controlla(&quot;Holm: ordine e valori attesi&quot;, np.allclose(h, [0.03, 0.06, 0.06]))
+controlla(&quot;p-value normale a due code: z=1,96 vale circa 0,05&quot;, abs(fx.p_normale(1.96) - 0.05) &lt; 0.001)
+
+# volatilità a grappoli: ACF dei valori assoluti positiva anche se i rendimenti non hanno memoria
+sigma = np.exp(fx.ar1(rng, 20000, 0.98, 0.15))
+g = rng.normal(0, 1, 20000) * sigma
+controlla(&quot;grappoli di volatilità: rendimenti senza memoria&quot;, abs(fx.acf(g, 1)[1]) &lt; 4 / np.sqrt(len(g)))
+controlla(&quot;grappoli di volatilità: valori assoluti con memoria&quot;, fx.acf(np.abs(g), 1)[1] &gt; 0.1)
+
+# il rimescolamento distrugge la memoria dei valori assoluti
+perm = rng.permutation(g)
+controlla(&quot;rimescolati, i valori assoluti perdono la memoria&quot;, abs(fx.acf(np.abs(perm), 1)[1]) &lt; 4 / np.sqrt(len(g)))
+print(f&quot;{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
