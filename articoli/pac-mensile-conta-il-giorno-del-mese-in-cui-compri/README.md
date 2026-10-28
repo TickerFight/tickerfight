@@ -2,7 +2,7 @@
 
 **Domanda:** in un piano di accumulo con versamento mensile fisso, comprare il 3 o il 25 del mese cambia davvero il risultato, o la differenza è rumore?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [PAC mensile: conta il giorno del mese in cui compri?](https://ticker-fight.blogspot.com/2026/10/pac-mensile-conta-il-giorno-del-mese-in.html).
 
 ## Il disegno
 

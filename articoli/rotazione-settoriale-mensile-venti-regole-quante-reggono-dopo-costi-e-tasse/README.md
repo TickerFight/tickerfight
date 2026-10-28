@@ -2,7 +2,7 @@
 
 **Domanda:** una rotazione mensile tra i nove ETF settoriali americani batte il buy & hold e i nove settori tenuti in parti uguali? E, tra venti regole dichiarate in anticipo, quante reggono ai costi, ai test multipli e al passare del tempo?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Rotazione settoriale mensile: venti regole, quante reggono dopo costi e tasse?](https://ticker-fight.blogspot.com/2026/10/rotazione-settoriale-mensile-venti.html).
 
 ## Il disegno
 

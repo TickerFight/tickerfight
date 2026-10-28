@@ -2,7 +2,7 @@
 
 **Domanda:** il premio di dimensione, cioè il vantaggio storico delle aziende piccole su quelle grandi, c'è davvero, decennio per decennio?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Large cap contro small cap: il premio di dimensione esiste, decennio per decennio?](https://ticker-fight.blogspot.com/2026/10/large-cap-contro-small-cap-il-premio-di.html).
 
 ## Il disegno
 

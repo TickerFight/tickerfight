@@ -2,7 +2,7 @@
 
 **Domanda:** che cosa dice il VIX dei rendimenti e della volatilità del mese successivo, e una regola semplice basata sul VIX batte il buy & hold sull'S&P 500 e la fortuna?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Il VIX come segnale: cosa dice davvero dei mesi che verranno?](https://ticker-fight.blogspot.com/2026/10/il-vix-come-segnale-cosa-dice-davvero.html).
 
 ## Il disegno
 

@@ -2,10 +2,14 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-30 pubblicati, 4 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+34 pubblicati, 0 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
+| [Rotazione settoriale mensile: venti regole, quante reggono dopo costi e tasse?](https://tickerfight.github.io/tickerfight/articoli/rotazione-settoriale-mensile-venti-regole-quante-reggono-dopo-costi-e-tasse/) | Pubblicato | 28/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/rotazione-settoriale-mensile-venti.html) |
+| [PAC mensile: conta il giorno del mese in cui compri?](https://tickerfight.github.io/tickerfight/articoli/pac-mensile-conta-il-giorno-del-mese-in-cui-compri/) | Pubblicato | 28/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/pac-mensile-conta-il-giorno-del-mese-in.html) |
+| [Large cap contro small cap: il premio di dimensione esiste, decennio per decennio?](https://tickerfight.github.io/tickerfight/articoli/large-cap-contro-small-cap-il-premio-di-dimensione-esiste-decennio-per-decennio/) | Pubblicato | 28/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/large-cap-contro-small-cap-il-premio-di.html) |
+| [Il VIX come segnale: cosa dice davvero dei mesi che verranno?](https://tickerfight.github.io/tickerfight/articoli/il-vix-come-segnale-cosa-dice-davvero-dei-mesi-che-verranno/) | Pubblicato | 28/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/il-vix-come-segnale-cosa-dice-davvero.html) |
 | [Un ordine al mese contro uno a settimana: chi guarda meno guadagna di più?](https://tickerfight.github.io/tickerfight/articoli/un-ordine-al-mese-contro-uno-a-settimana-chi-guarda-meno-guadagna-di-piu/) | Pubblicato | 27/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/un-ordine-al-mese-contro-uno-settimana.html) |
 | [Rendimenti semplici contro logaritmici: quanto sbaglia la media?](https://tickerfight.github.io/tickerfight/articoli/rendimenti-semplici-contro-logaritmici-quanto-sbaglia-la-media/) | Pubblicato | 27/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/rendimenti-semplici-contro-logaritmici.html) |
 | [Quante operazioni all'anno si possono permettere 1.000 euro?](https://tickerfight.github.io/tickerfight/articoli/quante-operazioni-all-anno-si-possono-permettere-1-000-euro/) | Pubblicato | 27/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/quante-operazioni-allanno-si-possono.html) |
@@ -36,7 +40,3 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [Il cono della fortuna: la regola 50/200 sull'S&P 500 contro diecimila scimmie](https://tickerfight.github.io/tickerfight/articoli/il-cono-della-fortuna-la-regola-50-200-sull-sp-500-contro-diecimila-scimmie/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/il-cono-della-fortuna-la-regola-50200.html) |
 | [500 euro su Apple con le medie mobili: cinque anni di operazioni, commissioni e tasse](https://tickerfight.github.io/tickerfight/articoli/500-euro-su-apple-con-le-medie-mobili-cinque-anni-di-operazioni-commissioni-e-tasse/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/500-euro-su-apple-con-le-medie-mobili.html) |
 | [50 titoli dell'S&P 500, medie mobili contro buy & hold: la classifica](https://tickerfight.github.io/tickerfight/articoli/50-titoli-dell-sp-500-medie-mobili-contro-buy-hold-la-classifica/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/50-titoli-dells-500-medie-mobili-contro.html) |
-| [Large cap contro small cap: il premio di dimensione esiste, decennio per decennio?](https://tickerfight.github.io/tickerfight/articoli/large-cap-contro-small-cap-il-premio-di-dimensione-esiste-decennio-per-decennio/) | In revisione | — | — |
-| [Il VIX come segnale: cosa dice davvero dei mesi che verranno?](https://tickerfight.github.io/tickerfight/articoli/il-vix-come-segnale-cosa-dice-davvero-dei-mesi-che-verranno/) | In revisione | — | — |
-| [Rotazione settoriale mensile: venti regole, quante reggono dopo costi e tasse?](https://tickerfight.github.io/tickerfight/articoli/rotazione-settoriale-mensile-venti-regole-quante-reggono-dopo-costi-e-tasse/) | In revisione | — | — |
-| [PAC mensile: conta il giorno del mese in cui compri?](https://tickerfight.github.io/tickerfight/articoli/pac-mensile-conta-il-giorno-del-mese-in-cui-compri/) | In revisione | — | — |
