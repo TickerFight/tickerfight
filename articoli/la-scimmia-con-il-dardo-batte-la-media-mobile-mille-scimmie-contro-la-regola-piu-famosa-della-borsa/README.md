@@ -2,7 +2,7 @@
 
 **Domanda:** una regola a media mobile semplice (investiti quando la chiusura di ieri è sopra la media) batte migliaia di scimmie che stanno nel mercato per la stessa quota di tempo e con lo stesso numero di operazioni?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [La scimmia con il dardo batte la media mobile? Mille scimmie contro la regola più famosa della Borsa](https://ticker-fight.blogspot.com/2026/10/la-scimmia-con-il-dardo-batte-la-media.html).
 
 ## Il disegno
 

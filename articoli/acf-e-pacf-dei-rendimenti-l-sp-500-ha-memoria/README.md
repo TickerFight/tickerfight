@@ -2,7 +2,7 @@
 
 **Domanda:** i rendimenti giornalieri dell'S&P 500 hanno memoria? Che cosa dicono l'autocorrelazione (ACF) e l'autocorrelazione parziale (PACF), e dove sta davvero la memoria: nel segno o nella grandezza dei movimenti?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [ACF e PACF dei rendimenti: l'S&P 500 ha memoria?](https://ticker-fight.blogspot.com/2026/10/acf-e-pacf-dei-rendimenti-ls-500-ha.html).
 
 ## Il disegno
 
