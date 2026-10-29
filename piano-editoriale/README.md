@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-36 pubblicati, 2 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+36 pubblicati, 5 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -43,4 +43,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [500 euro su Apple con le medie mobili: cinque anni di operazioni, commissioni e tasse](https://tickerfight.github.io/tickerfight/articoli/500-euro-su-apple-con-le-medie-mobili-cinque-anni-di-operazioni-commissioni-e-tasse/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/500-euro-su-apple-con-le-medie-mobili.html) |
 | [50 titoli dell'S&P 500, medie mobili contro buy & hold: la classifica](https://tickerfight.github.io/tickerfight/articoli/50-titoli-dell-sp-500-medie-mobili-contro-buy-hold-la-classifica/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/50-titoli-dells-500-medie-mobili-contro.html) |
 | [Prezzi adjusted e non adjusted: l'errore gonfia o sgonfia i risultati?](https://tickerfight.github.io/tickerfight/articoli/prezzi-adjusted-e-non-adjusted-l-errore-gonfia-o-sgonfia-i-risultati/) | In revisione | — | — |
+| [«Vendi a maggio e vai via»: Stati Uniti e Giappone, due crolli e la fortuna](https://tickerfight.github.io/tickerfight/articoli/vendi-a-maggio-e-vai-via-stati-uniti-e-giappone-due-crolli-e-la-fortuna/) | In revisione | — | — |
+| [VIX sopra 30: comprare la paura?](https://tickerfight.github.io/tickerfight/articoli/vix-sopra-30-comprare-la-paura/) | In revisione | — | — |
+| [PAC dal 2000: il decennio perso](https://tickerfight.github.io/tickerfight/articoli/pac-dal-2000-il-decennio-perso/) | In revisione | — | — |
 | [Trailing stop contro uscita a tempo: con 1.000 euro, quale delle due regole d'uscita regge meglio?](https://tickerfight.github.io/tickerfight/articoli/trailing-stop-contro-uscita-a-tempo-con-1-000-euro-quale-delle-due-regole-d-uscita-regge-meglio/) | In revisione | — | — |
