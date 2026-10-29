@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dogs of the Dow: comprare i titoli che pagano di più · il codice · TickerFight</title>
+<meta name="description" content="Dogs of the Dow: comprare i titoli che pagano di più">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Dogs of the Dow: comprare i titoli che pagano di più</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="dogs-of-the-dow-comprare-i-titoli-che-pagano-di-piu.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>dogs-of-the-dow-comprare-i-titoli-che-pagano-di-piu/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── motore.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd dogs-of-the-dow-comprare-i-titoli-che-pagano-di-piu
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance prezzi e dividendi dei titoli del Dow Jones e dello SPY.
+
+Salva dati/adj.csv (chiusure corrette per dividendi, per il rendimento totale), dati/close.csv (chiusure senza correzione per i dividendi,
+corrette solo per i frazionamenti: servono per il rendimento da dividendo), dati/div.csv (dividendi pagati per azione, una riga per data
+di stacco) e dati/metadati.json. Gli script successivi leggono SOLO i file salvati.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        try:
+            g = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        except Exception as e:
+            print(f&quot;{ticker}: errore {e!r} (tentativo {tentativo + 1})&quot;)
+            g = pd.DataFrame()
+        if not g.empty and &quot;Adj Close&quot; in g.columns:
+            g.index = pd.to_datetime(g.index).tz_localize(None).normalize()
+            g = g[~g.index.duplicated(keep=&quot;last&quot;)].sort_index()
+            return g
+        time.sleep(8)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    adj, close, div, esiti = {}, {}, {}, []
+    tickers = [config.INDICE] + list(config.UNIVERSO)
+    for t in tickers:
+        g = scarica(t)
+        if g.empty:
+            esiti.append({&quot;ticker&quot;: t, &quot;stato&quot;: &quot;assente: nessun dato restituito da Yahoo Finance&quot;})
+            print(f&quot;{t}: nessun dato&quot;)
+            continue
+        if g.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:
+            g = g.iloc[:-1]
+        g = g[(g[&quot;Adj Close&quot;] &gt; 0) &amp; (g[&quot;Close&quot;] &gt; 0)].dropna(subset=[&quot;Adj Close&quot;, &quot;Close&quot;])
+        adj[t], close[t] = g[&quot;Adj Close&quot;], g[&quot;Close&quot;]
+        div[t] = g[&quot;Dividends&quot;][g[&quot;Dividends&quot;] &gt; 0] if &quot;Dividends&quot; in g.columns else pd.Series(dtype=float)
+        esiti.append({&quot;ticker&quot;: t, &quot;stato&quot;: &quot;ok&quot;, &quot;righe&quot;: len(g), &quot;prima_data&quot;: str(g.index[0].date()),
+                      &quot;ultima_data&quot;: str(g.index[-1].date()), &quot;n_dividendi&quot;: int(len(div[t]))})
+        print(f&quot;{t}: {len(g)} righe, {len(div[t])} dividendi, dal {g.index[0].date()} al {g.index[-1].date()}&quot;)
+    if config.INDICE not in adj or len(adj) &lt; 0.9 * len(tickers):
+        raise SystemExit(&quot;Download insufficiente: manca lo SPY o più del 10% dei titoli.&quot;)
+    for nome, d in ((&quot;adj&quot;, adj), (&quot;close&quot;, close)):
+        df = pd.DataFrame(d).sort_index()
+        df.index.name = &quot;Date&quot;
+        df.to_csv(config.DATI / f&quot;{nome}.csv&quot;, float_format=&quot;%.6f&quot;)
+    dv = pd.DataFrame(div).sort_index()
+    dv.index.name = &quot;Date&quot;
+    dv.to_csv(config.FILE_DIV, float_format=&quot;%.6f&quot;)
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;prezzi&quot;: &quot;Adj Close = corretto per dividendi e frazionamenti; Close = corretto solo per frazionamenti&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;titoli&quot;: esiti,
+            &quot;sha256&quot;: {f.name: hashlib.sha256(f.read_bytes()).hexdigest() for f in (config.FILE_ADJ, config.FILE_CLOSE, config.FILE_DIV)}}
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Dogs of the Dow: i dieci titoli a più alto rendimento da dividendo contro l&#x27;universo, lo SPY e la sorte.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json     ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  curve.csv         valore di 1 dollaro per Dogs, universo e SPY (una seduta su cinque)
+  annuali.csv       rendimento di ogni anno intero per Dogs, universo, SPY (e varianti)
+  scelte.csv        i titoli scelti a fine di ogni anno e il loro rendimento da dividendo
+  bootstrap.csv     differenze di Sharpe ricampionate (Dogs - universo)
+  scimmie.csv       valore finale di 1 dollaro per ogni scimmia
+&quot;&quot;&quot;
+import json
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import motore as m
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con motore.py&quot;
+GA = config.GIORNI_ANNO
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def leggi(file) -&gt; pd.DataFrame:
+    df = pd.read_csv(file, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    return df[~df.index.duplicated(keep=&quot;last&quot;)]
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    adj, close, div = leggi(config.FILE_ADJ), leggi(config.FILE_CLOSE), leggi(config.FILE_DIV)
+    idx = adj[config.INDICE].dropna().index
+    adj, close = adj.reindex(idx), close.reindex(idx)
+    titoli = [t for t in config.UNIVERSO if t in adj.columns]
+    ultima = idx[-1]
+    fine_anno = pd.Series(idx, index=idx).groupby(idx.year).last()          # ultimo giorno di Borsa di ogni anno
+    anni_f = [a for a in range(config.PRIMO_ANNO_FORMAZIONE, ultima.year) if a in fine_anno.index]
+    rng = np.random.default_rng(config.SEME)
+
+    righe = {k: [] for k in (&quot;d10&quot;, &quot;d5&quot;, &quot;bassi&quot;, &quot;uni&quot;, &quot;spy&quot;)}
+    date_g, annuali, scelte = [], [], []
+    rend_ann = np.zeros((len(anni_f), len(titoli)))
+    disp = np.zeros((len(anni_f), len(titoli)), dtype=bool)
+    prec_d10 = None
+    ricambi, yd_dogs, yd_uni, n_disp = [], [], [], []
+    for j, F in enumerate(anni_f):
+        Y = F + 1
+        s = fine_anno[F]
+        e = fine_anno[Y] if Y &lt; ultima.year else ultima
+        anno_f = adj.index[(adj.index.year == F) &amp; (adj.index &lt;= s)]
+        storia = adj.loc[anno_f, titoli].notna().sum().to_numpy()
+        ok = (storia &gt;= config.MIN_STORIA_GG) &amp; adj.loc[s, titoli].notna().to_numpy() &amp; adj.loc[e, titoli].notna().to_numpy()
+        dv = div.reindex(columns=titoli).loc[(div.index.year == F) &amp; (div.index &lt;= s)].sum().to_numpy()
+        yld = m.rendimento_da_dividendo(dv, close.loc[s, titoli].to_numpy())
+        yld = np.where(ok, yld, 0.0)
+        sel = {&quot;d10&quot;: m.scegli_alti(yld, ok, config.K_DOGS), &quot;d5&quot;: m.scegli_alti(yld, ok, config.K_PICCOLI),
+               &quot;bassi&quot;: m.scegli_alti(yld, ok, config.K_DOGS, bassi=True), &quot;uni&quot;: np.flatnonzero(ok)}
+        P = adj.loc[s:e, titoli].to_numpy()
+        for k, pos in sel.items():
+            righe[k].append(m.rendimenti_giornalieri_pesi_uguali(P[:, pos]))
+        righe[&quot;spy&quot;].append(m.rendimenti_giornalieri_pesi_uguali(adj.loc[s:e, [config.INDICE]].to_numpy()))
+        date_g.append(adj.loc[s:e].index[1:])
+        rend_ann[j] = np.where(ok, P[-1] / P[0] - 1.0, 0.0)
+        disp[j] = ok
+        n_disp.append(int(ok.sum()))
+        yd_dogs.append(float(yld[sel[&quot;d10&quot;]].mean()))
+        yd_uni.append(float(yld[ok].mean()))
+        if prec_d10 is not None:
+            ricambi.append(len(set(sel[&quot;d10&quot;]) - prec_d10) / config.K_DOGS)
+        prec_d10 = set(sel[&quot;d10&quot;])
+        scelte.append({&quot;anno_acquisto&quot;: F, &quot;anno_detenzione&quot;: Y, &quot;titoli&quot;: &quot; &quot;.join(titoli[i] for i in sel[&quot;d10&quot;]),
+                       &quot;rend_div_medio&quot;: float(yld[sel[&quot;d10&quot;]].mean())})
+        annuali.append({&quot;anno&quot;: Y, &quot;completo&quot;: int(Y &lt; ultima.year), **{k: float(np.prod(1 + righe[k][-1]) - 1) for k in righe}})
+    date = date_g[0].append(date_g[1:]) if len(date_g) &gt; 1 else date_g[0]
+    R = {k: np.concatenate(v) for k, v in righe.items()}
+    T = len(date)
+    anni = (date[-1] - date[0]).days / 365.25
+    if anni &lt; config.ANNI_MINIMI:
+        raise SystemExit(f&quot;Periodo di {anni:.1f} anni: troppo corto.&quot;)
+    A = pd.DataFrame(annuali)
+    comp = A[A[&quot;completo&quot;] == 1]
+
+    reg(&quot;data_inizio&quot;, str(date[0].date()), &quot;data_lunga&quot;, &quot;Primo giorno del periodo con i Dogs in portafoglio&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(date[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta nei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;anni&quot;, anni, &quot;num1&quot;, &quot;Anni del periodo&quot;, &quot;dati/&quot;)
+    reg(&quot;n_sedute&quot;, T, &quot;int&quot;, &quot;Rendimenti giornalieri nel periodo&quot;, &quot;dati/&quot;)
+    reg(&quot;n_anni_interi&quot;, len(comp), &quot;int&quot;, &quot;Anni interi nel periodo (l&#x27;ultimo, parziale, è escluso dai confronti anno per anno)&quot;, &quot;dati/&quot;)
+    reg(&quot;anno_primo&quot;, int(A[&quot;anno&quot;].iloc[0]), &quot;annonum&quot;, &quot;Primo anno di detenzione&quot;, &quot;dati/&quot;)
+    reg(&quot;anno_ultimo_intero&quot;, int(comp[&quot;anno&quot;].iloc[-1]), &quot;annonum&quot;, &quot;Ultimo anno intero di detenzione&quot;, &quot;dati/&quot;)
+    reg(&quot;capitale&quot;, config.CAPITALE, &quot;int&quot;, &quot;Capitale iniziale per tradurre i rendimenti in dollari&quot;, &quot;config.py, CAPITALE&quot;)
+    reg(&quot;k_dogs&quot;, config.K_DOGS, &quot;int&quot;, &quot;Titoli dei Dogs&quot;, &quot;config.py, K_DOGS&quot;)
+    reg(&quot;k_piccoli&quot;, config.K_PICCOLI, &quot;int&quot;, &quot;Titoli della variante a cinque&quot;, &quot;config.py, K_PICCOLI&quot;)
+    reg(&quot;n_universo&quot;, len(titoli), &quot;int&quot;, &quot;Titoli nell&#x27;universo fissato in anticipo&quot;, &quot;config.py, UNIVERSO&quot;)
+    reg(&quot;n_disp_min&quot;, min(n_disp), &quot;int&quot;, &quot;Titoli disponibili nel primo anno (con storia completa)&quot;, &quot;dati/&quot;)
+    reg(&quot;n_disp_max&quot;, max(n_disp), &quot;int&quot;, &quot;Titoli disponibili nell&#x27;ultimo anno&quot;, &quot;dati/&quot;)
+    reg(&quot;h4_min&quot;, config.H4_MIN, &quot;pct0&quot;, &quot;Ipotesi 4: quota minima di anni con i Dogs davanti&quot;, &quot;config.py&quot;)
+    reg(&quot;h4_max&quot;, config.H4_MAX, &quot;pct0&quot;, &quot;Ipotesi 4: quota massima di anni con i Dogs davanti&quot;, &quot;config.py&quot;)
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Scimmie simulate&quot;, &quot;config.py, N_SCIMMIE&quot;)
+    reg(&quot;n_boot&quot;, config.N_BOOTSTRAP, &quot;int&quot;, &quot;Ricampionamenti bootstrap&quot;, &quot;config.py, N_BOOTSTRAP&quot;)
+    reg(&quot;blocco&quot;, config.BLOCCO_BOOTSTRAP, &quot;int&quot;, &quot;Giorni per blocco del bootstrap&quot;, &quot;config.py, BLOCCO_BOOTSTRAP&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello degli intervalli di confidenza&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia&quot;, 0.05, &quot;pct0&quot;, &quot;Livello di significatività dei test&quot;, &quot;convenzione&quot;)
+    reg(&quot;rend_div_dogs&quot;, float(np.mean(yd_dogs)), &quot;pct1&quot;, &quot;Rendimento da dividendo medio dei Dogs al momento dell&#x27;acquisto&quot;, &quot;scelte.csv&quot;)
+    reg(&quot;rend_div_uni&quot;, float(np.mean(yd_uni)), &quot;pct1&quot;, &quot;Rendimento da dividendo medio dell&#x27;universo al momento dell&#x27;acquisto&quot;, &quot;scelte.csv&quot;)
+    reg(&quot;ricambio&quot;, float(np.mean(ricambi)), &quot;pct0&quot;, &quot;Quota media di titoli dei Dogs sostituita da un anno all&#x27;altro&quot;, &quot;scelte.csv&quot;)
+
+    stat = {}
+    for k in R:
+        r = R[k]
+        e = m.equity(r)
+        stat[k] = dict(cagr=m.cagr(r, GA), vol=m.vol(r, GA), sharpe=m.sharpe(r, GA), dd=m.max_dd(r), finale=config.CAPITALE * float(e[-1]), tot=float(e[-1] - 1))
+        reg(f&quot;{k}_cagr&quot;, stat[k][&quot;cagr&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo composto ({k}, dividendi reinvestiti)&quot;, &quot;motore.cagr&quot;)
+        reg(f&quot;{k}_vol&quot;, stat[k][&quot;vol&quot;], &quot;pct1&quot;, f&quot;Volatilità annua ({k})&quot;, &quot;motore.vol&quot;)
+        reg(f&quot;{k}_sharpe&quot;, stat[k][&quot;sharpe&quot;], &quot;num2&quot;, f&quot;Rapporto di Sharpe ({k}, tasso privo di rischio zero)&quot;, &quot;motore.sharpe&quot;)
+        reg(f&quot;{k}_dd&quot;, -stat[k][&quot;dd&quot;], &quot;pct0&quot;, f&quot;Perdita massima dal picco ({k})&quot;, &quot;motore.max_dd&quot;)
+        reg(f&quot;{k}_finale&quot;, stat[k][&quot;finale&quot;], &quot;int&quot;, f&quot;Valore finale del capitale iniziale ({k})&quot;, &quot;motore.equity&quot;)
+    reg(&quot;diff_cagr_uni&quot;, stat[&quot;d10&quot;][&quot;cagr&quot;] - stat[&quot;uni&quot;][&quot;cagr&quot;], &quot;pp1&quot;, &quot;Rendimento annuo composto dei Dogs meno quello dell&#x27;universo, in punti&quot;, &quot;motore.cagr&quot;)
+    reg(&quot;diff_cagr_spy&quot;, stat[&quot;d10&quot;][&quot;cagr&quot;] - stat[&quot;spy&quot;][&quot;cagr&quot;], &quot;pp1&quot;, &quot;Rendimento annuo composto dei Dogs meno quello dello SPY, in punti&quot;, &quot;motore.cagr&quot;)
+    reg(&quot;diff_dd_uni&quot;, stat[&quot;d10&quot;][&quot;dd&quot;] - stat[&quot;uni&quot;][&quot;dd&quot;], &quot;pp1&quot;, &quot;Perdita massima dei Dogs meno quella dell&#x27;universo (positivo = Dogs meno profonda), in punti&quot;, &quot;motore.max_dd&quot;)
+    reg(&quot;diff_vol_uni&quot;, stat[&quot;d10&quot;][&quot;vol&quot;] - stat[&quot;uni&quot;][&quot;vol&quot;], &quot;pp1&quot;, &quot;Volatilità dei Dogs meno quella dell&#x27;universo, in punti&quot;, &quot;motore.vol&quot;)
+    reg(&quot;corr_uni&quot;, float(np.corrcoef(R[&quot;d10&quot;], R[&quot;uni&quot;])[0, 1]), &quot;num2&quot;, &quot;Correlazione dei rendimenti giornalieri tra Dogs e universo&quot;, &quot;numpy.corrcoef&quot;)
+
+    # --- Anno per anno ------------------------------------------------------------------------------------------
+    batte_uni = comp[&quot;d10&quot;] &gt; comp[&quot;uni&quot;]
+    batte_spy = comp[&quot;d10&quot;] &gt; comp[&quot;spy&quot;]
+    ecc = (comp[&quot;d10&quot;] - comp[&quot;uni&quot;]).to_numpy()
+    reg(&quot;quota_batte_uni&quot;, float(batte_uni.mean()), &quot;pct0&quot;, &quot;Quota di anni interi in cui i Dogs rendono più dell&#x27;universo&quot;, &quot;annuali.csv&quot;)
+    reg(&quot;n_batte_uni&quot;, int(batte_uni.sum()), &quot;int&quot;, &quot;Anni interi in cui i Dogs rendono più dell&#x27;universo&quot;, &quot;annuali.csv&quot;)
+    reg(&quot;quota_batte_spy&quot;, float(batte_spy.mean()), &quot;pct0&quot;, &quot;Quota di anni interi in cui i Dogs rendono più dello SPY&quot;, &quot;annuali.csv&quot;)
+    reg(&quot;n_batte_spy&quot;, int(batte_spy.sum()), &quot;int&quot;, &quot;Anni interi in cui i Dogs rendono più dello SPY&quot;, &quot;annuali.csv&quot;)
+    ib, iw = int(np.argmax(ecc)), int(np.argmin(ecc))
+    reg(&quot;anno_meglio&quot;, int(comp[&quot;anno&quot;].iloc[ib]), &quot;annonum&quot;, &quot;Anno intero con il miglior eccesso dei Dogs sull&#x27;universo&quot;, &quot;annuali.csv&quot;)
+    reg(&quot;ecc_meglio&quot;, float(ecc[ib]), &quot;pp1&quot;, &quot;Eccesso di rendimento dei Dogs sull&#x27;universo nel miglior anno, in punti&quot;, &quot;annuali.csv&quot;)
+    reg(&quot;anno_peggio&quot;, int(comp[&quot;anno&quot;].iloc[iw]), &quot;annonum&quot;, &quot;Anno intero con il peggior eccesso dei Dogs sull&#x27;universo&quot;, &quot;annuali.csv&quot;)
+    reg(&quot;ecc_peggio&quot;, float(ecc[iw]), &quot;pp1&quot;, &quot;Eccesso di rendimento dei Dogs sull&#x27;universo nel peggior anno, in punti&quot;, &quot;annuali.csv&quot;)
+    reg(&quot;ecc_medio&quot;, float(ecc.mean()), &quot;pp1&quot;, &quot;Eccesso medio annuo dei Dogs sull&#x27;universo (anni interi), in punti&quot;, &quot;annuali.csv&quot;)
+    # due metà del periodo
+    meta = comp[&quot;anno&quot;].iloc[len(comp) // 2]
+    for nome, sub in ((&quot;a&quot;, comp[comp[&quot;anno&quot;] &lt; meta]), (&quot;b&quot;, comp[comp[&quot;anno&quot;] &gt;= meta])):
+        reg(f&quot;meta_{nome}_diff&quot;, float(np.prod(1 + sub[&quot;d10&quot;]) ** (1 / len(sub)) - np.prod(1 + sub[&quot;uni&quot;]) ** (1 / len(sub))), &quot;pp1&quot;,
+            f&quot;Rendimento annuo composto dei Dogs meno quello dell&#x27;universo nella metà {nome} degli anni interi, in punti&quot;, &quot;annuali.csv&quot;)
+        reg(f&quot;meta_{nome}_n&quot;, len(sub), &quot;int&quot;, f&quot;Anni nella metà {nome}&quot;, &quot;annuali.csv&quot;)
+    reg(&quot;meta_anno&quot;, int(meta), &quot;annonum&quot;, &quot;Primo anno della seconda metà&quot;, &quot;annuali.csv&quot;)
+
+    # --- Bootstrap della differenza di Sharpe -----------------------------------------------------------------------
+    boot = m.bootstrap_diff_sharpe(R[&quot;d10&quot;], R[&quot;uni&quot;], config.N_BOOTSTRAP, config.BLOCCO_BOOTSTRAP, GA, rng)
+    lo, hi = np.quantile(boot, [(1 - config.LIVELLO_CONFIDENZA) / 2, 1 - (1 - config.LIVELLO_CONFIDENZA) / 2])
+    reg(&quot;diff_sharpe&quot;, stat[&quot;d10&quot;][&quot;sharpe&quot;] - stat[&quot;uni&quot;][&quot;sharpe&quot;], &quot;num2&quot;, &quot;Sharpe dei Dogs meno Sharpe dell&#x27;universo&quot;, &quot;motore.sharpe&quot;)
+    reg(&quot;diff_sharpe_lo&quot;, float(lo), &quot;num2&quot;, &quot;Estremo inferiore dell&#x27;intervallo bootstrap a blocchi della differenza di Sharpe&quot;, &quot;bootstrap a blocchi&quot;)
+    reg(&quot;diff_sharpe_hi&quot;, float(hi), &quot;num2&quot;, &quot;Estremo superiore dell&#x27;intervallo bootstrap a blocchi della differenza di Sharpe&quot;, &quot;bootstrap a blocchi&quot;)
+    pd.DataFrame({&quot;diff_sharpe&quot;: boot}).to_csv(config.RISULTATI / &quot;bootstrap.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+
+    # --- Scimmie ---------------------------------------------------------------------------------------------------
+    fin = m.scimmie_annuali(rend_ann, disp, config.K_DOGS, config.N_SCIMMIE, rng)
+    pd.DataFrame({&quot;finale&quot;: fin}).to_csv(config.RISULTATI / &quot;scimmie.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    cap = config.CAPITALE
+    fd, fu, fs = stat[&quot;d10&quot;][&quot;finale&quot;] / cap, stat[&quot;uni&quot;][&quot;finale&quot;] / cap, stat[&quot;spy&quot;][&quot;finale&quot;] / cap
+    reg(&quot;sc_mediana&quot;, cap * float(np.median(fin)), &quot;int&quot;, &quot;Valore finale mediano delle scimmie (dieci titoli a caso ogni anno)&quot;, &quot;scimmie.csv&quot;)
+    reg(&quot;sc_p5&quot;, cap * float(np.percentile(fin, 5)), &quot;int&quot;, &quot;Quinto percentile del valore finale delle scimmie&quot;, &quot;scimmie.csv&quot;)
+    reg(&quot;sc_p95&quot;, cap * float(np.percentile(fin, 95)), &quot;int&quot;, &quot;Novantacinquesimo percentile del valore finale delle scimmie&quot;, &quot;scimmie.csv&quot;)
+    reg(&quot;sc_sotto_dogs&quot;, float((fin &lt; fd).mean()), &quot;pct0&quot;, &quot;Quota di scimmie che chiudono sotto i Dogs&quot;, &quot;scimmie.csv&quot;)
+    reg(&quot;sc_batte_uni&quot;, float((fin &gt; fu).mean()), &quot;pct0&quot;, &quot;Quota di scimmie che chiudono sopra l&#x27;universo&quot;, &quot;scimmie.csv&quot;)
+    reg(&quot;sc_batte_spy&quot;, float((fin &gt; fs).mean()), &quot;pct0&quot;, &quot;Quota di scimmie che chiudono sopra lo SPY&quot;, &quot;scimmie.csv&quot;)
+
+    # --- File di supporto ---------------------------------------------------------------------------------------------
+    camp = np.arange(0, T, 5)
+    cum = {k: np.cumprod(1 + R[k]) for k in (&quot;d10&quot;, &quot;uni&quot;, &quot;spy&quot;)}
+    pd.DataFrame({&quot;data&quot;: date[camp].strftime(&quot;%Y-%m-%d&quot;), **{k: cum[k][camp] for k in cum}}).to_csv(config.RISULTATI / &quot;curve.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    A.to_csv(config.RISULTATI / &quot;annuali.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    pd.DataFrame(scelte).to_csv(config.RISULTATI / &quot;scelte.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+
+    # --- Verdetti sulle ipotesi -----------------------------------------------------------------------------------
+    h = [stat[&quot;d10&quot;][&quot;cagr&quot;] &lt; stat[&quot;uni&quot;][&quot;cagr&quot;],
+         stat[&quot;d10&quot;][&quot;dd&quot;] &gt; stat[&quot;uni&quot;][&quot;dd&quot;],
+         stat[&quot;d10&quot;][&quot;cagr&quot;] &lt; stat[&quot;spy&quot;][&quot;cagr&quot;],
+         config.H4_MIN &lt;= float(batte_uni.mean()) &lt;= config.H4_MAX,
+         float(np.percentile(fin, 5)) &lt;= fd &lt;= float(np.percentile(fin, 95)),
+         bool(lo &lt;= 0 &lt;= hi)]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(bool(v)), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(bool(v) for v in h)), &quot;int&quot;, &quot;Ipotesi confermate (su sei)&quot;, &quot;confronto con config.py&quot;)
+
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;pandas&quot;: pd.__version__,
+           &quot;numpy&quot;: np.__version__, &quot;ipotesi&quot;: config.IPOTESI, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_valore_dogs_universo_spy.png   valore di un dollaro per Dogs, universo e SPY (scala logaritmica)
+  fig2_eccesso_annuo.png              eccesso di rendimento dei Dogs sull&#x27;universo, anno per anno
+  fig3_scimmie.png                    valore finale delle scimmie contro Dogs, universo e SPY
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO, VERDE = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;, &quot;#2a7f3f&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    m = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    c = pd.read_csv(R / &quot;curve.csv&quot;, parse_dates=[&quot;data&quot;])
+    a = pd.read_csv(R / &quot;annuali.csv&quot;)
+    a = a[a[&quot;completo&quot;] == 1]
+    s = pd.read_csv(R / &quot;scimmie.csv&quot;)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(c[&quot;data&quot;], c[&quot;d10&quot;], color=ARANCIO, lw=2, label=&quot;Dogs (dieci titoli)&quot;)
+    ax.plot(c[&quot;data&quot;], c[&quot;uni&quot;], color=BLU, lw=2, label=&quot;Universo (trenta titoli, pesi uguali)&quot;)
+    ax.plot(c[&quot;data&quot;], c[&quot;spy&quot;], color=GRIGIO, lw=2, label=&quot;SPY&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_ylabel(&quot;Valore di 1 dollaro (scala logaritmica)&quot;)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_valore_dogs_universo_spy.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ecc = (a[&quot;d10&quot;] - a[&quot;uni&quot;]) * 100
+    ax.bar(a[&quot;anno&quot;], ecc, color=[VERDE if v &gt; 0 else ARANCIO for v in ecc])
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_ylabel(&quot;Dogs meno universo (punti percentuali)&quot;)
+    fig.savefig(config.FIGURE / &quot;fig2_eccesso_annuo.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    cap = m[&quot;capitale&quot;][&quot;valore&quot;]
+    ax.hist(s[&quot;finale&quot;] * cap, bins=50, color=GRIGIO, alpha=0.85)
+    ax.axvline(m[&quot;d10_finale&quot;][&quot;valore&quot;], color=ARANCIO, lw=2.5, label=&quot;Dogs&quot;)
+    ax.axvline(m[&quot;uni_finale&quot;][&quot;valore&quot;], color=BLU, lw=2.5, label=&quot;Universo&quot;)
+    ax.axvline(m[&quot;spy_finale&quot;][&quot;valore&quot;], color=&quot;#222&quot;, lw=2.5, ls=&quot;--&quot;, label=&quot;SPY&quot;)
+    ax.set_xlabel(f&quot;Valore finale di {cap:.0f} dollari con dieci titoli a caso ogni anno&quot;)
+    ax.set_ylabel(&quot;Scimmie&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig3_scimmie.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── motore.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 282 - &quot;Dogs of the Dow&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero dell&#x27;articolo si può
+ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+La strategia: l&#x27;ultimo giorno di Borsa di ogni anno si calcola il rendimento da dividendo (dividendi pagati nell&#x27;anno diviso il prezzo
+di chiusura) di ciascun titolo dell&#x27;universo e si comprano i dieci con il rendimento più alto, a pesi uguali, tenendoli per tutto
+l&#x27;anno successivo. Varianti: i cinque più alti, i dieci più bassi. Confronti: l&#x27;universo intero a pesi uguali, lo SPY, e &quot;scimmie&quot; che
+ogni anno estraggono a caso dieci titoli. Nessun costo e nessuna tassa (dichiarato).
+Nessun look-ahead: la scelta di fine anno usa solo dividendi e prezzi fino a quel giorno.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati -----------------------------------------------------------------------------------------------------------
+# Universo fissato PRIMA di guardare i dati: i trenta titoli dell&#x27;indice Dow Jones Industrial Average come li conosciamo a fine 2024.
+# Difetto dichiarato nei limiti: sono società ancora nell&#x27;indice oggi (survivorship bias); chi ne è uscito non c&#x27;è.
+UNIVERSO = (&quot;AAPL AMGN AMZN AXP BA CAT CRM CSCO CVX DIS GS HD HON IBM JNJ JPM KO MCD MMM MRK MSFT NKE NVDA PG SHW TRV UNH V VZ WMT&quot;).split()
+INDICE = &quot;SPY&quot;
+INIZIO_DOWNLOAD = &quot;2004-12-01&quot;
+PRIMO_ANNO_FORMAZIONE = 2005     # si sceglie a fine 2005 e si detiene il 2006
+NOMI_ESENTI = (&quot;Dow Jones&quot;, &quot;Dow&quot;, &quot;Dogs of the Dow&quot;, &quot;SPY&quot;, &quot;Dogs&quot;, &quot;Dow Jones Industrial Average&quot;)
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+FILE_ADJ, FILE_CLOSE, FILE_DIV = DATI / &quot;adj.csv&quot;, DATI / &quot;close.csv&quot;, DATI / &quot;div.csv&quot;
+DESCRIZIONE_DATI = &quot;chiusure giornaliere, chiusure corrette per dividendi e dividendi pagati dei titoli del Dow Jones e dello SPY&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+GIORNI_ANNO = 252
+CAPITALE = 500.0
+ANNI_MINIMI = 10
+
+# --- Strategia ------------------------------------------------------------------------------------------------------
+K_DOGS = 10          # i classici Dogs of the Dow
+K_PICCOLI = 5        # variante: i cinque più alti
+MIN_STORIA_GG = 200  # un titolo entra in un anno solo se aveva già prezzi per tutto l&#x27;anno di formazione
+H4_MIN, H4_MAX = 0.40, 0.60   # ipotesi 4: quota di anni in cui i Dogs battono l&#x27;universo
+
+# --- Test statistici ------------------------------------------------------------------------------------------------
+SEME = 20261030
+N_SCIMMIE = 5000
+N_BOOTSTRAP = 2000
+BLOCCO_BOOTSTRAP = 21
+LIVELLO_CONFIDENZA = 0.95
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati -------------------------------------------------------------------
+IPOTESI = (
+    &quot;1) Il rendimento annuo composto dei Dogs (dieci titoli) è inferiore a quello dell&#x27;universo dei trenta a pesi uguali: il rendimento da dividendo non è un fattore che paga. &quot;
+    &quot;2) La perdita massima dei Dogs è meno profonda di quella dell&#x27;universo: la fama di strategia difensiva regge. &quot;
+    &quot;3) I Dogs rendono meno dello SPY nel periodo comune. &quot;
+    &quot;4) I Dogs battono l&#x27;universo in una quota di anni compresa tra il 40% e il 60%: nessun vantaggio costante. &quot;
+    &quot;5) Il valore finale dei Dogs sta tra il quinto e il novantacinquesimo percentile delle scimmie che estraggono ogni anno dieci titoli a caso: la scelta per dividendo non si distingue dalla sorte. &quot;
+    &quot;6) La differenza di Sharpe tra Dogs e universo non si distingue dallo zero: l&#x27;intervallo di confidenza al 95% la contiene.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni di calcolo dell&#x27;articolo 282: metriche, bootstrap, Dogs of the Dow e scimmie annuali.
+
+Nessuna strategia di trading: sono confronti tra buy &amp; hold. Le funzioni sono pure, così verifica_motore.py
+le controlla su dati inventati con risultati calcolabili a mano.
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def equity(r) -&gt; np.ndarray:
+    return np.cumprod(1.0 + np.asarray(r, dtype=float))
+
+
+def cagr(r, ga: int) -&gt; float:
+    r = np.asarray(r, dtype=float)
+    return float(np.prod(1.0 + r) ** (ga / len(r)) - 1.0)
+
+
+def vol(r, ga: int) -&gt; float:
+    return float(np.std(np.asarray(r, dtype=float), ddof=1) * np.sqrt(ga))
+
+
+def sharpe(r, ga: int) -&gt; float:
+    r = np.asarray(r, dtype=float)
+    return float(np.mean(r) / np.std(r, ddof=1) * np.sqrt(ga))
+
+
+def max_dd(r) -&gt; float:
+    e = equity(r)
+    picco = np.maximum.accumulate(np.concatenate([[1.0], e]))[1:]
+    return float(np.min(e / picco - 1.0))
+
+
+def fine_mese(indice: pd.DatetimeIndex) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posizioni dell&#x27;ultima seduta di ogni mese (escluso l&#x27;ultimo mese se incompleto non è controllato: si usa quanto c&#x27;è).&quot;&quot;&quot;
+    s = pd.Series(np.arange(len(indice)), index=indice)
+    return s.groupby([indice.year, indice.month]).last().to_numpy()
+
+
+def rendimento_finestre(cum: np.ndarray, fini: np.ndarray, lung: int) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Rendimento totale delle ultime `lung` sedute alla fine di ogni mese utile. cum: (T, k). Restituisce (posizioni, matrice).&quot;&quot;&quot;
+    ok = fini[fini &gt;= lung]
+    base = np.concatenate([np.ones((1, cum.shape[1])), cum], axis=0)   # base[i] = valore prima della seduta i
+    return ok, cum[ok] / base[ok - lung + 1] - 1.0
+
+
+def quote_vincitrici(rend: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Quota di finestre in cui ciascuna colonna ha il rendimento più alto.&quot;&quot;&quot;
+    v = np.argmax(rend, axis=1)
+    return np.bincount(v, minlength=rend.shape[1]) / len(v)
+
+
+def persistenza(cum: np.ndarray, fini: np.ndarray, lung: int) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Per ogni mese t con `lung` sedute prima e dopo: area vincitrice nel passato (usa solo dati fino a t) e nel futuro.&quot;&quot;&quot;
+    base = np.concatenate([np.ones((1, cum.shape[1])), cum], axis=0)
+    passato, futuro = [], []
+    for e in fini:
+        if e - lung + 1 &lt; 0 or e + lung &gt;= len(cum):
+            continue
+        passato.append(int(np.argmax(cum[e] / base[e - lung + 1])))
+        futuro.append(int(np.argmax(cum[e + lung] / cum[e])))
+    return np.array(passato), np.array(futuro)
+
+
+def p_permutazione(passato: np.ndarray, futuro: np.ndarray, n: int, rng) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Quota di coincidenze osservata e p-value: frazione di permutazioni del futuro con almeno altrettante coincidenze.&quot;&quot;&quot;
+    oss = float(np.mean(passato == futuro))
+    sup = 0
+    for _ in range(n):
+        if np.mean(passato == rng.permutation(futuro)) &gt;= oss - 1e-12:
+            sup += 1
+    return oss, (sup + 1) / (n + 1)
+
+
+def volatilita_mobile(r: pd.Series, finestra: int, ga: int) -&gt; pd.Series:
+    return r.rolling(finestra).std(ddof=1) * np.sqrt(ga)
+
+
+def correlazione_mobile(a: pd.Series, b: pd.Series, finestra: int) -&gt; pd.Series:
+    return a.rolling(finestra).corr(b)
+
+
+def bootstrap_diff_sharpe(ra, rb, n: int, blocco: int, ga: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Differenza di Sharpe (a - b) ricampionando a blocchi le stesse date per entrambe le serie.&quot;&quot;&quot;
+    ra, rb = np.asarray(ra, dtype=float), np.asarray(rb, dtype=float)
+    T = len(ra)
+    nb = int(np.ceil(T / blocco))
+    out = np.empty(n)
+    for i in range(n):
+        inizi = rng.integers(0, T - blocco + 1, size=nb)
+        idx = (inizi[:, None] + np.arange(blocco)[None, :]).ravel()[:T]
+        out[i] = sharpe(ra[idx], ga) - sharpe(rb[idx], ga)
+    return out
+
+
+def rendimenti_mensili(r: np.ndarray, fini: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimenti composti per mese: r (T, k); i mesi sono i tratti che finiscono nelle posizioni `fini`.&quot;&quot;&quot;
+    e = np.vstack([np.ones((1, r.shape[1])), np.cumprod(1.0 + r, axis=0)])
+    estremi = np.concatenate([[0], fini + 1])
+    if estremi[-1] != len(r):            # coda: ultimo mese incompleto, si include
+        estremi = np.concatenate([estremi, [len(r)]])
+    return e[estremi[1:]] / e[estremi[:-1]] - 1.0
+
+
+def scimmie_valore_finale(mensili: np.ndarray, n: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Valore finale di 1 per n scimmie che scelgono a caso l&#x27;area (colonna) ogni mese.&quot;&quot;&quot;
+    M, k = mensili.shape
+    scelta = rng.integers(0, k, size=(n, M))
+    return np.prod(1.0 + mensili[np.arange(M)[None, :], scelta], axis=1)
+
+
+# --- Dogs of the Dow --------------------------------------------------------------------------------------------------
+def rendimento_da_dividendo(div_anno: np.ndarray, chiusura: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Dividendi pagati nell&#x27;anno diviso il prezzo di chiusura dell&#x27;ultimo giorno dell&#x27;anno.&quot;&quot;&quot;
+    return np.asarray(div_anno, dtype=float) / np.asarray(chiusura, dtype=float)
+
+
+def scegli_alti(rend_div: np.ndarray, disponibili: np.ndarray, k: int, bassi: bool = False) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posizioni dei k titoli disponibili con rendimento da dividendo più alto (o più basso). Parità: ordine di posizione.&quot;&quot;&quot;
+    pos = np.flatnonzero(disponibili)
+    ordine = np.argsort(rend_div[pos] if bassi else -rend_div[pos], kind=&quot;stable&quot;)
+    return pos[ordine[:k]]
+
+
+def rendimenti_giornalieri_pesi_uguali(prezzi: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;prezzi: (T+1, n) con la riga 0 = giorno di acquisto. Pesi uguali all&#x27;acquisto, poi buy &amp; hold: restituisce T rendimenti giornalieri.&quot;&quot;&quot;
+    valore = (prezzi / prezzi[0]).mean(axis=1)
+    return valore[1:] / valore[:-1] - 1.0
+
+
+def scimmie_annuali(rend_annui: np.ndarray, disponibili: np.ndarray, k: int, n: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;rend_annui (anni, titoli), disponibili (anni, titoli) booleana: valore finale di 1 per n scimmie che ogni anno estraggono k titoli a caso.&quot;&quot;&quot;
+    A = rend_annui.shape[0]
+    fin = np.ones(n)
+    for a in range(A):
+        pos = np.flatnonzero(disponibili[a])
+        casuali = rng.random((n, len(pos)))
+        scelti = np.argpartition(casuali, k - 1, axis=1)[:, :k]
+        fin *= 1.0 + rend_annui[a, pos][scelti].mean(axis=1)
+    return fin
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di motore.py su dati inventati, con risultati calcolabili a mano. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import motore as m
+
+rng = np.random.default_rng(1)
+
+
+def uguale(a, b, tol=1e-9, nome=&quot;&quot;):
+    assert abs(a - b) &lt; tol, f&quot;{nome}: {a} != {b}&quot;
+    print(f&quot;ok  {nome}&quot;)
+
+
+# 1. rendimento composto: +10% e -10% in due sedute
+r = np.array([0.10, -0.10])
+uguale(m.equity(r)[-1], 0.99, nome=&quot;equity&quot;)
+uguale(m.cagr(np.full(252, 0.0), 252), 0.0, nome=&quot;cagr nullo&quot;)
+uguale(m.cagr(np.full(252, 0.001), 252), 1.001 ** 252 - 1, nome=&quot;cagr costante&quot;)
+# 2. perdita massima: sale a 1,2 poi scende a 0,6 -&gt; -50%
+uguale(m.max_dd(np.array([0.2, -0.5])), -0.5, nome=&quot;perdita massima&quot;)
+# 3. volatilità e Sharpe di una serie alternata +1% / -1%
+alt = np.tile([0.01, -0.01], 126)
+uguale(m.vol(alt, 252), np.std(alt, ddof=1) * np.sqrt(252), nome=&quot;volatilità&quot;)
+uguale(m.sharpe(alt + 0.0, 252), 0.0, tol=1e-9, nome=&quot;Sharpe nullo&quot;)
+# 4. fine mese: tre mesi finti
+idx = pd.bdate_range(&quot;2020-01-01&quot;, periods=70)
+fini = m.fine_mese(idx)
+assert idx[fini[0]].month == 1 and idx[fini[0] + 1].month == 2, &quot;fine mese&quot;
+print(&quot;ok  fine mese&quot;)
+# 5. finestre: A cresce 1% al giorno, B ferma, C scende 1%: A vince sempre, rendimento a 10 sedute noto
+T = 600
+R = np.column_stack([np.full(T, 0.01), np.zeros(T), np.full(T, -0.01)])
+cum = np.cumprod(1.0 + R, axis=0)
+pos, rend = m.rendimento_finestre(cum, np.array([50, 100, 599]), 10)
+uguale(rend[0, 0], 1.01 ** 10 - 1, nome=&quot;rendimento finestra A&quot;)
+uguale(rend[0, 1], 0.0, nome=&quot;rendimento finestra B&quot;)
+uguale(rend[0, 2], 0.99 ** 10 - 1, nome=&quot;rendimento finestra C&quot;)
+q = m.quote_vincitrici(rend)
+assert q.tolist() == [1.0, 0.0, 0.0], &quot;quote vincitrici&quot;
+print(&quot;ok  quote vincitrici&quot;)
+# 6. persistenza: se A vince sempre, passato = futuro sempre
+fm = m.fine_mese(pd.bdate_range(&quot;2000-01-03&quot;, periods=T))
+pa, fu = m.persistenza(cum, fm, 60)
+assert len(pa) &gt; 5 and (pa == fu).all() and (pa == 0).all(), &quot;persistenza&quot;
+print(&quot;ok  persistenza&quot;)
+# 7. permutazione: su dati indipendenti il p-value è alto; su dati identici con due classi è basso
+a = rng.integers(0, 3, 300)
+b = rng.integers(0, 3, 300)
+_, p = m.p_permutazione(a, b, 500, rng)
+assert p &gt; 0.05, f&quot;permutazione su dati indipendenti: p={p}&quot;
+_, p2 = m.p_permutazione(a, a, 500, rng)
+assert p2 &lt; 0.01, &quot;permutazione su dati identici&quot;
+print(&quot;ok  permutazione&quot;)
+# 8. correlazione mobile: serie identiche -&gt; 1; opposte -&gt; -1
+x = pd.Series(rng.normal(size=300))
+uguale(m.correlazione_mobile(x, x, 50).dropna().min(), 1.0, tol=1e-9, nome=&quot;correlazione 1&quot;)
+uguale(m.correlazione_mobile(x, -x, 50).dropna().max(), -1.0, tol=1e-9, nome=&quot;correlazione -1&quot;)
+# 9. bootstrap: due serie identiche -&gt; differenza di Sharpe zero
+d = m.bootstrap_diff_sharpe(x.to_numpy() * 0.01, x.to_numpy() * 0.01, 50, 21, 252, rng)
+assert np.abs(d).max() &lt; 1e-9, &quot;bootstrap identico&quot;
+print(&quot;ok  bootstrap&quot;)
+# 10. mensili e scimmie: tre aree con rendimento mensile costante 1%, 0, -1% -&gt; la scimmia ha valore tra i tre estremi
+Rm = np.column_stack([np.full(T, 0.0005), np.zeros(T), np.full(T, -0.0005)])
+mens = m.rendimenti_mensili(Rm, fm)
+uguale(np.prod(1 + mens[:, 0]), np.prod(1 + Rm[:, 0]), tol=1e-9, nome=&quot;mesi ricompongono il totale&quot;)
+sc = m.scimmie_valore_finale(mens, 2000, rng)
+assert (sc &lt;= np.prod(1 + mens[:, 0]) + 1e-9).all() and (sc &gt;= np.prod(1 + mens[:, 2]) - 1e-9).all(), &quot;scimmie nei limiti&quot;
+print(&quot;ok  scimmie&quot;)
+# 11. rendimento da dividendo e scelta dei titoli: 4 titoli, il terzo non disponibile
+y = m.rendimento_da_dividendo(np.array([1.0, 4.0, 9.0, 2.0]), np.array([100.0, 100.0, 100.0, 100.0]))
+uguale(y[1], 0.04, nome=&quot;rendimento da dividendo&quot;)
+disp = np.array([True, True, False, True])
+assert m.scegli_alti(y, disp, 2).tolist() == [1, 3], &quot;scelta alti&quot;
+assert m.scegli_alti(y, disp, 2, bassi=True).tolist() == [0, 3], &quot;scelta bassi&quot;
+print(&quot;ok  scelta dei titoli&quot;)
+# 12. portafoglio a pesi uguali: due titoli, uno raddoppia e uno resta fermo -&gt; valore finale 1,5 e rendimenti coerenti
+Pz = np.array([[10.0, 20.0], [20.0, 20.0]])
+rz = m.rendimenti_giornalieri_pesi_uguali(Pz)
+uguale(float(rz[0]), 0.5, nome=&quot;pesi uguali un giorno&quot;)
+Pz2 = np.array([[10.0, 20.0], [20.0, 20.0], [20.0, 10.0]])
+uguale(float(np.prod(1 + m.rendimenti_giornalieri_pesi_uguali(Pz2)) - 1), ((20 / 10 + 10 / 20) / 2) - 1, nome=&quot;buy &amp; hold interno all&#x27;anno&quot;)
+# 13. scimmie annuali: tutti i titoli rendono +10% -&gt; ogni scimmia vale 1,1 elevato agli anni
+ra = np.full((3, 6), 0.10)
+fz = m.scimmie_annuali(ra, np.ones((3, 6), dtype=bool), 2, 100, rng)
+assert np.allclose(fz, 1.1 ** 3), &quot;scimmie annuali&quot;
+# un titolo non disponibile non viene mai estratto
+ra2 = np.zeros((2, 4)); ra2[:, 3] = 5.0
+dz = np.array([[True, True, True, False]] * 2)
+assert np.allclose(m.scimmie_annuali(ra2, dz, 2, 50, rng), 1.0), &quot;titolo non disponibile estratto&quot;
+print(&quot;ok  scimmie annuali&quot;)
+print(&quot;Tutti i controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
