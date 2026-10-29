@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-36 pubblicati, 18 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+36 pubblicati, 19 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -54,6 +54,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [VIX sopra 30: comprare la paura?](https://tickerfight.github.io/tickerfight/articoli/vix-sopra-30-comprare-la-paura/) | In revisione | — | — |
 | [Volatilità realizzata contro implicita: quanto sbaglia il VIX?](https://tickerfight.github.io/tickerfight/articoli/volatilita-realizzata-contro-implicita-quanto-sbaglia-il-vix/) | In revisione | — | — |
 | [Dogs of the Dow: comprare i titoli che pagano di più](https://tickerfight.github.io/tickerfight/articoli/dogs-of-the-dow-comprare-i-titoli-che-pagano-di-piu/) | In revisione | — | — |
+| [ARIMA sui rendimenti: il modello classico prevede il mercato?](https://tickerfight.github.io/tickerfight/articoli/arima-sui-rendimenti-il-modello-classico-prevede-il-mercato/) | In revisione | — | — |
 | [Perdere i 10 giorni migliori](https://tickerfight.github.io/tickerfight/articoli/perdere-i-10-giorni-migliori/) | In revisione | — | — |
 | [Tech contro il resto: la tecnologia batte tutti gli altri settori?](https://tickerfight.github.io/tickerfight/articoli/tech-contro-il-resto-la-tecnologia-batte-tutti-gli-altri-settori/) | In revisione | — | — |
 | [PAC dal 2000: il decennio perso](https://tickerfight.github.io/tickerfight/articoli/pac-dal-2000-il-decennio-perso/) | In revisione | — | — |
