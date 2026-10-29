@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-36 pubblicati, 20 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+36 pubblicati, 21 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -44,6 +44,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [50 titoli dell'S&P 500, medie mobili contro buy & hold: la classifica](https://tickerfight.github.io/tickerfight/articoli/50-titoli-dell-sp-500-medie-mobili-contro-buy-hold-la-classifica/) | Pubblicato | 21/10/2026 | [leggi](https://ticker-fight.blogspot.com/2026/10/50-titoli-dells-500-medie-mobili-contro.html) |
 | [Prezzi adjusted e non adjusted: l'errore gonfia o sgonfia i risultati?](https://tickerfight.github.io/tickerfight/articoli/prezzi-adjusted-e-non-adjusted-l-errore-gonfia-o-sgonfia-i-risultati/) | In revisione | — | — |
 | [La data di partenza cambia il verdetto](https://tickerfight.github.io/tickerfight/articoli/la-data-di-partenza-cambia-il-verdetto/) | In revisione | — | — |
+| [Il p-value in finanza: quando provare tante regole inganna](https://tickerfight.github.io/tickerfight/articoli/il-p-value-in-finanza-quando-provare-tante-regole-inganna/) | In revisione | — | — |
 | [Quanti anni di dati servono per fidarsi?](https://tickerfight.github.io/tickerfight/articoli/quanti-anni-di-dati-servono-per-fidarsi/) | In revisione | — | — |
 | [L'intervallo di confidenza del CAGR: quanto è incerto il rendimento di una storia](https://tickerfight.github.io/tickerfight/articoli/l-intervallo-di-confidenza-del-cagr-quanto-e-incerto-il-rendimento-di-una-storia/) | In revisione | — | — |
 | [Tasse sulle plusvalenze: strategia attiva contro buy & hold](https://tickerfight.github.io/tickerfight/articoli/tasse-sulle-plusvalenze-strategia-attiva-contro-buy-hold/) | In revisione | — | — |
