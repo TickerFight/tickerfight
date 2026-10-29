@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tasse sulle plusvalenze: strategia attiva contro buy &amp; hold · il codice · TickerFight</title>
+<meta name="description" content="Tasse sulle plusvalenze: strategia attiva contro buy &amp; hold">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Tasse sulle plusvalenze: strategia attiva contro buy &amp; hold</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="tasse-sulle-plusvalenze-strategia-attiva-contro-buy-hold.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>tasse-sulle-plusvalenze-strategia-attiva-contro-buy-hold/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd tasse-sulle-plusvalenze-strategia-attiva-contro-buy-hold
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Tasse sulle plusvalenze: filtro a 200 sedute contro buy &amp; hold, sull&#x27;S&amp;P 500.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json        ogni numero dell&#x27;articolo, con descrizione e origine
+  rendimenti.csv       rendimento annuo composto delle varianti (lordo, netto, con costi, senza compensazione)
+  aliquote.csv         vantaggio netto del filtro sul buy &amp; hold per aliquota da 0% a 40%
+  imposte_anni.csv     imposta pagata dal filtro in ogni anno solare, in percentuale del capitale a inizio anno
+&quot;&quot;&quot;
+import json
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as f
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    c = df[&quot;Close&quot;].astype(float)
+    if (c &lt;= 0).any() or c.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    cv_tutti = c.to_numpy()
+    sma_tutti = f.media_mobile(cv_tutti, config.SMA_GIORNI)
+    i0 = config.SMA_GIORNI - 1
+    cv, sma, idx = cv_tutti[i0:], sma_tutti[i0:], c.index[i0:]
+    lr = np.log(cv[1:] / cv[:-1])
+    n = len(lr)
+    anni = (idx[-1] - idx[0]).days / 365.25
+    yrs = idx[:n].year.to_numpy()
+    pos_f = f.posizione_semplice(cv, sma)[:n]
+    pos_bh = np.ones(n, dtype=int)
+
+    def sim(pos, aliq, costo=0.0, cred=config.ANNI_CREDITO):
+        return f.simula_fisco(lr, pos, yrs, aliq, costo, cred)
+
+    bh_l, bh_n = sim(pos_bh, 0.0), sim(pos_bh, config.ALIQUOTA)
+    f_l, f_n = sim(pos_f, 0.0), sim(pos_f, config.ALIQUOTA)
+    f_nc = sim(pos_f, config.ALIQUOTA, config.COSTO)
+    f_nz = sim(pos_f, config.ALIQUOTA, 0.0, -1)
+    cg = lambda r: f.cagr_da_capitale(r[&quot;capitale&quot;], anni)
+
+    reg(&quot;dati_prima_data&quot;, str(idx[0].date()), &quot;data_lunga&quot;, &quot;Prima chiusura con la media a 200 sedute calcolabile&quot;, &quot;dati/&quot;)
+    reg(&quot;dati_ultima_data&quot;, str(idx[-1].date()), &quot;data_lunga&quot;, &quot;Ultima chiusura dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;dati_anni&quot;, anni, &quot;num1&quot;, &quot;Anni di storia analizzati&quot;, &quot;dati/&quot;)
+    reg(&quot;sma_giorni&quot;, config.SMA_GIORNI, &quot;int&quot;, &quot;Sedute della media mobile&quot;, &quot;config.py&quot;)
+    reg(&quot;aliquota&quot;, config.ALIQUOTA, &quot;pct0&quot;, &quot;Aliquota sulle plusvalenze&quot;, &quot;config.py&quot;)
+    reg(&quot;costo&quot;, config.COSTO, &quot;pct2&quot;, &quot;Costo di ogni cambio di posizione (variante con costi)&quot;, &quot;config.py&quot;)
+    reg(&quot;anni_credito&quot;, config.ANNI_CREDITO, &quot;int&quot;, &quot;Anni solari successivi in cui valgono le minusvalenze&quot;, &quot;config.py&quot;)
+    reg(&quot;quota_top&quot;, config.QUOTA_ANNI_TOP, &quot;pct0&quot;, &quot;Quota di anni con più imposta, ipotesi 5&quot;, &quot;config.py&quot;)
+
+    cagr = dict(bh_lordo=cg(bh_l), bh_netto=cg(bh_n), filtro_lordo=cg(f_l), filtro_netto=cg(f_n), filtro_netto_costi=cg(f_nc), filtro_netto_senza_compensazione=cg(f_nz))
+    for k, v in cagr.items():
+        reg(f&quot;cagr_{k}&quot;, v, &quot;pct2&quot;, f&quot;Rendimento annuo composto: {k.replace(&#x27;_&#x27;, &#x27; &#x27;)}&quot;)
+    pd.DataFrame([dict(variante=k, cagr=v) for k, v in cagr.items()]).to_csv(config.RISULTATI / &quot;rendimenti.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    reg(&quot;cap_bh_l&quot;, bh_l[&quot;capitale&quot;], &quot;int&quot;, &quot;Capitale finale del buy &amp; hold lordo (partendo da 1)&quot;)
+    reg(&quot;cap_bh_n&quot;, bh_n[&quot;capitale&quot;], &quot;int&quot;, &quot;Capitale finale del buy &amp; hold netto&quot;)
+    reg(&quot;cap_f_l&quot;, f_l[&quot;capitale&quot;], &quot;int&quot;, &quot;Capitale finale del filtro lordo&quot;)
+    reg(&quot;cap_f_n&quot;, f_n[&quot;capitale&quot;], &quot;int&quot;, &quot;Capitale finale del filtro netto&quot;)
+    diff_l = cagr[&quot;filtro_lordo&quot;] - cagr[&quot;bh_lordo&quot;]
+    diff_n = cagr[&quot;filtro_netto&quot;] - cagr[&quot;bh_netto&quot;]
+    reg(&quot;diff_l&quot;, diff_l, &quot;pp2&quot;, &quot;Filtro meno buy &amp; hold, lordo, punti all&#x27;anno&quot;)
+    reg(&quot;diff_n&quot;, diff_n, &quot;pp2&quot;, &quot;Filtro meno buy &amp; hold, dopo le imposte, punti all&#x27;anno (negativo = filtro peggio)&quot;)
+    reg(&quot;diff_n_assoluta&quot;, abs(diff_n), &quot;pp2&quot;, &quot;Valore assoluto della differenza netta, punti all&#x27;anno&quot;)
+    reg(&quot;diff_nc&quot;, cagr[&quot;filtro_netto_costi&quot;] - cagr[&quot;bh_netto&quot;], &quot;pp2&quot;, &quot;Filtro con imposte e costi meno buy &amp; hold netto, punti all&#x27;anno&quot;)
+    reg(&quot;diff_nc_assoluta&quot;, abs(cagr[&quot;filtro_netto_costi&quot;] - cagr[&quot;bh_netto&quot;]), &quot;pp2&quot;, &quot;Valore assoluto della differenza con imposte e costi&quot;)
+    riduzione = 1.0 - diff_n / diff_l if diff_l &gt; 0 else 0.0   # se il filtro non ha vantaggio lordo la riduzione non è definita: 0
+    reg(&quot;riduzione_vantaggio&quot;, riduzione, &quot;pct0&quot;, &quot;Quota del vantaggio lordo del filtro tolta dalle imposte (oltre il 100% se il vantaggio diventa uno svantaggio)&quot;)
+    reg(&quot;imposta_bh_punti&quot;, cagr[&quot;bh_lordo&quot;] - cagr[&quot;bh_netto&quot;], &quot;pp2&quot;, &quot;Punti all&#x27;anno tolti dall&#x27;imposta al buy &amp; hold&quot;)
+    reg(&quot;imposta_f_punti&quot;, cagr[&quot;filtro_lordo&quot;] - cagr[&quot;filtro_netto&quot;], &quot;pp2&quot;, &quot;Punti all&#x27;anno tolti dall&#x27;imposta al filtro&quot;)
+    reg(&quot;compensazione_punti&quot;, cagr[&quot;filtro_netto&quot;] - cagr[&quot;filtro_netto_senza_compensazione&quot;], &quot;pp2&quot;, &quot;Punti all&#x27;anno recuperati grazie alla compensazione delle minusvalenze&quot;)
+    q_bh = 1.0 - (bh_n[&quot;capitale&quot;] - 1.0) / (bh_l[&quot;capitale&quot;] - 1.0)
+    q_f = 1.0 - (f_n[&quot;capitale&quot;] - 1.0) / (f_l[&quot;capitale&quot;] - 1.0)
+    reg(&quot;quota_bh&quot;, q_bh, &quot;pct0&quot;, &quot;Quota del guadagno finale lordo che se ne va in imposte, buy &amp; hold&quot;)
+    reg(&quot;quota_f&quot;, q_f, &quot;pct0&quot;, &quot;Quota del guadagno finale lordo che se ne va in imposte, filtro&quot;)
+
+    # realizzi
+    reg(&quot;n_realizzi&quot;, len(f_n[&quot;realizzi&quot;]), &quot;int&quot;, &quot;Plusvalenze o minusvalenze realizzate dal filtro (uscite più la liquidazione finale)&quot;)
+    reg(&quot;n_guadagni&quot;, int((np.array(f_n[&quot;realizzi&quot;]) &gt; 0).sum()), &quot;int&quot;, &quot;Realizzi in plusvalenza&quot;)
+    reg(&quot;n_perdite&quot;, int((np.array(f_n[&quot;realizzi&quot;]) &lt; 0).sum()), &quot;int&quot;, &quot;Realizzi in minusvalenza&quot;)
+    reg(&quot;quota_perdite&quot;, float((np.array(f_n[&quot;realizzi&quot;]) &lt; 0).mean()), &quot;pct0&quot;, &quot;Quota di realizzi in minusvalenza&quot;)
+
+    # imposte per anno
+    anni_lista = sorted(set(int(y) for y in yrs))
+    righe = []
+    for a in anni_lista:
+        t = f_n[&quot;imposte&quot;].get(a, 0.0)
+        righe.append(dict(anno=a, imposta=t, capitale_inizio=f_n[&quot;capitale_anno&quot;][a], imposta_pct_capitale=t / f_n[&quot;capitale_anno&quot;][a]))
+    I = pd.DataFrame(righe)
+    I.to_csv(config.RISULTATI / &quot;imposte_anni.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    reg(&quot;anni_tot&quot;, len(I), &quot;int&quot;, &quot;Anni solari coperti&quot;)
+    con = int((I[&quot;imposta&quot;] &gt; 0).sum())
+    reg(&quot;anni_con_imposta&quot;, con, &quot;int&quot;, &quot;Anni in cui il filtro paga imposta&quot;)
+    reg(&quot;quota_anni_imposta&quot;, con / len(I), &quot;pct0&quot;, &quot;Quota di anni in cui il filtro paga imposta&quot;)
+    k = int(np.ceil(config.QUOTA_ANNI_TOP * len(I)))
+    ordinate = np.sort(I[&quot;imposta_pct_capitale&quot;].to_numpy())[::-1]
+    reg(&quot;anni_top&quot;, k, &quot;int&quot;, &quot;Numero di anni nella quota più pesante&quot;)
+    reg(&quot;quota_top_imposte&quot;, float(ordinate[:k].sum() / ordinate.sum()), &quot;pct0&quot;, &quot;Quota delle imposte totali (in percentuale del capitale a inizio anno) pagata dagli anni più pesanti&quot;)
+    reg(&quot;imposta_max&quot;, float(I[&quot;imposta_pct_capitale&quot;].max()), &quot;pct1&quot;, &quot;Imposta massima in un anno, in percentuale del capitale a inizio anno&quot;)
+    reg(&quot;anno_max&quot;, int(I.loc[I[&quot;imposta_pct_capitale&quot;].idxmax(), &quot;anno&quot;]), &quot;annonum&quot;, &quot;Anno con l&#x27;imposta più pesante&quot;)
+
+    # aliquote
+    righe_a, tab = [], []
+    def diff_a(a):
+        return cg(sim(pos_f, a)) - cg(sim(pos_bh, a))
+    for a in config.ALIQUOTE:
+        key = f&quot;a{int(round(a * 1000))}&quot;
+        bh_a, f_a = cg(sim(pos_bh, a)), cg(sim(pos_f, a))
+        reg(f&quot;{key}_aliq&quot;, a, &quot;pct1&quot;, f&quot;Aliquota della riga {key}&quot;, &quot;config.py&quot;)
+        reg(f&quot;{key}_bh&quot;, bh_a, &quot;pct2&quot;, f&quot;Rendimento annuo composto del buy &amp; hold con aliquota {a}&quot;)
+        reg(f&quot;{key}_f&quot;, f_a, &quot;pct2&quot;, f&quot;Rendimento annuo composto del filtro con aliquota {a}&quot;)
+        reg(f&quot;{key}_d&quot;, f_a - bh_a, &quot;pp2&quot;, f&quot;Filtro meno buy &amp; hold con aliquota {a}, punti all&#x27;anno&quot;)
+    for a in np.arange(0.0, 0.4001, 0.02):
+        righe_a.append(dict(aliquota=a, differenza=diff_a(a)))
+    pd.DataFrame(righe_a).to_csv(config.RISULTATI / &quot;aliquote.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    lo, hi = 0.0, 0.6
+    if diff_a(hi) &gt; 0:
+        pareggio = hi
+    elif diff_a(lo) &lt;= 0:
+        pareggio = lo
+    else:
+        for _ in range(30):
+            mid = (lo + hi) / 2
+            lo, hi = (mid, hi) if diff_a(mid) &gt; 0 else (lo, mid)
+        pareggio = (lo + hi) / 2
+    reg(&quot;aliquota_pareggio&quot;, pareggio, &quot;pct1&quot;, &quot;Aliquota per cui il filtro rende come il buy &amp; hold dopo le imposte (ricerca per bisezione)&quot;)
+
+    reg(&quot;h1_riduzione&quot;, config.H1_RIDUZIONE, &quot;pct0&quot;, &quot;Ipotesi 1: soglia&quot;, &quot;config.py&quot;)
+    reg(&quot;h4_quota&quot;, config.H4_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 4: soglia&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_quota&quot;, config.H5_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 5: soglia&quot;, &quot;config.py&quot;)
+    reg(&quot;h6_aliquota&quot;, config.H6_ALIQUOTA, &quot;pct0&quot;, &quot;Ipotesi 6: soglia&quot;, &quot;config.py&quot;)
+    h = [riduzione &gt;= config.H1_RIDUZIONE,
+         cagr[&quot;filtro_netto&quot;] &lt; cagr[&quot;bh_netto&quot;],
+         q_f &gt; q_bh,
+         con / len(I) &gt;= config.H4_QUOTA,
+         RIS[&quot;quota_top_imposte&quot;][&quot;valore&quot;] &gt;= config.H5_QUOTA,
+         pareggio &lt; config.H6_ALIQUOTA]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(v), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(h)), &quot;int&quot;, &quot;Ipotesi confermate (su sei)&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;run_utc&quot;, datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;testo&quot;, &quot;Data di esecuzione dell&#x27;analisi&quot;)
+    json.dump({&quot;valori&quot;: RIS}, open(config.RISULTATI / &quot;metriche.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;), indent=1, ensure_ascii=False)
+    print(f&quot;Scritti {len(RIS)} numeri in metriche.json; esiti {[int(x) for x in h]}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_rendimenti.png   rendimento annuo composto: buy &amp; hold e filtro, lordo e netto, e filtro con costi
+  fig2_aliquote.png     vantaggio netto del filtro sul buy &amp; hold al variare dell&#x27;aliquota, con l&#x27;aliquota di pareggio
+  fig3_imposte_anni.png imposta pagata dal filtro in ogni anno, in percentuale del capitale a inizio anno
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO, VERDE = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;, &quot;#2a7f4f&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+
+    Rn = pd.read_csv(R / &quot;rendimenti.csv&quot;).set_index(&quot;variante&quot;)[&quot;cagr&quot;] * 100
+    ordine = [&quot;bh_lordo&quot;, &quot;bh_netto&quot;, &quot;filtro_lordo&quot;, &quot;filtro_netto&quot;, &quot;filtro_netto_costi&quot;]
+    etich = [&quot;Buy &amp; hold\nlordo&quot;, &quot;Buy &amp; hold\nnetto&quot;, &quot;Filtro\nlordo&quot;, &quot;Filtro\nnetto&quot;, &quot;Filtro netto\ncon costi&quot;]
+    colori = [GRIGIO, GRIGIO, BLU, BLU, ARANCIO]
+    fig, ax = plt.subplots(figsize=(10, 5))
+    vals = [Rn[k] for k in ordine]
+    ax.bar(np.arange(5), vals, color=colori, alpha=0.9)
+    for i, v in enumerate(vals):
+        ax.text(i, v + 0.05, f&quot;{v:.2f}&quot;.replace(&quot;.&quot;, &quot;,&quot;) + &quot;%&quot;, ha=&quot;center&quot;, fontsize=11)
+    ax.set_xticks(np.arange(5))
+    ax.set_xticklabels(etich, fontsize=10)
+    ax.set_ylabel(&quot;Rendimento annuo composto (%)&quot;)
+    ax.set_ylim(0, max(vals) * 1.15)
+    fig.savefig(config.FIGURE / &quot;fig1_rendimenti.png&quot;)
+    plt.close(fig)
+
+    A = pd.read_csv(R / &quot;aliquote.csv&quot;)
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(A[&quot;aliquota&quot;] * 100, A[&quot;differenza&quot;] * 100, color=BLU, lw=2.4)
+    ax.axhline(0, color=&quot;#333&quot;, lw=1)
+    ax.axvline(V[&quot;aliquota_pareggio&quot;][&quot;valore&quot;] * 100, color=ARANCIO, ls=&quot;--&quot;, lw=1.4, label=&quot;Aliquota di pareggio&quot;)
+    ax.axvline(config.ALIQUOTA * 100, color=GRIGIO, ls=&quot;:&quot;, lw=1.4, label=&quot;Aliquota del 26%&quot;)
+    ax.set_xlabel(&quot;Aliquota sulle plusvalenze (%)&quot;)
+    ax.set_ylabel(&quot;Filtro meno buy &amp; hold, dopo le imposte (punti all&#x27;anno)&quot;)
+    ax.legend(loc=&quot;upper right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig2_aliquote.png&quot;)
+    plt.close(fig)
+
+    I = pd.read_csv(R / &quot;imposte_anni.csv&quot;)
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(I[&quot;anno&quot;], I[&quot;imposta_pct_capitale&quot;] * 100, color=ARANCIO, width=0.8)
+    ax.set_xlabel(&quot;Anno solare&quot;)
+    ax.set_ylabel(&quot;Imposta pagata dal filtro (% del capitale a inizio anno)&quot;)
+    fig.savefig(config.FIGURE / &quot;fig3_imposte_anni.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 108 - &quot;Tasse sulle plusvalenze: strategia attiva contro buy &amp; hold&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Si confrontano, sull&#x27;S&amp;P 500 (indice di prezzo, senza dividendi) e con l&#x27;imposta italiana sulle plusvalenze, un buy &amp; hold, che paga l&#x27;imposta una sola volta
+alla fine, e il filtro a 200 sedute (in mercato sopra la media, in liquidità senza interessi sotto), che realizza una plusvalenza o una minusvalenza a ogni
+uscita e paga l&#x27;imposta subito, riducendo il capitale che continua a lavorare. Le minusvalenze realizzate si possono portare in compensazione di plusvalenze
+successive fino al quarto anno solare dopo quello della perdita (regola italiana per i redditi diversi). L&#x27;aliquota ALIQUOTA vale per l&#x27;intera storia,
+anche se in Italia è in vigore solo da pochi anni: è un&#x27;ipotesi di lavoro. Alla fine della storia si liquida tutto e si paga l&#x27;imposta sulla plusvalenza
+latente, così da confrontare capitali comparabili.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;,)
+
+SMA_GIORNI = 200
+ALIQUOTA = 0.26                                # aliquota sulle plusvalenze
+ALIQUOTE = (0.0, 0.125, 0.20, 0.26)            # aliquote della tabella di sensibilità (0,125 = titoli di Stato)
+ANNI_CREDITO = 4                               # le minusvalenze valgono fino al quarto anno solare successivo
+COSTO = 0.001                                  # costo di ogni cambio di posizione (0,10%), nella variante con costi
+QUOTA_ANNI_TOP = 0.20                          # ipotesi 5: il 20% degli anni con più imposta
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------
+H1_RIDUZIONE = 0.50              # ipotesi 1: le imposte tolgono almeno metà del vantaggio lordo del filtro
+H4_QUOTA = 0.50                  # ipotesi 4: il filtro paga imposta in almeno metà degli anni
+H5_QUOTA = 0.50                  # ipotesi 5: il 20% degli anni con più imposta paga almeno metà del totale
+H6_ALIQUOTA = 0.15               # ipotesi 6: l&#x27;aliquota di pareggio è sotto il 15%
+
+IPOTESI = (
+    &quot;1) Con aliquota del 26%, le imposte tolgono almeno metà del vantaggio lordo del filtro a 200 sedute rispetto al buy &amp; hold. &quot;
+    &quot;2) Dopo le imposte il filtro rende meno del buy &amp; hold. &quot;
+    &quot;3) La quota del guadagno finale che se ne va in imposte è più alta nel filtro che nel buy &amp; hold. &quot;
+    &quot;4) Il filtro paga imposta in almeno la metà degli anni. &quot;
+    &quot;5) Il 20% degli anni con più imposta paga almeno metà delle imposte totali del filtro. &quot;
+    &quot;6) L&#x27;aliquota di pareggio, cioè quella per cui il filtro rende come il buy &amp; hold dopo le imposte, è inferiore al 15%.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 108: filtro sotto la media mobile e simulazione dell&#x27;imposta sulle plusvalenze con compensazione delle minusvalenze.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def media_mobile(close: np.ndarray, lung: int) -&gt; np.ndarray:
+    return pd.Series(np.asarray(close, dtype=float)).rolling(lung).mean().to_numpy()
+
+
+def posizione_semplice(close: np.ndarray, sma: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;1 = investito, 0 = in liquidità, deciso alla chiusura t (sopra la media: investito).&quot;&quot;&quot;
+    return (np.asarray(close) &gt;= np.asarray(sma)).astype(int)
+
+
+def simula_fisco(lr: np.ndarray, pos: np.ndarray, anni_solari: np.ndarray, aliquota: float, costo: float = 0.0,
+                 anni_credito: int = 4) -&gt; dict:
+    &quot;&quot;&quot;Capitale iniziale 1. Il giorno t il capitale investito rende exp(lr[t]) se pos[t] = 1, zero altrimenti.
+    A ogni cambio di posizione si paga il costo (moltiplicativo). A ogni uscita si realizza la plusvalenza (o minusvalenza) rispetto al capitale
+    di ingresso: la plusvalenza è tassata al netto delle minusvalenze ancora valide (fino al quarto anno solare dopo la perdita, consumate dalla più vecchia);
+    la minusvalenza diventa credito. L&#x27;imposta è tolta subito dal capitale. Alla fine, se si è investiti, si liquida e si tassa la plusvalenza latente.
+    Restituisce il capitale finale, le imposte per anno solare, il capitale all&#x27;inizio di ogni anno e le plusvalenze/minusvalenze realizzate.&quot;&quot;&quot;
+    lr, pos, yrs = np.asarray(lr, dtype=float), np.asarray(pos), np.asarray(anni_solari)
+    w = 1.0
+    base = 1.0 if pos[0] == 1 else None
+    crediti: list[list[float]] = []                    # [anno della perdita, importo]
+    imposte: dict[int, float] = {}
+    realizzi: list[float] = []
+    capitale_anno: dict[int, float] = {}
+    prec = pos[0]
+
+    def tassa(gain: float, anno: int) -&gt; float:
+        nonlocal crediti
+        realizzi.append(gain)
+        crediti = [c for c in crediti if c[0] + anni_credito &gt;= anno and c[1] &gt; 0]
+        if gain &lt;= 0:
+            if gain &lt; 0:
+                crediti.append([anno, -gain])
+            return 0.0
+        resto = gain
+        for c in crediti:
+            usa = min(c[1], resto)
+            c[1] -= usa
+            resto -= usa
+            if resto &lt;= 0:
+                break
+        t = aliquota * resto
+        imposte[anno] = imposte.get(anno, 0.0) + t
+        return t
+
+    for t in range(len(lr)):
+        anno = int(yrs[t])
+        capitale_anno.setdefault(anno, w)
+        if pos[t] != prec:
+            w *= (1.0 - costo)
+            if pos[t] == 0:                            # uscita: si realizza
+                w -= tassa(w - base, anno)
+                base = None
+            else:                                      # ingresso: nuovo prezzo di carico
+                base = w
+            prec = pos[t]
+        if pos[t] == 1:
+            w *= np.exp(lr[t])
+    if prec == 1 and base is not None:                 # liquidazione finale
+        w -= tassa(w - base, int(yrs[len(lr) - 1]))
+    return dict(capitale=w, imposte=imposte, capitale_anno=capitale_anno, realizzi=realizzi)
+
+
+def cagr_da_capitale(capitale: float, anni: float) -&gt; float:
+    return float(capitale ** (1.0 / anni) - 1.0)
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+
+import funzioni as f
+
+
+def uguale(a, b, tol=1e-9, nome=&quot;&quot;):
+    assert abs(a - b) &lt; tol, f&quot;{nome}: {a} != {b}&quot;
+    print(f&quot;ok  {nome}&quot;)
+
+
+anni = np.array([2000] * 10)
+# 1. buy &amp; hold sempre investito: imposta solo alla fine, sulla plusvalenza
+lr = np.full(10, np.log(1.1) / 10)             # capitale lordo finale 1,1
+r = f.simula_fisco(lr, np.ones(10, dtype=int), anni, 0.26)
+uguale(r[&quot;capitale&quot;], 1.1 - 0.26 * 0.1, nome=&quot;buy &amp; hold: imposta alla fine&quot;)
+# 2. aliquota zero: capitale lordo
+r0 = f.simula_fisco(lr, np.ones(10, dtype=int), anni, 0.0)
+uguale(r0[&quot;capitale&quot;], 1.1, nome=&quot;aliquota zero&quot;)
+# 3. un&#x27;uscita con guadagno: imposta subito, poi in liquidità
+lr3 = np.array([np.log(1.2), 0.0, np.log(2.0)])
+pos3 = np.array([1, 0, 0])
+r3 = f.simula_fisco(lr3, pos3, np.array([2000, 2000, 2000]), 0.26)
+uguale(r3[&quot;capitale&quot;], 1.2 - 0.26 * 0.2, nome=&quot;uscita in guadagno, poi liquidità&quot;)
+# 4. minusvalenza compensa la plusvalenza successiva: perdita di 0,1 poi guadagno
+lr4 = np.array([np.log(0.9), 0.0, 0.0, np.log(1.5), 0.0])
+pos4 = np.array([1, 0, 0, 1, 0])
+r4 = f.simula_fisco(lr4, pos4, np.array([2000, 2000, 2001, 2001, 2001]), 0.26)
+# dopo la perdita w = 0.9; rientra a 0.9; sale a 1.35; esce: guadagno 0.45, credito 0.1 -&gt; imposta 0.26*0.35
+uguale(r4[&quot;capitale&quot;], 1.35 - 0.26 * 0.35, nome=&quot;compensazione della minusvalenza&quot;)
+# 5. credito scaduto: la perdita del 2000 non vale nel 2005
+anni5 = np.array([2000, 2000, 2005, 2005, 2005])
+r5 = f.simula_fisco(lr4, pos4, anni5, 0.26)
+uguale(r5[&quot;capitale&quot;], 1.35 - 0.26 * 0.45, nome=&quot;credito scaduto dopo il quarto anno&quot;)
+# 6. costo: un cambio costa lo 0,1% del capitale
+r6 = f.simula_fisco(np.array([0.0, 0.0]), np.array([1, 0]), np.array([2000, 2000]), 0.26, costo=0.001)
+uguale(r6[&quot;capitale&quot;], 1 - 0.001, nome=&quot;costo del cambio&quot;)
+print(&quot;Tutti i controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
