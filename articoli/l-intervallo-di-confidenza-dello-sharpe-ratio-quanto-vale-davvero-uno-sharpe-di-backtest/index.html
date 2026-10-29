@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>L&#x27;intervallo di confidenza dello Sharpe ratio: quanto vale davvero uno Sharpe di backtest · il codice · TickerFight</title>
+<meta name="description" content="L&#x27;intervallo di confidenza dello Sharpe ratio: quanto vale davvero uno Sharpe di backtest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>L&#x27;intervallo di confidenza dello Sharpe ratio: quanto vale davvero uno Sharpe di backtest</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="l-intervallo-di-confidenza-dello-sharpe-ratio-quanto-vale-davvero-uno-sharpe-di-backtest.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>l-intervallo-di-confidenza-dello-sharpe-ratio-quanto-vale-davvero-uno-sharpe-di-backtest/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd l-intervallo-di-confidenza-dello-sharpe-ratio-quanto-vale-davvero-uno-sharpe-di-backtest
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - L&#x27;intervallo di confidenza dello Sharpe ratio dell&#x27;S&amp;P 500.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json     ogni numero dell&#x27;articolo, con descrizione e origine
+  intervalli.csv    per ogni finestra: Sharpe e quattro intervalli (Lo, Mertens, bootstrap sui giorni, bootstrap a blocchi)
+  copertura.csv     per ogni lunghezza di finestra: copertura onesta della formula di Lo
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+GA = config.GIORNI_ANNO
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    c = close.to_numpy()
+    x = c[1:] / c[:-1] - 1.0
+    date = close.index[1:]
+    n = len(x)
+    rng = np.random.default_rng(config.SEME)
+
+    reg(&quot;prima_data&quot;, str(close.index[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(close.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;n_rend&quot;, n, &quot;int&quot;, &quot;Rendimenti giornalieri usati&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_tot&quot;, n / GA, &quot;num1&quot;, &quot;Anni di borsa nei dati (sedute diviso 252)&quot;, &quot;dati/&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_IC, &quot;pct0&quot;, &quot;Livello degli intervalli di confidenza&quot;, &quot;config.py&quot;)
+    reg(&quot;n_boot&quot;, config.N_BOOT, &quot;int&quot;, &quot;Ricampionamenti bootstrap&quot;, &quot;config.py, N_BOOT&quot;)
+    reg(&quot;blocco&quot;, config.BLOCCO, &quot;int&quot;, &quot;Sedute per blocco del bootstrap a blocchi&quot;, &quot;config.py, BLOCCO&quot;)
+    reg(&quot;h1_amp&quot;, config.H1_AMPIEZZA, &quot;num2&quot;, &quot;Ipotesi 1: ampiezza massima dell&#x27;intervallo di Lo sull&#x27;intero periodo&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_amp&quot;, config.H2_AMPIEZZA, &quot;num1&quot;, &quot;Ipotesi 2: ampiezza minima dell&#x27;intervallo di Lo a dieci anni&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_diff&quot;, config.H3_DIFF, &quot;pct0&quot;, &quot;Ipotesi 3: differenza massima di ampiezza tra Mertens e Lo&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_cop&quot;, config.H5_COPERTURA, &quot;pct0&quot;, &quot;Ipotesi 5: copertura onesta minima a dieci anni&quot;, &quot;config.py&quot;)
+    z0 = (x - x.mean()) / x.std(ddof=0)
+    reg(&quot;asimmetria&quot;, float(np.mean(z0 ** 3)), &quot;num2&quot;, &quot;Asimmetria dei rendimenti giornalieri&quot;, &quot;dati/&quot;)
+    reg(&quot;curtosi&quot;, float(np.mean(z0 ** 4)), &quot;num1&quot;, &quot;Curtosi (non in eccesso) dei rendimenti giornalieri; 3 per una distribuzione normale&quot;, &quot;dati/&quot;)
+
+    righe, finestre = [], [(a, n - a * GA) for a in config.FINESTRE_ANNI if a * GA &lt;= n] + [(&quot;tot&quot;, 0)]
+    for a, inizio in finestre:
+        w = x[inizio:]
+        sr = fx.sharpe(w, GA)
+        lo_ = fx.intervallo(sr, fx.se_lo(w, GA), config.Z95)
+        me_ = fx.intervallo(sr, fx.se_mertens(w, GA), config.Z95)
+        bi = fx.bootstrap_sharpe(w, config.N_BOOT, 1, GA, config.LIVELLO_IC, rng)
+        bb = fx.bootstrap_sharpe(w, config.N_BOOT, config.BLOCCO, GA, config.LIVELLO_IC, rng)
+        k = f&quot;w{a}&quot;
+        righe.append({&quot;finestra&quot;: str(a), &quot;anni&quot;: len(w) / GA, &quot;sharpe&quot;: sr, &quot;lo_lo&quot;: lo_[0], &quot;lo_hi&quot;: lo_[1], &quot;me_lo&quot;: me_[0], &quot;me_hi&quot;: me_[1],
+                      &quot;bi_lo&quot;: bi[0], &quot;bi_hi&quot;: bi[1], &quot;bb_lo&quot;: bb[0], &quot;bb_hi&quot;: bb[1]})
+        reg(f&quot;{k}_sr&quot;, sr, &quot;num2&quot;, f&quot;Sharpe annualizzato, finestra {a}&quot;, &quot;funzioni.sharpe&quot;)
+        for nome, (l, h), f_ in ((&quot;lo&quot;, lo_, &quot;Lo&quot;), (&quot;me&quot;, me_, &quot;Mertens&quot;), (&quot;bi&quot;, bi, &quot;bootstrap sui giorni&quot;), (&quot;bb&quot;, bb, &quot;bootstrap a blocchi&quot;)):
+            reg(f&quot;{k}_{nome}_lo&quot;, l, &quot;num2&quot;, f&quot;Estremo basso dell&#x27;intervallo ({f_}), finestra {a}&quot;, &quot;funzioni&quot;)
+            reg(f&quot;{k}_{nome}_hi&quot;, h, &quot;num2&quot;, f&quot;Estremo alto dell&#x27;intervallo ({f_}), finestra {a}&quot;, &quot;funzioni&quot;)
+            reg(f&quot;{k}_amp_{nome}&quot;, h - l, &quot;num2&quot;, f&quot;Ampiezza dell&#x27;intervallo ({f_}), finestra {a}&quot;, &quot;funzioni&quot;)
+    pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;intervalli.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    reg(&quot;se_tot&quot;, fx.se_lo(x, GA), &quot;num3&quot;, &quot;Errore standard di Lo dello Sharpe sull&#x27;intero periodo&quot;, &quot;funzioni.se_lo&quot;)
+    reg(&quot;rapporto_me_lo&quot;, RIS[&quot;wtot_amp_me&quot;][&quot;valore&quot;] / RIS[&quot;wtot_amp_lo&quot;][&quot;valore&quot;], &quot;num3&quot;, &quot;Ampiezza di Mertens diviso ampiezza di Lo, intero periodo&quot;, &quot;rapporto&quot;)
+    reg(&quot;diff_me_lo&quot;, abs(RIS[&quot;wtot_amp_me&quot;][&quot;valore&quot;] / RIS[&quot;wtot_amp_lo&quot;][&quot;valore&quot;] - 1), &quot;pct1&quot;, &quot;Differenza relativa di ampiezza tra Mertens e Lo, intero periodo&quot;, &quot;rapporto&quot;)
+    reg(&quot;rapporto_bb_bi&quot;, RIS[&quot;wtot_amp_bb&quot;][&quot;valore&quot;] / RIS[&quot;wtot_amp_bi&quot;][&quot;valore&quot;], &quot;num2&quot;, &quot;Ampiezza a blocchi diviso ampiezza sui giorni, intero periodo&quot;, &quot;rapporto&quot;)
+
+    # --- Anni necessari ------------------------------------------------------------------------------------------------
+    sr_t = RIS[&quot;wtot_sr&quot;][&quot;valore&quot;]
+    for h, nome in ((0.2, &quot;02&quot;), (0.1, &quot;01&quot;), (0.05, &quot;005&quot;)):
+        reg(f&quot;anni_{nome}&quot;, fx.anni_necessari(sr_t, h, config.Z95, GA), &quot;int&quot;, f&quot;Anni per un intervallo di più o meno {h} sullo Sharpe&quot;, &quot;funzioni.anni_necessari&quot;)
+
+    # --- Copertura onesta ------------------------------------------------------------------------------------------------
+    inizi = fx.inizi_mese(date)
+    cop = []
+    for a in config.COPERTURA_ANNI:
+        q, kk = fx.copertura_fuori(x, a * GA, inizi, GA, config.Z95)
+        cop.append({&quot;anni&quot;: a, &quot;copertura&quot;: q, &quot;finestre&quot;: kk})
+        reg(f&quot;cop{a}&quot;, q, &quot;pct0&quot;, f&quot;Copertura onesta della formula di Lo, finestre di {a} anni&quot;, &quot;funzioni.copertura_fuori&quot;)
+        reg(f&quot;cop{a}_n&quot;, kk, &quot;int&quot;, f&quot;Finestre di {a} anni (una per mese)&quot;, &quot;funzioni.copertura_fuori&quot;)
+    pd.DataFrame(cop).to_csv(config.RISULTATI / &quot;copertura.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+
+    # --- La regola a media mobile contro il buy &amp; hold ----------------------------------------------------------------------
+    rr, bh = fx.regola_sma(c, config.MEDIA_REGOLA)
+    sr_r, sr_b = fx.sharpe(rr, GA), fx.sharpe(bh, GA)
+    lo_d, hi_d = fx.differenza_sharpe_bootstrap(rr, bh, config.N_BOOT, config.BLOCCO, GA, config.LIVELLO_IC, rng)
+    reg(&quot;media_regola&quot;, config.MEDIA_REGOLA, &quot;int&quot;, &quot;Lunghezza della media mobile della regola&quot;, &quot;config.py&quot;)
+    reg(&quot;reg_n&quot;, len(rr), &quot;int&quot;, &quot;Sedute del campione comune regola e buy &amp; hold&quot;, &quot;dati/&quot;)
+    reg(&quot;reg_sr&quot;, sr_r, &quot;num2&quot;, &quot;Sharpe della regola a media mobile&quot;, &quot;funzioni.sharpe&quot;)
+    reg(&quot;reg_bh_sr&quot;, sr_b, &quot;num2&quot;, &quot;Sharpe del buy &amp; hold sulle stesse date&quot;, &quot;funzioni.sharpe&quot;)
+    reg(&quot;reg_diff&quot;, sr_r - sr_b, &quot;num2&quot;, &quot;Sharpe della regola meno Sharpe del buy &amp; hold&quot;, &quot;funzioni.sharpe&quot;)
+    reg(&quot;reg_lo&quot;, lo_d, &quot;num2&quot;, &quot;Estremo inferiore dell&#x27;intervallo bootstrap a blocchi della differenza&quot;, &quot;funzioni.differenza_sharpe_bootstrap&quot;)
+    reg(&quot;reg_hi&quot;, hi_d, &quot;num2&quot;, &quot;Estremo superiore dell&#x27;intervallo bootstrap a blocchi della differenza&quot;, &quot;funzioni.differenza_sharpe_bootstrap&quot;)
+    reg(&quot;reg_quota_inv&quot;, float(np.mean(rr != 0)), &quot;pct0&quot;, &quot;Quota di giorni in cui la regola è investita (giorni con rendimento diverso da zero)&quot;, &quot;dati/&quot;)
+
+    # --- Verdetti ---------------------------------------------------------------------------------------------------------------
+    h = [RIS[&quot;wtot_amp_lo&quot;][&quot;valore&quot;] &lt; config.H1_AMPIEZZA,
+         RIS[&quot;w10_amp_lo&quot;][&quot;valore&quot;] &gt; config.H2_AMPIEZZA,
+         RIS[&quot;diff_me_lo&quot;][&quot;valore&quot;] &lt; config.H3_DIFF,
+         RIS[&quot;wtot_amp_bb&quot;][&quot;valore&quot;] &gt; RIS[&quot;wtot_amp_bi&quot;][&quot;valore&quot;],
+         RIS[&quot;cop10&quot;][&quot;valore&quot;] &gt;= config.H5_COPERTURA,
+         lo_d &lt;= 0 &lt;= hi_d]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(bool(v)), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(bool(v) for v in h)), &quot;int&quot;, &quot;Ipotesi confermate (su 6)&quot;, &quot;confronto con config.py&quot;)
+
+    meta = {&quot;generato&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+            &quot;numpy&quot;: np.__version__, &quot;pandas&quot;: pd.__version__, &quot;seme&quot;: config.SEME, &quot;ipotesi&quot;: config.IPOTESI}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps({&quot;meta&quot;: meta, &quot;valori&quot;: RIS}, ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    print(f&quot;Scritte {len(RIS)} metriche.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_intervalli_per_finestra.png   Sharpe e intervallo (bootstrap a blocchi) per finestra
+  fig2_ampiezza_e_anni.png           ampiezza dell&#x27;intervallo (formula) in funzione degli anni di dati
+  fig3_copertura.png                 quota di finestre il cui intervallo di Lo contiene lo Sharpe delle altre sedute
+&quot;&quot;&quot;
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False, &quot;axes.grid&quot;: True,
+                     &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;, &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    w = pd.read_csv(R / &quot;intervalli.csv&quot;)
+    cop = pd.read_csv(R / &quot;copertura.csv&quot;)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    y = np.arange(len(w))[::-1]
+    nomi = [f&quot;ultimi {int(round(a))} anni&quot; if f != &quot;tot&quot; else f&quot;tutto ({a:.0f} anni)&quot; for f, a in zip(w[&quot;finestra&quot;], w[&quot;anni&quot;])]
+    ax.errorbar(w[&quot;sharpe&quot;], y, xerr=[w[&quot;sharpe&quot;] - w[&quot;bb_lo&quot;], w[&quot;bb_hi&quot;] - w[&quot;sharpe&quot;]], fmt=&quot;o&quot;, color=ARANCIO, capsize=5, lw=2)
+    ax.axvline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_yticks(y)
+    ax.set_yticklabels(nomi)
+    ax.set_xlabel(&quot;Sharpe annualizzato e intervallo al 95% (bootstrap a blocchi)&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_intervalli_per_finestra.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    amp = w[&quot;lo_hi&quot;] - w[&quot;lo_lo&quot;]
+    ax.plot(w[&quot;anni&quot;], amp, &quot;o&quot;, color=ARANCIO, ms=9, label=&quot;Ampiezza osservata&quot;)
+    s = np.linspace(w[&quot;anni&quot;].min(), w[&quot;anni&quot;].max(), 100)
+    ax.plot(s, amp.iloc[-1] * np.sqrt(w[&quot;anni&quot;].iloc[-1] / s), color=GRIGIO, lw=2, label=&quot;Andamento 1 / radice degli anni&quot;)
+    ax.set_xlabel(&quot;Anni di dati&quot;)
+    ax.set_ylabel(&quot;Ampiezza dell&#x27;intervallo di Lo al 95% (Sharpe)&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig2_ampiezza_e_anni.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    xs = np.arange(len(cop))
+    ax.bar(xs, cop[&quot;copertura&quot;] * 100, 0.5, color=BLU, label=&quot;Copertura onesta (formula di Lo)&quot;)
+    ax.set_xticks(xs)
+    ax.set_xticklabels([f&quot;{a} anni&quot; for a in cop[&quot;anni&quot;]])
+    ax.axhline(95, color=ARANCIO, lw=2, label=&quot;Livello nominale (95%)&quot;)
+    ax.set_ylim(0, 112)
+    ax.set_ylabel(&quot;Finestre il cui intervallo contiene lo Sharpe delle altre sedute (%)&quot;)
+    ax.legend(loc=&quot;lower right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig3_copertura.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 82 - &quot;L&#x27;intervallo di confidenza dello Sharpe ratio&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Il rapporto di Sharpe (rendimento medio diviso deviazione standard, annualizzato, tasso privo di rischio zero) è la misura di qualità di una strategia più citata, e di
+solito è riportato come un numero. Qui se ne calcola l&#x27;incertezza sull&#x27;S&amp;P 500 (indice di prezzo, dal 1927, rendimenti semplici giornalieri) con quattro intervalli al 95%:
+la formula di Lo (rendimenti indipendenti e normali), la formula di Mertens (corretta per asimmetria e code spesse), il bootstrap sui giorni e il bootstrap a blocchi
+circolari di 21 sedute. Si calcolano sull&#x27;intero periodo e sugli ultimi 10, 20, 30 e 50 anni. Poi si controlla se la formula è onesta: su finestre che partono da ogni mese, quante
+volte l&#x27;intervallo della finestra contiene lo Sharpe di tutte le altre sedute (la «copertura»)? Infine: quanti anni servono per restringere l&#x27;intervallo, e se lo Sharpe
+della regola «investiti sopra la media mobile a 200 sedute» è davvero diverso da quello del buy &amp; hold (bootstrap a blocchi sulla differenza, con le stesse date).
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;, &quot;Lo&quot;, &quot;Mertens&quot;, &quot;Sharpe&quot;)
+
+GIORNI_ANNO = 252
+FINESTRE_ANNI = (10, 20, 30, 50)
+COPERTURA_ANNI = (5, 10, 20, 30)
+MEDIA_REGOLA = 200
+Z95 = 1.959964
+LIVELLO_IC = 0.95
+N_BOOT = 2000
+BLOCCO = 21
+SEME = 20261030
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------
+H1_AMPIEZZA = 0.50               # ipotesi 1: intero periodo, ampiezza dell&#x27;intervallo di Lo sotto 0,5
+H2_AMPIEZZA = 1.00               # ipotesi 2: ultimi 10 anni, ampiezza dell&#x27;intervallo di Lo oltre 1,0
+H3_DIFF = 0.05                   # ipotesi 3: Mertens e Lo differiscono, in ampiezza, di meno del 5%
+H5_COPERTURA = 0.90              # ipotesi 5: copertura onesta con finestre di 10 anni almeno 90%
+
+IPOTESI = (
+    &quot;1) Sull&#x27;intero periodo l&#x27;intervallo di confidenza al 95% dello Sharpe, con la formula di Lo, è largo meno di 0,5. &quot;
+    &quot;2) Sugli ultimi 10 anni lo stesso intervallo è largo più di 1,0: un decennio non basta a distinguere uno Sharpe buono da uno mediocre. &quot;
+    &quot;3) L&#x27;intervallo di Mertens, che tiene conto di asimmetria e code spesse, ha un&#x27;ampiezza che differisce da quella di Lo di meno del 5% sull&#x27;intero periodo: a frequenza giornaliera la correzione conta poco. &quot;
+    &quot;4) Il bootstrap a blocchi dà un intervallo più largo di quello del bootstrap sui giorni, sull&#x27;intero periodo. &quot;
+    &quot;5) La formula di Lo è onesta: con finestre di 10 anni la copertura onesta (riferimento: lo Sharpe di tutte le altre sedute) è almeno del 90%. &quot;
+    &quot;6) Lo Sharpe della regola a media mobile a 200 sedute non si distingue da quello del buy &amp; hold: l&#x27;intervallo bootstrap a blocchi della differenza contiene lo zero.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 82: Sharpe, errori standard (Lo, Mertens), bootstrap, copertura onesta, anni necessari, regola a media mobile.&quot;&quot;&quot;
+import math
+
+import numpy as np
+import pandas as pd
+
+
+def sharpe(x: np.ndarray, ga: int) -&gt; float:
+    x = np.asarray(x, dtype=float)
+    return float(x.mean() / x.std(ddof=1) * math.sqrt(ga))
+
+
+def se_lo(x: np.ndarray, ga: int) -&gt; float:
+    &quot;&quot;&quot;Errore standard annualizzato dello Sharpe con rendimenti indipendenti e normali (Lo, 2002): radice di (1 + SR^2 / 2) / n, per SR del periodo.&quot;&quot;&quot;
+    x = np.asarray(x, dtype=float)
+    n = len(x)
+    sr = x.mean() / x.std(ddof=1)
+    return float(math.sqrt(ga) * math.sqrt((1.0 + 0.5 * sr * sr) / n))
+
+
+def se_mertens(x: np.ndarray, ga: int) -&gt; float:
+    &quot;&quot;&quot;Come se_lo ma con asimmetria g3 e curtosi g4 (non in eccesso): radice di (1 - g3 SR + (g4 - 1) SR^2 / 4) / n (Mertens, 2002).&quot;&quot;&quot;
+    x = np.asarray(x, dtype=float)
+    n = len(x)
+    sd = x.std(ddof=1)
+    sr = x.mean() / sd
+    z = (x - x.mean()) / x.std(ddof=0)
+    g3, g4 = float(np.mean(z ** 3)), float(np.mean(z ** 4))
+    return float(math.sqrt(ga) * math.sqrt((1.0 - g3 * sr + (g4 - 1.0) / 4.0 * sr * sr) / n))
+
+
+def intervallo(sr: float, se: float, z: float) -&gt; tuple[float, float]:
+    return sr - z * se, sr + z * se
+
+
+def bootstrap_sharpe(x: np.ndarray, n_boot: int, blocco: int, ga: int, livello: float, rng) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Intervallo percentile dello Sharpe annualizzato. blocco = 1: bootstrap sui giorni; blocco &gt; 1: blocchi circolari.&quot;&quot;&quot;
+    x = np.asarray(x, dtype=float)
+    n = len(x)
+    nb = int(np.ceil(n / blocco))
+    salti = np.arange(blocco)[None, :]
+    s = np.empty(n_boot)
+    for i in range(n_boot):
+        if blocco == 1:
+            y = x[rng.integers(0, n, n)]
+        else:
+            y = x[((rng.integers(0, n, nb)[:, None] + salti) % n).ravel()[:n]]
+        s[i] = y.mean() / y.std(ddof=1) * math.sqrt(ga)
+    lo, hi = np.quantile(s, [(1 - livello) / 2, 1 - (1 - livello) / 2])
+    return float(lo), float(hi)
+
+
+def copertura_fuori(x: np.ndarray, lung: int, inizi: np.ndarray, ga: int, z: float) -&gt; tuple[float, int]:
+    &quot;&quot;&quot;Per ogni finestra di `lung` sedute: l&#x27;intervallo (Lo) dello Sharpe della finestra, allargato per l&#x27;incertezza del riferimento, contiene lo Sharpe di tutte le ALTRE sedute?&quot;&quot;&quot;
+    x = np.asarray(x, dtype=float)
+    n = len(x)
+    inizi = np.asarray(inizi)
+    inizi = inizi[inizi + lung &lt;= n]
+    c1 = np.concatenate([[0.0], np.cumsum(x)])
+    c2 = np.concatenate([[0.0], np.cumsum(x * x)])
+    s1, s2 = c1[inizi + lung] - c1[inizi], c2[inizi + lung] - c2[inizi]
+    mw = s1 / lung
+    sdw = np.sqrt((s2 - lung * mw ** 2) / (lung - 1))
+    r1, r2, nr = c1[-1] - s1, c2[-1] - s2, n - lung
+    mr = r1 / nr
+    sdr = np.sqrt((r2 - nr * mr ** 2) / (nr - 1))
+    srw, srr = mw / sdw, mr / sdr
+    sew = np.sqrt(ga) * np.sqrt((1 + 0.5 * srw ** 2) / lung)
+    ser = np.sqrt(ga) * np.sqrt((1 + 0.5 * srr ** 2) / nr)
+    diff = (srw - srr) * math.sqrt(ga)
+    return float(np.mean(np.abs(diff) &lt;= z * np.sqrt(sew ** 2 + ser ** 2))), int(len(inizi))
+
+
+def anni_necessari(sr_annuo: float, semiampiezza: float, z: float, ga: int) -&gt; float:
+    &quot;&quot;&quot;Anni di dati perché la semiampiezza dell&#x27;intervallo di Lo dello Sharpe annualizzato scenda a `semiampiezza`: z^2 (1 + SR_giorno^2 / 2) / h^2.&quot;&quot;&quot;
+    sr_d = sr_annuo / math.sqrt(ga)
+    return float(z * z * (1.0 + 0.5 * sr_d * sr_d) / (semiampiezza ** 2))
+
+
+def regola_sma(c: np.ndarray, n: int) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Rendimenti semplici giornalieri della regola «investito se la chiusura di ieri è sopra la media di n chiusure fino a ieri incluso, altrimenti fermo»
+    e del buy &amp; hold, per le sedute t = n + 1 .. fine (stesse date).&quot;&quot;&quot;
+    c = np.asarray(c, dtype=float)
+    cs = np.concatenate([[0.0], np.cumsum(c)])
+    t = np.arange(n + 1, len(c))
+    ieri = t - 1
+    sma = (cs[ieri + 1] - cs[ieri + 1 - n]) / n
+    pos = (c[ieri] &gt; sma).astype(float)
+    r = c[t] / c[t - 1] - 1.0
+    return pos * r, r
+
+
+def differenza_sharpe_bootstrap(xa: np.ndarray, xb: np.ndarray, n_boot: int, blocco: int, ga: int, livello: float, rng) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Intervallo percentile della differenza di Sharpe (a - b) ricampionando a blocchi le stesse date per entrambe le serie.&quot;&quot;&quot;
+    xa, xb = np.asarray(xa, dtype=float), np.asarray(xb, dtype=float)
+    n = len(xa)
+    nb = int(np.ceil(n / blocco))
+    salti = np.arange(blocco)[None, :]
+    d = np.empty(n_boot)
+    for i in range(n_boot):
+        idx = ((rng.integers(0, n, nb)[:, None] + salti) % n).ravel()[:n]
+        a, b = xa[idx], xb[idx]
+        d[i] = (a.mean() / a.std(ddof=1) - b.mean() / b.std(ddof=1)) * math.sqrt(ga)
+    lo, hi = np.quantile(d, [(1 - livello) / 2, 1 - (1 - livello) / 2])
+    return float(lo), float(hi)
+
+
+def inizi_mese(date: pd.DatetimeIndex) -&gt; np.ndarray:
+    s = pd.Series(np.arange(len(date)), index=date)
+    return s.groupby([date.year, date.month]).first().to_numpy()
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import math
+
+import numpy as np
+
+import funzioni as f
+
+
+def ok(nome, cond):
+    assert cond, nome
+    print(f&quot;ok  {nome}&quot;)
+
+
+rng = np.random.default_rng(1)
+x = rng.normal(0.0004, 0.01, 252 * 40)
+# 1. Sharpe contro il calcolo diretto
+ok(&quot;Sharpe annualizzato&quot;, abs(f.sharpe(x, 252) - x.mean() / x.std(ddof=1) * math.sqrt(252)) &lt; 1e-12)
+# 2. errore standard di Lo con Sharpe nullo: radice di ga / n
+z0 = rng.normal(0.0, 0.01, 252 * 40)
+ok(&quot;errore standard di Lo con media vicina a zero ~ 1/radice(anni)&quot;, abs(f.se_lo(z0, 252) - 1 / math.sqrt(40)) &lt; 0.01)
+# 3. Mertens uguale a Lo per dati normali
+ok(&quot;Mertens vicino a Lo su dati normali&quot;, abs(f.se_mertens(x, 252) / f.se_lo(x, 252) - 1) &lt; 0.05)
+# 4. Mertens più largo di Lo per dati con code molto spesse e Sharpe non piccolo
+t = rng.standard_t(3, 252 * 40) * 0.006 + 0.0006
+ok(&quot;Mertens più largo di Lo con code spesse&quot;, f.se_mertens(t, 252) &gt; f.se_lo(t, 252))
+# 5. bootstrap sui giorni vicino alla formula su dati indipendenti
+lo, hi = f.bootstrap_sharpe(x, 500, 1, 252, 0.95, rng)
+se = f.se_lo(x, 252)
+ok(&quot;bootstrap sui giorni vicino alla formula&quot;, abs((hi - lo) / (2 * 1.96 * se) - 1) &lt; 0.2)
+# 6. bootstrap a blocchi vicino su dati indipendenti
+lb, hb = f.bootstrap_sharpe(x, 500, 21, 252, 0.95, rng)
+ok(&quot;bootstrap a blocchi vicino su dati indipendenti&quot;, abs((hb - lb) / (hi - lo) - 1) &lt; 0.25)
+# 7. copertura onesta su dati indipendenti: vicina al nominale
+y = rng.normal(0.0003, 0.01, 252 * 200)
+c, n = f.copertura_fuori(y, 252 * 10, np.arange(0, len(y) - 252 * 10, 21), 252, 1.959964)
+ok(&quot;copertura onesta vicina al nominale su dati indipendenti&quot;, 0.88 &lt; c &lt;= 1.0 and n &gt; 100)
+# 8. anni necessari: Sharpe quasi nullo, semiampiezza 0,1 -&gt; z^2 / 0,01 = 384,2 anni
+ok(&quot;anni necessari&quot;, abs(f.anni_necessari(0.0, 0.1, 1.96, 252) - 1.96 ** 2 / 0.01) &lt; 1e-9)
+# 9. regola a media mobile: prezzi crescenti -&gt; sempre investita, stessi rendimenti del buy &amp; hold
+c_up = np.arange(1.0, 400.0)
+r, bh = f.regola_sma(c_up, 50)
+ok(&quot;prezzi crescenti: la regola coincide col buy &amp; hold&quot;, np.allclose(r, bh) and len(r) == len(c_up) - 51)
+# 10. differenza di Sharpe: serie identiche -&gt; zero
+lo_d, hi_d = f.differenza_sharpe_bootstrap(x, x, 50, 21, 252, 0.95, rng)
+ok(&quot;serie identiche: differenza nulla&quot;, abs(lo_d) &lt; 1e-9 and abs(hi_d) &lt; 1e-9)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
