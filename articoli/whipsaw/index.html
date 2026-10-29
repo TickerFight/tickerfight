@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Whipsaw · il codice · TickerFight</title>
+<meta name="description" content="Whipsaw">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Whipsaw</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="whipsaw.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>whipsaw/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd whipsaw
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Whipsaw: il filtro a 200 sedute sull&#x27;S&amp;P 500, falsi segnali, durata delle uscite, costi e banda.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json     ogni numero dell&#x27;articolo, con descrizione e origine
+  uscite.csv        ogni uscita completa del filtro semplice: date, prezzi, durata, risultato (log del prezzo di uscita sul prezzo di rientro)
+  decenni.csv       per decennio: cambi, cambi all&#x27;anno, quota di whipsaw, rendimento del buy &amp; hold e del filtro
+  rendimenti.csv    rendimento annuo composto delle cinque varianti
+  esempio.csv       un tratto di serie con chiusura, media e posizioni (per il grafico)
+&quot;&quot;&quot;
+import json
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as f
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+GA = config.GIORNI_ANNO
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    c = df[&quot;Close&quot;].astype(float)
+    if (c &lt;= 0).any() or c.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    cv_tutti = c.to_numpy()
+    sma_tutti = f.media_mobile(cv_tutti, config.SMA_GIORNI)
+    i0 = config.SMA_GIORNI - 1                      # prima chiusura con la media calcolabile
+    cv, sma, idx = cv_tutti[i0:], sma_tutti[i0:], c.index[i0:]
+    lr_tutti = np.log(cv[1:] / cv[:-1])
+    n = len(lr_tutti)
+    anni = (idx[-1] - idx[0]).days / 365.25
+    tot = float(lr_tutti.sum())
+
+    pos_s = f.posizione_semplice(cv, sma)[:n]       # la posizione del giorno t usa la chiusura t
+    pos_b = f.posizione_banda(cv, sma, config.BANDA)[:n]
+    cagr_bh = f.cagr_da_log(tot, anni)
+    cagr_f = f.cagr_da_log(f.log_strategia(lr_tutti, pos_s, 0.0), anni)  # senza costi: ln(1-costo) ~ 0
+    cagr_fc = f.cagr_da_log(f.log_strategia(lr_tutti, pos_s, config.COSTO), anni)
+    cagr_b = f.cagr_da_log(f.log_strategia(lr_tutti, pos_b, 0.0), anni)
+    cagr_bc = f.cagr_da_log(f.log_strategia(lr_tutti, pos_b, config.COSTO), anni)
+    cs, cb = f.cambi(pos_s), f.cambi(pos_b)
+
+    reg(&quot;dati_prima_data&quot;, str(idx[0].date()), &quot;data_lunga&quot;, &quot;Prima chiusura con la media a 200 sedute calcolabile&quot;, &quot;dati/&quot;)
+    reg(&quot;dati_ultima_data&quot;, str(idx[-1].date()), &quot;data_lunga&quot;, &quot;Ultima chiusura dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;dati_anni&quot;, anni, &quot;num1&quot;, &quot;Anni di storia analizzati&quot;, &quot;dati/&quot;)
+    reg(&quot;sma_giorni&quot;, config.SMA_GIORNI, &quot;int&quot;, &quot;Sedute della media mobile&quot;, &quot;config.py&quot;)
+    reg(&quot;banda&quot;, config.BANDA, &quot;pct0&quot;, &quot;Banda attorno alla media&quot;, &quot;config.py&quot;)
+    reg(&quot;costo&quot;, config.COSTO, &quot;pct2&quot;, &quot;Costo di ogni cambio di posizione&quot;, &quot;config.py&quot;)
+    reg(&quot;breve&quot;, config.DURATA_BREVE, &quot;int&quot;, &quot;Sedute: un&#x27;uscita è breve se dura al massimo questo numero&quot;, &quot;config.py&quot;)
+    reg(&quot;top_n&quot;, config.TOP_N, &quot;int&quot;, &quot;Uscite migliori contate nell&#x27;ipotesi 3&quot;, &quot;config.py&quot;)
+
+    reg(&quot;cagr_bh&quot;, cagr_bh, &quot;pct2&quot;, &quot;Rendimento annuo composto del buy &amp; hold (stessi anni)&quot;)
+    reg(&quot;cagr_f&quot;, cagr_f, &quot;pct2&quot;, &quot;Rendimento annuo composto del filtro semplice, senza costi&quot;)
+    reg(&quot;cagr_fc&quot;, cagr_fc, &quot;pct2&quot;, &quot;Rendimento annuo composto del filtro semplice, con costo a ogni cambio&quot;)
+    reg(&quot;cagr_b&quot;, cagr_b, &quot;pct2&quot;, &quot;Rendimento annuo composto del filtro con banda, senza costi&quot;)
+    reg(&quot;cagr_bc&quot;, cagr_bc, &quot;pct2&quot;, &quot;Rendimento annuo composto del filtro con banda, con costo a ogni cambio&quot;)
+    reg(&quot;diff_f&quot;, cagr_f - cagr_bh, &quot;pp2&quot;, &quot;Filtro semplice senza costi meno buy &amp; hold, punti all&#x27;anno&quot;)
+    reg(&quot;diff_fc&quot;, cagr_fc - cagr_bh, &quot;pp2&quot;, &quot;Filtro semplice con costi meno buy &amp; hold, punti all&#x27;anno&quot;)
+    reg(&quot;diff_bc&quot;, cagr_bc - cagr_bh, &quot;pp2&quot;, &quot;Filtro con banda e costi meno buy &amp; hold, punti all&#x27;anno&quot;)
+    reg(&quot;costo_tot&quot;, cagr_f - cagr_fc, &quot;pp2&quot;, &quot;Punti all&#x27;anno tolti dai costi al filtro semplice&quot;)
+    reg(&quot;esposizione&quot;, float(pos_s.mean()), &quot;pct0&quot;, &quot;Quota di sedute in cui il filtro semplice è investito&quot;)
+    pd.DataFrame([dict(variante=&quot;buy_and_hold&quot;, cagr=cagr_bh), dict(variante=&quot;semplice_senza_costi&quot;, cagr=cagr_f),
+                  dict(variante=&quot;semplice_con_costi&quot;, cagr=cagr_fc), dict(variante=&quot;banda_senza_costi&quot;, cagr=cagr_b),
+                  dict(variante=&quot;banda_con_costi&quot;, cagr=cagr_bc)]).to_csv(config.RISULTATI / &quot;rendimenti.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    reg(&quot;cambi_f&quot;, len(cs), &quot;int&quot;, &quot;Cambi di posizione del filtro semplice&quot;)
+    reg(&quot;cambi_b&quot;, len(cb), &quot;int&quot;, &quot;Cambi di posizione del filtro con banda&quot;)
+    reg(&quot;cambi_anno_f&quot;, len(cs) / anni, &quot;num1&quot;, &quot;Cambi di posizione all&#x27;anno, filtro semplice&quot;)
+    reg(&quot;cambi_anno_b&quot;, len(cb) / anni, &quot;num1&quot;, &quot;Cambi di posizione all&#x27;anno, filtro con banda&quot;)
+    riduzione = 1.0 - len(cb) / len(cs)
+    reg(&quot;riduzione_cambi&quot;, riduzione, &quot;pct0&quot;, &quot;Riduzione dei cambi di posizione grazie alla banda&quot;)
+
+    # --- uscite complete
+    u, r = f.episodi(pos_s)
+    durata = r - u
+    risultato = np.log(cv[u] / cv[r])                # &gt; 0: si è rientrati più in basso (uscita utile)
+    whip = risultato &lt;= 0
+    ep = pd.DataFrame(dict(uscita=idx[u].date, rientro=idx[r].date, prezzo_uscita=cv[u], prezzo_rientro=cv[r],
+                           sedute=durata, risultato_log=risultato, whipsaw=whip))
+    ep.to_csv(config.RISULTATI / &quot;uscite.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    reg(&quot;ep_n&quot;, len(u), &quot;int&quot;, &quot;Uscite complete (uscita seguita da rientro)&quot;)
+    reg(&quot;ep_breve_quota&quot;, float((durata &lt;= config.DURATA_BREVE).mean()), &quot;pct0&quot;, &quot;Quota di uscite che durano al massimo 20 sedute&quot;)
+    reg(&quot;ep_dur_med&quot;, float(np.median(durata)), &quot;int&quot;, &quot;Durata mediana di un&#x27;uscita, in sedute&quot;)
+    reg(&quot;ep_dur_max&quot;, int(durata.max()), &quot;int&quot;, &quot;Durata della uscita più lunga, in sedute&quot;)
+    reg(&quot;ep_whip_n&quot;, int(whip.sum()), &quot;int&quot;, &quot;Uscite chiuse con un rientro a prezzo uguale o più alto (whipsaw)&quot;)
+    reg(&quot;ep_whip_quota&quot;, float(whip.mean()), &quot;pct0&quot;, &quot;Quota di whipsaw tra le uscite complete&quot;)
+    reg(&quot;whip_medio&quot;, float(np.mean(np.expm1(-risultato[whip]))), &quot;pct1&quot;, &quot;Variazione media del prezzo tra uscita e rientro nei whipsaw (rientro più caro di questa percentuale)&quot;)
+    pos_r = risultato[~whip]
+    reg(&quot;util_medio&quot;, float(np.mean(np.expm1(-pos_r))), &quot;pct1&quot;, &quot;Variazione media del prezzo tra uscita e rientro nelle uscite utili (rientro più basso di questa percentuale: valore negativo)&quot;)
+    guad = np.sort(pos_r)[::-1]
+    top = guad[:config.TOP_N].sum()
+    reg(&quot;top_quota&quot;, float(top / guad.sum()), &quot;pct0&quot;, &quot;Quota della somma dei guadagni delle uscite in guadagno che viene dalle 10 migliori&quot;)
+    reg(&quot;util_n&quot;, int((~whip).sum()), &quot;int&quot;, &quot;Uscite utili (rientro più basso)&quot;)
+    reg(&quot;saldo_uscite&quot;, float(np.expm1(risultato.sum())), &quot;pct0&quot;, &quot;Effetto composto di tutte le uscite sul valore finale rispetto al buy &amp; hold&quot;)
+    corte = durata &lt;= config.DURATA_BREVE
+    reg(&quot;corte_whip_quota&quot;, float(whip[corte].mean()), &quot;pct0&quot;, &quot;Tra le uscite brevi, quota di whipsaw&quot;)
+    reg(&quot;lunghe_whip_quota&quot;, float(whip[~corte].mean()), &quot;pct0&quot;, &quot;Tra le uscite più lunghe, quota di whipsaw&quot;)
+
+    # --- periodi
+    date_cambi = idx[cs]
+    def per_anno(a, b):
+        k = int(((date_cambi.year &gt;= a) &amp; (date_cambi.year &lt;= b)).sum())
+        return k, k / (b - a + 1)
+    ka, pa = per_anno(*config.PERIODO_A)
+    kb, pb_ = per_anno(*config.PERIODO_B)
+    reg(&quot;per_a_i&quot;, config.PERIODO_A[0], &quot;annonum&quot;, &quot;Primo anno del periodo A&quot;, &quot;config.py&quot;)
+    reg(&quot;per_a_f&quot;, config.PERIODO_A[1], &quot;annonum&quot;, &quot;Ultimo anno del periodo A&quot;, &quot;config.py&quot;)
+    reg(&quot;per_b_i&quot;, config.PERIODO_B[0], &quot;annonum&quot;, &quot;Primo anno del periodo B&quot;, &quot;config.py&quot;)
+    reg(&quot;per_b_f&quot;, config.PERIODO_B[1], &quot;annonum&quot;, &quot;Ultimo anno del periodo B&quot;, &quot;config.py&quot;)
+    reg(&quot;per_a_anno&quot;, pa, &quot;num1&quot;, &quot;Cambi di posizione all&#x27;anno nel periodo A&quot;)
+    reg(&quot;per_b_anno&quot;, pb_, &quot;num1&quot;, &quot;Cambi di posizione all&#x27;anno nel periodo B&quot;)
+    rapporto = pa / pb_ if pb_ &gt; 0 else float(&quot;inf&quot;)
+    reg(&quot;rapporto_periodi&quot;, float(rapporto), &quot;num1&quot;, &quot;Cambi all&#x27;anno del periodo A diviso quelli del periodo B&quot;)
+
+    # --- decenni
+    righe = []
+    for d0 in config.DECENNI:
+        d1 = d0 + 9
+        m = (idx[:-1].year &gt;= d0) &amp; (idx[:-1].year &lt;= d1)
+        a_dec = (idx[:-1][m][-1] - idx[:-1][m][0]).days / 365.25 + 1 / 252 if m.any() else 0
+        if not m.any():
+            continue
+        lr_d = lr_tutti[m]
+        pos_d = pos_s[m]
+        k = int(((date_cambi.year &gt;= d0) &amp; (date_cambi.year &lt;= d1)).sum())
+        mu = (u &gt;= 0) &amp; (idx[u].year &gt;= d0) &amp; (idx[u].year &lt;= d1)
+        wq = float(whip[mu].mean()) if mu.any() else 0.0
+        bh_d = f.cagr_da_log(float(lr_d.sum()), a_dec)
+        f_d = f.cagr_da_log(float((lr_d * pos_d).sum()), a_dec)
+        righe.append(dict(decennio=d0, cambi=k, anni=a_dec, cambi_anno=k / a_dec, uscite=int(mu.sum()), quota_whipsaw=wq, cagr_bh=bh_d, cagr_filtro=f_d))
+        reg(f&quot;d{d0}_cambi&quot;, k, &quot;int&quot;, f&quot;Cambi di posizione nel decennio {d0}&quot;)
+        reg(f&quot;d{d0}_anno&quot;, k / a_dec, &quot;num1&quot;, f&quot;Cambi di posizione all&#x27;anno nel decennio {d0}&quot;)
+        reg(f&quot;d{d0}_whip&quot;, wq, &quot;pct0&quot;, f&quot;Quota di whipsaw tra le uscite del decennio {d0}&quot;)
+        reg(f&quot;d{d0}_bh&quot;, bh_d, &quot;pct1&quot;, f&quot;Rendimento annuo composto del buy &amp; hold nel decennio {d0}&quot;)
+        reg(f&quot;d{d0}_f&quot;, f_d, &quot;pct1&quot;, f&quot;Rendimento annuo composto del filtro semplice (senza costi) nel decennio {d0}&quot;)
+    pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;decenni.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+
+    # --- esempio per il grafico
+    a, b = pd.Timestamp(config.ESEMPIO[0]), pd.Timestamp(config.ESEMPIO[1])
+    ex = pd.DataFrame({&quot;data&quot;: idx[:n], &quot;chiusura&quot;: cv[:n], &quot;media&quot;: sma[:n], &quot;pos&quot;: pos_s, &quot;pos_banda&quot;: pos_b})
+    ex[(ex[&quot;data&quot;] &gt;= a) &amp; (ex[&quot;data&quot;] &lt;= b)].to_csv(config.RISULTATI / &quot;esempio.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+    reg(&quot;esempio_cambi&quot;, int(((idx[cs] &gt;= a) &amp; (idx[cs] &lt;= b)).sum()), &quot;int&quot;, &quot;Cambi di posizione del filtro semplice nel tratto del grafico&quot;)
+    reg(&quot;esempio_cambi_b&quot;, int(((idx[cb] &gt;= a) &amp; (idx[cb] &lt;= b)).sum()), &quot;int&quot;, &quot;Cambi di posizione del filtro con banda nel tratto del grafico&quot;)
+    reg(&quot;esempio_anno_i&quot;, a.year, &quot;annonum&quot;, &quot;Primo anno del tratto del grafico&quot;, &quot;config.py&quot;)
+    reg(&quot;esempio_anno_f&quot;, b.year, &quot;annonum&quot;, &quot;Ultimo anno del tratto del grafico&quot;, &quot;config.py&quot;)
+
+    # --- ipotesi
+    reg(&quot;h1_quota&quot;, config.H1_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 1: soglia&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_quota&quot;, config.H2_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 2: soglia&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_quota&quot;, config.H3_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 3: soglia&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_rapporto&quot;, config.H5_RAPPORTO, &quot;num1&quot;, &quot;Ipotesi 5: soglia del rapporto&quot;, &quot;config.py&quot;)
+    reg(&quot;h6_riduzione&quot;, config.H6_RIDUZIONE, &quot;pct0&quot;, &quot;Ipotesi 6: soglia della riduzione&quot;, &quot;config.py&quot;)
+    h = [RIS[&quot;ep_breve_quota&quot;][&quot;valore&quot;] &gt;= config.H1_QUOTA,
+         RIS[&quot;ep_whip_quota&quot;][&quot;valore&quot;] &gt;= config.H2_QUOTA,
+         RIS[&quot;top_quota&quot;][&quot;valore&quot;] &gt;= config.H3_QUOTA,
+         cagr_fc &gt; cagr_bh,
+         rapporto &gt;= config.H5_RAPPORTO,
+         riduzione &gt;= config.H6_RIDUZIONE]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(v), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(h)), &quot;int&quot;, &quot;Ipotesi confermate (su sei)&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;run_utc&quot;, datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;testo&quot;, &quot;Data di esecuzione dell&#x27;analisi&quot;)
+    json.dump({&quot;valori&quot;: RIS}, open(config.RISULTATI / &quot;metriche.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;), indent=1, ensure_ascii=False)
+    print(f&quot;Scritti {len(RIS)} numeri in metriche.json; esiti {[int(x) for x in h]}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_segnali.png     un tratto di storia: chiusura, media a 200 sedute, uscite e rientri del filtro semplice
+  fig2_durate.png      quante uscite durano poco e quante molto, e quante finiscono in whipsaw
+  fig3_rendimenti.png  rendimento annuo composto: buy &amp; hold, filtro semplice e con banda, con e senza costi
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO, VERDE = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;, &quot;#2a7f4f&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))
+
+    # 1. segnali
+    E = pd.read_csv(R / &quot;esempio.csv&quot;, parse_dates=[&quot;data&quot;])
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(E[&quot;data&quot;], E[&quot;chiusura&quot;], color=GRIGIO, lw=1.3, label=&quot;S&amp;P 500&quot;)
+    ax.plot(E[&quot;data&quot;], E[&quot;media&quot;], color=BLU, lw=1.6, label=&quot;Media a 200 sedute&quot;)
+    d = E[&quot;pos&quot;].diff().fillna(0)
+    u, r = E[d &lt; 0], E[d &gt; 0]
+    ax.scatter(u[&quot;data&quot;], u[&quot;chiusura&quot;], marker=&quot;v&quot;, s=80, color=ARANCIO, zorder=5, label=&quot;Uscita&quot;)
+    ax.scatter(r[&quot;data&quot;], r[&quot;chiusura&quot;], marker=&quot;^&quot;, s=80, color=VERDE, zorder=5, label=&quot;Rientro&quot;)
+    ax.set_ylabel(&quot;Livello dell&#x27;indice&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig1_segnali.png&quot;)
+    plt.close(fig)
+
+    # 2. durate
+    U = pd.read_csv(R / &quot;uscite.csv&quot;)
+    bordi = [0, 5, 10, 20, 60, 120, 10 ** 6]
+    nomi = [&quot;1-5&quot;, &quot;6-10&quot;, &quot;11-20&quot;, &quot;21-60&quot;, &quot;61-120&quot;, &quot;oltre 120&quot;]
+    U[&quot;classe&quot;] = pd.cut(U[&quot;sedute&quot;], bordi, labels=nomi)
+    tot = U.groupby(&quot;classe&quot;, observed=False).size()
+    whip = U[U[&quot;whipsaw&quot;]].groupby(&quot;classe&quot;, observed=False).size()
+    x = np.arange(len(nomi))
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(x, tot.values - whip.values, color=VERDE, label=&quot;Rientro più in basso (uscita utile)&quot;)
+    ax.bar(x, whip.values, bottom=tot.values - whip.values, color=ARANCIO, label=&quot;Rientro a prezzo uguale o più alto (whipsaw)&quot;)
+    ax.set_xticks(x)
+    ax.set_xticklabels(nomi)
+    ax.set_xlabel(&quot;Durata dell&#x27;uscita (sedute)&quot;)
+    ax.set_ylabel(&quot;Numero di uscite&quot;)
+    ax.legend(loc=&quot;upper right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig2_durate.png&quot;)
+    plt.close(fig)
+
+    # 3. rendimenti
+    Rn = pd.read_csv(R / &quot;rendimenti.csv&quot;).set_index(&quot;variante&quot;)[&quot;cagr&quot;] * 100
+    etich = [&quot;Buy &amp; hold&quot;, &quot;Filtro\nsenza costi&quot;, &quot;Filtro\ncon costi&quot;, &quot;Filtro con banda\nsenza costi&quot;, &quot;Filtro con banda\ncon costi&quot;]
+    colori = [GRIGIO, BLU, BLU, VERDE, VERDE]
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(np.arange(5), Rn.values, color=colori, alpha=0.9)
+    for i, v in enumerate(Rn.values):
+        ax.text(i, v + 0.05, f&quot;{v:.2f}&quot;.replace(&quot;.&quot;, &quot;,&quot;) + &quot;%&quot;, ha=&quot;center&quot;, fontsize=11)
+    ax.set_xticks(np.arange(5))
+    ax.set_xticklabels(etich, fontsize=10)
+    ax.set_ylabel(&quot;Rendimento annuo composto (%)&quot;)
+    ax.set_ylim(0, Rn.max() * 1.15)
+    fig.savefig(config.FIGURE / &quot;fig3_rendimenti.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 134 - &quot;Whipsaw&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Filtro di trend sull&#x27;S&amp;P 500 (indice di prezzo): in mercato quando la chiusura è sopra la media delle ultime SMA_GIORNI chiusure, in liquidità senza
+interessi quando è sotto. Il segnale alla chiusura del giorno t decide la posizione del giorno t+1 (nessuna informazione dal futuro). Un «whipsaw» è
+un&#x27;uscita seguita da un rientro a un prezzo uguale o più alto di quello di uscita: si è venduto e ricomprato più caro. Si misura quante volte succede,
+quanto dura ogni uscita, quanto pesano i casi buoni e quelli cattivi, e quanto costa se ogni cambio di posizione ha un costo. Si prova anche una banda
+attorno alla media (esce sotto la media meno la banda, rientra sopra la media più la banda).
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;,)
+
+GIORNI_ANNO = 252
+SMA_GIORNI = 200
+BANDA = 0.02                                   # banda attorno alla media (2%)
+COSTO = 0.001                                  # costo di ogni cambio di posizione (0,10%)
+DURATA_BREVE = 20                              # un&#x27;uscita è «breve» se dura al massimo 20 sedute
+TOP_N = 10                                     # quante uscite migliori contano nell&#x27;ipotesi 3
+PERIODO_A = (1966, 1981)                       # anni di mercato laterale (ipotesi 5)
+PERIODO_B = (1982, 1999)                       # anni di mercato in forte salita (ipotesi 5)
+DECENNI = (1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000, 2010, 2020)
+ESEMPIO = (&quot;2018-01-01&quot;, &quot;2020-12-31&quot;)         # tratto mostrato nel grafico dei segnali
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------
+H1_QUOTA = 0.50                  # ipotesi 1: almeno metà delle uscite dura al massimo 20 sedute
+H2_QUOTA = 0.50                  # ipotesi 2: almeno metà delle uscite si chiude con un rientro a prezzo uguale o più alto
+H3_QUOTA = 0.50                  # ipotesi 3: le 10 uscite migliori valgono almeno metà della somma di tutti i guadagni delle uscite in guadagno
+H5_RAPPORTO = 1.5                # ipotesi 5: cambi all&#x27;anno nel periodo A almeno 1,5 volte quelli del periodo B
+H6_RIDUZIONE = 0.40              # ipotesi 6: la banda riduce i cambi di almeno il 40%
+
+IPOTESI = (
+    &quot;1) Almeno metà delle uscite dal mercato dura al massimo 20 sedute. &quot;
+    &quot;2) Almeno metà delle uscite si chiude con un rientro a un prezzo uguale o più alto di quello di uscita (whipsaw). &quot;
+    &quot;3) Le 10 uscite migliori valgono almeno metà della somma dei guadagni di tutte le uscite in guadagno. &quot;
+    &quot;4) Anche dopo un costo dello 0,10% a ogni cambio di posizione, il filtro rende più del buy &amp; hold. &quot;
+    &quot;5) Nel periodo laterale 1966-1981 i cambi di posizione all&#x27;anno sono almeno 1,5 volte quelli del periodo 1982-1999. &quot;
+    &quot;6) Una banda del 2% attorno alla media riduce i cambi di posizione di almeno il 40%.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 134: filtro sotto la media mobile, banda, cambi di posizione, episodi di uscita.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def media_mobile(close: np.ndarray, lung: int) -&gt; np.ndarray:
+    return pd.Series(np.asarray(close, dtype=float)).rolling(lung).mean().to_numpy()
+
+
+def posizione_semplice(close: np.ndarray, sma: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;1 = investito, 0 = in liquidità, deciso alla chiusura t (sopra la media: investito).&quot;&quot;&quot;
+    return (np.asarray(close) &gt;= np.asarray(sma)).astype(int)
+
+
+def posizione_banda(close: np.ndarray, sma: np.ndarray, banda: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Con banda: esce se la chiusura scende sotto media*(1-banda), rientra se sale sopra media*(1+banda); nel mezzo resta com&#x27;è.&quot;&quot;&quot;
+    close, sma = np.asarray(close, dtype=float), np.asarray(sma, dtype=float)
+    pos = np.empty(len(close), dtype=int)
+    stato = 1 if close[0] &gt;= sma[0] else 0
+    for t in range(len(close)):
+        if stato == 1 and close[t] &lt; sma[t] * (1 - banda):
+            stato = 0
+        elif stato == 0 and close[t] &gt; sma[t] * (1 + banda):
+            stato = 1
+        pos[t] = stato
+    return pos
+
+
+def cambi(pos: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posizioni t &gt;= 1 in cui la posizione differisce da quella di t-1.&quot;&quot;&quot;
+    p = np.asarray(pos)
+    return np.flatnonzero(p[1:] != p[:-1]) + 1
+
+
+def episodi(pos: np.ndarray) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Uscite complete: (posizione di uscita, posizione di rientro). Un&#x27;uscita ancora aperta alla fine non è inclusa.&quot;&quot;&quot;
+    p = np.asarray(pos)
+    c = cambi(p)
+    usc = [t for t in c if p[t] == 0]
+    rie = [t for t in c if p[t] == 1]
+    out_u, out_r = [], []
+    for u in usc:
+        dopo = [t for t in rie if t &gt; u]
+        if not dopo:
+            break
+        out_u.append(u)
+        out_r.append(dopo[0])
+    return np.array(out_u, dtype=int), np.array(out_r, dtype=int)
+
+
+def log_strategia(lr: np.ndarray, pos: np.ndarray, costo: float) -&gt; float:
+    &quot;&quot;&quot;Somma dei log-rendimenti della strategia: lr[t] (da t a t+1) conta se pos[t] = 1; ogni cambio costa ln(1-costo).&quot;&quot;&quot;
+    lr, pos = np.asarray(lr), np.asarray(pos)
+    return float((lr * pos).sum() + len(cambi(pos)) * np.log(1 - costo))
+
+
+def cagr_da_log(somma_log: float, anni: float) -&gt; float:
+    return float(np.exp(somma_log / anni) - 1.0)
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+
+import funzioni as f
+
+
+def uguale(a, b, tol=1e-9, nome=&quot;&quot;):
+    assert abs(a - b) &lt; tol, f&quot;{nome}: {a} != {b}&quot;
+    print(f&quot;ok  {nome}&quot;)
+
+
+# 1. media mobile
+m = f.media_mobile(np.array([1, 2, 3, 4, 5.0]), 3)
+assert np.isnan(m[1]) and m[2] == 2 and m[4] == 4
+print(&quot;ok  media mobile&quot;)
+# 2. posizione semplice, cambi, episodi
+close = np.array([10, 12, 9, 8, 13, 14, 7, 15.0])
+sma = np.full(8, 10.0)
+p = f.posizione_semplice(close, sma)
+assert list(p) == [1, 1, 0, 0, 1, 1, 0, 1], list(p)
+assert list(f.cambi(p)) == [2, 4, 6, 7]
+u, r = f.episodi(p)
+assert list(u) == [2, 6] and list(r) == [4, 7], (u, r)
+print(&quot;ok  posizione, cambi ed episodi&quot;)
+# 3. episodio ancora aperto alla fine escluso; inizio fuori mercato ignorato
+p2 = np.array([0, 0, 1, 1, 0, 0])
+u2, r2 = f.episodi(p2)
+assert len(u2) == 0 and len(r2) == 0, (u2, r2)
+p3 = np.array([0, 1, 1, 0, 1])
+u3, r3 = f.episodi(p3)
+assert list(u3) == [3] and list(r3) == [4], (u3, r3)
+print(&quot;ok  episodi aperti e iniziali&quot;)
+# 4. banda: due chiusure appena sotto la media non fanno uscire
+close = np.array([100, 99, 101, 97, 103.0])
+sma = np.full(5, 100.0)
+pb = f.posizione_banda(close, sma, 0.02)
+assert list(pb) == [1, 1, 1, 0, 1], list(pb)
+print(&quot;ok  banda&quot;)
+# 5. strategia: costo per cambio e rendimento composto
+lr = np.log1p(np.array([0.1, 0.1, -0.1, 0.1]))
+pos = np.array([1, 1, 0, 1])
+atteso = lr[0] + lr[1] + lr[3] + 2 * np.log(1 - 0.001)
+uguale(f.log_strategia(lr, pos, 0.001), atteso, nome=&quot;log della strategia con costi&quot;)
+uguale(f.cagr_da_log(2 * np.log(1.1), 2.0), 0.10, nome=&quot;rendimento composto&quot;)
+print(&quot;Tutti i controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
