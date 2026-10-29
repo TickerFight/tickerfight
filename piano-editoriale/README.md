@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-36 pubblicati, 16 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+36 pubblicati, 17 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -49,6 +49,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [Whipsaw](https://tickerfight.github.io/tickerfight/articoli/whipsaw/) | In revisione | — | — |
 | [«Vendi a maggio e vai via»: Stati Uniti e Giappone, due crolli e la fortuna](https://tickerfight.github.io/tickerfight/articoli/vendi-a-maggio-e-vai-via-stati-uniti-e-giappone-due-crolli-e-la-fortuna/) | In revisione | — | — |
 | [Equal weight contro market cap: RSP o SPY?](https://tickerfight.github.io/tickerfight/articoli/equal-weight-contro-market-cap-rsp-o-spy/) | In revisione | — | — |
+| [Growth contro value: crescita o valore?](https://tickerfight.github.io/tickerfight/articoli/growth-contro-value-crescita-o-valore/) | In revisione | — | — |
 | [SPY contro QQQ: l'S&P 500 o il Nasdaq-100?](https://tickerfight.github.io/tickerfight/articoli/spy-contro-qqq-l-sp-500-o-il-nasdaq-100/) | In revisione | — | — |
 | [VIX sopra 30: comprare la paura?](https://tickerfight.github.io/tickerfight/articoli/vix-sopra-30-comprare-la-paura/) | In revisione | — | — |
 | [Volatilità realizzata contro implicita: quanto sbaglia il VIX?](https://tickerfight.github.io/tickerfight/articoli/volatilita-realizzata-contro-implicita-quanto-sbaglia-il-vix/) | In revisione | — | — |
