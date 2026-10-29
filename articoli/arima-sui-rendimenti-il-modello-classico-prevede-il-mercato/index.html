@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ARIMA sui rendimenti: il modello classico prevede il mercato? · il codice · TickerFight</title>
+<meta name="description" content="ARIMA sui rendimenti: il modello classico prevede il mercato?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>ARIMA sui rendimenti: il modello classico prevede il mercato?</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="arima-sui-rendimenti-il-modello-classico-prevede-il-mercato.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>arima-sui-rendimenti-il-modello-classico-prevede-il-mercato/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd arima-sui-rendimenti-il-modello-classico-prevede-il-mercato
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - ARIMA sui rendimenti mensili dell&#x27;S&amp;P 500: dentro il campione e fuori dal campione.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json       ogni numero dell&#x27;articolo, con descrizione e origine
+  bic_ordini.csv      BIC di ogni ordine (p, q) sull&#x27;intero periodo
+  previsioni.csv      per ogni mese fuori campione: valore reale, previsione ARIMA, previsione media storica
+  bootstrap_r2.csv    R quadro fuori campione di ogni ricampionamento
+&quot;&quot;&quot;
+import json
+import platform
+from collections import Counter
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+import statsmodels
+from statsmodels.tsa.stattools import adfuller
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+MESI = [&quot;gennaio&quot;, &quot;febbraio&quot;, &quot;marzo&quot;, &quot;aprile&quot;, &quot;maggio&quot;, &quot;giugno&quot;, &quot;luglio&quot;, &quot;agosto&quot;, &quot;settembre&quot;, &quot;ottobre&quot;, &quot;novembre&quot;, &quot;dicembre&quot;]
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def nome_mese(per: pd.Period) -&gt; str:
+    return f&quot;{MESI[per.month - 1]} {per.year}&quot;
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    rm = fx.rendimenti_mensili(close)
+    y = rm.to_numpy()
+    T = len(y)
+    rng = np.random.default_rng(config.SEME)
+
+    reg(&quot;data_ultima&quot;, str(close.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;mese_primo&quot;, nome_mese(rm.index[0]), &quot;testo&quot;, &quot;Primo mese con un rendimento mensile&quot;, &quot;dati/&quot;)
+    reg(&quot;mese_ultimo&quot;, nome_mese(rm.index[-1]), &quot;testo&quot;, &quot;Ultimo mese completo usato&quot;, &quot;dati/&quot;)
+    reg(&quot;n_mesi&quot;, T, &quot;int&quot;, &quot;Rendimenti mensili usati (mesi completi)&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_totali&quot;, T / 12, &quot;num1&quot;, &quot;Anni coperti dai rendimenti mensili&quot;, &quot;dati/&quot;)
+    reg(&quot;media_mese&quot;, float(y.mean()), &quot;pct2&quot;, &quot;Rendimento logaritmico medio mensile&quot;, &quot;dati/&quot;)
+    reg(&quot;vol_mese&quot;, float(y.std(ddof=1)), &quot;pct1&quot;, &quot;Deviazione standard dei rendimenti mensili&quot;, &quot;dati/&quot;)
+    reg(&quot;quota_positivi&quot;, float((y &gt; 0).mean()), &quot;pct0&quot;, &quot;Quota di mesi con rendimento positivo&quot;, &quot;dati/&quot;)
+    reg(&quot;p_max&quot;, config.P_MAX, &quot;int&quot;, &quot;Ordine massimo AR provato&quot;, &quot;config.py, P_MAX&quot;)
+    reg(&quot;q_max&quot;, config.Q_MAX, &quot;int&quot;, &quot;Ordine massimo MA provato&quot;, &quot;config.py, Q_MAX&quot;)
+    reg(&quot;n_modelli&quot;, (config.P_MAX + 1) * (config.Q_MAX + 1), &quot;int&quot;, &quot;Modelli provati (coppie p, q)&quot;, &quot;config.py&quot;)
+    reg(&quot;mesi_iniziali&quot;, config.MESI_INIZIALI, &quot;int&quot;, &quot;Mesi usati solo per la prima stima&quot;, &quot;config.py, MESI_INIZIALI&quot;)
+    reg(&quot;anni_iniziali&quot;, config.MESI_INIZIALI / 12, &quot;int&quot;, &quot;Anni usati solo per la prima stima&quot;, &quot;config.py&quot;)
+    reg(&quot;ogni_mesi&quot;, config.OGNI_MESI, &quot;int&quot;, &quot;Mesi tra una ristima del modello e la successiva&quot;, &quot;config.py, OGNI_MESI&quot;)
+    reg(&quot;lag_test&quot;, config.LAG_TEST, &quot;int&quot;, &quot;Ritardi del test di Ljung-Box e di Newey-West&quot;, &quot;config.py, LAG_TEST&quot;)
+    reg(&quot;soglia&quot;, config.SOGLIA, &quot;pct0&quot;, &quot;Livello di significatività dei test&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_forte&quot;, config.SOGLIA_FORTE, &quot;pct0&quot;, &quot;Livello di significatività forte&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_r2&quot;, config.H2_R2_MAX, &quot;pct0&quot;, &quot;Ipotesi 2: quota massima di varianza spiegata in campione&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_r2&quot;, config.H3_R2_OOS_MAX, &quot;pct0&quot;, &quot;Ipotesi 3: R quadro fuori campione massimo&quot;, &quot;config.py&quot;)
+    reg(&quot;n_boot&quot;, config.N_BOOT, &quot;int&quot;, &quot;Ricampionamenti bootstrap&quot;, &quot;config.py&quot;)
+    reg(&quot;blocco_medio&quot;, config.BLOCCO_MEDIO, &quot;int&quot;, &quot;Lunghezza media dei blocchi del bootstrap, in mesi&quot;, &quot;config.py&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_IC, &quot;pct0&quot;, &quot;Livello degli intervalli di confidenza&quot;, &quot;config.py&quot;)
+
+    # --- Stazionarietà: perché d = 0 sui rendimenti e d = 1 sui prezzi ---------------------------------------------
+    lp = np.log(close.groupby([close.index.year, close.index.month]).last().to_numpy())
+    p_liv = adfuller(lp, maxlag=config.LAG_ADF, autolag=None, regression=&quot;ct&quot;, result_object=False)[1]
+    p_rend = adfuller(y, maxlag=config.LAG_ADF, autolag=None, regression=&quot;c&quot;, result_object=False)[1]
+    reg(&quot;adf_p_prezzi&quot;, float(p_liv), &quot;pval&quot;, &quot;P-value del test ADF sul logaritmo dei prezzi mensili (con tendenza)&quot;, &quot;statsmodels.adfuller&quot;)
+    reg(&quot;adf_p_rend&quot;, float(p_rend), &quot;pval&quot;, &quot;P-value del test ADF sui rendimenti mensili&quot;, &quot;statsmodels.adfuller&quot;)
+
+    # --- Dentro il campione ------------------------------------------------------------------------------------------
+    ordine, ris, tab = fx.scegli_ordine(y, config.P_MAX, config.Q_MAX, &quot;bic&quot;)
+    ordine_aic, _, _ = fx.scegli_ordine(y, config.P_MAX, config.Q_MAX, &quot;aic&quot;)
+    pd.DataFrame([{&quot;p&quot;: p, &quot;q&quot;: q, &quot;bic&quot;: b, &quot;delta_bic&quot;: b - min(tab.values())} for (p, q), b in sorted(tab.items())]).to_csv(
+        config.RISULTATI / &quot;bic_ordini.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+    p, q = ordine
+    reg(&quot;ord_p&quot;, p, &quot;int&quot;, &quot;Ordine AR scelto dal BIC sull&#x27;intero periodo&quot;, &quot;scegli_ordine&quot;)
+    reg(&quot;ord_q&quot;, q, &quot;int&quot;, &quot;Ordine MA scelto dal BIC sull&#x27;intero periodo&quot;, &quot;scegli_ordine&quot;)
+    reg(&quot;ord_somma&quot;, p + q, &quot;int&quot;, &quot;Parametri di memoria (p + q) scelti dal BIC&quot;, &quot;scegli_ordine&quot;)
+    reg(&quot;aic_p&quot;, ordine_aic[0], &quot;int&quot;, &quot;Ordine AR scelto dall&#x27;AIC&quot;, &quot;scegli_ordine&quot;)
+    reg(&quot;aic_q&quot;, ordine_aic[1], &quot;int&quot;, &quot;Ordine MA scelto dall&#x27;AIC&quot;, &quot;scegli_ordine&quot;)
+    bic0 = tab[(0, 0)]
+    reg(&quot;delta_bic_zero&quot;, bic0 - min(tab.values()), &quot;num1&quot;, &quot;BIC del modello senza memoria (0, 0) meno il BIC del migliore&quot;, &quot;bic_ordini.csv&quot;)
+    res = np.asarray(ris.resid)
+    r2_in = 1 - float(np.var(res)) / float(np.var(y))
+    reg(&quot;r2_in&quot;, r2_in, &quot;pct2&quot;, &quot;Quota di varianza spiegata dal modello scelto, dentro il campione (1 meno varianza dei residui su varianza dei rendimenti)&quot;, &quot;statsmodels&quot;)
+    names = list(ris.param_names)
+    for nome, chiave in ((&quot;ar.L1&quot;, &quot;phi1&quot;), (&quot;ma.L1&quot;, &quot;theta1&quot;)):
+        reg(chiave, float(ris.params[names.index(nome)]) if nome in names else 0.0, &quot;num3&quot;, f&quot;Coefficiente {nome} del modello scelto (zero se assente)&quot;, &quot;statsmodels&quot;)
+        reg(chiave + &quot;_z&quot;, float(ris.tvalues[names.index(nome)]) if nome in names else 0.0, &quot;num1&quot;, f&quot;Statistica z di {nome} (zero se assente)&quot;, &quot;statsmodels&quot;)
+    lb, lbp = fx.ljung_box_serie(res, config.LAG_TEST)
+    lb2, lb2p = fx.ljung_box_serie(res ** 2, config.LAG_TEST)
+    lby2, lby2p = fx.ljung_box_serie(y ** 2, config.LAG_TEST)
+    reg(&quot;lb_res_p&quot;, lbp, &quot;pval&quot;, &quot;P-value di Ljung-Box sui residui (12 ritardi)&quot;, &quot;statsmodels&quot;)
+    reg(&quot;lb_res2_stat&quot;, lb2, &quot;num1&quot;, &quot;Statistica di Ljung-Box sui quadrati dei residui (12 ritardi)&quot;, &quot;statsmodels&quot;)
+    reg(&quot;lb_res2_p&quot;, lb2p, &quot;pval&quot;, &quot;P-value di Ljung-Box sui quadrati dei residui (12 ritardi)&quot;, &quot;statsmodels&quot;)
+    reg(&quot;lb_y2_p&quot;, lby2p, &quot;pval&quot;, &quot;P-value di Ljung-Box sui quadrati dei rendimenti (12 ritardi)&quot;, &quot;statsmodels&quot;)
+    reg(&quot;acf1_mensile&quot;, float(np.corrcoef(y[1:], y[:-1])[0, 1]), &quot;num3&quot;, &quot;Autocorrelazione dei rendimenti mensili al ritardo 1&quot;, &quot;numpy.corrcoef&quot;)
+
+    # --- Fuori dal campione ------------------------------------------------------------------------------------------
+    f_mod, f_med, reale, ordini = fx.previsioni_rolling(y, config.MESI_INIZIALI, config.OGNI_MESI, config.P_MAX, config.Q_MAX)
+    date_oos = rm.index[config.MESI_INIZIALI:]
+    n = len(reale)
+    pd.DataFrame({&quot;mese&quot;: date_oos.astype(str), &quot;reale&quot;: reale, &quot;arima&quot;: f_mod, &quot;media_storica&quot;: f_med}).to_csv(
+        config.RISULTATI / &quot;previsioni.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    e_m, e_b = reale - f_mod, reale - f_med
+    r2o = fx.r2_fuori_campione(reale, f_med, f_mod)
+    r2z = float(1 - np.sum(e_m ** 2) / np.sum(reale ** 2))
+    t_cw, p_cw = fx.clark_west(reale, f_med, f_mod, config.LAG_TEST)
+    reg(&quot;n_oos&quot;, n, &quot;int&quot;, &quot;Previsioni fuori campione (mesi)&quot;, &quot;previsioni.csv&quot;)
+    reg(&quot;mese_oos_primo&quot;, nome_mese(date_oos[0]), &quot;testo&quot;, &quot;Primo mese previsto fuori campione&quot;, &quot;previsioni.csv&quot;)
+    reg(&quot;n_blocchi&quot;, len(ordini), &quot;int&quot;, &quot;Volte in cui il modello è stato riscelto e ristimato&quot;, &quot;previsioni_rolling&quot;)
+    cnt = Counter(ordini)
+    top, k = cnt.most_common(1)[0]
+    reg(&quot;ord_top_p&quot;, top[0], &quot;int&quot;, &quot;Ordine AR più frequente tra le riscelte&quot;, &quot;previsioni_rolling&quot;)
+    reg(&quot;ord_top_q&quot;, top[1], &quot;int&quot;, &quot;Ordine MA più frequente tra le riscelte&quot;, &quot;previsioni_rolling&quot;)
+    reg(&quot;ord_top_quota&quot;, k / len(ordini), &quot;pct0&quot;, &quot;Quota di riscelte con l&#x27;ordine più frequente&quot;, &quot;previsioni_rolling&quot;)
+    reg(&quot;ord_n_distinti&quot;, len(cnt), &quot;int&quot;, &quot;Ordini diversi scelti nelle riscelte&quot;, &quot;previsioni_rolling&quot;)
+    reg(&quot;rmse_mod&quot;, float(np.sqrt(np.mean(e_m ** 2))), &quot;pct2&quot;, &quot;Radice dell&#x27;errore quadratico medio mensile del modello&quot;, &quot;previsioni.csv&quot;)
+    reg(&quot;rmse_med&quot;, float(np.sqrt(np.mean(e_b ** 2))), &quot;pct2&quot;, &quot;Radice dell&#x27;errore quadratico medio mensile della media storica&quot;, &quot;previsioni.csv&quot;)
+    reg(&quot;r2_oos&quot;, r2o, &quot;pct2&quot;, &quot;R quadro fuori campione del modello rispetto alla media storica (uno meno rapporto tra errori quadratici)&quot;, &quot;previsioni.csv&quot;)
+    reg(&quot;r2_oos_zero&quot;, r2z, &quot;pct2&quot;, &quot;R quadro fuori campione rispetto alla previsione «zero»&quot;, &quot;previsioni.csv&quot;)
+    reg(&quot;cw_t&quot;, t_cw, &quot;num2&quot;, &quot;Statistica di Clark-West (Newey-West a 12 ritardi)&quot;, &quot;funzioni.clark_west&quot;)
+    reg(&quot;cw_p&quot;, p_cw, &quot;pval&quot;, &quot;P-value di Clark-West a una coda: il modello batte la media storica&quot;, &quot;funzioni.clark_west&quot;)
+    # intervallo bootstrap dell&#x27;R quadro fuori campione
+    boot = np.empty(config.N_BOOT)
+    for i, idx in enumerate(fx.bootstrap_stazionario(rng, n, config.BLOCCO_MEDIO, config.N_BOOT)):
+        boot[i] = 1 - np.sum(e_m[idx] ** 2) / np.sum(e_b[idx] ** 2)
+    pd.DataFrame({&quot;r2_oos&quot;: boot}).to_csv(config.RISULTATI / &quot;bootstrap_r2.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    lo, hi = np.quantile(boot, [(1 - config.LIVELLO_IC) / 2, 1 - (1 - config.LIVELLO_IC) / 2])
+    reg(&quot;r2_oos_lo&quot;, float(lo), &quot;pct2&quot;, &quot;Estremo inferiore dell&#x27;intervallo bootstrap dell&#x27;R quadro fuori campione&quot;, &quot;bootstrap stazionario&quot;)
+    reg(&quot;r2_oos_hi&quot;, float(hi), &quot;pct2&quot;, &quot;Estremo superiore dell&#x27;intervallo bootstrap dell&#x27;R quadro fuori campione&quot;, &quot;bootstrap stazionario&quot;)
+    # segno
+    hit_m = float(np.mean(np.sign(f_mod) == np.sign(reale)))
+    hit_med = float(np.mean(np.sign(f_med) == np.sign(reale)))
+    su = float(np.mean(reale &gt; 0))
+    reg(&quot;hit_mod&quot;, hit_m, &quot;pct1&quot;, &quot;Quota di mesi in cui il segno previsto dal modello è giusto&quot;, &quot;previsioni.csv&quot;)
+    reg(&quot;hit_med&quot;, hit_med, &quot;pct1&quot;, &quot;Quota di mesi in cui il segno della media storica è giusto&quot;, &quot;previsioni.csv&quot;)
+    reg(&quot;hit_su&quot;, su, &quot;pct1&quot;, &quot;Quota di mesi positivi nel periodo fuori campione (chi prevede sempre «sale»)&quot;, &quot;previsioni.csv&quot;)
+    reg(&quot;quota_prev_negative&quot;, float(np.mean(f_mod &lt; 0)), &quot;pct1&quot;, &quot;Quota di mesi in cui il modello prevede un rendimento negativo&quot;, &quot;previsioni.csv&quot;)
+    reg(&quot;prev_min&quot;, float(f_mod.min()), &quot;pct2&quot;, &quot;Previsione più bassa del modello (rendimento mensile)&quot;, &quot;previsioni.csv&quot;)
+    reg(&quot;prev_max&quot;, float(f_mod.max()), &quot;pct2&quot;, &quot;Previsione più alta del modello (rendimento mensile)&quot;, &quot;previsioni.csv&quot;)
+    # due metà del periodo fuori campione
+    m2 = n // 2
+    reg(&quot;r2_oos_a&quot;, fx.r2_fuori_campione(reale[:m2], f_med[:m2], f_mod[:m2]), &quot;pct2&quot;, &quot;R quadro fuori campione nella prima metà&quot;, &quot;previsioni.csv&quot;)
+    reg(&quot;r2_oos_b&quot;, fx.r2_fuori_campione(reale[m2:], f_med[m2:], f_mod[m2:]), &quot;pct2&quot;, &quot;R quadro fuori campione nella seconda metà&quot;, &quot;previsioni.csv&quot;)
+    reg(&quot;anno_meta&quot;, int(date_oos[m2].year), &quot;annonum&quot;, &quot;Primo anno della seconda metà del periodo fuori campione&quot;, &quot;previsioni.csv&quot;)
+
+    # --- Verdetti ----------------------------------------------------------------------------------------------------------
+    h = [p + q &lt;= config.H1_P_PIU_Q_MAX, r2_in &lt; config.H2_R2_MAX, r2o &lt; config.H3_R2_OOS_MAX, lb2p &lt; config.SOGLIA_FORTE, hit_m &lt;= su, p_cw &gt;= config.SOGLIA]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(bool(v)), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(bool(v) for v in h)), &quot;int&quot;, &quot;Ipotesi confermate (su 6)&quot;, &quot;confronto con config.py&quot;)
+
+    meta = {&quot;generato&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+            &quot;numpy&quot;: np.__version__, &quot;pandas&quot;: pd.__version__, &quot;statsmodels&quot;: statsmodels.__version__, &quot;seme&quot;: config.SEME, &quot;ipotesi&quot;: config.IPOTESI}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps({&quot;meta&quot;: meta, &quot;valori&quot;: RIS}, ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    print(f&quot;Scritte {len(RIS)} metriche.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_bic_per_ordine.png      BIC di ogni ordine (p, q) rispetto al migliore, sull&#x27;intero periodo
+  fig2_errore_cumulato.png     differenza cumulata degli errori quadratici (media storica meno ARIMA), fuori campione
+  fig3_bootstrap_r2.png        distribuzione bootstrap dell&#x27;R quadro fuori campione
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False, &quot;axes.grid&quot;: True,
+                     &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;, &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    m = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    b = pd.read_csv(R / &quot;bic_ordini.csv&quot;)
+    pr = pd.read_csv(R / &quot;previsioni.csv&quot;)
+    bo = pd.read_csv(R / &quot;bootstrap_r2.csv&quot;)
+
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    etich = [f&quot;({p},{q})&quot; for p, q in zip(b[&quot;p&quot;], b[&quot;q&quot;])]
+    col = [ARANCIO if d == 0 else BLU for d in b[&quot;delta_bic&quot;]]
+    ax.bar(etich, b[&quot;delta_bic&quot;], color=col)
+    ax.set_xlabel(&quot;Ordine del modello (p, q)&quot;)
+    ax.set_ylabel(&quot;BIC meno il BIC del migliore (più basso è meglio)&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_bic_per_ordine.png&quot;)
+    plt.close(fig)
+
+    e_m = (pr[&quot;reale&quot;] - pr[&quot;arima&quot;]) ** 2
+    e_b = (pr[&quot;reale&quot;] - pr[&quot;media_storica&quot;]) ** 2
+    cum = (e_b - e_m).cumsum() * 1e4
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(pd.PeriodIndex(pr[&quot;mese&quot;], freq=&quot;M&quot;).to_timestamp(), cum, color=ARANCIO, lw=2)
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_ylabel(&quot;Errore quadratico cumulato: media storica meno ARIMA (sopra lo zero vince ARIMA)&quot;)
+    fig.savefig(config.FIGURE / &quot;fig2_errore_cumulato.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    ax.hist(bo[&quot;r2_oos&quot;] * 100, bins=50, color=GRIGIO, alpha=0.85)
+    ax.axvline(0, color=&quot;#555&quot;, lw=1.5)
+    ax.axvline(m[&quot;r2_oos&quot;][&quot;valore&quot;] * 100, color=ARANCIO, lw=2.5, label=&quot;Valore osservato&quot;)
+    ax.set_xlabel(&quot;R quadro fuori campione (%) nei ricampionamenti&quot;)
+    ax.set_ylabel(&quot;Ricampionamenti&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig3_bootstrap_r2.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 303 - &quot;ARIMA sui rendimenti&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Idea: un modello ARIMA(p, d, q) descrive una serie con la sua memoria (p ritardi dei valori passati, q ritardi degli errori passati) dopo
+aver tolto d volte la tendenza. Sui rendimenti d è zero (un rendimento è già una differenza di logaritmi dei prezzi). Si adatta, sui
+rendimenti logaritmici MENSILI dell&#x27;S&amp;P 500 (chiusure di fine mese, senza dividendi), il modello scelto con il criterio BIC tra tutti gli
+ordini fino a (2, 2); lo si verifica dentro il campione (BIC, spiegazione della varianza, residui) e FUORI dal campione: ogni dodici mesi si
+ristima il modello solo con i dati già noti e si prevede il mese successivo, confrontando l&#x27;errore con quello della semplice media storica.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;ARIMA&quot;, &quot;ARMA&quot;, &quot;AR(1)&quot;, &quot;MA(1)&quot;, &quot;ARIMA(0,1,0)&quot;, &quot;BIC&quot;, &quot;AIC&quot;, &quot;Ljung-Box&quot;, &quot;Clark-West&quot;)
+
+# --- Modello ---------------------------------------------------------------------------------------------------
+P_MAX, Q_MAX = 2, 2                # ordini provati: tutte le coppie da (0, 0) a (2, 2)
+MESI_INIZIALI = 240                # primi vent&#x27;anni solo per stimare; le previsioni cominciano dopo
+OGNI_MESI = 12                     # il modello si ristima una volta all&#x27;anno, con i soli dati già noti
+LAG_TEST = 12                      # ritardi del test di Ljung-Box sui residui e per l&#x27;errore standard di Newey-West
+LAG_ADF = 12
+H1_P_PIU_Q_MAX = 1                 # ipotesi 1: il BIC sceglie al massimo un parametro di memoria (p + q &lt;= 1)
+H2_R2_MAX = 0.02                   # ipotesi 2: il miglior modello spiega in campione meno del 2% della varianza
+H3_R2_OOS_MAX = 0.01               # ipotesi 3: R quadro fuori campione sotto l&#x27;1%
+SOGLIA = 0.05
+SOGLIA_FORTE = 0.01
+N_BOOT = 2000
+BLOCCO_MEDIO = 12
+LIVELLO_IC = 0.95
+SEME = 20261030
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati ------------------------------------------------------------
+IPOTESI = (
+    &quot;1) Sull&#x27;intero periodo il BIC sceglie un modello con al massimo un parametro di memoria (p più q non superiore a uno): la serie dei rendimenti mensili ha pochissima struttura. &quot;
+    &quot;2) Il modello scelto spiega, dentro il campione, meno del 2% della varianza dei rendimenti mensili. &quot;
+    &quot;3) Fuori dal campione il modello non migliora la media storica di più dell&#x27;1%: l&#x27;R quadro fuori campione, calcolato sull&#x27;errore quadratico, è sotto l&#x27;1%. &quot;
+    &quot;4) Il modello lascia intatta la volatilità: il test di Ljung-Box sui quadrati dei residui, a dodici ritardi, rifiuta al 1% (p-value sotto 0,01). &quot;
+    &quot;5) Il segno previsto non batte il segno ovvio: la quota di mesi in cui il modello indovina il segno non supera la quota di mesi positivi, cioè quella di chi prevede sempre «sale». &quot;
+    &quot;6) Il test di Clark-West non rifiuta al 5% l&#x27;uguaglianza tra il modello e la media storica.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 303: rendimenti mensili, scelta dell&#x27;ordine ARIMA, previsioni fuori campione, test di Clark-West, bootstrap.&quot;&quot;&quot;
+import math
+import warnings
+
+import numpy as np
+import pandas as pd
+from scipy.stats import norm
+from statsmodels.tsa.arima.model import ARIMA
+
+
+def rendimenti_mensili(close: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Rendimenti logaritmici mensili sulle chiusure dell&#x27;ultimo giorno di Borsa di ogni mese. L&#x27;ultimo mese dei dati,
+    di solito incompleto, è scartato.&quot;&quot;&quot;
+    mese = close.groupby([close.index.year, close.index.month]).last()
+    mese.index = pd.PeriodIndex([pd.Period(year=a, month=m, freq=&quot;M&quot;) for a, m in mese.index])
+    return np.log(mese).diff().dropna().iloc[:-1]
+
+
+def adatta(y: np.ndarray, p: int, q: int):
+    &quot;&quot;&quot;ARMA(p, q) con costante sui rendimenti; None se l&#x27;adattamento non converge.&quot;&quot;&quot;
+    with warnings.catch_warnings():
+        warnings.simplefilter(&quot;ignore&quot;)
+        try:
+            ris = ARIMA(y, order=(p, 0, q), trend=&quot;c&quot;).fit()
+        except Exception:
+            return None
+    if not np.isfinite(ris.bic):
+        return None
+    return ris
+
+
+def scegli_ordine(y: np.ndarray, pmax: int, qmax: int, criterio: str = &quot;bic&quot;):
+    &quot;&quot;&quot;Prova tutti gli ordini (p, q) fino a (pmax, qmax). Restituisce (ordine migliore, risultato, tabella {(p,q): criterio}).&quot;&quot;&quot;
+    tabella, miglior = {}, (None, None, np.inf)
+    for p in range(pmax + 1):
+        for q in range(qmax + 1):
+            ris = adatta(y, p, q)
+            if ris is None:
+                continue
+            v = ris.bic if criterio == &quot;bic&quot; else ris.aic
+            tabella[(p, q)] = float(v)
+            if v &lt; miglior[2]:
+                miglior = ((p, q), ris, v)
+    return miglior[0], miglior[1], tabella
+
+
+def previsioni_rolling(y: np.ndarray, iniziale: int, ogni: int, pmax: int, qmax: int):
+    &quot;&quot;&quot;Previsione a un mese per tutti i mesi da `iniziale` in poi. Ogni `ogni` mesi si sceglie l&#x27;ordine con il BIC e si ristimina il modello su tutti
+    i dati fino a quel mese; nei mesi in mezzo i parametri restano fissi e la previsione usa solo i rendimenti già noti.
+    Restituisce (previsione ARIMA, media storica, valori reali, ordini scelti per blocco).&quot;&quot;&quot;
+    T = len(y)
+    f_mod, f_med, reale, ordini = [], [], [], []
+    for t0 in range(iniziale, T, ogni):
+        ordine, ris, _ = scegli_ordine(y[:t0], pmax, qmax)
+        t1 = min(t0 + ogni, T)
+        nuovo = ris.apply(y[:t1])                     # stessi parametri, dati noti fino a t1
+        pred = np.asarray(nuovo.predict(start=t0, end=t1 - 1))
+        # la previsione del mese t usa solo i dati fino a t - 1: predict() in-sample è una previsione a un passo
+        f_mod.extend(pred.tolist())
+        f_med.extend([float(y[:t].mean()) for t in range(t0, t1)])
+        reale.extend(y[t0:t1].tolist())
+        ordini.append(ordine)
+    return np.array(f_mod), np.array(f_med), np.array(reale), ordini
+
+
+def newey_west_t(x: np.ndarray, lag: int) -&gt; float:
+    &quot;&quot;&quot;Statistica t della media di x con errore standard di Newey-West (pesi di Bartlett).&quot;&quot;&quot;
+    x = np.asarray(x, dtype=float)
+    n = len(x)
+    d = x - x.mean()
+    s = float(d @ d) / n
+    for k in range(1, lag + 1):
+        s += 2 * (1 - k / (lag + 1)) * float(d[k:] @ d[:-k]) / n
+    return float(x.mean() / math.sqrt(s / n))
+
+
+def clark_west(reale, f_base, f_mod, lag: int) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Test di Clark-West per modelli annidati: il modello più grande batte quello di base? Restituisce (t, p-value a una coda).&quot;&quot;&quot;
+    reale, f_base, f_mod = (np.asarray(v, dtype=float) for v in (reale, f_base, f_mod))
+    e_b, e_m = reale - f_base, reale - f_mod
+    f = e_b ** 2 - (e_m ** 2 - (f_base - f_mod) ** 2)
+    t = newey_west_t(f, lag)
+    return t, float(1 - norm.cdf(t))
+
+
+def r2_fuori_campione(reale, f_base, f_mod) -&gt; float:
+    reale, f_base, f_mod = (np.asarray(v, dtype=float) for v in (reale, f_base, f_mod))
+    return float(1 - np.sum((reale - f_mod) ** 2) / np.sum((reale - f_base) ** 2))
+
+
+def bootstrap_stazionario(rng, n: int, lunghezza_media: float, n_boot: int):
+    &quot;&quot;&quot;Indici di un bootstrap stazionario (Politis-Romano): blocchi di lunghezza geometrica con media `lunghezza_media`.&quot;&quot;&quot;
+    p = 1.0 / lunghezza_media
+    for _ in range(n_boot):
+        idx = np.empty(n, dtype=int)
+        idx[0] = rng.integers(n)
+        nuovo = rng.random(n) &lt; p
+        salti = rng.integers(n, size=n)
+        for i in range(1, n):
+            idx[i] = salti[i] if nuovo[i] else (idx[i - 1] + 1) % n
+        yield idx
+
+
+def ljung_box_serie(x: np.ndarray, h: int) -&gt; tuple[float, float]:
+    from statsmodels.stats.diagnostic import acorr_ljungbox
+    r = acorr_ljungbox(np.asarray(x, dtype=float), lags=[h], return_df=True)
+    return float(r[&quot;lb_stat&quot;].iloc[0]), float(r[&quot;lb_pvalue&quot;].iloc[0])
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome, cond):
+    global n_ok
+    print((&quot;OK   &quot; if cond else &quot;FAIL &quot;) + nome)
+    if not cond:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+rng = np.random.default_rng(1)
+# 1. rendimenti mensili: 3 mesi finti, l&#x27;ultimo (incompleto) è scartato
+d = pd.bdate_range(&quot;2020-01-01&quot;, &quot;2020-04-10&quot;)
+c = pd.Series(100 * 1.001 ** np.arange(len(d)), index=d)
+rm = fx.rendimenti_mensili(c)
+controlla(&quot;rendimenti mensili: scartato l&#x27;ultimo mese incompleto&quot;, str(rm.index[-1]) == &quot;2020-03&quot; and len(rm) == 2)
+# 2. AR(1) con phi 0,5: il BIC sceglie un ordine con memoria e stima phi vicino a 0,5
+a = np.zeros(1500)
+e = rng.normal(0, 1, 1500)
+for t in range(1, 1500):
+    a[t] = 0.5 * a[t - 1] + e[t]
+ordine, ris, tab = fx.scegli_ordine(a, 2, 2)
+controlla(&quot;AR(1): l&#x27;ordine scelto ha almeno un parametro AR&quot;, ordine[0] &gt;= 1)
+controlla(&quot;AR(1): phi stimato vicino a 0,5&quot;, abs(float(ris.params[list(ris.param_names).index(&quot;ar.L1&quot;)]) - 0.5) &lt; 0.1)
+# 3. rumore bianco: il BIC sceglie (0, 0)
+w = rng.normal(0.01, 0.04, 800)
+ordine_w, _, _ = fx.scegli_ordine(w, 2, 2)
+controlla(&quot;rumore bianco: il BIC sceglie (0, 0)&quot;, ordine_w == (0, 0))
+# 4. previsioni a un passo senza guardare avanti: cambiare un valore futuro non cambia la previsione passata
+y = rng.normal(0.01, 0.04, 400)
+f1, _, r1, _ = fx.previsioni_rolling(y, 300, 25, 1, 1)
+y2 = y.copy()
+y2[390] += 1.0
+f2, _, _, _ = fx.previsioni_rolling(y2, 300, 25, 1, 1)
+controlla(&quot;nessun look-ahead: le previsioni fino al mese 389 non cambiano se si altera il mese 390&quot;, np.allclose(f1[:90], f2[:90], atol=1e-8))
+controlla(&quot;le previsioni sono quante i mesi fuori campione&quot;, len(f1) == 100 and np.allclose(r1, y[300:]))
+# 5. R quadro fuori campione: modello perfetto = 1, modello uguale alla base = 0
+r = rng.normal(0, 1, 200)
+b = np.zeros(200)
+controlla(&quot;R quadro fuori campione di un modello perfetto&quot;, abs(fx.r2_fuori_campione(r, b, r) - 1) &lt; 1e-12)
+controlla(&quot;R quadro fuori campione di un modello uguale alla base&quot;, abs(fx.r2_fuori_campione(r, b, b)) &lt; 1e-12)
+# 6. Clark-West: su rumore bianco il p-value non è piccolo; con un segnale vero lo è
+ru = rng.normal(0, 1, 1500)
+f_buono = 0.5 * ru + rng.normal(0, 0.1, 1500)   # previsione con vero contenuto
+_, p_rum = fx.clark_west(ru, np.zeros(1500), rng.normal(0, 0.05, 1500), 12)
+_, p_seg = fx.clark_west(ru, np.zeros(1500), f_buono, 12)
+controlla(&quot;Clark-West: previsione di puro rumore non rifiuta a 0,001&quot;, p_rum &gt; 0.001)
+controlla(&quot;Clark-West: previsione informativa rifiuta&quot;, p_seg &lt; 0.001)
+# 7. Newey-West: media nulla -&gt; t piccola; media grande -&gt; t grande
+controlla(&quot;Newey-West: media vera zero&quot;, abs(fx.newey_west_t(rng.normal(0, 1, 3000), 12)) &lt; 4)
+controlla(&quot;Newey-West: media lontana da zero&quot;, fx.newey_west_t(rng.normal(1, 1, 3000), 12) &gt; 10)
+# 8. bootstrap stazionario: indici dentro l&#x27;intervallo e blocchi consecutivi
+idx = next(fx.bootstrap_stazionario(rng, 100, 10, 1))
+controlla(&quot;bootstrap stazionario: indici validi&quot;, idx.min() &gt;= 0 and idx.max() &lt; 100 and len(idx) == 100)
+controlla(&quot;bootstrap stazionario: contiene blocchi consecutivi&quot;, np.mean(np.diff(idx) == 1) &gt; 0.5)
+print(f&quot;Tutti i {n_ok} controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
