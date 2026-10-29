@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ETF covered call: rendita o rinuncia? · il codice · TickerFight</title>
+<meta name="description" content="gli ETF che vendono ogni mese opzioni call sull&#x27;indice e distribuiscono il premio (XYLD sull&#x27;S&amp;P 500, QYLD sul Nasdaq-100) rendono di più, di meno o con meno rischio dell&#x27;indice? E uno stesso rischio si può ottenere più semplicemente con indice e liquidità?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>ETF covered call: rendita o rinuncia?</h1>
+<p class="domanda">Gli ETF che vendono ogni mese opzioni call sull&#x27;indice e distribuiscono il premio (XYLD sull&#x27;S&amp;P 500, QYLD sul Nasdaq-100) rendono di più, di meno o con meno rischio dell&#x27;indice? E uno stesso rischio si può ottenere più semplicemente con indice e liquidità?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="etf-covered-call-rendita-o-rinuncia.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Dati:</strong> chiusure aggiustate (distribuzioni reinvestite) di XYLD, QYLD, SPY e QQQ dal giorno in cui esistono tutti e quattro.</li>
+<li><strong>Coppie:</strong> XYLD contro SPY, QYLD contro QQQ.</li>
+<li><strong>Misure:</strong> rendimento annuo composto, volatilità, Sharpe, perdita massima, cattura mensile dei rialzi e dei ribassi.</li>
+<li><strong>Test:</strong> bootstrap a blocchi della differenza di Sharpe; portafoglio di indice e liquidità con la stessa volatilità del covered call; crollo del 2020 e rialzo dei tassi del 2022.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>etf-covered-call-rendita-o-rinuncia/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica SPY, QQQ, XYLD, QYLD e il tasso a tre mesi (^IRX) da Yahoo Finance
+    ├── 02_backtest_e_test.py  metriche, cattura, bootstrap, portafoglio con la stessa volatilità, due fasi di crisi
+    ├── 03_grafici.py          i grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            cattura dei mesi di rialzo e ribasso, portafoglio con la stessa volatilità
+    ├── motore.py              rendimento, volatilità, Sharpe, perdita massima, bootstrap a blocchi
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd etf-covered-call-rendita-o-rinuncia
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera di quattro ETF (SPY, QQQ, XYLD, QYLD) e del tasso a tre mesi (^IRX).
+
+Salva, per ogni ETF, dati/&lt;ticker&gt;.csv (Date, Close, Adj Close, Volume) e dati/metadati.json con la fonte,
+la data del download, la versione di yfinance e l&#x27;impronta SHA-256 di ogni file. Gli script successivi leggono SOLO
+i file salvati: i risultati restano riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;Adj Close&quot; è il prezzo con i dividendi reinvestiti: è quello che si usa per i rendimenti.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;etf&quot;: []}
+    nomi = {t: (n, a) for t, n, a in config.ETF}
+    nomi[config.TICKER_LIQUIDITA] = (&quot;Tasso a 3 mesi dei Treasury americani (percentuale annua)&quot;, &quot;IRX&quot;)
+    for ticker in [t for t, _, _ in config.ETF] + [config.TICKER_LIQUIDITA]:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nomi[ticker][0], &quot;sigla&quot;: nomi[ticker][1]}
+        grezzo = scarica(ticker)
+        if grezzo.empty or &quot;Adj Close&quot; not in grezzo.columns:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;etf&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Close&quot;, &quot;Adj Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Adj Close&quot;])
+        df = df[df[&quot;Adj Close&quot;] &gt; 0]
+        # seduta ancora in corso: barra incompleta, da scartare
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:
+            df = df.iloc[:-1]
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;etf&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    principali = {t for t, _, _ in config.ETF} | {config.TICKER_LIQUIDITA}
+    ok = {r[&quot;ticker&quot;] for r in meta[&quot;etf&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;}
+    if not principali &lt;= ok:
+        raise SystemExit(f&quot;Mancano ETF principali: {sorted(principali - ok)}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>metriche, cattura, bootstrap, portafoglio con la stessa volatilità, due fasi di crisi</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - ETF covered call: XYLD contro SPY e QYLD contro QQQ.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json     ogni numero dell&#x27;articolo, con descrizione e origine
+  curve.csv         valore di 1 dollaro nei quattro ETF (una seduta su cinque)
+  mensili.csv       rendimenti mensili dei quattro ETF
+  bootstrap.csv     differenze di Sharpe ricampionate (covered call meno indice) per le due coppie
+  miste.csv         valore di 1 dollaro del portafoglio con la stessa volatilità, per le due coppie (una seduta su cinque)
+&quot;&quot;&quot;
+import json
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as f
+import motore as m
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con motore.py e funzioni.py&quot;
+GA = config.GIORNI_ANNO
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def carica(ticker: str, colonna: str) -&gt; pd.Series:
+    df = pd.read_csv(config.file_dati(ticker), parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    c = df[colonna].astype(float)
+    if c.isna().any() or (c &lt; 0).any():
+        raise SystemExit(f&quot;{ticker}: dati mancanti o negativi.&quot;)
+    return c
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    sigle = [s for _, _, s in config.ETF]
+    prezzi = pd.concat({s: carica(t, config.COLONNA_PREZZO) for t, _, s in config.ETF}, axis=1).dropna()
+    anni = (prezzi.index[-1] - prezzi.index[0]).days / 365.25
+    if anni &lt; config.ANNI_MINIMI:
+        raise SystemExit(f&quot;Storia comune di {anni:.1f} anni: troppo corta.&quot;)
+    tasso = carica(config.TICKER_LIQUIDITA, &quot;Close&quot;).reindex(prezzi.index, method=&quot;ffill&quot;).bfill() / 100.0
+    R = prezzi.pct_change().dropna()
+    liq = (tasso.reindex(R.index) / GA).to_numpy()          # rendimento giornaliero della liquidità
+    fini = m.fine_mese(R.index)
+    mensili = m.rendimenti_mensili(R.to_numpy(), fini)
+    ci = {s: i for i, s in enumerate(sigle)}
+    rng = np.random.default_rng(config.SEME)
+    a = (1 - config.LIVELLO_CONFIDENZA) / 2
+
+    reg(&quot;data_inizio&quot;, str(prezzi.index[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta in comune dei quattro ETF&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(prezzi.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta nei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;anni&quot;, anni, &quot;num1&quot;, &quot;Anni di storia comune&quot;, &quot;dati/&quot;)
+    reg(&quot;n_sedute&quot;, len(R), &quot;int&quot;, &quot;Rendimenti giornalieri in comune&quot;, &quot;dati/&quot;)
+    reg(&quot;n_mesi&quot;, len(mensili), &quot;int&quot;, &quot;Mesi usati per la cattura&quot;, &quot;dati/&quot;)
+    reg(&quot;capitale&quot;, config.CAPITALE, &quot;int&quot;, &quot;Capitale iniziale per tradurre i rendimenti in dollari&quot;, &quot;config.py&quot;)
+    reg(&quot;tasso_medio&quot;, float(tasso.mean()), &quot;pct1&quot;, &quot;Tasso a tre mesi medio nel periodo&quot;, &quot;dati/IRX.csv&quot;)
+    reg(&quot;h2_riduzione&quot;, config.H2_VOL_RIDUZIONE, &quot;pct0&quot;, &quot;Ipotesi 2: riduzione relativa minima della volatilità&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_dd&quot;, config.H3_DD_MIN, &quot;pct0&quot;, &quot;Ipotesi 3: perdita massima minima del covered call&quot;, &quot;config.py&quot;)
+    reg(&quot;h4_up&quot;, config.H4_UP_MAX, &quot;pct0&quot;, &quot;Ipotesi 4: cattura massima dei mesi di rialzo&quot;, &quot;config.py&quot;)
+    reg(&quot;h4_down&quot;, config.H4_DOWN_MIN, &quot;pct0&quot;, &quot;Ipotesi 4: cattura minima dei mesi di ribasso&quot;, &quot;config.py&quot;)
+    reg(&quot;n_bootstrap&quot;, config.N_BOOTSTRAP, &quot;int&quot;, &quot;Ricampionamenti del bootstrap&quot;, &quot;config.py&quot;)
+    reg(&quot;blocco&quot;, config.BLOCCO_BOOTSTRAP, &quot;int&quot;, &quot;Giorni per blocco del bootstrap&quot;, &quot;config.py&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello degli intervalli di confidenza&quot;, &quot;config.py&quot;)
+
+    stat = {}
+    for s in sigle:
+        r = R[s].to_numpy()
+        e = m.equity(r)
+        stat[s] = dict(cagr=m.cagr(r, GA), vol=m.vol(r, GA), sharpe=m.sharpe(r, GA), dd=-m.max_dd(r), finale=config.CAPITALE * float(e[-1]))
+        k = s.lower()
+        reg(f&quot;{k}_cagr&quot;, stat[s][&quot;cagr&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo composto di {s} (distribuzioni reinvestite)&quot;, &quot;motore.cagr&quot;)
+        reg(f&quot;{k}_vol&quot;, stat[s][&quot;vol&quot;], &quot;pct1&quot;, f&quot;Volatilità annua di {s}&quot;, &quot;motore.vol&quot;)
+        reg(f&quot;{k}_sharpe&quot;, stat[s][&quot;sharpe&quot;], &quot;num2&quot;, f&quot;Rapporto di Sharpe di {s} (tasso privo di rischio zero)&quot;, &quot;motore.sharpe&quot;)
+        reg(f&quot;{k}_dd&quot;, stat[s][&quot;dd&quot;], &quot;pct0&quot;, f&quot;Perdita massima dal picco di {s}&quot;, &quot;motore.max_dd&quot;)
+        reg(f&quot;{k}_finale&quot;, stat[s][&quot;finale&quot;], &quot;int&quot;, f&quot;Valore finale del capitale iniziale in {s}&quot;, &quot;motore.equity&quot;)
+
+    esiti = {i: [] for i in range(1, 8)}
+    boots = {}
+    miste = {}
+    for cc, ix in config.COPPIE:
+        k, kx = cc.lower(), ix.lower()
+        rc, rx = R[cc].to_numpy(), R[ix].to_numpy()
+        reg(f&quot;{k}_diff_cagr&quot;, stat[cc][&quot;cagr&quot;] - stat[ix][&quot;cagr&quot;], &quot;pp1&quot;, f&quot;Rendimento annuo di {cc} meno quello di {ix}, in punti percentuali&quot;, &quot;motore.cagr&quot;)
+        rel = stat[cc][&quot;vol&quot;] / stat[ix][&quot;vol&quot;] - 1.0
+        reg(f&quot;{k}_vol_rel&quot;, -rel, &quot;pct0&quot;, f&quot;Riduzione relativa della volatilità di {cc} rispetto a {ix}&quot;, &quot;motore.vol&quot;)
+        reg(f&quot;{k}_diff_dd&quot;, stat[ix][&quot;dd&quot;] - stat[cc][&quot;dd&quot;], &quot;pp1&quot;, f&quot;Perdita massima di {ix} meno quella di {cc}, in punti percentuali&quot;, &quot;motore.max_dd&quot;)
+        reg(f&quot;{k}_rapporto_finale&quot;, stat[cc][&quot;finale&quot;] / stat[ix][&quot;finale&quot;], &quot;num2&quot;, f&quot;Valore finale di {cc} diviso quello di {ix}&quot;, &quot;motore.equity&quot;)
+        reg(f&quot;{k}_corr&quot;, float(np.corrcoef(rc, rx)[0, 1]), &quot;num2&quot;, f&quot;Correlazione dei rendimenti giornalieri tra {cc} e {ix}&quot;, &quot;dati/&quot;)
+        su, giu = f.cattura(mensili[:, ci[cc]], mensili[:, ci[ix]])
+        reg(f&quot;{k}_cat_su&quot;, su, &quot;pct0&quot;, f&quot;Cattura dei mesi di rialzo di {ix} da parte di {cc}&quot;, &quot;funzioni.cattura&quot;)
+        reg(f&quot;{k}_cat_giu&quot;, giu, &quot;pct0&quot;, f&quot;Cattura dei mesi di ribasso di {ix} da parte di {cc}&quot;, &quot;funzioni.cattura&quot;)
+        boot = m.bootstrap_diff_sharpe(rc, rx, config.N_BOOTSTRAP, config.BLOCCO_BOOTSTRAP, GA, rng)
+        lo, hi = [float(x) for x in np.quantile(boot, [a, 1 - a])]
+        boots[cc] = boot
+        reg(f&quot;{k}_sh_diff&quot;, stat[cc][&quot;sharpe&quot;] - stat[ix][&quot;sharpe&quot;], &quot;num2&quot;, f&quot;Sharpe di {cc} meno Sharpe di {ix}&quot;, &quot;motore.sharpe&quot;)
+        reg(f&quot;{k}_sh_lo&quot;, lo, &quot;num2&quot;, f&quot;Estremo inferiore dell&#x27;intervallo bootstrap a blocchi della differenza di Sharpe ({cc} meno {ix})&quot;, &quot;motore.bootstrap_diff_sharpe&quot;)
+        reg(f&quot;{k}_sh_hi&quot;, hi, &quot;num2&quot;, f&quot;Estremo superiore dell&#x27;intervallo bootstrap a blocchi della differenza di Sharpe ({cc} meno {ix})&quot;, &quot;motore.bootstrap_diff_sharpe&quot;)
+        w = f.peso_stessa_volatilita(rx, liq, stat[cc][&quot;vol&quot;], GA)
+        rm = f.miscela(rx, liq, w)
+        mix_cagr, mix_sh, mix_dd = m.cagr(rm, GA), m.sharpe(rm, GA), -m.max_dd(rm)
+        miste[cc] = m.equity(rm)
+        reg(f&quot;{k}_w&quot;, w, &quot;pct0&quot;, f&quot;Peso di {ix} nel portafoglio con la stessa volatilità di {cc} (il resto in liquidità)&quot;, &quot;funzioni.peso_stessa_volatilita&quot;)
+        reg(f&quot;{k}_mix_cagr&quot;, mix_cagr, &quot;pct1&quot;, f&quot;Rendimento annuo composto del portafoglio {ix} e liquidità con la volatilità di {cc}&quot;, &quot;motore.cagr&quot;)
+        reg(f&quot;{k}_mix_dd&quot;, mix_dd, &quot;pct0&quot;, f&quot;Perdita massima del portafoglio {ix} e liquidità con la volatilità di {cc}&quot;, &quot;motore.max_dd&quot;)
+        reg(f&quot;{k}_mix_diff&quot;, mix_cagr - stat[cc][&quot;cagr&quot;], &quot;pp1&quot;, f&quot;Rendimento annuo del portafoglio con la stessa volatilità meno quello di {cc}, in punti percentuali&quot;, &quot;motore.cagr&quot;)
+        n_crisi_meglio = 0
+        crisi = []
+        for j, (nome, ini, fin) in enumerate(config.CRISI):
+            sel = (R.index &gt;= pd.Timestamp(ini)) &amp; (R.index &lt;= pd.Timestamp(fin))
+            if sel.sum() &lt; 5:
+                raise SystemExit(f&quot;Fase «{nome}» fuori dai dati.&quot;)
+            rcc, rix = float(np.prod(1 + rc[sel]) - 1), float(np.prod(1 + rx[sel]) - 1)
+            crisi.append((rcc, rix))
+            reg(f&quot;{k}_crisi{j}_cc&quot;, rcc, &quot;pct0&quot;, f&quot;Rendimento di {cc} nella fase «{nome}»&quot;, &quot;dati/&quot;)
+            reg(f&quot;{k}_crisi{j}_ix&quot;, rix, &quot;pct0&quot;, f&quot;Rendimento di {ix} nella fase «{nome}»&quot;, &quot;dati/&quot;)
+            reg(f&quot;{k}_crisi{j}_meglio&quot;, int(rcc &gt; rix), &quot;int&quot;, f&quot;1 se {cc} perde meno di {ix} nella fase «{nome}»&quot;, &quot;dati/&quot;)
+            n_crisi_meglio += int(rcc &gt; rix)
+        reg(f&quot;{k}_n_crisi_meglio&quot;, n_crisi_meglio, &quot;int&quot;, f&quot;Fasi di crisi in cui {cc} perde meno di {ix}&quot;, &quot;dati/&quot;)
+        esiti[1].append(stat[cc][&quot;cagr&quot;] &lt; stat[ix][&quot;cagr&quot;])
+        esiti[2].append(rel &lt;= -config.H2_VOL_RIDUZIONE)
+        esiti[3].append(stat[cc][&quot;dd&quot;] &gt; config.H3_DD_MIN)
+        esiti[4].append(su &lt; config.H4_UP_MAX and giu &gt; config.H4_DOWN_MIN)
+        esiti[5].append(lo &lt;= 0 &lt;= hi)
+        esiti[6].append(mix_cagr &gt; stat[cc][&quot;cagr&quot;])
+        esiti[7].append(n_crisi_meglio == len(config.CRISI))
+    for i in range(1, 8):
+        reg(f&quot;h{i}_esito&quot;, int(all(esiti[i])), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata in entrambe le coppie, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+        reg(f&quot;h{i}_n_coppie&quot;, int(sum(esiti[i])), &quot;int&quot;, f&quot;Coppie su due in cui l&#x27;ipotesi {i} è confermata&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(all(esiti[i]) for i in range(1, 8))), &quot;int&quot;, &quot;Ipotesi confermate (su sette)&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_coppie&quot;, len(config.COPPIE), &quot;int&quot;, &quot;Coppie covered call e indice&quot;, &quot;config.py&quot;)
+    reg(&quot;run_utc&quot;, datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;testo&quot;, &quot;Data di esecuzione dell&#x27;analisi&quot;)
+    json.dump({&quot;valori&quot;: RIS}, open(config.RISULTATI / &quot;metriche.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;), indent=1, ensure_ascii=False)
+
+    cum = np.cumprod(1.0 + R.to_numpy(), axis=0)
+    camp = np.arange(0, len(R), 5)
+    pd.DataFrame({&quot;data&quot;: R.index[camp].strftime(&quot;%Y-%m-%d&quot;), **{s.lower(): cum[camp, ci[s]] for s in sigle}}).to_csv(
+        config.RISULTATI / &quot;curve.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    pd.DataFrame({&quot;data&quot;: R.index[camp].strftime(&quot;%Y-%m-%d&quot;), **{f&quot;mix_{cc.lower()}&quot;: miste[cc][camp] for cc, _ in config.COPPIE}}).to_csv(
+        config.RISULTATI / &quot;miste.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    pd.DataFrame(mensili, columns=sigle).to_csv(config.RISULTATI / &quot;mensili.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    pd.DataFrame({cc.lower(): boots[cc] for cc, _ in config.COPPIE}).to_csv(config.RISULTATI / &quot;bootstrap.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    print(f&quot;Scritti {len(RIS)} numeri in metriche.json&quot;)
+    for i in range(1, 8):
+        print(f&quot;H{i}: {esiti[i]}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_valore.png      valore di un dollaro nei quattro ETF (scala logaritmica)
+  fig2_cattura.png     cattura dei mesi di rialzo e di ribasso, per le due coppie
+  fig3_stessa_vol.png  covered call contro portafoglio indice e liquidità con la stessa volatilità
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO, VERDE = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;, &quot;#2a7f4f&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    c = pd.read_csv(R / &quot;curve.csv&quot;, parse_dates=[&quot;data&quot;])
+    mx = pd.read_csv(R / &quot;miste.csv&quot;, parse_dates=[&quot;data&quot;])
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(c[&quot;data&quot;], c[&quot;spy&quot;], color=BLU, lw=2, label=&quot;SPY (S&amp;P 500)&quot;)
+    ax.plot(c[&quot;data&quot;], c[&quot;xyld&quot;], color=BLU, lw=2, ls=&quot;--&quot;, label=&quot;XYLD (covered call sull&#x27;S&amp;P 500)&quot;)
+    ax.plot(c[&quot;data&quot;], c[&quot;qqq&quot;], color=ARANCIO, lw=2, label=&quot;QQQ (Nasdaq-100)&quot;)
+    ax.plot(c[&quot;data&quot;], c[&quot;qyld&quot;], color=ARANCIO, lw=2, ls=&quot;--&quot;, label=&quot;QYLD (covered call sul Nasdaq-100)&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_ylabel(&quot;Valore di 1 dollaro (scala logaritmica)&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig1_valore.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(9, 5))
+    etich = [&quot;XYLD su SPY&quot;, &quot;QYLD su QQQ&quot;]
+    x = np.arange(2)
+    su = [V[&quot;xyld_cat_su&quot;][&quot;valore&quot;] * 100, V[&quot;qyld_cat_su&quot;][&quot;valore&quot;] * 100]
+    giu = [V[&quot;xyld_cat_giu&quot;][&quot;valore&quot;] * 100, V[&quot;qyld_cat_giu&quot;][&quot;valore&quot;] * 100]
+    ax.bar(x - 0.2, su, width=0.4, color=VERDE, label=&quot;Mesi di rialzo dell&#x27;indice&quot;)
+    ax.bar(x + 0.2, giu, width=0.4, color=ARANCIO, label=&quot;Mesi di ribasso dell&#x27;indice&quot;)
+    ax.axhline(100, color=GRIGIO, ls=&quot;--&quot;, lw=1)
+    ax.set_xticks(x)
+    ax.set_xticklabels(etich)
+    ax.set_ylabel(&quot;Quota dell&#x27;indice catturata (%)&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig2_cattura.png&quot;)
+    plt.close(fig)
+
+    fig, axs = plt.subplots(1, 2, figsize=(11, 4.6), sharey=False)
+    for ax, (cc, nome, colore) in zip(axs, ((&quot;xyld&quot;, &quot;XYLD&quot;, BLU), (&quot;qyld&quot;, &quot;QYLD&quot;, ARANCIO))):
+        ax.plot(c[&quot;data&quot;], c[cc], color=colore, lw=2, label=nome)
+        ax.plot(mx[&quot;data&quot;], mx[f&quot;mix_{cc}&quot;], color=GRIGIO, lw=2, label=&quot;Indice e liquidità, stessa volatilità&quot;)
+        ax.set_title(f&quot;{nome}: peso dell&#x27;indice {V[cc + &#x27;_w&#x27;][&#x27;valore&#x27;] * 100:.0f}%&quot;.replace(&quot;.&quot;, &quot;,&quot;), loc=&quot;left&quot;, fontsize=12)
+        ax.legend(loc=&quot;upper left&quot;, fontsize=9)
+        ax.tick_params(axis=&quot;x&quot;, rotation=30)
+    axs[0].set_ylabel(&quot;Valore di 1 dollaro&quot;)
+    fig.savefig(config.FIGURE / &quot;fig3_stessa_vol.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 483 - &quot;ETF covered call: rendita o rinuncia?&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui, scritti prima di guardare i risultati.
+
+Due ETF covered call, che vendono ogni mese opzioni call sull&#x27;indice e distribuiscono il premio incassato: XYLD (sull&#x27;S&amp;P 500) e
+QYLD (sul Nasdaq-100). Ognuno si confronta con l&#x27;ETF che replica lo stesso indice senza opzioni, SPY e QQQ. Tutti i prezzi sono
+«Adj Close» di Yahoo Finance, cioè con i dividendi e le distribuzioni reinvestiti. Periodo: da quando esistono tutti e quattro (da dicembre 2013).
+Terzo confronto: un portafoglio di controllo, indice e liquidità (tasso a tre mesi, ^IRX), con il peso dell&#x27;indice scelto in modo che la
+volatilità sia uguale a quella del covered call.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati: (ticker Yahoo Finance, nome, sigla) ---------------------------------------------------------------------
+ETF = [
+    (&quot;SPY&quot;, &quot;SPDR S&amp;P 500&quot;, &quot;SPY&quot;),
+    (&quot;QQQ&quot;, &quot;Invesco QQQ Trust (Nasdaq-100)&quot;, &quot;QQQ&quot;),
+    (&quot;XYLD&quot;, &quot;Global X S&amp;P 500 Covered Call&quot;, &quot;XYLD&quot;),
+    (&quot;QYLD&quot;, &quot;Global X Nasdaq 100 Covered Call&quot;, &quot;QYLD&quot;),
+]
+TICKER_LIQUIDITA = &quot;^IRX&quot;
+INIZIO_DOWNLOAD = &quot;2013-01-01&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;, &quot;Nasdaq-100&quot;, &quot;Nasdaq 100&quot;, &quot;QQQ&quot;, &quot;SPY&quot;, &quot;XYLD&quot;, &quot;QYLD&quot;, &quot;IRX&quot;)
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;chiusure giornaliere aggiustate di quattro ETF quotati negli Stati Uniti e il tasso a tre mesi&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+COLONNA_PREZZO = &quot;Adj Close&quot;     # prezzo con dividendi e distribuzioni reinvestiti
+ANNI_MINIMI = 8
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+# --- Parametri dell&#x27;analisi ----------------------------------------------------------------------------------------
+GIORNI_ANNO = 252
+CAPITALE = 500.0
+COPPIE = [(&quot;XYLD&quot;, &quot;SPY&quot;), (&quot;QYLD&quot;, &quot;QQQ&quot;)]       # (covered call, indice senza opzioni)
+H2_VOL_RIDUZIONE = 0.10          # ipotesi 2: la volatilità del covered call è più bassa di almeno il 10% (relativo) di quella dell&#x27;indice
+H3_DD_MIN = 0.20                 # ipotesi 3: la perdita massima del covered call resta comunque sopra il 20%
+H4_UP_MAX = 0.80                 # ipotesi 4: nei mesi di rialzo il covered call cattura meno dell&#x27;80% del rendimento dell&#x27;indice
+H4_DOWN_MIN = 0.80               # ... e nei mesi di ribasso cattura più dell&#x27;80% della perdita
+
+# --- Test statistici -----------------------------------------------------------------------------------------------
+SEME = 20261029
+N_BOOTSTRAP = 2000
+BLOCCO_BOOTSTRAP = 21
+LIVELLO_CONFIDENZA = 0.95
+
+# --- Fasi di crisi, fissate a priori (date di calendario) -----------------------------------------------------------
+CRISI = [
+    (&quot;Crollo del 2020&quot;, &quot;2020-02-19&quot;, &quot;2020-03-23&quot;),
+    (&quot;Rialzo dei tassi del 2022&quot;, &quot;2022-01-03&quot;, &quot;2022-10-12&quot;),
+]
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati ------------------------------------------------------------------
+IPOTESI = (
+    &quot;1) Nel periodo comune il rendimento annuo composto di entrambi i covered call, XYLD e QYLD, è più basso di quello dell&#x27;indice &quot;
+    &quot;corrispondente, SPY e QQQ. &quot;
+    &quot;2) La volatilità annua di entrambi i covered call è più bassa di quella dell&#x27;indice di almeno il 10% in termini relativi. &quot;
+    &quot;3) La perdita massima di entrambi i covered call resta comunque sopra il 20%: l&#x27;opzione non protegge dai crolli. &quot;
+    &quot;4) Su base mensile, in entrambi i covered call la cattura dei mesi di rialzo dell&#x27;indice è sotto l&#x27;80% e quella dei mesi di ribasso è sopra l&#x27;80%: &quot;
+    &quot;si rinuncia ai rialzi ma non si evitano i ribassi. &quot;
+    &quot;5) La differenza di Sharpe tra covered call e indice non si distingue dallo zero in nessuna delle due coppie: l&#x27;intervallo di &quot;
+    &quot;confidenza al 95% la contiene. &quot;
+    &quot;6) Un portafoglio di indice e liquidità con la stessa volatilità del covered call ha un rendimento annuo composto più alto del covered call, in entrambe le coppie. &quot;
+    &quot;7) Nel crollo del 2020 e nel rialzo dei tassi del 2022 entrambi i covered call perdono meno dell&#x27;indice corrispondente.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>cattura dei mesi di rialzo e ribasso, portafoglio con la stessa volatilità</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 483: cattura dei mesi di rialzo e di ribasso, portafoglio con la stessa volatilità.&quot;&quot;&quot;
+import numpy as np
+
+
+def cattura(r_fondo: np.ndarray, r_indice: np.ndarray) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Cattura dei mesi di rialzo e di ribasso: rendimento medio del fondo diviso quello dell&#x27;indice, nei mesi in cui l&#x27;indice sale e in cui scende.&quot;&quot;&quot;
+    r_fondo, r_indice = np.asarray(r_fondo, float), np.asarray(r_indice, float)
+    su, giu = r_indice &gt; 0, r_indice &lt; 0
+    return float(r_fondo[su].mean() / r_indice[su].mean()), float(r_fondo[giu].mean() / r_indice[giu].mean())
+
+
+def miscela(r_indice: np.ndarray, r_liquidita: np.ndarray, w: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimenti giornalieri di un portafoglio con peso w nell&#x27;indice e 1 - w in liquidità, ribilanciato ogni giorno.&quot;&quot;&quot;
+    return w * np.asarray(r_indice, float) + (1.0 - w) * np.asarray(r_liquidita, float)
+
+
+def peso_stessa_volatilita(r_indice: np.ndarray, r_liquidita: np.ndarray, vol_obiettivo: float, ga: int) -&gt; float:
+    &quot;&quot;&quot;Peso dell&#x27;indice che dà alla miscela la volatilità annua `vol_obiettivo` (bisezione tra 0 e 1; se non raggiungibile, l&#x27;estremo).&quot;&quot;&quot;
+    def vol(w):
+        return float(np.std(miscela(r_indice, r_liquidita, w), ddof=1) * np.sqrt(ga))
+    lo, hi = 0.0, 1.0
+    if vol(hi) &lt;= vol_obiettivo:
+        return 1.0
+    if vol(lo) &gt;= vol_obiettivo:
+        return 0.0
+    for _ in range(60):
+        mid = (lo + hi) / 2
+        if vol(mid) &lt; vol_obiettivo:
+            lo = mid
+        else:
+            hi = mid
+    return (lo + hi) / 2
+</code></pre></details>
+<details><summary>flusso/motore.py<small>rendimento, volatilità, Sharpe, perdita massima, bootstrap a blocchi</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni di calcolo dell&#x27;articolo 202: metriche, finestre mobili, persistenza, bootstrap, scimmie.
+
+Nessuna strategia di trading: sono confronti tra buy &amp; hold. Le funzioni sono pure, così verifica_motore.py
+le controlla su dati inventati con risultati calcolabili a mano.
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def equity(r) -&gt; np.ndarray:
+    return np.cumprod(1.0 + np.asarray(r, dtype=float))
+
+
+def cagr(r, ga: int) -&gt; float:
+    r = np.asarray(r, dtype=float)
+    return float(np.prod(1.0 + r) ** (ga / len(r)) - 1.0)
+
+
+def vol(r, ga: int) -&gt; float:
+    return float(np.std(np.asarray(r, dtype=float), ddof=1) * np.sqrt(ga))
+
+
+def sharpe(r, ga: int) -&gt; float:
+    r = np.asarray(r, dtype=float)
+    return float(np.mean(r) / np.std(r, ddof=1) * np.sqrt(ga))
+
+
+def max_dd(r) -&gt; float:
+    e = equity(r)
+    picco = np.maximum.accumulate(np.concatenate([[1.0], e]))[1:]
+    return float(np.min(e / picco - 1.0))
+
+
+def fine_mese(indice: pd.DatetimeIndex) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posizioni dell&#x27;ultima seduta di ogni mese (escluso l&#x27;ultimo mese se incompleto non è controllato: si usa quanto c&#x27;è).&quot;&quot;&quot;
+    s = pd.Series(np.arange(len(indice)), index=indice)
+    return s.groupby([indice.year, indice.month]).last().to_numpy()
+
+
+def rendimento_finestre(cum: np.ndarray, fini: np.ndarray, lung: int) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Rendimento totale delle ultime `lung` sedute alla fine di ogni mese utile. cum: (T, k). Restituisce (posizioni, matrice).&quot;&quot;&quot;
+    ok = fini[fini &gt;= lung]
+    base = np.concatenate([np.ones((1, cum.shape[1])), cum], axis=0)   # base[i] = valore prima della seduta i
+    return ok, cum[ok] / base[ok - lung + 1] - 1.0
+
+
+def quote_vincitrici(rend: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Quota di finestre in cui ciascuna colonna ha il rendimento più alto.&quot;&quot;&quot;
+    v = np.argmax(rend, axis=1)
+    return np.bincount(v, minlength=rend.shape[1]) / len(v)
+
+
+def persistenza(cum: np.ndarray, fini: np.ndarray, lung: int) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Per ogni mese t con `lung` sedute prima e dopo: area vincitrice nel passato (usa solo dati fino a t) e nel futuro.&quot;&quot;&quot;
+    base = np.concatenate([np.ones((1, cum.shape[1])), cum], axis=0)
+    passato, futuro = [], []
+    for e in fini:
+        if e - lung + 1 &lt; 0 or e + lung &gt;= len(cum):
+            continue
+        passato.append(int(np.argmax(cum[e] / base[e - lung + 1])))
+        futuro.append(int(np.argmax(cum[e + lung] / cum[e])))
+    return np.array(passato), np.array(futuro)
+
+
+def p_permutazione(passato: np.ndarray, futuro: np.ndarray, n: int, rng) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Quota di coincidenze osservata e p-value: frazione di permutazioni del futuro con almeno altrettante coincidenze.&quot;&quot;&quot;
+    oss = float(np.mean(passato == futuro))
+    sup = 0
+    for _ in range(n):
+        if np.mean(passato == rng.permutation(futuro)) &gt;= oss - 1e-12:
+            sup += 1
+    return oss, (sup + 1) / (n + 1)
+
+
+def volatilita_mobile(r: pd.Series, finestra: int, ga: int) -&gt; pd.Series:
+    return r.rolling(finestra).std(ddof=1) * np.sqrt(ga)
+
+
+def correlazione_mobile(a: pd.Series, b: pd.Series, finestra: int) -&gt; pd.Series:
+    return a.rolling(finestra).corr(b)
+
+
+def bootstrap_diff_sharpe(ra, rb, n: int, blocco: int, ga: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Differenza di Sharpe (a - b) ricampionando a blocchi le stesse date per entrambe le serie.&quot;&quot;&quot;
+    ra, rb = np.asarray(ra, dtype=float), np.asarray(rb, dtype=float)
+    T = len(ra)
+    nb = int(np.ceil(T / blocco))
+    out = np.empty(n)
+    for i in range(n):
+        inizi = rng.integers(0, T - blocco + 1, size=nb)
+        idx = (inizi[:, None] + np.arange(blocco)[None, :]).ravel()[:T]
+        out[i] = sharpe(ra[idx], ga) - sharpe(rb[idx], ga)
+    return out
+
+
+def rendimenti_mensili(r: np.ndarray, fini: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimenti composti per mese: r (T, k); i mesi sono i tratti che finiscono nelle posizioni `fini`.&quot;&quot;&quot;
+    e = np.vstack([np.ones((1, r.shape[1])), np.cumprod(1.0 + r, axis=0)])
+    estremi = np.concatenate([[0], fini + 1])
+    if estremi[-1] != len(r):            # coda: ultimo mese incompleto, si include
+        estremi = np.concatenate([estremi, [len(r)]])
+    return e[estremi[1:]] / e[estremi[:-1]] - 1.0
+
+
+def scimmie_valore_finale(mensili: np.ndarray, n: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Valore finale di 1 per n scimmie che scelgono a caso l&#x27;area (colonna) ogni mese.&quot;&quot;&quot;
+    M, k = mensili.shape
+    scelta = rng.integers(0, k, size=(n, M))
+    return np.prod(1.0 + mensili[np.arange(M)[None, :], scelta], axis=1)
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di motore.py su dati inventati, con risultati calcolabili a mano. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as f
+import motore as m
+
+rng = np.random.default_rng(1)
+
+
+def uguale(a, b, tol=1e-9, nome=&quot;&quot;):
+    assert abs(a - b) &lt; tol, f&quot;{nome}: {a} != {b}&quot;
+    print(f&quot;ok  {nome}&quot;)
+
+
+# 1. rendimento composto: +10% e -10% in due sedute
+r = np.array([0.10, -0.10])
+uguale(m.equity(r)[-1], 0.99, nome=&quot;equity&quot;)
+uguale(m.cagr(np.full(252, 0.0), 252), 0.0, nome=&quot;cagr nullo&quot;)
+uguale(m.cagr(np.full(252, 0.001), 252), 1.001 ** 252 - 1, nome=&quot;cagr costante&quot;)
+# 2. perdita massima: sale a 1,2 poi scende a 0,6 -&gt; -50%
+uguale(m.max_dd(np.array([0.2, -0.5])), -0.5, nome=&quot;perdita massima&quot;)
+# 3. volatilità e Sharpe di una serie alternata +1% / -1%
+alt = np.tile([0.01, -0.01], 126)
+uguale(m.vol(alt, 252), np.std(alt, ddof=1) * np.sqrt(252), nome=&quot;volatilità&quot;)
+uguale(m.sharpe(alt + 0.0, 252), 0.0, tol=1e-9, nome=&quot;Sharpe nullo&quot;)
+# 4. fine mese: tre mesi finti
+idx = pd.bdate_range(&quot;2020-01-01&quot;, periods=70)
+fini = m.fine_mese(idx)
+assert idx[fini[0]].month == 1 and idx[fini[0] + 1].month == 2, &quot;fine mese&quot;
+print(&quot;ok  fine mese&quot;)
+# 5. finestre: A cresce 1% al giorno, B ferma, C scende 1%: A vince sempre, rendimento a 10 sedute noto
+T = 600
+R = np.column_stack([np.full(T, 0.01), np.zeros(T), np.full(T, -0.01)])
+cum = np.cumprod(1.0 + R, axis=0)
+pos, rend = m.rendimento_finestre(cum, np.array([50, 100, 599]), 10)
+uguale(rend[0, 0], 1.01 ** 10 - 1, nome=&quot;rendimento finestra A&quot;)
+uguale(rend[0, 1], 0.0, nome=&quot;rendimento finestra B&quot;)
+uguale(rend[0, 2], 0.99 ** 10 - 1, nome=&quot;rendimento finestra C&quot;)
+q = m.quote_vincitrici(rend)
+assert q.tolist() == [1.0, 0.0, 0.0], &quot;quote vincitrici&quot;
+print(&quot;ok  quote vincitrici&quot;)
+# 6. persistenza: se A vince sempre, passato = futuro sempre
+fm = m.fine_mese(pd.bdate_range(&quot;2000-01-03&quot;, periods=T))
+pa, fu = m.persistenza(cum, fm, 60)
+assert len(pa) &gt; 5 and (pa == fu).all() and (pa == 0).all(), &quot;persistenza&quot;
+print(&quot;ok  persistenza&quot;)
+# 7. permutazione: su dati indipendenti il p-value è alto; su dati identici con due classi è basso
+a = rng.integers(0, 3, 300)
+b = rng.integers(0, 3, 300)
+_, p = m.p_permutazione(a, b, 500, rng)
+assert p &gt; 0.05, f&quot;permutazione su dati indipendenti: p={p}&quot;
+_, p2 = m.p_permutazione(a, a, 500, rng)
+assert p2 &lt; 0.01, &quot;permutazione su dati identici&quot;
+print(&quot;ok  permutazione&quot;)
+# 8. correlazione mobile: serie identiche -&gt; 1; opposte -&gt; -1
+x = pd.Series(rng.normal(size=300))
+uguale(m.correlazione_mobile(x, x, 50).dropna().min(), 1.0, tol=1e-9, nome=&quot;correlazione 1&quot;)
+uguale(m.correlazione_mobile(x, -x, 50).dropna().max(), -1.0, tol=1e-9, nome=&quot;correlazione -1&quot;)
+# 9. bootstrap: due serie identiche -&gt; differenza di Sharpe zero
+d = m.bootstrap_diff_sharpe(x.to_numpy() * 0.01, x.to_numpy() * 0.01, 50, 21, 252, rng)
+assert np.abs(d).max() &lt; 1e-9, &quot;bootstrap identico&quot;
+print(&quot;ok  bootstrap&quot;)
+# 10. mensili e scimmie: tre aree con rendimento mensile costante 1%, 0, -1% -&gt; la scimmia ha valore tra i tre estremi
+Rm = np.column_stack([np.full(T, 0.0005), np.zeros(T), np.full(T, -0.0005)])
+mens = m.rendimenti_mensili(Rm, fm)
+uguale(np.prod(1 + mens[:, 0]), np.prod(1 + Rm[:, 0]), tol=1e-9, nome=&quot;mesi ricompongono il totale&quot;)
+sc = m.scimmie_valore_finale(mens, 2000, rng)
+assert (sc &lt;= np.prod(1 + mens[:, 0]) + 1e-9).all() and (sc &gt;= np.prod(1 + mens[:, 2]) - 1e-9).all(), &quot;scimmie nei limiti&quot;
+print(&quot;ok  scimmie&quot;)
+# 11. cattura: fondo che prende metà dei rialzi e tutti i ribassi
+idx_m = np.array([0.04, -0.02, 0.02, -0.04])
+fondo = np.array([0.02, -0.02, 0.01, -0.04])
+su, giu = f.cattura(fondo, idx_m)
+uguale(su, 0.5, nome=&quot;cattura rialzi&quot;)
+uguale(giu, 1.0, nome=&quot;cattura ribassi&quot;)
+# 12. peso a stessa volatilità: con liquidità costante la volatilità è lineare nel peso
+ri = rng.normal(0.0004, 0.01, 2000)
+liq = np.full(2000, 0.0001)
+w = f.peso_stessa_volatilita(ri, liq, 0.5 * m.vol(ri, 252), 252)
+uguale(w, 0.5, tol=1e-6, nome=&quot;peso a stessa volatilità&quot;)
+uguale(m.vol(f.miscela(ri, liq, w), 252), 0.5 * m.vol(ri, 252), tol=1e-6, nome=&quot;volatilità della miscela&quot;)
+assert f.peso_stessa_volatilita(ri, liq, 2 * m.vol(ri, 252), 252) == 1.0, &quot;obiettivo oltre l&#x27;indice&quot;
+print(&quot;ok  peso limite&quot;)
+print(&quot;Tutti i controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
