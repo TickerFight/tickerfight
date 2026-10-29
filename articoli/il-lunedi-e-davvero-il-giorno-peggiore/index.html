@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Il lunedì è davvero il giorno peggiore? · il codice · TickerFight</title>
+<meta name="description" content="Il lunedì è davvero il giorno peggiore?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Il lunedì è davvero il giorno peggiore?</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="il-lunedi-e-davvero-il-giorno-peggiore.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>il-lunedi-e-davvero-il-giorno-peggiore/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd il-lunedi-e-davvero-il-giorno-peggiore
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Il lunedì è davvero il giorno peggiore? Rendimento dell&#x27;S&amp;P 500 per giorno della settimana.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json        ogni numero dell&#x27;articolo, con descrizione e origine
+  giorni_settimana.csv per giorno: sedute, media, mediana, quota di giorni positivi, intervallo al 95% della media (punti base)
+  periodi.csv          media per giorno nei due sotto-periodi e senza i 10 giorni peggiori (punti base)
+  permutazioni.csv     distribuzione simulata della differenza tra giorno migliore e peggiore (punti base)
+&quot;&quot;&quot;
+import json
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as f
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+PB = 10000.0                                       # punti base: centesimi di punto percentuale
+NG = config.NOMI_GIORNI
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    c = df[&quot;Close&quot;].astype(float)
+    if (c &lt;= 0).any() or c.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    r_all = c.pct_change().dropna()
+    r_all = r_all[r_all.index &gt;= pd.Timestamp(config.INIZIO_ANALISI)]
+    g_all = r_all.index.dayofweek.to_numpy()
+    if (g_all &gt; 4).any():
+        raise SystemExit(&quot;Trovate sedute di sabato o domenica dopo l&#x27;inizio dell&#x27;analisi.&quot;)
+    r = r_all.to_numpy()
+    anni = (r_all.index[-1] - r_all.index[0]).days / 365.25
+    rng = np.random.default_rng(config.SEME)
+
+    reg(&quot;dati_prima_data&quot;, str(r_all.index[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta analizzata&quot;, &quot;dati/&quot;)
+    reg(&quot;dati_ultima_data&quot;, str(r_all.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;dati_anni&quot;, anni, &quot;num1&quot;, &quot;Anni di storia analizzati&quot;, &quot;dati/&quot;)
+    reg(&quot;sedute&quot;, len(r), &quot;int&quot;, &quot;Sedute (rendimenti giornalieri) analizzate&quot;, &quot;dati/&quot;)
+    reg(&quot;anno_inizio&quot;, r_all.index[0].year, &quot;annonum&quot;, &quot;Anno di inizio dell&#x27;analisi&quot;, &quot;config.py&quot;)
+    reg(&quot;p1_i&quot;, config.PERIODO_1[0], &quot;annonum&quot;, &quot;Primo anno del primo sotto-periodo&quot;, &quot;config.py&quot;)
+    reg(&quot;p1_f&quot;, config.PERIODO_1[1], &quot;annonum&quot;, &quot;Ultimo anno del primo sotto-periodo&quot;, &quot;config.py&quot;)
+    reg(&quot;p2_i&quot;, config.PERIODO_2[0], &quot;annonum&quot;, &quot;Primo anno del secondo sotto-periodo&quot;, &quot;config.py&quot;)
+    reg(&quot;n_perm&quot;, config.N_PERMUTAZIONI, &quot;int&quot;, &quot;Permutazioni del test&quot;, &quot;config.py&quot;)
+    reg(&quot;top_peggiori&quot;, config.TOP_PEGGIORI, &quot;int&quot;, &quot;Giorni peggiori tolti nel test di robustezza&quot;, &quot;config.py&quot;)
+    reg(&quot;media_tutti&quot;, float(r.mean() * PB), &quot;num1&quot;, &quot;Rendimento medio giornaliero di tutte le sedute, punti base&quot;)
+
+    # --- giorni della settimana, tutto il periodo
+    righe = []
+    m_all = f.medie_per_gruppo(r, g_all)
+    for d in range(5):
+        x = r[g_all == d]
+        se = x.std(ddof=1) / np.sqrt(len(x))
+        righe.append(dict(giorno=NG[d], sedute=len(x), media_pb=x.mean() * PB, mediana_pb=np.median(x) * PB, quota_positivi=(x &gt; 0).mean(),
+                          lo_pb=(x.mean() - 1.96 * se) * PB, hi_pb=(x.mean() + 1.96 * se) * PB))
+        reg(f&quot;g{d}_n&quot;, len(x), &quot;int&quot;, f&quot;Sedute di {NG[d]}&quot;)
+        reg(f&quot;g{d}_media&quot;, x.mean() * PB, &quot;num1&quot;, f&quot;Rendimento medio di {NG[d]}, punti base&quot;)
+        reg(f&quot;g{d}_mediana&quot;, np.median(x) * PB, &quot;num1&quot;, f&quot;Rendimento mediano di {NG[d]}, punti base&quot;)
+        reg(f&quot;g{d}_pos&quot;, float((x &gt; 0).mean()), &quot;pct1&quot;, f&quot;Quota di {NG[d]} con rendimento positivo&quot;)
+        reg(f&quot;g{d}_lo&quot;, (x.mean() - 1.96 * se) * PB, &quot;num1&quot;, f&quot;Estremo inferiore dell&#x27;intervallo al 95% della media di {NG[d]}, punti base&quot;)
+        reg(f&quot;g{d}_hi&quot;, (x.mean() + 1.96 * se) * PB, &quot;num1&quot;, f&quot;Estremo superiore dell&#x27;intervallo al 95% della media di {NG[d]}, punti base&quot;)
+    pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;giorni_settimana.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    reg(&quot;min_giorno&quot;, NG[int(np.argmin(m_all))], &quot;testo&quot;, &quot;Giorno con la media più bassa, tutto il periodo&quot;)
+    reg(&quot;max_giorno&quot;, NG[int(np.argmax(m_all))], &quot;testo&quot;, &quot;Giorno con la media più alta, tutto il periodo&quot;)
+    reg(&quot;differenza_estremi&quot;, float((m_all.max() - m_all.min()) * PB), &quot;num1&quot;, &quot;Differenza tra la media del giorno migliore e del peggiore, punti base&quot;)
+
+    # --- sotto-periodi
+    anno = r_all.index.year.to_numpy()
+    p1 = (anno &gt;= config.PERIODO_1[0]) &amp; (anno &lt;= config.PERIODO_1[1])
+    p2 = (anno &gt;= config.PERIODO_2[0]) &amp; (anno &lt;= config.PERIODO_2[1])
+    m1 = f.medie_per_gruppo(r[p1], g_all[p1])
+    m2 = f.medie_per_gruppo(r[p2], g_all[p2])
+    # senza i giorni peggiori
+    peggiori = np.argsort(r)[:config.TOP_PEGGIORI]
+    tieni = np.ones(len(r), dtype=bool)
+    tieni[peggiori] = False
+    m3 = f.medie_per_gruppo(r[tieni], g_all[tieni])
+    n_lun_peggiori = int((g_all[peggiori] == 0).sum())
+    reg(&quot;peggiori_lunedi&quot;, n_lun_peggiori, &quot;int&quot;, &quot;Dei 10 giorni peggiori, quanti sono lunedì&quot;)
+    reg(&quot;peggiore_rend&quot;, float(r[peggiori[0]]), &quot;pct1&quot;, &quot;Rendimento del giorno peggiore&quot;)
+    reg(&quot;peggiore_data&quot;, str(r_all.index[peggiori[0]].date()), &quot;data_lunga&quot;, &quot;Data del giorno peggiore&quot;)
+    reg(&quot;peggiore_giorno&quot;, NG[int(g_all[peggiori[0]])], &quot;testo&quot;, &quot;Giorno della settimana del giorno peggiore&quot;)
+    tab = []
+    for d in range(5):
+        reg(f&quot;p1_g{d}&quot;, m1[d] * PB, &quot;num1&quot;, f&quot;Media di {NG[d]} nel primo sotto-periodo, punti base&quot;)
+        reg(f&quot;p2_g{d}&quot;, m2[d] * PB, &quot;num1&quot;, f&quot;Media di {NG[d]} nel secondo sotto-periodo, punti base&quot;)
+        reg(f&quot;s_g{d}&quot;, m3[d] * PB, &quot;num1&quot;, f&quot;Media di {NG[d]} senza i 10 giorni peggiori, punti base&quot;)
+        tab.append(dict(giorno=NG[d], periodo1_pb=m1[d] * PB, periodo2_pb=m2[d] * PB, senza_peggiori_pb=m3[d] * PB))
+    pd.DataFrame(tab).to_csv(config.RISULTATI / &quot;periodi.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    reg(&quot;min_giorno_p1&quot;, NG[int(np.argmin(m1))], &quot;testo&quot;, &quot;Giorno con la media più bassa nel primo sotto-periodo&quot;)
+    reg(&quot;min_giorno_p2&quot;, NG[int(np.argmin(m2))], &quot;testo&quot;, &quot;Giorno con la media più bassa nel secondo sotto-periodo&quot;)
+    reg(&quot;max_giorno_p2&quot;, NG[int(np.argmax(m2))], &quot;testo&quot;, &quot;Giorno con la media più alta nel secondo sotto-periodo&quot;)
+    reg(&quot;min_giorno_s&quot;, NG[int(np.argmin(m3))], &quot;testo&quot;, &quot;Giorno con la media più bassa senza i 10 giorni peggiori&quot;)
+
+    # --- permutazione
+    p_val, sim = f.p_permutazione(r, g_all.copy(), config.N_PERMUTAZIONI, rng)
+    pd.DataFrame({&quot;differenza_pb&quot;: sim * PB}).to_csv(config.RISULTATI / &quot;permutazioni.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+    reg(&quot;p_valore&quot;, p_val, &quot;pval&quot;, &quot;P-value del test di permutazione (differenza tra giorno migliore e peggiore), tutto il periodo&quot;)
+    reg(&quot;perm_p95&quot;, float(np.quantile(sim, 0.95) * PB), &quot;num1&quot;, &quot;95° percentile della differenza tra giorno migliore e peggiore nelle permutazioni, punti base&quot;)
+    p1_val, _ = f.p_permutazione(r[p1], g_all[p1].copy(), 5000, rng)
+    p2_val, _ = f.p_permutazione(r[p2], g_all[p2].copy(), 5000, rng)
+    reg(&quot;p_valore_1&quot;, p1_val, &quot;pval&quot;, &quot;P-value del test di permutazione nel primo sotto-periodo (5.000 permutazioni)&quot;)
+    reg(&quot;p_valore_2&quot;, p2_val, &quot;pval&quot;, &quot;P-value del test di permutazione nel secondo sotto-periodo (5.000 permutazioni)&quot;)
+
+    # --- strategia senza lunedì
+    lr = np.log1p(r)
+    lun = g_all == 0
+    tot = float(lr.sum())
+    cagr_bh = float(np.exp(tot / anni) - 1)
+    senza = tot - float(lr[lun].sum())
+    cagr_s = float(np.exp(senza / anni) - 1)
+    n_lun = int(lun.sum())
+    senza_c = senza + 2 * n_lun * np.log(1 - config.COSTO)
+    cagr_sc = float(np.exp(senza_c / anni) - 1)
+    reg(&quot;cagr_bh&quot;, cagr_bh, &quot;pct2&quot;, &quot;Rendimento annuo composto del buy &amp; hold&quot;)
+    reg(&quot;cagr_senza&quot;, cagr_s, &quot;pct2&quot;, &quot;Rendimento annuo composto stando in liquidità ogni lunedì, senza costi&quot;)
+    reg(&quot;diff_senza&quot;, cagr_s - cagr_bh, &quot;pp2&quot;, &quot;Differenza, punti all&#x27;anno (positiva = meglio del buy &amp; hold)&quot;)
+    reg(&quot;costo&quot;, config.COSTO, &quot;pct2&quot;, &quot;Costo per operazione della variante con costi&quot;, &quot;config.py&quot;)
+    reg(&quot;cagr_senza_costi&quot;, cagr_sc, &quot;pct2&quot;, &quot;Rendimento annuo composto senza lunedì con costo per operazione&quot;)
+    reg(&quot;diff_senza_costi_assoluta&quot;, abs(cagr_sc - cagr_bh), &quot;pp1&quot;, &quot;Valore assoluto della differenza con i costi, punti all&#x27;anno&quot;)
+    reg(&quot;operazioni_anno&quot;, 2 * n_lun / anni, &quot;int&quot;, &quot;Operazioni all&#x27;anno (due per ogni lunedì saltato)&quot;)
+    cp = f.costo_pareggio(lr[lun])
+    reg(&quot;costo_pareggio&quot;, cp, &quot;pct2&quot;, &quot;Costo per operazione che azzera il vantaggio (0 se nessun vantaggio)&quot;)
+    reg(&quot;costo_pareggio_pb&quot;, cp * PB, &quot;num1&quot;, &quot;Costo di pareggio per operazione, punti base&quot;)
+
+    # --- ipotesi
+    reg(&quot;h3_p&quot;, config.H3_P, &quot;pct0&quot;, &quot;Ipotesi 3: soglia del p-value&quot;, &quot;config.py&quot;)
+    reg(&quot;h6_costo_pb&quot;, config.H6_COSTO * PB, &quot;num1&quot;, &quot;Ipotesi 6: soglia del costo di pareggio, punti base&quot;, &quot;config.py&quot;)
+    h = [int(np.argmin(m_all)) == 0,
+         int(np.argmin(m2)) != 0,
+         p_val &lt; config.H3_P,
+         int(np.argmin(m3)) != 0,
+         cagr_s &gt; cagr_bh,
+         cp &lt; config.H6_COSTO]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(v), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(h)), &quot;int&quot;, &quot;Ipotesi confermate (su sei)&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;run_utc&quot;, datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;testo&quot;, &quot;Data di esecuzione dell&#x27;analisi&quot;)
+    json.dump({&quot;valori&quot;: RIS}, open(config.RISULTATI / &quot;metriche.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;), indent=1, ensure_ascii=False)
+    print(f&quot;Scritti {len(RIS)} numeri in metriche.json; esiti {[int(x) for x in h]}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_giorni.png      rendimento medio per giorno della settimana con intervallo al 95% (punti base)
+  fig2_periodi.png     media per giorno nei due sotto-periodi e senza i 10 giorni peggiori
+  fig3_permutazione.png distribuzione della differenza tra giorno migliore e peggiore quando i giorni sono mescolati, e valore vero
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO, VERDE = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;, &quot;#2a7f4f&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    G = pd.read_csv(R / &quot;giorni_settimana.csv&quot;)
+    x = np.arange(5)
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(x, G[&quot;media_pb&quot;], color=[ARANCIO if i == 0 else BLU for i in x], alpha=0.9)
+    ax.errorbar(x, G[&quot;media_pb&quot;], yerr=[G[&quot;media_pb&quot;] - G[&quot;lo_pb&quot;], G[&quot;hi_pb&quot;] - G[&quot;media_pb&quot;]], fmt=&quot;none&quot;, ecolor=&quot;#333&quot;, capsize=5, lw=1.3)
+    ax.axhline(0, color=&quot;#333&quot;, lw=1)
+    ax.set_xticks(x)
+    ax.set_xticklabels([n.capitalize() for n in G[&quot;giorno&quot;]])
+    ax.set_ylabel(&quot;Rendimento medio giornaliero (punti base)&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_giorni.png&quot;)
+    plt.close(fig)
+
+    P = pd.read_csv(R / &quot;periodi.csv&quot;)
+    w = 0.27
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(x - w, P[&quot;periodo1_pb&quot;], w, color=BLU, label=f&quot;{config.PERIODO_1[0]}-{config.PERIODO_1[1]}&quot;)
+    ax.bar(x, P[&quot;periodo2_pb&quot;], w, color=VERDE, label=f&quot;{config.PERIODO_2[0]}-oggi&quot;)
+    ax.bar(x + w, P[&quot;senza_peggiori_pb&quot;], w, color=GRIGIO, label=&quot;Intero periodo, senza i 10 giorni peggiori&quot;)
+    ax.axhline(0, color=&quot;#333&quot;, lw=1)
+    ax.set_xticks(x)
+    ax.set_xticklabels([n.capitalize() for n in P[&quot;giorno&quot;]])
+    ax.set_ylabel(&quot;Rendimento medio giornaliero (punti base)&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig2_periodi.png&quot;)
+    plt.close(fig)
+
+    S = pd.read_csv(R / &quot;permutazioni.csv&quot;)[&quot;differenza_pb&quot;]
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.hist(S, bins=60, color=GRIGIO, alpha=0.8)
+    ax.axvline(V[&quot;differenza_estremi&quot;][&quot;valore&quot;], color=ARANCIO, lw=2.2, label=&quot;Differenza vera&quot;)
+    ax.set_xlabel(&quot;Differenza tra giorno migliore e peggiore (punti base)&quot;)
+    ax.set_ylabel(&quot;Permutazioni&quot;)
+    ax.legend(loc=&quot;upper right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig3_permutazione.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 506 - &quot;Il lunedì è davvero il giorno peggiore?&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Rendimento giornaliero (chiusura su chiusura, indice di prezzo, senza dividendi) dell&#x27;S&amp;P 500 per giorno della settimana. Il giorno della settimana è quello
+della seduta cui il rendimento si riferisce: il rendimento del lunedì va dalla chiusura del venerdì (o dell&#x27;ultimo giorno di Borsa aperta) a quella del lunedì.
+Se il lunedì è festivo, il rendimento che copre il fine settimana cade di martedì e conta come martedì. Fino al settembre del 1952 la Borsa americana teneva
+sedute anche il sabato: si parte quindi dal 1953, quando le sedute sono solo da lunedì a venerdì. Il test di significatività è di permutazione: si mescolano le
+etichette dei giorni tra i rendimenti e si guarda quanto spesso la differenza tra il giorno migliore e il peggiore è grande come quella vera.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;,)
+
+GIORNI_ANNO = 252
+INIZIO_ANALISI = &quot;1953-01-01&quot;                  # dalla fine delle sedute del sabato
+PERIODO_1 = (1953, 1989)
+PERIODO_2 = (1990, 2026)
+N_PERMUTAZIONI = 20000
+TOP_PEGGIORI = 10                              # giorni peggiori tolti nel test di robustezza
+COSTO = 0.0005                                 # costo di ogni operazione (0,05%) nella variante con costi
+SEME = 20261031
+NOMI_GIORNI = (&quot;lunedì&quot;, &quot;martedì&quot;, &quot;mercoledì&quot;, &quot;giovedì&quot;, &quot;venerdì&quot;)
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------
+H3_P = 0.05                      # ipotesi 3: p-value del test di permutazione sotto il 5%
+H6_COSTO = 0.0002                # ipotesi 6: il costo di pareggio è inferiore allo 0,02% per operazione
+
+IPOTESI = (
+    &quot;1) Dal 1953 a oggi il lunedì ha il rendimento medio giornaliero più basso dei cinque giorni della settimana. &quot;
+    &quot;2) Dal 1990 a oggi il lunedì non è più il giorno peggiore della settimana. &quot;
+    &quot;3) La differenza tra il giorno migliore e il peggiore è statisticamente significativa: p-value del test di permutazione sotto il 5%. &quot;
+    &quot;4) Togliendo i 10 giorni peggiori dell&#x27;intero periodo, il lunedì non è più il giorno con la media più bassa. &quot;
+    &quot;5) Stare in liquidità ogni lunedì, senza costi, rende più del buy &amp; hold. &quot;
+    &quot;6) Il costo per operazione che azzera quel vantaggio è inferiore allo 0,02%.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 506: statistiche per giorno della settimana, test di permutazione, strategia senza lunedì.&quot;&quot;&quot;
+import numpy as np
+
+
+def medie_per_gruppo(r: np.ndarray, g: np.ndarray, k: int = 5) -&gt; np.ndarray:
+    &quot;&quot;&quot;Media di r per ciascun gruppo 0..k-1 (g: etichetta intera).&quot;&quot;&quot;
+    somme = np.bincount(g, weights=r, minlength=k)
+    conta = np.bincount(g, minlength=k)
+    return somme / conta
+
+
+def p_permutazione(r: np.ndarray, g: np.ndarray, n: int, rng, k: int = 5) -&gt; tuple[float, np.ndarray]:
+    &quot;&quot;&quot;P-value della differenza tra la media massima e minima per gruppo, mescolando le etichette. Restituisce anche la distribuzione simulata.&quot;&quot;&quot;
+    m = medie_per_gruppo(r, g, k)
+    oss = float(m.max() - m.min())
+    sim = np.empty(n)
+    gg = g.copy()
+    for i in range(n):
+        rng.shuffle(gg)
+        mm = medie_per_gruppo(r, gg, k)
+        sim[i] = mm.max() - mm.min()
+    return float((np.sum(sim &gt;= oss) + 1) / (n + 1)), sim
+
+
+def costo_pareggio(lr_giorni: np.ndarray) -&gt; float:
+    &quot;&quot;&quot;Costo per operazione che azzera il vantaggio di stare fuori nei giorni `lr_giorni` (log-rendimenti dei giorni saltati).
+    Ogni giorno saltato richiede due operazioni (vendere prima, ricomprare dopo). Vale 0 se saltare quei giorni non conviene nemmeno senza costi.&quot;&quot;&quot;
+    n = len(lr_giorni)
+    s = float(np.sum(lr_giorni))
+    if s &gt;= 0 or n == 0:
+        return 0.0
+    return float(1.0 - np.exp(s / (2 * n)))
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+
+import funzioni as f
+
+
+def uguale(a, b, tol=1e-9, nome=&quot;&quot;):
+    assert abs(a - b) &lt; tol, f&quot;{nome}: {a} != {b}&quot;
+    print(f&quot;ok  {nome}&quot;)
+
+
+r = np.array([1.0, 3.0, 2.0, 4.0, 5.0, 7.0])
+g = np.array([0, 0, 1, 1, 2, 2])
+m = f.medie_per_gruppo(r, g, 3)
+assert list(m) == [2.0, 3.0, 6.0], m
+print(&quot;ok  medie per gruppo&quot;)
+# permutazione: gruppi identici -&gt; p-value alto; gruppi molto diversi -&gt; p-value basso
+rng = np.random.default_rng(1)
+x = rng.normal(0, 1, 5000)
+gi = np.tile(np.arange(5), 1000)
+p, sim = f.p_permutazione(x, gi.copy(), 500, rng)
+assert p &gt; 0.05, p
+print(&quot;ok  permutazione senza differenze: p-value&quot;, round(p, 2))
+y = x + gi * 0.5
+p2, _ = f.p_permutazione(y, gi.copy(), 500, rng)
+assert p2 &lt; 0.01, p2
+print(&quot;ok  permutazione con differenze nette: p-value&quot;, round(p2, 3))
+# costo di pareggio: 100 giorni con -0,1% ciascuno: il pareggio è a ln(1-c) = ln(0.999)/2
+lg = np.full(100, np.log(0.999))
+uguale(f.costo_pareggio(lg), 1 - np.exp(np.log(0.999) / 2), nome=&quot;costo di pareggio&quot;)
+uguale(f.costo_pareggio(np.full(10, 0.01)), 0.0, nome=&quot;costo di pareggio senza vantaggio&quot;)
+print(&quot;Tutti i controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
