@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La data di partenza cambia il verdetto · il codice · TickerFight</title>
+<meta name="description" content="il verdetto su una regola di trading, qui un filtro di tendenza a 200 sedute sull&#x27;S&amp;P 500 contro il buy &amp; hold, dipende dalla data in cui si comincia a guardarla?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>La data di partenza cambia il verdetto</h1>
+<p class="domanda">Il verdetto su una regola di trading, qui un filtro di tendenza a 200 sedute sull&#x27;S&amp;P 500 contro il buy &amp; hold, dipende dalla data in cui si comincia a guardarla?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="la-data-di-partenza-cambia-il-verdetto.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Regola:</strong> investiti se la chiusura sta sopra la media delle ultime 200 chiusure, altrimenti liquidità a rendimento zero; segnale eseguito alla chiusura successiva; 10 punti base per ogni cambio.</li>
+<li><strong>Misure:</strong> rendimento annuo composto, Sharpe e perdita massima su finestre che partono da ogni mese dal 1928.</li>
+<li><strong>Confronti:</strong> buy &amp; hold sullo stesso indice; due decenni di riferimento (partenze a gennaio 1990 e 2000).</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>la-data-di-partenza-cambia-il-verdetto/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica l'S&amp;P 500 dal 1927 (i dati sono quelli già usati negli articoli 301 e 426)
+    ├── 02_backtest_e_test.py  regola e buy &amp; hold da ogni mese di partenza, finestre di 5, 10 e 20 anni
+    ├── 03_grafici.py          i grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            filtro a 200 sedute, metriche su finestre, inizi di mese
+    └── verifica_motore.py     controlli su dati inventati (ritardo del segnale, costi, metriche)
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd la-data-di-partenza-cambia-il-verdetto
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>regola e buy &amp; hold da ogni mese di partenza, finestre di 5, 10 e 20 anni</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - La data di partenza cambia il verdetto: filtro a 200 sedute contro buy &amp; hold da ogni mese di partenza.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json     ogni numero dell&#x27;articolo, con descrizione e origine
+  finestre_5.csv, finestre_10.csv, finestre_20.csv   per ogni mese di partenza: rendimento annuo, Sharpe e perdita massima di regola e buy &amp; hold
+  curve.csv         valore di 1 per regola e buy &amp; hold sull&#x27;intero periodo (una seduta su cinque)
+&quot;&quot;&quot;
+import json
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as f
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+GA = config.GIORNI_ANNO
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    c = df[&quot;Close&quot;].astype(float)
+    if (c &lt;= 0).any() or c.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    date, close = c.index, c.to_numpy()
+    n = len(close)
+    strat, bh, pos = f.rendimenti_regola(close, config.MEDIA, config.COSTO_BP / 10000.0)
+    prima = config.MEDIA + 2                       # prima posizione con segnale in vigore
+    anni_tot = (date[-1] - date[prima]).days / 365.25
+
+    reg(&quot;dati_prima_data&quot;, str(date[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;dati_ultima_data&quot;, str(date[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;partenza_prima&quot;, str(date[prima].date()), &quot;data_lunga&quot;, &quot;Prima seduta con la regola in vigore&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_tot&quot;, anni_tot, &quot;num1&quot;, &quot;Anni dalla prima seduta con la regola in vigore all&#x27;ultima&quot;)
+    reg(&quot;media&quot;, config.MEDIA, &quot;int&quot;, &quot;Sedute della media mobile&quot;, &quot;config.py&quot;)
+    reg(&quot;costo_bp&quot;, config.COSTO_BP, &quot;int&quot;, &quot;Costo di ogni cambio di posizione in punti base&quot;, &quot;config.py&quot;)
+    reg(&quot;giorni_anno&quot;, GA, &quot;int&quot;, &quot;Sedute in un anno&quot;, &quot;config.py&quot;)
+
+    # intero periodo
+    cs, ss, ds = f.metriche_finestra(strat[prima:], GA)
+    cb, sb, db = f.metriche_finestra(bh[prima:], GA)
+    reg(&quot;tot_cagr_regola&quot;, cs, &quot;pct1&quot;, &quot;Rendimento annuo composto della regola sull&#x27;intero periodo&quot;)
+    reg(&quot;tot_cagr_bh&quot;, cb, &quot;pct1&quot;, &quot;Rendimento annuo composto del buy &amp; hold sull&#x27;intero periodo&quot;)
+    reg(&quot;tot_sharpe_regola&quot;, ss, &quot;num2&quot;, &quot;Sharpe della regola sull&#x27;intero periodo&quot;)
+    reg(&quot;tot_sharpe_bh&quot;, sb, &quot;num2&quot;, &quot;Sharpe del buy &amp; hold sull&#x27;intero periodo&quot;)
+    reg(&quot;tot_dd_regola&quot;, ds, &quot;pct0&quot;, &quot;Perdita massima della regola sull&#x27;intero periodo&quot;)
+    reg(&quot;tot_dd_bh&quot;, db, &quot;pct0&quot;, &quot;Perdita massima del buy &amp; hold sull&#x27;intero periodo&quot;)
+    reg(&quot;quota_investito&quot;, float(pos[prima:].mean()), &quot;pct0&quot;, &quot;Quota di sedute con la regola investita&quot;)
+    reg(&quot;cambi_anno&quot;, float(np.abs(np.diff(pos[prima - 1:])).sum() / anni_tot), &quot;num1&quot;, &quot;Cambi di posizione all&#x27;anno&quot;)
+
+    inizi = f.inizi_mese(date, prima)
+    esiti = {}
+    for h in config.ORIZZONTI:
+        lung = h * GA
+        righe = []
+        for i in inizi:
+            if i + lung &gt;= n:
+                break
+            a, sa, da = f.metriche_finestra(strat[i + 1:i + 1 + lung], GA)
+            b, sb_, db_ = f.metriche_finestra(bh[i + 1:i + 1 + lung], GA)
+            righe.append((str(date[i].date()), a, b, sa, sb_, da, db_))
+        W = pd.DataFrame(righe, columns=[&quot;data&quot;, &quot;cagr_r&quot;, &quot;cagr_b&quot;, &quot;sh_r&quot;, &quot;sh_b&quot;, &quot;dd_r&quot;, &quot;dd_b&quot;])
+        W.to_csv(config.RISULTATI / f&quot;finestre_{h}.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+        diff = (W[&quot;cagr_r&quot;] - W[&quot;cagr_b&quot;]).to_numpy()
+        reg(f&quot;h{h}_n&quot;, len(W), &quot;int&quot;, f&quot;Mesi di partenza con una finestra di {h} anni completa&quot;)
+        reg(f&quot;h{h}_quota_rend&quot;, float((diff &gt; 0).mean()), &quot;pct0&quot;, f&quot;Quota di partenze in cui la regola batte il buy &amp; hold sul rendimento annuo, finestre di {h} anni&quot;)
+        reg(f&quot;h{h}_quota_sharpe&quot;, float((W[&quot;sh_r&quot;] &gt; W[&quot;sh_b&quot;]).mean()), &quot;pct0&quot;, f&quot;Quota di partenze in cui la regola ha uno Sharpe più alto, finestre di {h} anni&quot;)
+        reg(f&quot;h{h}_quota_dd&quot;, float((W[&quot;dd_r&quot;] &lt; W[&quot;dd_b&quot;]).mean()), &quot;pct0&quot;, f&quot;Quota di partenze in cui la regola ha una perdita massima minore, finestre di {h} anni&quot;)
+        reg(f&quot;h{h}_diff_media&quot;, float(diff.mean()), &quot;pp1&quot;, f&quot;Differenza media di rendimento annuo (regola meno buy &amp; hold), finestre di {h} anni&quot;)
+        reg(f&quot;h{h}_cagr_r_media&quot;, float(W[&quot;cagr_r&quot;].mean()), &quot;pct1&quot;, f&quot;Rendimento annuo medio della regola, finestre di {h} anni&quot;)
+        reg(f&quot;h{h}_cagr_b_media&quot;, float(W[&quot;cagr_b&quot;].mean()), &quot;pct1&quot;, f&quot;Rendimento annuo medio del buy &amp; hold, finestre di {h} anni&quot;)
+        reg(f&quot;h{h}_diff_max&quot;, float(diff.max()), &quot;pp1&quot;, f&quot;Differenza massima, finestre di {h} anni&quot;)
+        reg(f&quot;h{h}_diff_min&quot;, float(diff.min()), &quot;pp1&quot;, f&quot;Differenza minima, finestre di {h} anni&quot;)
+        reg(f&quot;h{h}_anno_max&quot;, int(pd.Timestamp(W[&quot;data&quot;][int(diff.argmax())]).year), &quot;annonum&quot;, f&quot;Anno di partenza con la differenza massima, finestre di {h} anni&quot;)
+        reg(f&quot;h{h}_anno_min&quot;, int(pd.Timestamp(W[&quot;data&quot;][int(diff.argmin())]).year), &quot;annonum&quot;, f&quot;Anno di partenza con la differenza minima, finestre di {h} anni&quot;)
+        reg(f&quot;h{h}_ampiezza&quot;, float(diff.max() - diff.min()), &quot;pp1&quot;, f&quot;Ampiezza della differenza tra la partenza migliore e la peggiore, finestre di {h} anni&quot;)
+        reg(f&quot;h{h}_tre_su_tre&quot;, float(((diff &gt; 0) &amp; (W[&quot;sh_r&quot;] &gt; W[&quot;sh_b&quot;]) &amp; (W[&quot;dd_r&quot;] &lt; W[&quot;dd_b&quot;])).mean()), &quot;pct0&quot;, f&quot;Quota di partenze in cui la regola vince su rendimento, Sharpe e perdita massima insieme, finestre di {h} anni&quot;)
+        reg(f&quot;h{h}_zero_su_tre&quot;, float(((diff &lt;= 0) &amp; (W[&quot;sh_r&quot;] &lt;= W[&quot;sh_b&quot;]) &amp; (W[&quot;dd_r&quot;] &gt;= W[&quot;dd_b&quot;])).mean()), &quot;pct0&quot;, f&quot;Quota di partenze in cui la regola perde su tutte e tre le misure, finestre di {h} anni&quot;)
+        esiti[h] = dict(W=W, diff=diff)
+
+    # casi di studio: decenni che partono a gennaio di un anno
+    Wp = esiti[config.ORIZZONTE_PRINCIPALE][&quot;W&quot;]
+    for nome, anno in ((&quot;fav&quot;, config.ANNO_FAVOREVOLE), (&quot;sfav&quot;, config.ANNO_SFAVOREVOLE)):
+        r = Wp[Wp[&quot;data&quot;].str.startswith(f&quot;{anno}-01&quot;)].iloc[0]
+        reg(f&quot;caso_{nome}_anno&quot;, anno, &quot;annonum&quot;, f&quot;Anno di partenza del caso «{nome}»&quot;, &quot;config.py&quot;)
+        reg(f&quot;caso_{nome}_regola&quot;, float(r[&quot;cagr_r&quot;]), &quot;pct1&quot;, f&quot;Rendimento annuo della regola, decennio del caso «{nome}»&quot;)
+        reg(f&quot;caso_{nome}_bh&quot;, float(r[&quot;cagr_b&quot;]), &quot;pct1&quot;, f&quot;Rendimento annuo del buy &amp; hold, decennio del caso «{nome}»&quot;)
+        reg(f&quot;caso_{nome}_diff&quot;, float(r[&quot;cagr_r&quot;] - r[&quot;cagr_b&quot;]), &quot;pp1&quot;, f&quot;Differenza di rendimento annuo, decennio del caso «{nome}»&quot;)
+        reg(f&quot;caso_{nome}_dd_regola&quot;, float(r[&quot;dd_r&quot;]), &quot;pct0&quot;, f&quot;Perdita massima della regola, decennio del caso «{nome}»&quot;)
+        reg(f&quot;caso_{nome}_dd_bh&quot;, float(r[&quot;dd_b&quot;]), &quot;pct0&quot;, f&quot;Perdita massima del buy &amp; hold, decennio del caso «{nome}»&quot;)
+
+    P = config.ORIZZONTE_PRINCIPALE
+    d10 = esiti[P][&quot;diff&quot;]
+    reg(&quot;orizzonte&quot;, P, &quot;annonum&quot;, &quot;Anni della finestra principale&quot;, &quot;config.py&quot;)
+    reg(&quot;h1_min&quot;, config.H1_MIN, &quot;pct0&quot;, &quot;Ipotesi 1: quota minima&quot;, &quot;config.py&quot;)
+    reg(&quot;h1_max&quot;, config.H1_MAX, &quot;pct0&quot;, &quot;Ipotesi 1: quota massima&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_quota&quot;, config.H2_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 2: quota minima sulla perdita massima&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_vantaggio&quot;, config.H3_VANTAGGIO, &quot;pp1&quot;, &quot;Ipotesi 3: vantaggio minimo nel decennio favorevole, punti&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_svantaggio&quot;, config.H3_SVANTAGGIO, &quot;pp1&quot;, &quot;Ipotesi 3: svantaggio minimo nel decennio sfavorevole, punti&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_ampiezza&quot;, config.H5_AMPIEZZA, &quot;pp1&quot;, &quot;Ipotesi 5: ampiezza minima, punti&quot;, &quot;config.py&quot;)
+    h = [config.H1_MIN &lt;= RIS[f&quot;h{P}_quota_rend&quot;][&quot;valore&quot;] &lt;= config.H1_MAX,
+         RIS[f&quot;h{P}_quota_dd&quot;][&quot;valore&quot;] &gt;= config.H2_QUOTA,
+         RIS[&quot;caso_fav_diff&quot;][&quot;valore&quot;] &gt;= config.H3_VANTAGGIO and RIS[&quot;caso_sfav_diff&quot;][&quot;valore&quot;] &lt;= -config.H3_SVANTAGGIO,
+         RIS[f&quot;h{P}_cagr_r_media&quot;][&quot;valore&quot;] &lt; RIS[f&quot;h{P}_cagr_b_media&quot;][&quot;valore&quot;],
+         RIS[f&quot;h{P}_ampiezza&quot;][&quot;valore&quot;] &gt; config.H5_AMPIEZZA,
+         RIS[&quot;h20_quota_rend&quot;][&quot;valore&quot;] &lt; RIS[f&quot;h{P}_quota_rend&quot;][&quot;valore&quot;]]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(v), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(h)), &quot;int&quot;, &quot;Ipotesi confermate (su sei)&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;run_utc&quot;, datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;testo&quot;, &quot;Data di esecuzione dell&#x27;analisi&quot;)
+    json.dump({&quot;valori&quot;: RIS}, open(config.RISULTATI / &quot;metriche.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;), indent=1, ensure_ascii=False)
+
+    camp = np.arange(prima, n, 5)
+    er, eb = np.cumprod(1.0 + strat[prima:]), np.cumprod(1.0 + bh[prima:])
+    pd.DataFrame({&quot;data&quot;: date[camp].strftime(&quot;%Y-%m-%d&quot;), &quot;regola&quot;: er[camp - prima], &quot;buyhold&quot;: eb[camp - prima]}).to_csv(
+        config.RISULTATI / &quot;curve.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    print(f&quot;Scritti {len(RIS)} numeri in metriche.json; esiti {h}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_valore.png     valore di 1 per regola e buy &amp; hold, scala logaritmica
+  fig2_diff_10anni.png  differenza di rendimento annuo (regola meno buy &amp; hold) per ogni mese di partenza, finestre di dieci anni
+  fig3_quote.png      quota di partenze in cui vince la regola, per misura e per durata
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    c = pd.read_csv(R / &quot;curve.csv&quot;, parse_dates=[&quot;data&quot;])
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(c[&quot;data&quot;], c[&quot;buyhold&quot;], color=ARANCIO, lw=1.8, label=&quot;Buy &amp; hold&quot;)
+    ax.plot(c[&quot;data&quot;], c[&quot;regola&quot;], color=BLU, lw=1.8, label=&quot;Filtro a 200 sedute&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_ylabel(&quot;Valore di 1 dollaro (scala logaritmica)&quot;)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_valore.png&quot;)
+    plt.close(fig)
+
+    W = pd.read_csv(R / f&quot;finestre_{config.ORIZZONTE_PRINCIPALE}.csv&quot;, parse_dates=[&quot;data&quot;])
+    diff = (W[&quot;cagr_r&quot;] - W[&quot;cagr_b&quot;]) * 100
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.fill_between(W[&quot;data&quot;], diff, 0, where=diff &gt;= 0, color=BLU, alpha=0.75, label=&quot;La regola batte il buy &amp; hold&quot;)
+    ax.fill_between(W[&quot;data&quot;], diff, 0, where=diff &lt; 0, color=ARANCIO, alpha=0.75, label=&quot;Il buy &amp; hold batte la regola&quot;)
+    ax.axhline(0, color=&quot;#333&quot;, lw=1)
+    for anno in (config.ANNO_SFAVOREVOLE, config.ANNO_FAVOREVOLE):
+        ax.axvline(pd.Timestamp(f&quot;{anno}-01-01&quot;), color=GRIGIO, ls=&quot;:&quot;, lw=1.2)
+        ax.text(pd.Timestamp(f&quot;{anno}-01-01&quot;), diff.max() * 0.92, str(anno), ha=&quot;center&quot;, fontsize=11,
+                bbox=dict(boxstyle=&quot;round,pad=0.2&quot;, fc=&quot;white&quot;, ec=&quot;none&quot;, alpha=0.85))
+    ax.set_xlabel(&quot;Mese di partenza della finestra di dieci anni&quot;)
+    ax.set_ylabel(&quot;Differenza di rendimento annuo (punti)&quot;)
+    ax.legend(loc=&quot;lower left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig2_diff_10anni.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    x = np.arange(len(config.ORIZZONTI))
+    for k, (chiave, nome, col) in enumerate(((&quot;quota_rend&quot;, &quot;Rendimento annuo più alto&quot;, BLU), (&quot;quota_sharpe&quot;, &quot;Sharpe più alto&quot;, GRIGIO),
+                                              (&quot;quota_dd&quot;, &quot;Perdita massima minore&quot;, ARANCIO))):
+        ax.bar(x + (k - 1) * 0.27, [V[f&quot;h{h}_{chiave}&quot;][&quot;valore&quot;] * 100 for h in config.ORIZZONTI], width=0.27, color=col, label=nome)
+    ax.axhline(50, color=&quot;#333&quot;, lw=1, ls=&quot;--&quot;)
+    ax.set_xticks(x)
+    ax.set_xticklabels([f&quot;{h} anni&quot; for h in config.ORIZZONTI])
+    ax.set_ylabel(&quot;Quota di partenze in cui vince la regola (%)&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10, ncol=1)
+    ax.set_ylim(0, 105)
+    fig.savefig(config.FIGURE / &quot;fig3_quote.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 13 - &quot;La data di partenza cambia il verdetto&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Regola: filtro di tendenza a 200 sedute sull&#x27;S&amp;P 500 (indice di prezzo, senza dividendi). Si è investiti se la chiusura sta sopra la media
+mobile semplice delle ultime 200 chiusure, altrimenti si sta in liquidità (rendimento zero). Il segnale si osserva a una chiusura e si
+esegue alla chiusura SUCCESSIVA (nessun look-ahead); ogni cambio di posizione costa COSTO_BP punti base. Confronto: buy &amp; hold sullo stesso indice.
+La domanda non è se la regola funzioni, ma quanto il verdetto dipenda dalla data di partenza: si misura su ogni mese di partenza dal 1928,
+con finestre di 5, 10 e 20 anni. Il segnale usa la storia precedente alla partenza, come farebbe chi avvia la regola in quel momento.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;,)
+
+# --- La regola ------------------------------------------------------------------------------------------------
+MEDIA = 200                      # sedute della media mobile
+COSTO_BP = 10                    # punti base per ogni cambio di posizione
+GIORNI_ANNO = 252
+ORIZZONTI = (5, 10, 20)          # anni delle finestre
+ORIZZONTE_PRINCIPALE = 10
+ANNO_FAVOREVOLE = 2000           # decennio che parte a gennaio di quest&#x27;anno (caso 1)
+ANNO_SFAVOREVOLE = 1990          # decennio che parte a gennaio di quest&#x27;anno (caso 2)
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------
+H1_MIN, H1_MAX = 0.20, 0.80      # ipotesi 1: sul rendimento annuo la regola vince in una quota di partenze tra il 20% e l&#x27;80% (verdetto instabile)
+H2_QUOTA = 0.90                  # ipotesi 2: sulla perdita massima la regola fa meglio in almeno il 90% delle partenze
+H3_VANTAGGIO = 0.05              # ipotesi 3: nel decennio del 2000 la regola batte il buy &amp; hold di almeno 5 punti all&#x27;anno...
+H3_SVANTAGGIO = 0.03             # ... e in quello del 1990 perde di almeno 3 punti all&#x27;anno
+H5_AMPIEZZA = 0.10               # ipotesi 5: tra la partenza migliore e la peggiore la differenza di rendimento annuo supera 10 punti
+SEME = 20261029
+
+IPOTESI = (
+    &quot;1) Su finestre di dieci anni, su ogni mese di partenza dal 1928, la regola batte il buy &amp; hold sul rendimento annuo composto in una &quot;
+    &quot;quota di partenze compresa tra il 20% e l&#x27;80%: il verdetto dipende dalla data. &quot;
+    &quot;2) Sulla perdita massima la regola fa meglio del buy &amp; hold in almeno il 90% delle partenze. &quot;
+    &quot;3) Il decennio che parte a gennaio 2000 vede la regola battere il buy &amp; hold di almeno 5 punti all&#x27;anno, e quello che parte a gennaio 1990 la vede perdere di almeno 3 punti all&#x27;anno. &quot;
+    &quot;4) Sull&#x27;insieme delle partenze, il rendimento annuo medio della regola è più basso di quello del buy &amp; hold. &quot;
+    &quot;5) Tra la data di partenza che più favorisce la regola e quella che più la sfavorisce, la differenza di rendimento annuo rispetto al buy &amp; hold supera 10 punti percentuali. &quot;
+    &quot;6) Allungando la finestra da dieci a venti anni la quota di partenze in cui la regola batte il buy &amp; hold sul rendimento diminuisce.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>filtro a 200 sedute, metriche su finestre, inizi di mese</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 13: filtro di tendenza a 200 sedute, metriche su finestre che partono da ogni mese.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def rendimenti_regola(close: np.ndarray, media: int, costo: float) -&gt; tuple[np.ndarray, np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Rendimenti giornalieri della regola, del buy &amp; hold e posizione.
+
+    Il giorno k ha il rendimento close[k]/close[k-1]-1. La posizione del giorno k è il segnale osservato alla chiusura k-2 (chiusura sopra la media
+    mobile delle ultime `media` chiusure), eseguito alla chiusura k-1. Ogni cambio di posizione costa `costo` (frazione), sottratto al rendimento del giorno k.
+    Gli indici 0 e 1 non hanno posizione (zero) e vanno scartati da chi usa la serie.&quot;&quot;&quot;
+    close = np.asarray(close, dtype=float)
+    n = len(close)
+    ret = np.zeros(n)
+    ret[1:] = close[1:] / close[:-1] - 1.0
+    sma = np.full(n, np.nan)
+    cs = np.cumsum(np.insert(close, 0, 0.0))
+    sma[media - 1:] = (cs[media:] - cs[:-media]) / media
+    sig = np.zeros(n)
+    ok = ~np.isnan(sma)
+    sig[ok] = (close[ok] &gt; sma[ok]).astype(float)
+    pos = np.zeros(n)
+    pos[2:] = sig[:-2]
+    cambi = np.zeros(n)
+    cambi[1:] = np.abs(pos[1:] - pos[:-1])
+    strat = pos * ret - costo * cambi
+    return strat, ret, pos
+
+
+def metriche_finestra(r: np.ndarray, ga: int) -&gt; tuple[float, float, float]:
+    &quot;&quot;&quot;(rendimento annuo composto, Sharpe con tasso zero, perdita massima come numero positivo) di una serie di rendimenti giornalieri.&quot;&quot;&quot;
+    r = np.asarray(r, dtype=float)
+    cagr = float(np.prod(1.0 + r) ** (ga / len(r)) - 1.0)
+    sd = np.std(r, ddof=1)
+    sharpe = float(np.mean(r) / sd * np.sqrt(ga)) if sd &gt; 0 else 0.0
+    e = np.cumprod(1.0 + r)
+    picco = np.maximum.accumulate(np.concatenate([[1.0], e]))[1:]
+    return cagr, sharpe, float(-np.min(e / picco - 1.0))
+
+
+def inizi_mese(date: pd.DatetimeIndex, prima: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posizioni della prima seduta di ogni mese, a partire dalla posizione `prima`.&quot;&quot;&quot;
+    s = pd.Series(np.arange(len(date)), index=date)
+    pos = s.groupby([date.year, date.month]).first().to_numpy()
+    return pos[pos &gt;= prima]
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati (ritardo del segnale, costi, metriche)</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as f
+
+
+def uguale(a, b, tol=1e-9, nome=&quot;&quot;):
+    assert abs(a - b) &lt; tol, f&quot;{nome}: {a} != {b}&quot;
+    print(f&quot;ok  {nome}&quot;)
+
+
+# 1. prezzo sempre in salita: sopra la media, sempre investiti dopo il ritardo; nessun costo dopo il primo ingresso
+c = 100.0 * 1.001 ** np.arange(600)
+s, b, pos = f.rendimenti_regola(c, 50, 0.001)
+assert pos[:2].sum() == 0 and pos[52:].min() == 1.0, &quot;posizione&quot;
+uguale(s[60], b[60], nome=&quot;stessa cosa del buy &amp; hold quando si è dentro&quot;)
+# 2. nessun look-ahead: il segnale del giorno k usa solo chiusure fino a k-2
+c2 = np.r_[np.full(100, 100.0), 200.0, np.full(100, 200.0)]            # salto alla chiusura 100
+s2, b2, pos2 = f.rendimenti_regola(c2, 50, 0.0)
+assert pos2[100] == 0.0 and pos2[101] == 0.0 and pos2[102] == 1.0, &quot;il segnale deve essere in ritardo di due sedute&quot;
+print(&quot;ok  nessun look-ahead&quot;)
+# 3. costo: ingresso e poi uscita (quando la media raggiunge il prezzo) costano due volte il costo
+uguale(sum(f.rendimenti_regola(c2, 50, 0.01)[0] - f.rendimenti_regola(c2, 50, 0.0)[0]), -0.02, nome=&quot;costo di ingresso e uscita&quot;)
+# 4. metriche: serie costante
+cg, sh, dd = f.metriche_finestra(np.full(252, 0.001), 252)
+uguale(cg, 1.001 ** 252 - 1, nome=&quot;cagr&quot;)
+uguale(dd, 0.0, nome=&quot;perdita massima nulla&quot;)
+cg, sh, dd = f.metriche_finestra(np.array([0.2, -0.5, 0.0]), 252)
+uguale(dd, 0.5, nome=&quot;perdita massima del 50%&quot;)
+# 5. inizi di mese
+idx = pd.bdate_range(&quot;2020-01-01&quot;, periods=70)
+p = f.inizi_mese(idx, 0)
+assert idx[p[0]].day == 1 and idx[p[1]].month == 2 and idx[p[1]].day == 3, &quot;inizi di mese&quot;
+print(&quot;ok  inizi di mese&quot;)
+print(&quot;Tutti i controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
