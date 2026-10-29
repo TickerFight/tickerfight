@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Volatilità realizzata contro implicita: quanto sbaglia il VIX? · il codice · TickerFight</title>
+<meta name="description" content="Volatilità realizzata contro implicita: quanto sbaglia il VIX?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Volatilità realizzata contro implicita: quanto sbaglia il VIX?</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="volatilita-realizzata-contro-implicita-quanto-sbaglia-il-vix.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>volatilita-realizzata-contro-implicita-quanto-sbaglia-il-vix/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd volatilita-realizzata-contro-implicita-quanto-sbaglia-il-vix
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera di l&#x27;indice e il VIX.
+
+Salva, per ogni indice, dati/&lt;ticker&gt;.csv (Date, Open, High, Low, Close, Volume) e dati/metadati.json con la fonte,
+la data del download, la versione di yfinance e l&#x27;impronta SHA-256 di ogni file. Gli script successivi leggono SOLO
+i file salvati: i risultati restano riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;indici&quot;: []}
+    for ticker, nome, valuta in config.INDICI:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nome, &quot;valuta&quot;: valuta}
+        grezzo = scarica(ticker)
+        if grezzo.empty:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;indici&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;])
+        df = df[df[&quot;Close&quot;] &gt; 0]
+        # seduta ancora in corso: barra incompleta, da scartare
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:
+            df = df.iloc[:-1]
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;indici&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    if sum(1 for r in meta[&quot;indici&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;) &lt; 2:
+        raise SystemExit(&quot;Dati insufficienti.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Volatilità realizzata contro implicita: VIX e volatilità dell&#x27;S&amp;P 500 che segue.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json     ogni numero dell&#x27;articolo, con descrizione e origine
+  fasce.csv         per fascia del VIX: quota di sedute, VIX medio, volatilità realizzata media, premio medio, quota di sedute con premio positivo
+  mesi.csv          campione mensile non sovrapposto: data, VIX, volatilità realizzata successiva e passata, premio
+&quot;&quot;&quot;
+import json
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as f
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+GA = config.GIORNI_ANNO
+N = config.RV_GIORNI
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def carica(ticker):
+    df = pd.read_csv(config.file_dati(ticker), parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    c = df[&quot;Close&quot;].astype(float)
+    if (c &lt;= 0).any() or c.isna().any():
+        raise SystemExit(f&quot;{ticker}: chiusure mancanti o non positive.&quot;)
+    return c
+
+
+def main():
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    meta = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    if any(r[&quot;stato&quot;] != &quot;ok&quot; for r in meta[&quot;indici&quot;]):
+        raise SystemExit(&quot;Mancano i dati di S&amp;P 500 o VIX.&quot;)
+    close, vix = carica(config.TICKER_INDICE), carica(config.TICKER_VIX)
+    d = pd.concat({&quot;c&quot;: close, &quot;v&quot;: vix}, axis=1, join=&quot;inner&quot;).dropna()
+    lr_tutti = np.log(d[&quot;c&quot;].to_numpy()[1:] / d[&quot;c&quot;].to_numpy()[:-1])
+    # allineamento: la posizione i dei rendimenti è il rendimento del giorno i+1 di d; il VIX e la volatilità del giorno t usano lr fino a t
+    idx = d.index[1:]
+    v = d[&quot;v&quot;].to_numpy()[1:]
+    rv_pass = f.vol_realizzata_passata(lr_tutti, N, GA)
+    rv_fut = f.vol_realizzata_futura(lr_tutti, N, GA)
+    ok = ~np.isnan(rv_pass) &amp; ~np.isnan(rv_fut)
+    t = np.flatnonzero(ok)
+    vt, rf, rp = v[t], rv_fut[t], rv_pass[t]
+    prem = vt - rf
+    anni = (idx[t[-1]] - idx[t[0]]).days / 365.25
+
+    reg(&quot;dati_prima_data&quot;, str(idx[t[0]].date()), &quot;data_lunga&quot;, &quot;Prima seduta con VIX, volatilità passata e futura&quot;, &quot;dati/*.csv&quot;)
+    reg(&quot;dati_ultima_data&quot;, str(idx[t[-1]].date()), &quot;data_lunga&quot;, &quot;Ultima seduta con volatilità futura calcolabile&quot;, &quot;dati/*.csv&quot;)
+    reg(&quot;dati_anni&quot;, anni, &quot;num1&quot;, &quot;Anni di storia usati&quot;)
+    reg(&quot;n_giorni&quot;, len(t), &quot;int&quot;, &quot;Sedute usate&quot;)
+    reg(&quot;rv_giorni&quot;, N, &quot;int&quot;, &quot;Sedute della volatilità realizzata (circa un mese)&quot;, &quot;config.py&quot;)
+    reg(&quot;vix_medio&quot;, float(vt.mean()), &quot;num1&quot;, &quot;VIX medio, punti&quot;)
+    reg(&quot;rv_medio&quot;, float(rf.mean()), &quot;num1&quot;, &quot;Volatilità realizzata media nel mese successivo, punti&quot;)
+    reg(&quot;premio_medio&quot;, float(prem.mean()), &quot;num1&quot;, &quot;Premio medio (VIX meno volatilità realizzata successiva), punti&quot;)
+    reg(&quot;premio_mediano&quot;, float(np.median(prem)), &quot;num1&quot;, &quot;Premio mediano, punti&quot;)
+    reg(&quot;quota_premio_pos&quot;, float((prem &gt; 0).mean()), &quot;pct0&quot;, &quot;Quota di sedute in cui il VIX supera la volatilità realizzata successiva&quot;)
+    i_min = int(np.argmin(prem))
+    reg(&quot;premio_min&quot;, float(-prem[i_min]), &quot;num1&quot;, &quot;Sottostima massima: volatilità realizzata successiva meno VIX nel caso peggiore, punti&quot;)
+    reg(&quot;premio_min_data&quot;, str(idx[t[i_min]].date()), &quot;data_lunga&quot;, &quot;Data del caso di maggiore sottostima del VIX&quot;)
+    reg(&quot;premio_min_vix&quot;, float(vt[i_min]), &quot;num1&quot;, &quot;VIX nel giorno di maggiore sottostima, punti&quot;)
+    reg(&quot;premio_min_rv&quot;, float(rf[i_min]), &quot;num1&quot;, &quot;Volatilità realizzata successiva nel giorno di maggiore sottostima, punti&quot;)
+    reg(&quot;quota_sottostima_10&quot;, float((prem &lt; -10).mean()), &quot;pct1&quot;, &quot;Quota di sedute in cui la volatilità realizzata supera il VIX di oltre 10 punti&quot;)
+    reg(&quot;sottostima_10_punti&quot;, 10, &quot;int&quot;, &quot;Punti di sottostima della quota precedente&quot;, &quot;config.py&quot;)
+
+    # --- fasce del VIX
+    righe = []
+    for k in range(len(config.FASCE) - 1):
+        lo, hi = config.FASCE[k], config.FASCE[k + 1]
+        m = (vt &gt;= lo) &amp; (vt &lt; hi)
+        righe.append(dict(fascia=k, da=lo, a=hi, quota=m.mean(), vix=vt[m].mean(), rv=rf[m].mean(), premio=prem[m].mean(), quota_pos=(prem[m] &gt; 0).mean()))
+        reg(f&quot;f{k}_quota&quot;, float(m.mean()), &quot;pct0&quot;, f&quot;Quota di sedute con il VIX nella fascia {k}&quot;)
+        reg(f&quot;f{k}_vix&quot;, float(vt[m].mean()), &quot;num1&quot;, f&quot;VIX medio nella fascia {k}, punti&quot;)
+        reg(f&quot;f{k}_rv&quot;, float(rf[m].mean()), &quot;num1&quot;, f&quot;Volatilità realizzata media nella fascia {k}, punti&quot;)
+        reg(f&quot;f{k}_premio&quot;, float(prem[m].mean()), &quot;num1&quot;, f&quot;Premio medio nella fascia {k}, punti&quot;)
+        reg(f&quot;f{k}_pos&quot;, float((prem[m] &gt; 0).mean()), &quot;pct0&quot;, f&quot;Quota di sedute con premio positivo nella fascia {k}&quot;)
+    pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;fasce.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+    reg(&quot;fascia_1_lim&quot;, config.FASCE[1], &quot;int&quot;, &quot;Limite superiore della prima fascia del VIX&quot;, &quot;config.py&quot;)
+    reg(&quot;fascia_2_lim&quot;, config.FASCE[2], &quot;int&quot;, &quot;Limite superiore della seconda fascia del VIX&quot;, &quot;config.py&quot;)
+    reg(&quot;fascia_3_lim&quot;, config.FASCE[3], &quot;int&quot;, &quot;Limite superiore della terza fascia del VIX&quot;, &quot;config.py&quot;)
+
+    # --- regressioni
+    a, b, r2 = f.regressione(vt, rf)
+    reg(&quot;reg_a&quot;, a, &quot;num1&quot;, &quot;Intercetta della regressione della volatilità realizzata successiva sul VIX, punti&quot;)
+    reg(&quot;reg_b&quot;, b, &quot;num2&quot;, &quot;Pendenza della regressione della volatilità realizzata successiva sul VIX&quot;)
+    reg(&quot;r2_vix&quot;, r2, &quot;num2&quot;, &quot;R quadro della regressione sul VIX&quot;)
+    a2, b2, r2p = f.regressione(rp, rf)
+    reg(&quot;r2_passato&quot;, r2p, &quot;num2&quot;, &quot;R quadro della regressione sulla volatilità realizzata dell&#x27;ultimo mese&quot;)
+    reg(&quot;pend_passato&quot;, b2, &quot;num2&quot;, &quot;Pendenza della regressione sulla volatilità realizzata dell&#x27;ultimo mese&quot;)
+    reg(&quot;corr_vix&quot;, float(np.corrcoef(vt, rf)[0, 1]), &quot;num2&quot;, &quot;Correlazione tra VIX e volatilità realizzata successiva&quot;)
+    reg(&quot;corr_passato&quot;, float(np.corrcoef(rp, rf)[0, 1]), &quot;num2&quot;, &quot;Correlazione tra volatilità realizzata passata e successiva&quot;)
+
+    # --- campione mensile non sovrapposto
+    sel = np.arange(0, len(t), N)
+    pm = prem[sel]
+    mesi = pd.DataFrame(dict(data=idx[t][sel], vix=vt[sel], rv_successiva=rf[sel], rv_passata=rp[sel], premio=pm))
+    mesi.to_csv(config.RISULTATI / &quot;mesi.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+    pos_somma = float(pm[pm &gt; 0].sum())
+    peggiori = np.sort(pm)[:config.N_PEGGIORI]
+    reg(&quot;mesi_n&quot;, len(sel), &quot;int&quot;, &quot;Date del campione mensile non sovrapposto&quot;)
+    reg(&quot;mesi_premio_medio&quot;, float(pm.mean()), &quot;num1&quot;, &quot;Premio medio nel campione mensile, punti&quot;)
+    reg(&quot;mesi_neg_quota&quot;, float((pm &lt; 0).mean()), &quot;pct0&quot;, &quot;Quota di mesi con premio negativo&quot;)
+    reg(&quot;mesi_positivo_somma&quot;, pos_somma, &quot;num1&quot;, &quot;Somma dei premi mensili positivi, punti&quot;)
+    reg(&quot;mesi_peggiori_n&quot;, config.N_PEGGIORI, &quot;int&quot;, &quot;Mesi peggiori considerati&quot;, &quot;config.py&quot;)
+    reg(&quot;mesi_peggiori_somma&quot;, float(-peggiori.sum()), &quot;num1&quot;, &quot;Somma (valore assoluto) dei premi dei mesi peggiori, punti&quot;)
+    reg(&quot;mesi_peggiori_quota&quot;, float(-peggiori.sum() / pos_somma), &quot;pct0&quot;, &quot;Quota dei premi positivi cancellata dai mesi peggiori&quot;)
+    reg(&quot;mesi_peggiore_premio&quot;, float(-peggiori[0]), &quot;num1&quot;, &quot;Premio del mese peggiore (valore assoluto), punti&quot;)
+
+    reg(&quot;h1_quota&quot;, config.H1_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 1: soglia&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_min&quot;, config.H2_MIN, &quot;num1&quot;, &quot;Ipotesi 2: minimo del premio medio, punti&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_max&quot;, config.H2_MAX, &quot;num1&quot;, &quot;Ipotesi 2: massimo del premio medio, punti&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_quota&quot;, config.H5_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 5: soglia&quot;, &quot;config.py&quot;)
+    reg(&quot;h6_pendenza&quot;, config.H6_PENDENZA, &quot;num1&quot;, &quot;Ipotesi 6: soglia della pendenza&quot;, &quot;config.py&quot;)
+    h = [float((prem &gt; 0).mean()) &gt;= config.H1_QUOTA,
+         config.H2_MIN &lt;= float(prem.mean()) &lt;= config.H2_MAX,
+         righe[-1][&quot;premio&quot;] &gt; righe[0][&quot;premio&quot;],
+         r2 &gt; r2p,
+         float(-peggiori.sum() / pos_somma) &gt;= config.H5_QUOTA,
+         b &lt; config.H6_PENDENZA]
+    for i, x in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(x), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(h)), &quot;int&quot;, &quot;Ipotesi confermate (su sei)&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;run_utc&quot;, datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;testo&quot;, &quot;Data di esecuzione dell&#x27;analisi&quot;)
+    json.dump({&quot;valori&quot;: RIS}, open(config.RISULTATI / &quot;metriche.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;), indent=1, ensure_ascii=False)
+    print(f&quot;Scritti {len(RIS)} numeri in metriche.json; esiti {[int(x) for x in h]}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_vix_e_realizzata.png  VIX e volatilità realizzata successiva, un punto al mese (campione non sovrapposto)
+  fig2_dispersione.png       volatilità realizzata successiva contro VIX, con la retta di regressione
+  fig3_premio_per_fascia.png premio medio per fascia del VIX
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO, VERDE = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;, &quot;#2a7f4f&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    M = pd.read_csv(R / &quot;mesi.csv&quot;, parse_dates=[&quot;data&quot;])
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(M[&quot;data&quot;], M[&quot;vix&quot;], color=BLU, lw=1.8, label=&quot;VIX (volatilità attesa)&quot;)
+    ax.plot(M[&quot;data&quot;], M[&quot;rv_successiva&quot;], color=ARANCIO, lw=1.4, label=&quot;Volatilità realizzata nel mese successivo&quot;)
+    ax.set_ylabel(&quot;Punti di volatilità annua&quot;)
+    ax.legend(loc=&quot;upper right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig1_vix_e_realizzata.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(7.5, 6.5))
+    ax.scatter(M[&quot;vix&quot;], M[&quot;rv_successiva&quot;], s=12, color=BLU, alpha=0.5)
+    lim = max(M[&quot;vix&quot;].max(), M[&quot;rv_successiva&quot;].max()) * 1.03
+    ax.plot([0, lim], [0, lim], color=GRIGIO, ls=&quot;--&quot;, lw=1.2, label=&quot;VIX uguale alla volatilità realizzata&quot;)
+    xs = np.array([0, lim])
+    ax.plot(xs, V[&quot;reg_a&quot;][&quot;valore&quot;] + V[&quot;reg_b&quot;][&quot;valore&quot;] * xs, color=ARANCIO, lw=2, label=&quot;Retta di regressione&quot;)
+    ax.set_xlim(0, lim)
+    ax.set_ylim(0, lim)
+    ax.set_xlabel(&quot;VIX (punti)&quot;)
+    ax.set_ylabel(&quot;Volatilità realizzata nel mese successivo (punti)&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig2_dispersione.png&quot;)
+    plt.close(fig)
+
+    F = pd.read_csv(R / &quot;fasce.csv&quot;)
+    etichette = []
+    for _, r in F.iterrows():
+        etichette.append(f&quot;VIX sotto {r[&#x27;a&#x27;]:.0f}&quot; if r[&quot;da&quot;] == 0 else (f&quot;VIX sopra {r[&#x27;da&#x27;]:.0f}&quot; if r[&quot;a&quot;] &gt; 500 else f&quot;VIX {r[&#x27;da&#x27;]:.0f}-{r[&#x27;a&#x27;]:.0f}&quot;))
+    fig, ax = plt.subplots(figsize=(10, 5))
+    colori = [VERDE if p &gt;= 0 else ARANCIO for p in F[&quot;premio&quot;]]
+    ax.bar(np.arange(len(F)), F[&quot;premio&quot;], color=colori, alpha=0.9)
+    ax.axhline(0, color=&quot;#333&quot;, lw=1)
+    ax.set_xticks(np.arange(len(F)))
+    ax.set_xticklabels(etichette)
+    ax.set_ylabel(&quot;Premio medio: VIX meno volatilità realizzata (punti)&quot;)
+    fig.savefig(config.FIGURE / &quot;fig3_premio_per_fascia.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 245 - &quot;Volatilità realizzata contro implicita&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui, scritti prima di guardare i risultati.
+
+Il VIX è la volatilità attesa dal mercato dell&#x27;S&amp;P 500 nei successivi trenta giorni di calendario, ricavata dai prezzi delle opzioni (volatilità implicita),
+espressa in punti di volatilità annua. La volatilità realizzata è quella che poi si osserva: deviazione standard dei rendimenti giornalieri logaritmici
+dell&#x27;S&amp;P 500 (indice di prezzo) nelle RV_GIORNI sedute successive alla chiusura del giorno t (circa trenta giorni di calendario), annualizzata e in punti.
+Premio = VIX del giorno t meno volatilità realizzata nelle RV_GIORNI sedute successive: positivo quando il VIX ha sovrastimato. Nessun look-ahead nel
+confronto: il VIX di t usa solo informazioni di t; la volatilità realizzata «passata» usa solo le RV_GIORNI sedute fino a t.
+Le statistiche usano tutte le sedute (descrittive, con finestre sovrapposte); per i conti per mese si usa un campione non sovrapposto, una data ogni RV_GIORNI sedute.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati ---------------------------------------------------------------------------------
+INDICI = [
+    (&quot;^GSPC&quot;, &quot;S&amp;P 500&quot;, &quot;USD&quot;),
+    (&quot;^VIX&quot;, &quot;VIX&quot;, &quot;punti&quot;),
+]
+TICKER_INDICE = &quot;^GSPC&quot;
+TICKER_VIX = &quot;^VIX&quot;
+INIZIO_DOWNLOAD = &quot;1989-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;S&amp;P 500 e del VIX&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; l&#x27;S&amp;P 500 è l&#x27;indice di prezzo, senza dividendi&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;, &quot;VIX&quot;)
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+# --- Parametri (fissati prima di guardare i dati) --------------------------------------------
+GIORNI_ANNO = 252
+RV_GIORNI = 21                                  # sedute della volatilità realizzata (circa un mese)
+FASCE = (0.0, 15.0, 20.0, 30.0, 1000.0)         # fasce del VIX per l&#x27;ipotesi 3
+N_PEGGIORI = 10                                 # mesi peggiori nell&#x27;ipotesi 5
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------
+H1_QUOTA = 0.75                  # ipotesi 1: il VIX supera la volatilità realizzata successiva in almeno il 75% delle sedute
+H2_MIN = 2.0                     # ipotesi 2: premio medio tra 2 e 6 punti di volatilità
+H2_MAX = 6.0
+H5_QUOTA = 0.25                  # ipotesi 5: i 10 mesi peggiori cancellano almeno il 25% di tutto il premio mensile positivo
+H6_PENDENZA = 1.0                # ipotesi 6: pendenza della regressione della volatilità realizzata sul VIX sotto 1
+
+IPOTESI = (
+    &quot;1) Il VIX è più alto della volatilità realizzata nel mese successivo in almeno il 75% delle sedute. &quot;
+    &quot;2) Il premio medio (VIX meno volatilità realizzata successiva) sta tra 2 e 6 punti di volatilità. &quot;
+    &quot;3) Il premio medio, in punti di volatilità, è più alto quando il VIX è sopra 30 che quando è sotto 15. &quot;
+    &quot;4) Il VIX prevede la volatilità del mese successivo meglio della volatilità realizzata dell&#x27;ultimo mese (R quadro più alto). &quot;
+    &quot;5) I 10 mesi con il premio più negativo (campione mensile non sovrapposto) cancellano almeno il 25% della somma dei premi mensili positivi. &quot;
+    &quot;6) Nella regressione della volatilità realizzata successiva sul VIX la pendenza è sotto 1: quando il VIX sale, la volatilità che segue sale meno.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 245: volatilità realizzata, premio, regressione e R quadro.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def vol_realizzata_passata(lr: np.ndarray, n: int, ga: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Volatilità annua in punti delle n sedute che finiscono in t (usa solo dati fino a t). NaN fino a n-1.&quot;&quot;&quot;
+    return pd.Series(lr).rolling(n).std(ddof=1).to_numpy() * np.sqrt(ga) * 100.0
+
+
+def vol_realizzata_futura(lr: np.ndarray, n: int, ga: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Volatilità annua in punti delle n sedute successive a t (t+1 .. t+n). NaN per le ultime n posizioni.&quot;&quot;&quot;
+    return np.concatenate([vol_realizzata_passata(lr, n, ga)[n:], np.full(n, np.nan)])
+
+
+def regressione(x: np.ndarray, y: np.ndarray) -&gt; tuple[float, float, float]:
+    &quot;&quot;&quot;Minimi quadrati y = a + b x. Restituisce (a, b, R quadro).&quot;&quot;&quot;
+    b, a = np.polyfit(x, y, 1)
+    pred = a + b * x
+    r2 = 1.0 - np.sum((y - pred) ** 2) / np.sum((y - np.mean(y)) ** 2)
+    return float(a), float(b), float(r2)
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+
+import funzioni as f
+
+
+def uguale(a, b, tol=1e-9, nome=&quot;&quot;):
+    assert abs(a - b) &lt; tol, f&quot;{nome}: {a} != {b}&quot;
+    print(f&quot;ok  {nome}&quot;)
+
+
+# 1. volatilità passata: rendimenti alternati +1% / -1% -&gt; deviazione standard campionaria nota
+lr = np.tile([0.01, -0.01], 20)
+p = f.vol_realizzata_passata(lr, 4, 252)
+assert np.isnan(p[:3]).all()
+atteso = np.std([0.01, -0.01, 0.01, -0.01], ddof=1) * np.sqrt(252) * 100
+uguale(p[3], atteso, nome=&quot;volatilità passata&quot;)
+# 2. futura = passata spostata: la futura in t è la passata in t+n
+fu = f.vol_realizzata_futura(lr, 4, 252)
+uguale(fu[0], p[4], nome=&quot;volatilità futura in t uguale alla passata in t+n&quot;)
+assert np.isnan(fu[-4:]).all()
+print(&quot;ok  ultime posizioni senza futuro&quot;)
+# nessuna informazione dal futuro nella passata: cambiare un rendimento dopo t non modifica p[t]
+lr2 = lr.copy()
+lr2[10:] = 0.05
+p2 = f.vol_realizzata_passata(lr2, 4, 252)
+uguale(p2[9], p[9], nome=&quot;la passata in t non dipende da dati dopo t&quot;)
+# 3. regressione su dati esatti
+x = np.arange(10.0)
+a, b, r2 = f.regressione(x, 3.0 + 2.0 * x)
+uguale(a, 3.0, tol=1e-9, nome=&quot;intercetta&quot;)
+uguale(b, 2.0, tol=1e-9, nome=&quot;pendenza&quot;)
+uguale(r2, 1.0, tol=1e-9, nome=&quot;R quadro perfetto&quot;)
+rng = np.random.default_rng(1)
+xx = rng.normal(size=5000)
+a, b, r2 = f.regressione(xx, rng.normal(size=5000))
+assert r2 &lt; 0.01
+print(&quot;ok  R quadro vicino a zero senza relazione&quot;)
+print(&quot;Tutti i controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
