@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VIX sopra 30: comprare la paura? · il codice · TickerFight</title>
+<meta name="description" content="dopo che il VIX chiude sopra 30, l&#x27;S&amp;P 500 rende di più del solito nei mesi successivi? Si può comprare la paura?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>VIX sopra 30: comprare la paura?</h1>
+<p class="domanda">Dopo che il VIX chiude sopra 30, l&#x27;S&amp;P 500 rende di più del solito nei mesi successivi? Si può comprare la paura?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="vix-sopra-30-comprare-la-paura.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Evento:</strong> prima chiusura del VIX sopra la soglia dopo almeno 63 sedute sotto; acquisto alla chiusura successiva.</li>
+<li><strong>Misure:</strong> rendimento a 21, 63, 126 e 252 sedute, quota di episodi positivi, peggiore chiusura nelle 63 sedute dopo l'acquisto, soglie 25, 30, 35 e 40.</li>
+<li><strong>Test:</strong> scimmie (stesso numero di acquisti a date casuali) e confronto con una seduta qualunque.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>vix-sopra-30-comprare-la-paura/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica i dati da Yahoo Finance
+    ├── 02_backtest_e_test.py  calcoli e test statistici
+    ├── 03_grafici.py          i grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd vix-sopra-30-comprare-la-paura
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera di l&#x27;indice e il VIX.
+
+Salva, per ogni indice, dati/&lt;ticker&gt;.csv (Date, Open, High, Low, Close, Volume) e dati/metadati.json con la fonte,
+la data del download, la versione di yfinance e l&#x27;impronta SHA-256 di ogni file. Gli script successivi leggono SOLO
+i file salvati: i risultati restano riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;indici&quot;: []}
+    for ticker, nome, valuta in config.INDICI:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nome, &quot;valuta&quot;: valuta}
+        grezzo = scarica(ticker)
+        if grezzo.empty:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;indici&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;])
+        df = df[df[&quot;Close&quot;] &gt; 0]
+        # seduta ancora in corso: barra incompleta, da scartare
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:
+            df = df.iloc[:-1]
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;indici&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    if sum(1 for r in meta[&quot;indici&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;) &lt; 2:
+        raise SystemExit(&quot;Dati insufficienti.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>calcoli e test statistici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - VIX sopra 30: che cosa fa l&#x27;S&amp;P 500 dopo?
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json     ogni numero dell&#x27;articolo, con descrizione e origine
+  episodi.csv       un record per episodio (soglia base): date, VIX, rendimenti a 21/63/126/252 sedute, peggior chiusura nelle 63 successive
+  soglie.csv        per ciascuna soglia della griglia: episodi, rendimento medio a un anno, rendimento generico
+  scimmie.csv       rendimenti medi delle scimmie a ciascun orizzonte
+  curve.csv         S&amp;P 500 e VIX (una seduta su cinque) per il grafico del contesto
+&quot;&quot;&quot;
+import json
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as f
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def carica(ticker):
+    df = pd.read_csv(config.file_dati(ticker), parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    c = df[&quot;Close&quot;].astype(float)
+    if (c &lt;= 0).any() or c.isna().any():
+        raise SystemExit(f&quot;{ticker}: chiusure mancanti o non positive.&quot;)
+    return c
+
+
+def main():
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    meta = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    if any(r[&quot;stato&quot;] != &quot;ok&quot; for r in meta[&quot;indici&quot;]):
+        raise SystemExit(&quot;Mancano i dati di S&amp;P 500 o VIX.&quot;)
+    close, vix = carica(config.TICKER_INDICE), carica(config.TICKER_VIX)
+    d = pd.concat({&quot;c&quot;: close, &quot;v&quot;: vix}, axis=1, join=&quot;inner&quot;).dropna()
+    c, v = d[&quot;c&quot;].to_numpy(), d[&quot;v&quot;].to_numpy()
+    n = len(d)
+    anni = (d.index[-1] - d.index[0]).days / 365.25
+    rng = np.random.default_rng(config.SEME)
+    R = config.RISULTATI
+    prima = config.QUIETE + 1       # prima entrata possibile: stessa per episodi e confronto generico
+    a = (1 - config.LIVELLO_CONFIDENZA) / 2
+
+    reg(&quot;dati_prima_data&quot;, str(d.index[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta con S&amp;P 500 e VIX insieme&quot;, &quot;dati/*.csv&quot;)
+    reg(&quot;dati_ultima_data&quot;, str(d.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/*.csv&quot;)
+    reg(&quot;dati_anni&quot;, anni, &quot;num1&quot;, &quot;Anni di storia usati&quot;)
+    reg(&quot;dati_sedute&quot;, n, &quot;annonum&quot;, &quot;Sedute usate&quot;)
+    reg(&quot;vix_massimo&quot;, float(v.max()), &quot;num1&quot;, &quot;Massimo della chiusura del VIX nei dati&quot;)
+    reg(&quot;vix_massimo_data&quot;, str(d.index[int(v.argmax())].date()), &quot;data_lunga&quot;, &quot;Data del massimo della chiusura del VIX&quot;)
+    reg(&quot;vix_mediano&quot;, float(np.median(v)), &quot;num1&quot;, &quot;Mediana della chiusura del VIX nei dati&quot;)
+    reg(&quot;quota_sopra_soglia&quot;, float((v &gt; config.SOGLIA_BASE).mean()), &quot;pct1&quot;, &quot;Quota di sedute con il VIX sopra la soglia base&quot;)
+
+    # --- griglia delle soglie ------------------------------------------------------------------
+    righe_s, cerca = [], {}
+    for sg in config.GRIGLIA_SOGLIE:
+        ep = f.episodi(v, sg, config.QUIETE)
+        ent = ep + 1
+        ent = ent[ent &lt; n]
+        r252 = f.rendimenti_forward(c, ent, 252)
+        gen = c[np.arange(prima, n - 252) + 252] / c[np.arange(prima, n - 252)] - 1.0
+        cerca[sg] = dict(ep=ep, ent=ent, r252=r252, gen=float(gen.mean()))
+        righe_s.append(dict(soglia=sg, episodi=len(ep), validi_252=len(r252), media_252=float(r252.mean()) if len(r252) else np.nan,
+                            generico_252=float(gen.mean())))
+        k = int(sg)
+        reg(f&quot;sg{k}_episodi&quot;, len(ep), &quot;int&quot;, f&quot;Episodi con il VIX sopra {k}&quot;)
+        reg(f&quot;sg{k}_validi&quot;, len(r252), &quot;int&quot;, f&quot;Episodi con un anno di dati davanti, soglia {k}&quot;)
+        if len(r252):
+            reg(f&quot;sg{k}_media&quot;, float(r252.mean()), &quot;pct1&quot;, f&quot;Rendimento medio a un anno degli episodi, soglia {k}&quot;)
+        reg(f&quot;sg{k}_generico&quot;, float(gen.mean()), &quot;pct1&quot;, f&quot;Rendimento medio a un anno su una seduta qualunque (stesso periodo), soglia {k}&quot;)
+    pd.DataFrame(righe_s).to_csv(R / &quot;soglie.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    valutabili = [s for s in config.GRIGLIA_SOGLIE if len(cerca[s][&quot;r252&quot;]) &gt;= config.EPISODI_MIN_GRIGLIA]
+    ok = [s for s in valutabili if cerca[s][&quot;r252&quot;].mean() &gt; cerca[s][&quot;gen&quot;]]
+    reg(&quot;n_soglie_valutabili&quot;, len(valutabili), &quot;int&quot;, &quot;Soglie con almeno cinque episodi con un anno di dati davanti&quot;)
+    reg(&quot;n_soglie_ok&quot;, len(ok), &quot;int&quot;, &quot;Soglie valutabili in cui il rendimento medio a un anno supera quello generico&quot;)
+    reg(&quot;episodi_min_griglia&quot;, config.EPISODI_MIN_GRIGLIA, &quot;int&quot;, &quot;Numero minimo di episodi per valutare una soglia&quot;, &quot;config.py&quot;)
+
+    # --- soglia base ---------------------------------------------------------------------------
+    B = cerca[config.SOGLIA_BASE]
+    ep, ent = B[&quot;ep&quot;], B[&quot;ent&quot;]
+    reg(&quot;soglia_base&quot;, config.SOGLIA_BASE, &quot;int&quot;, &quot;Soglia del VIX&quot;, &quot;config.py&quot;)
+    reg(&quot;quiete&quot;, config.QUIETE, &quot;int&quot;, &quot;Sedute sotto la soglia prima di un nuovo episodio&quot;, &quot;config.py&quot;)
+    reg(&quot;n_episodi&quot;, len(ep), &quot;int&quot;, &quot;Episodi indipendenti con il VIX sopra la soglia base&quot;)
+    reg(&quot;episodi_prima&quot;, str(d.index[ep[0]].date()), &quot;data_lunga&quot;, &quot;Data del primo episodio&quot;)
+    reg(&quot;episodi_ultima&quot;, str(d.index[ep[-1]].date()), &quot;data_lunga&quot;, &quot;Data dell&#x27;ultimo episodio&quot;)
+
+    tab = pd.DataFrame({&quot;segnale&quot;: d.index[ep].strftime(&quot;%Y-%m-%d&quot;), &quot;acquisto&quot;: d.index[ent].strftime(&quot;%Y-%m-%d&quot;) if len(ent) == len(ep) else &quot;&quot;,
+                        &quot;vix&quot;: v[ep]}) if len(ent) == len(ep) else pd.DataFrame({&quot;segnale&quot;: d.index[ep].strftime(&quot;%Y-%m-%d&quot;), &quot;vix&quot;: v[ep]})
+    for h in config.ORIZZONTI:
+        col = np.full(len(ep), np.nan)
+        e2 = ep + 1
+        ok_i = e2 + h &lt; n
+        col[ok_i] = c[e2[ok_i] + h] / c[e2[ok_i]] - 1.0
+        tab[f&quot;r{h}&quot;] = col
+    mn = np.full(len(ep), np.nan)
+    e2 = ep + 1
+    ok_m = e2 + config.ORIZZONTE_MIN &lt; n
+    mn[ok_m] = [c[x + 1:x + config.ORIZZONTE_MIN + 1].min() / c[x] - 1.0 for x in e2[ok_m]]
+    tab[&quot;min63&quot;] = mn
+    tab.to_csv(R / &quot;episodi.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    righe_sc = []
+    for h in config.ORIZZONTI:
+        r = f.rendimenti_forward(c, ent, h)
+        validi = np.arange(prima, n - h)
+        gen = c[validi + h] / c[validi] - 1.0
+        sc = f.scimmie_medie(c, validi, len(r), h, config.N_SCIMMIE, rng)
+        lo, hi = [float(x) for x in np.quantile(sc, [a, 1 - a])]
+        pup = (int((sc &gt;= r.mean()).sum()) + 1) / (config.N_SCIMMIE + 1)
+        pdw = (int((sc &lt;= r.mean()).sum()) + 1) / (config.N_SCIMMIE + 1)
+        p2 = min(1.0, 2 * min(pup, pdw))
+        righe_sc.append(dict(orizzonte=h, k=len(r), media_ep=float(r.mean()), media_gen=float(gen.mean()), lo=lo, hi=hi, p2=p2))
+        reg(f&quot;h{h}_validi&quot;, len(r), &quot;int&quot;, f&quot;Episodi con {h} sedute di dati davanti&quot;)
+        reg(f&quot;h{h}_media&quot;, float(r.mean()), &quot;pct1&quot;, f&quot;Rendimento medio degli episodi a {h} sedute&quot;)
+        reg(f&quot;h{h}_mediana&quot;, float(np.median(r)), &quot;pct1&quot;, f&quot;Rendimento mediano degli episodi a {h} sedute&quot;)
+        reg(f&quot;h{h}_quota_pos&quot;, float((r &gt; 0).mean()), &quot;pct0&quot;, f&quot;Quota di episodi con rendimento positivo a {h} sedute&quot;)
+        reg(f&quot;h{h}_peggiore&quot;, float(r.min()), &quot;pct1&quot;, f&quot;Peggior rendimento di un episodio a {h} sedute&quot;)
+        reg(f&quot;h{h}_migliore&quot;, float(r.max()), &quot;pct1&quot;, f&quot;Miglior rendimento di un episodio a {h} sedute&quot;)
+        reg(f&quot;h{h}_generico&quot;, float(gen.mean()), &quot;pct1&quot;, f&quot;Rendimento medio a {h} sedute da una seduta qualunque&quot;)
+        reg(f&quot;h{h}_diff&quot;, float(r.mean() - gen.mean()), &quot;pp1&quot;, f&quot;Differenza tra episodi e generico a {h} sedute&quot;)
+        reg(f&quot;h{h}_sc_lo&quot;, lo, &quot;pct1&quot;, f&quot;Estremo basso dell&#x27;intervallo al 95% delle scimmie a {h} sedute&quot;)
+        reg(f&quot;h{h}_sc_hi&quot;, hi, &quot;pct1&quot;, f&quot;Estremo alto dell&#x27;intervallo al 95% delle scimmie a {h} sedute&quot;)
+        reg(f&quot;h{h}_p&quot;, p2, &quot;pval&quot;, f&quot;p-value a due code (scimmie) a {h} sedute&quot;)
+        reg(f&quot;h{h}_p_su&quot;, pup, &quot;pval&quot;, f&quot;Quota di scimmie con rendimento medio pari o sopra gli episodi, {h} sedute&quot;)
+    pd.DataFrame(righe_sc).to_csv(R / &quot;scimmie.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    m63 = f.minimo_successivo(c, ent, config.ORIZZONTE_MIN)
+    reg(&quot;orizzonte_min&quot;, config.ORIZZONTE_MIN, &quot;int&quot;, &quot;Sedute osservate dopo l&#x27;acquisto per il minimo successivo&quot;, &quot;config.py&quot;)
+    reg(&quot;quota_scende_ancora&quot;, float((m63 &lt; 0).mean()), &quot;pct0&quot;, &quot;Quota di episodi in cui, entro 63 sedute, almeno una chiusura è sotto il prezzo pagato&quot;)
+    reg(&quot;minimo_medio&quot;, float(m63.mean()), &quot;pct1&quot;, &quot;Peggior chiusura media nelle 63 sedute dopo l&#x27;acquisto, rispetto al prezzo pagato&quot;)
+    reg(&quot;minimo_peggiore&quot;, float(m63.min()), &quot;pct1&quot;, &quot;Peggior chiusura in assoluto nelle 63 sedute dopo un acquisto&quot;)
+    r252 = f.rendimenti_forward(c, ent, 252)
+    reg(&quot;peggiore_anno&quot;, int(d.index[ent[r252.argmin()]].year), &quot;annonum&quot;, &quot;Anno dell&#x27;acquisto con il peggior rendimento a un anno&quot;)
+    reg(&quot;migliore_anno&quot;, int(d.index[ent[r252.argmax()]].year), &quot;annonum&quot;, &quot;Anno dell&#x27;acquisto con il miglior rendimento a un anno&quot;)
+    reg(&quot;n_negativi_252&quot;, int((r252 &lt;= 0).sum()), &quot;int&quot;, &quot;Episodi con rendimento a un anno non positivo&quot;)
+    # quanti episodi raggruppati in poche crisi: episodi con acquisto nello stesso anno
+    anni_ep = pd.Series(d.index[ent].year)
+    reg(&quot;n_anni_con_episodi&quot;, int(anni_ep.nunique()), &quot;int&quot;, &quot;Anni di calendario diversi in cui cade almeno un episodio&quot;)
+
+    # --- ipotesi --------------------------------------------------------------------------------
+    reg(&quot;h3_quota&quot;, config.H3_QUOTA, &quot;pct0&quot;, &quot;Soglia dell&#x27;ipotesi 3&quot;, &quot;config.py&quot;)
+    reg(&quot;h4_quota&quot;, config.H4_QUOTA, &quot;pct0&quot;, &quot;Soglia dell&#x27;ipotesi 4&quot;, &quot;config.py&quot;)
+    reg(&quot;h6_episodi&quot;, config.H6_EPISODI, &quot;int&quot;, &quot;Soglia dell&#x27;ipotesi 6 sul numero di episodi&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_forte&quot;, config.SOGLIA_FORTE, &quot;pval&quot;, &quot;Livello severo del p-value&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_p&quot;, config.SOGLIA, &quot;pval&quot;, &quot;Livello ordinario del p-value&quot;, &quot;config.py&quot;)
+    h1 = RIS[&quot;h252_media&quot;][&quot;valore&quot;] &gt; RIS[&quot;h252_generico&quot;][&quot;valore&quot;]
+    h2 = RIS[&quot;h21_sc_lo&quot;][&quot;valore&quot;] &lt;= RIS[&quot;h21_media&quot;][&quot;valore&quot;] &lt;= RIS[&quot;h21_sc_hi&quot;][&quot;valore&quot;]
+    h3 = RIS[&quot;quota_scende_ancora&quot;][&quot;valore&quot;] &gt; config.H3_QUOTA
+    h4 = RIS[&quot;h252_quota_pos&quot;][&quot;valore&quot;] &gt; config.H4_QUOTA
+    h5 = len(valutabili) &gt; 0 and len(ok) == len(valutabili)
+    h6 = len(ep) &lt; config.H6_EPISODI and RIS[&quot;h252_p&quot;][&quot;valore&quot;] &gt; config.SOGLIA_FORTE
+    esiti = [h1, h2, h3, h4, h5, h6]
+    for i, e in enumerate(esiti, 1):
+        reg(f&quot;h{i}_esito&quot;, &quot;confermata&quot; if e else &quot;smentita&quot;, &quot;testo&quot;, f&quot;Esito dell&#x27;ipotesi {i}&quot;, &quot;config.py e metriche&quot;)
+    reg(&quot;n_conf&quot;, int(sum(esiti)), &quot;int&quot;, &quot;Ipotesi confermate su sei&quot;)
+    reg(&quot;n_smentite&quot;, int(6 - sum(esiti)), &quot;int&quot;, &quot;Ipotesi smentite su sei&quot;)
+
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Numero di scimmie&quot;, &quot;config.py&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello di confidenza&quot;, &quot;config.py&quot;)
+    reg(&quot;giorni_anno&quot;, config.GIORNI_ANNO, &quot;int&quot;, &quot;Sedute in un anno&quot;, &quot;config.py&quot;)
+    reg(&quot;run_utc&quot;, datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;testo&quot;, &quot;Data di esecuzione dell&#x27;analisi&quot;)
+    json.dump({&quot;valori&quot;: RIS}, open(R / &quot;metriche.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;), indent=1, ensure_ascii=False)
+
+    camp = np.arange(0, n, 5)
+    pd.DataFrame({&quot;data&quot;: d.index[camp], &quot;spx&quot;: c[camp], &quot;vix&quot;: v[camp]}).to_csv(R / &quot;curve.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+    print(tab.to_string())
+    print(pd.DataFrame(righe_sc).to_string())
+    print(f&quot;Scritti {len(RIS)} numeri in metriche.json&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_contesto.png    S&amp;P 500 (scala log) e VIX con la soglia e gli episodi
+  fig2_orizzonti.png   rendimento medio degli episodi contro scimmie e generico, per orizzonte
+  fig3_episodi.png     rendimento a un anno di ogni episodio
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def pct_fmt(dec=0):
+    return plt.FuncFormatter(lambda x, _: f&quot;{x * 100:.{dec}f}%&quot;.replace(&quot;.&quot;, &quot;,&quot;))
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    cur = pd.read_csv(R / &quot;curve.csv&quot;, parse_dates=[&quot;data&quot;])
+    ep = pd.read_csv(R / &quot;episodi.csv&quot;, parse_dates=[&quot;segnale&quot;])
+    sc = pd.read_csv(R / &quot;scimmie.csv&quot;)
+
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(9, 6.5), sharex=True, gridspec_kw={&quot;height_ratios&quot;: [1.2, 1]})
+    a1.plot(cur[&quot;data&quot;], cur[&quot;spx&quot;], color=BLU, lw=1.5)
+    a1.set_yscale(&quot;log&quot;)
+    a1.set_ylabel(&quot;S&amp;P 500 (scala log)&quot;)
+    a1.set_title(&quot;Quando il VIX supera 30&quot;, loc=&quot;left&quot;, fontsize=13)
+    a2.plot(cur[&quot;data&quot;], cur[&quot;vix&quot;], color=ARANCIO, lw=1.0)
+    a2.axhline(config.SOGLIA_BASE, color=GRIGIO, ls=&quot;--&quot;, lw=1.2)
+    for dt in ep[&quot;segnale&quot;]:
+        a1.axvline(dt, color=GRIGIO, alpha=0.5, lw=0.8)
+        a2.axvline(dt, color=GRIGIO, alpha=0.5, lw=0.8)
+    a2.set_ylabel(&quot;VIX&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_contesto.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(9, 5))
+    x = np.arange(len(sc))
+    ax.bar(x - 0.2, sc[&quot;media_ep&quot;], width=0.4, color=BLU, label=&quot;Dopo VIX sopra 30&quot;)
+    ax.bar(x + 0.2, sc[&quot;media_gen&quot;], width=0.4, color=GRIGIO, label=&quot;Seduta qualunque&quot;)
+    ax.errorbar(x + 0.2, sc[&quot;media_gen&quot;], yerr=[sc[&quot;media_gen&quot;] - sc[&quot;lo&quot;], sc[&quot;hi&quot;] - sc[&quot;media_gen&quot;]], fmt=&quot;none&quot;, ecolor=&quot;black&quot;, capsize=4, lw=1,
+                label=&quot;Intervallo al 95% delle scimmie&quot;)
+    ax.set_xticks(x)
+    ax.set_xticklabels([f&quot;{h} sedute&quot; for h in sc[&quot;orizzonte&quot;]])
+    ax.yaxis.set_major_formatter(pct_fmt())
+    ax.set_ylabel(&quot;Rendimento medio&quot;)
+    ax.set_title(&quot;Rendimento medio dopo l&#x27;acquisto&quot;, loc=&quot;left&quot;, fontsize=13)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig2_orizzonti.png&quot;)
+    plt.close(fig)
+
+    e = ep.dropna(subset=[&quot;r252&quot;]).reset_index(drop=True)
+    fig, ax = plt.subplots(figsize=(9, 5))
+    colori = [BLU if r &gt; 0 else ARANCIO for r in e[&quot;r252&quot;]]
+    ax.bar(np.arange(len(e)), e[&quot;r252&quot;], color=colori)
+    ax.set_xticks(np.arange(len(e)))
+    ax.set_xticklabels([str(s.year) for s in e[&quot;segnale&quot;]], rotation=60, fontsize=10)
+    ax.axhline(0, color=&quot;black&quot;, lw=0.8)
+    ax.yaxis.set_major_formatter(pct_fmt())
+    ax.set_ylabel(&quot;Rendimento a un anno dall&#x27;acquisto&quot;)
+    ax.set_title(&quot;Episodio per episodio&quot;, loc=&quot;left&quot;, fontsize=13)
+    fig.savefig(config.FIGURE / &quot;fig3_episodi.png&quot;)
+    plt.close(fig)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 243 - &quot;VIX sopra 30: comprare la paura?&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui, scritti prima di guardare i risultati.
+
+Domanda: dopo che il VIX chiude sopra 30, l&#x27;S&amp;P 500 rende di più del solito nei mesi successivi? Si può «comprare la paura»?
+
+Evento: un episodio comincia nella prima seduta in cui il VIX chiude sopra la soglia dopo almeno QUIETE sedute consecutive con il VIX
+uguale o sotto la soglia (così gli episodi sono separati e non si sovrappongono). Si compra alla chiusura della seduta SUCCESSIVA a
+quella in cui il VIX chiude sopra la soglia (il segnale non può essere scambiato nella stessa chiusura: nessun look-ahead) e si guarda
+il rendimento dell&#x27;S&amp;P 500 (indice di prezzo, senza dividendi) a 21, 63, 126 e 252 sedute. Confronti: tutte le sedute qualunque (rendimento
+«generico») e le scimmie, cioè lo stesso numero di date di acquisto scelte a caso.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati ---------------------------------------------------------------------------------
+INDICI = [
+    (&quot;^GSPC&quot;, &quot;S&amp;P 500&quot;, &quot;USD&quot;),
+    (&quot;^VIX&quot;, &quot;VIX&quot;, &quot;punti&quot;),
+]
+TICKER_INDICE = &quot;^GSPC&quot;
+TICKER_VIX = &quot;^VIX&quot;
+INIZIO_DOWNLOAD = &quot;1989-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;S&amp;P 500 e del VIX&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; l&#x27;S&amp;P 500 è l&#x27;indice di prezzo, senza dividendi&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;, &quot;VIX&quot;)
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+# --- Parametri (fissati prima di guardare i dati) --------------------------------------------
+GIORNI_ANNO = 252
+SOGLIA_BASE = 30.0
+QUIETE = 63                  # sedute consecutive sotto la soglia prima che un nuovo episodio possa cominciare (circa tre mesi)
+ORIZZONTI = (21, 63, 126, 252)
+ORIZZONTE_MIN = 63           # per l&#x27;ipotesi sul minimo successivo: finestra di sedute dopo l&#x27;acquisto
+GRIGLIA_SOGLIE = (25.0, 30.0, 35.0, 40.0)    # robustezza: si riportano tutte
+EPISODI_MIN_GRIGLIA = 5      # una soglia con meno episodi non si valuta
+H3_QUOTA = 0.50              # ipotesi 3: in più della metà degli episodi l&#x27;indice scende ancora sotto il prezzo d&#x27;acquisto
+H4_QUOTA = 0.80              # ipotesi 4: quota di episodi con rendimento a un anno positivo sopra l&#x27;80%
+H6_EPISODI = 20              # ipotesi 6: meno di venti episodi indipendenti
+
+# --- Test statistici ----------------------------------------------------------------------
+SEME = 20261029
+N_SCIMMIE = 10000
+LIVELLO_CONFIDENZA = 0.95
+SOGLIA = 0.05
+SOGLIA_FORTE = 0.01
+
+IPOTESI = (
+    &quot;1) Dopo un episodio con il VIX sopra 30 il rendimento medio dell&#x27;S&amp;P 500 a un anno (252 sedute) è più alto del rendimento medio a un &quot;
+    &quot;anno su una seduta qualunque. &quot;
+    &quot;2) A un mese (21 sedute) la differenza non si distingue dal caso: il rendimento medio degli episodi cade dentro l&#x27;intervallo al 95% &quot;
+    &quot;ottenuto dalle scimmie (stesso numero di acquisti, date a caso). &quot;
+    &quot;3) Comprare non è comodo: in più della metà degli episodi l&#x27;indice scende ancora, cioè nelle 63 sedute successive l&#x27;acquisto tocca &quot;
+    &quot;almeno una chiusura sotto il prezzo pagato. &quot;
+    &quot;4) A un anno più dell&#x27;80% degli episodi chiude in positivo. &quot;
+    &quot;5) Il risultato non dipende dalla soglia: con 25, 30, 35 e 40 (se ci sono almeno cinque episodi) il rendimento medio a un anno è &quot;
+    &quot;sempre più alto di quello generico. &quot;
+    &quot;6) Gli episodi indipendenti sono meno di venti, e a un anno il rendimento medio degli episodi non si distingue dalle scimmie al &quot;
+    &quot;livello severo dell&#x27;1%: p-value sopra 0,01.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>└── verifica_motore.py     controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 243: episodi di VIX sopra soglia, rendimenti a orizzonti fissi, scimmie.&quot;&quot;&quot;
+import numpy as np
+
+
+def episodi(vix: np.ndarray, soglia: float, quiete: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posizioni (nel vettore del VIX) della prima chiusura sopra la soglia dopo almeno `quiete` chiusure consecutive non sopra.&quot;&quot;&quot;
+    sopra = vix &gt; soglia
+    out = []
+    for i in range(quiete, len(vix)):
+        if sopra[i] and not sopra[i - quiete:i].any():
+            out.append(i)
+    return np.array(out, dtype=int)
+
+
+def rendimenti_forward(c: np.ndarray, entrate: np.ndarray, h: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimento da chiusura a chiusura da ciascuna entrata a h sedute dopo; le entrate senza h sedute davanti sono escluse.&quot;&quot;&quot;
+    e = entrate[entrate + h &lt; len(c)]
+    return c[e + h] / c[e] - 1.0
+
+
+def minimo_successivo(c: np.ndarray, entrate: np.ndarray, h: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Per ciascuna entrata: peggior chiusura nelle h sedute successive, rispetto al prezzo d&#x27;entrata (meno uno).&quot;&quot;&quot;
+    e = entrate[entrate + h &lt; len(c)]
+    return np.array([c[x + 1:x + h + 1].min() / c[x] - 1.0 for x in e])
+
+
+def entrate_generiche(n: int, h: int, prima: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Tutte le possibili entrate con h sedute davanti, a partire da `prima`.&quot;&quot;&quot;
+    return np.arange(prima, n - h)
+
+
+def scimmie_medie(c: np.ndarray, validi: np.ndarray, k: int, h: int, n_scimmie: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimento medio a h sedute di k entrate scelte a caso (senza ripetizioni) tra le entrate `validi`.&quot;&quot;&quot;
+    r = c[validi + h] / c[validi] - 1.0
+    out = np.empty(n_scimmie)
+    for j in range(n_scimmie):
+        out[j] = r[rng.choice(len(r), size=k, replace=False)].mean()
+    return out
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati: se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+
+import funzioni as f
+
+
+def main():
+    # VIX: tre episodi ben separati
+    v = np.full(400, 15.0)
+    v[100:103] = 35.0
+    v[300] = 31.0
+    v[301] = 12.0
+    v[302] = 33.0     # entro la quiete dal precedente: non è un nuovo episodio
+    ep = f.episodi(v, 30.0, 63)
+    assert list(ep) == [100, 300], ep
+    # un episodio che continua a stare sopra non ne apre altri
+    v2 = np.full(300, 15.0); v2[100:200] = 40.0
+    assert list(f.episodi(v2, 30.0, 63)) == [100]
+    # nessun episodio prima che passi la quiete iniziale
+    v3 = np.full(100, 15.0); v3[10] = 40.0
+    assert len(f.episodi(v3, 30.0, 63)) == 0
+    # rendimenti
+    c = 100.0 * 1.01 ** np.arange(400)
+    ent = np.array([101, 390])
+    r = f.rendimenti_forward(c, ent, 21)
+    assert len(r) == 1 and abs(r[0] - (1.01 ** 21 - 1)) &lt; 1e-9
+    # minimo successivo: serie che scende poi sale
+    c2 = np.r_[100.0, 90.0, 95.0, 110.0, 120.0]
+    m = f.minimo_successivo(c2, np.array([0]), 3)
+    assert abs(m[0] - (-0.10)) &lt; 1e-12
+    # scimmie: con rendimenti tutti uguali la media è sempre quella
+    rng = np.random.default_rng(1)
+    c3 = 100.0 * 1.001 ** np.arange(500)
+    s = f.scimmie_medie(c3, np.arange(10, 200), 5, 21, 50, rng)
+    assert np.allclose(s, 1.001 ** 21 - 1)
+    print(&quot;verifica_motore: tutto ok&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>

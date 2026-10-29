@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PAC dal 2000: il decennio perso · il codice · TickerFight</title>
+<meta name="description" content="un piano di accumulo mensile partito nel 2000 sull&#x27;S&amp;P 500 ha davvero battuto il versamento unico, e quanto dipende dalla data di partenza?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>PAC dal 2000: il decennio perso</h1>
+<p class="domanda">Un piano di accumulo mensile partito nel 2000 sull&#x27;S&amp;P 500 ha davvero battuto il versamento unico, e quanto dipende dalla data di partenza?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="pac-dal-2000-il-decennio-perso.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Dati:</strong> S&amp;P 500 (indice di prezzo) mensile.</li>
+<li><strong>Confronto:</strong> PAC con commissioni e tasse contro versamento unico dello stesso capitale, su tutte le date di partenza.</li>
+<li><strong>Test:</strong> rango della partenza 2000 tra tutte le partenze, serie rimescolate (scimmie), confronto con la partenza 1929.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>pac-dal-2000-il-decennio-perso/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica i dati da Yahoo Finance
+    ├── 02_backtest_e_test.py  calcoli e test statistici
+    ├── 03_grafici.py          i grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd pac-dal-2000-il-decennio-perso
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>calcoli e test statistici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - PAC dal 2000: il piano di accumulo contro il lump sum, tutte le date di partenza e il caso.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json        ogni numero dell&#x27;articolo, con descrizione e origine
+  partenze.csv         per ogni mese di partenza dal 1928: rendimento totale netto del PAC e del lump sum a dieci anni
+  curva_2000.csv       valore lordo mese per mese del piano che parte nel gennaio 2000 (PAC, lump sum, versato)
+  curva_1929.csv       lo stesso per il piano che parte nel gennaio 1929
+  quote_perm.csv       per ogni serie rimescolata, quota di piani con rendimento pari o peggiore di quello del piano 2000
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+MESI_IT = [&quot;gennaio&quot;, &quot;febbraio&quot;, &quot;marzo&quot;, &quot;aprile&quot;, &quot;maggio&quot;, &quot;giugno&quot;, &quot;luglio&quot;, &quot;agosto&quot;, &quot;settembre&quot;,
+           &quot;ottobre&quot;, &quot;novembre&quot;, &quot;dicembre&quot;]
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    pm = fx.prezzi_mensili(df[&quot;Close&quot;].astype(float))
+    p = pm.to_numpy(float)
+    mesi_idx = pm.index
+    n = len(p)
+    rng = np.random.default_rng(config.SEME)
+    M = config.MESI
+    versato = config.VERSAMENTO * M
+
+    pac, ls = fx.piani(p)
+    starts = np.arange(len(pac))
+    date_s = mesi_idx[starts]
+    s2000 = int(np.flatnonzero(date_s == pd.Period(f&quot;{config.ANNO_CASO}-01&quot;, freq=&quot;M&quot;))[0])
+    s1929 = int(np.flatnonzero(date_s == pd.Period(f&quot;{config.ANNO_CRISI}-01&quot;, freq=&quot;M&quot;))[0])
+    pd.DataFrame({&quot;partenza&quot;: date_s.astype(str), &quot;pac&quot;: pac, &quot;lump_sum&quot;: ls}).to_csv(
+        config.RISULTATI / &quot;partenze.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    for s, nome in ((s2000, &quot;curva_2000.csv&quot;), (s1929, &quot;curva_1929.csv&quot;)):
+        a, b, c = fx.curva_piano(p, s)
+        pd.DataFrame({&quot;mese&quot;: np.arange(M + 1), &quot;data&quot;: mesi_idx[s:s + M + 1].astype(str), &quot;pac&quot;: a, &quot;lump_sum&quot;: b,
+                      &quot;versato&quot;: c, &quot;prezzo&quot;: p[s:s + M + 1]}).to_csv(config.RISULTATI / nome, index=False, float_format=&quot;%.4f&quot;)
+
+    reg(&quot;prima_data&quot;, str(df.index[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(df.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;anno_primo_piano&quot;, int(mesi_idx[0].year), &quot;annonum&quot;, &quot;Anno di partenza del primo piano decennale&quot;, &quot;dati/&quot;)
+    reg(&quot;anno_ultimo_piano&quot;, int(date_s[-1].year), &quot;annonum&quot;, &quot;Anno di partenza dell&#x27;ultimo piano decennale completo&quot;, &quot;dati/&quot;)
+    reg(&quot;n_partenze&quot;, len(pac), &quot;int&quot;, &quot;Mesi di partenza con un piano decennale completo&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;mesi&quot;, M, &quot;int&quot;, &quot;Versamenti di ogni piano&quot;, &quot;config.py, MESI&quot;)
+    reg(&quot;anni_piano&quot;, M // 12, &quot;annonum&quot;, &quot;Anni di ogni piano&quot;, &quot;config.py, MESI&quot;)
+    reg(&quot;versamento&quot;, config.VERSAMENTO, &quot;int&quot;, &quot;Versamento mensile&quot;, &quot;config.py, VERSAMENTO&quot;)
+    reg(&quot;versato&quot;, versato, &quot;int&quot;, &quot;Totale versato in un piano&quot;, &quot;config.py&quot;)
+    reg(&quot;commissione&quot;, config.COMMISSIONE, &quot;num2&quot;, &quot;Commissione per ogni acquisto e per la vendita finale&quot;, &quot;config.py, COMMISSIONE&quot;)
+    reg(&quot;aliquota&quot;, config.ALIQUOTA, &quot;pct0&quot;, &quot;Aliquota sulla plusvalenza&quot;, &quot;config.py, ALIQUOTA&quot;)
+    reg(&quot;anno_caso&quot;, config.ANNO_CASO, &quot;annonum&quot;, &quot;Anno di partenza del piano del caso principale&quot;, &quot;config.py, ANNO_CASO&quot;)
+    reg(&quot;anno_caso_fine&quot;, config.ANNO_CASO + M // 12 - 1, &quot;annonum&quot;, &quot;Ultimo anno di versamento del piano del caso principale&quot;, &quot;config.py&quot;)
+    reg(&quot;anno_crisi&quot;, config.ANNO_CRISI, &quot;annonum&quot;, &quot;Anno di partenza del secondo caso storico&quot;, &quot;config.py, ANNO_CRISI&quot;)
+    reg(&quot;h1_punti&quot;, config.H3_PUNTI, &quot;pp1&quot;, &quot;Ipotesi 1: vantaggio minimo del PAC sul lump sum, in punti percentuali&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_margine&quot;, config.H1_MARGINE, &quot;pct0&quot;, &quot;Ipotesi 2: margine dal totale versato&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_quota&quot;, config.H2_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 3: quota delle date di partenza peggiori&quot;, &quot;config.py&quot;)
+    reg(&quot;h4_quota&quot;, config.H4_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 4: quota massima di piani rimescolati peggiori del piano del 2000&quot;, &quot;config.py&quot;)
+    reg(&quot;n_perm&quot;, config.N_PERM, &quot;int&quot;, &quot;Serie rimescolate&quot;, &quot;config.py, N_PERM&quot;)
+
+    # --- Il piano del 2000 -------------------------------------------------------------------------------------
+    a, b, c = fx.curva_piano(p, s2000)
+    reg(&quot;prezzo_inizio&quot;, float(p[s2000]), &quot;num1&quot;, &quot;Chiusura dell&#x27;S&amp;P 500 nel primo giorno di borsa del piano 2000&quot;, &quot;dati/&quot;)
+    reg(&quot;prezzo_fine&quot;, float(p[s2000 + M]), &quot;num1&quot;, &quot;Chiusura dell&#x27;S&amp;P 500 alla vendita del piano 2000&quot;, &quot;dati/&quot;)
+    reg(&quot;prezzo_minimo&quot;, float(p[s2000:s2000 + M + 1].min()), &quot;num1&quot;, &quot;Minimo delle chiusure mensili durante il piano 2000&quot;, &quot;dati/&quot;)
+    reg(&quot;prezzo_minimo_data&quot;, f&quot;{MESI_IT[mesi_idx[s2000 + int(np.argmin(p[s2000:s2000 + M + 1]))].month - 1]} {mesi_idx[s2000 + int(np.argmin(p[s2000:s2000 + M + 1]))].year}&quot;, &quot;testo&quot;, &quot;Mese del minimo delle chiusure mensili durante il piano 2000&quot;, &quot;dati/&quot;)
+    reg(&quot;indice_var&quot;, float(p[s2000 + M] / p[s2000] - 1), &quot;pct0&quot;, &quot;Variazione dell&#x27;indice tra l&#x27;inizio e la fine del piano 2000&quot;, &quot;dati/&quot;)
+    reg(&quot;pac_2000&quot;, float(pac[s2000]), &quot;pct1&quot;, &quot;Rendimento totale netto del PAC 2000 (valore finale netto diviso il versato, meno uno)&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;ls_2000&quot;, float(ls[s2000]), &quot;pct1&quot;, &quot;Rendimento totale netto del lump sum 2000&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;diff_2000&quot;, float(pac[s2000] - ls[s2000]), &quot;pp1&quot;, &quot;Rendimento del PAC 2000 meno quello del lump sum, in punti percentuali&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;pac_2000_finale&quot;, float((1 + pac[s2000]) * versato), &quot;int&quot;, &quot;Valore finale netto del PAC 2000&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;ls_2000_finale&quot;, float((1 + ls[s2000]) * versato), &quot;int&quot;, &quot;Valore finale netto del lump sum 2000&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;pac_2000_max_perdita&quot;, float((a[1:] / c[1:] - 1).min()), &quot;pct0&quot;, &quot;Peggior rapporto tra valore lordo del PAC 2000 e versato fino a quel mese, meno uno&quot;, &quot;curva_2000.csv&quot;)
+    mmin = int(np.argmin(a[1:] / c[1:] - 1)) + 1
+    reg(&quot;pac_2000_max_perdita_mese&quot;, mmin, &quot;int&quot;, &quot;Mese del piano (dal primo) con il peggior rapporto tra valore e versato&quot;, &quot;curva_2000.csv&quot;)
+    reg(&quot;ls_2000_max_perdita&quot;, float((b / b[0] - 1).min()), &quot;pct0&quot;, &quot;Peggior rendimento lordo del lump sum 2000 durante il piano&quot;, &quot;curva_2000.csv&quot;)
+    sotto = np.flatnonzero(a[1:] &lt; c[1:]) + 1
+    reg(&quot;pac_2000_mesi_sotto&quot;, len(sotto), &quot;int&quot;, &quot;Mesi (su centoventi) in cui il PAC 2000 vale meno del versato fino a quel momento&quot;, &quot;curva_2000.csv&quot;)
+
+    # --- Tutte le date di partenza -----------------------------------------------------------------------------
+    rango = int((pac &lt; pac[s2000]).sum() + 1)
+    quota_real = float((pac &lt;= pac[s2000]).mean())
+    reg(&quot;rango_2000&quot;, rango, &quot;int&quot;, &quot;Posto del PAC 2000 tra tutte le partenze, dal peggiore (uno)&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;quota_peggiori&quot;, quota_real, &quot;pct1&quot;, &quot;Quota di partenze con un PAC pari o peggiore di quello del 2000&quot;, &quot;partenze.csv&quot;)
+    ip = int(np.argmin(pac)); iq = int(np.argmax(pac))
+    reg(&quot;pac_peggiore&quot;, float(pac[ip]), &quot;pct0&quot;, &quot;Rendimento totale netto del PAC peggiore&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;pac_peggiore_anno&quot;, int(date_s[ip].year), &quot;annonum&quot;, &quot;Anno di partenza del PAC peggiore&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;pac_migliore&quot;, float(pac[iq]), &quot;pct0&quot;, &quot;Rendimento totale netto del PAC migliore&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;pac_migliore_anno&quot;, int(date_s[iq].year), &quot;annonum&quot;, &quot;Anno di partenza del PAC migliore&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;pac_mediano&quot;, float(np.median(pac)), &quot;pct0&quot;, &quot;Rendimento totale netto mediano del PAC decennale&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;n_pac_negativi&quot;, int((pac &lt; 0).sum()), &quot;int&quot;, &quot;Partenze in cui il PAC chiude sotto il versato&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;quota_pac_negativi&quot;, float((pac &lt; 0).mean()), &quot;pct1&quot;, &quot;Quota di partenze in cui il PAC chiude sotto il versato&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;n_ls_negativi&quot;, int((ls &lt; 0).sum()), &quot;int&quot;, &quot;Partenze in cui il lump sum chiude sotto la somma investita&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;quota_ls_negativi&quot;, float((ls &lt; 0).mean()), &quot;pct1&quot;, &quot;Quota di partenze in cui il lump sum chiude sotto la somma investita&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;quota_pac_batte_ls&quot;, float((pac &gt; ls).mean()), &quot;pct0&quot;, &quot;Quota di partenze in cui il PAC fa meglio del lump sum&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;quota_pac_batte_ls_neg&quot;, float((pac[ls &lt; 0] &gt; ls[ls &lt; 0]).mean()) if (ls &lt; 0).any() else 0.0, &quot;pct0&quot;, &quot;Tra le partenze in cui il lump sum perde, quota in cui il PAC fa meglio&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;pac_mediano_ls_mediano&quot;, float(np.median(ls)), &quot;pct0&quot;, &quot;Rendimento totale netto mediano del lump sum decennale&quot;, &quot;partenze.csv&quot;)
+
+    # --- 1929 ----------------------------------------------------------------------------------------------------
+    a9, b9, c9 = fx.curva_piano(p, s1929)
+    reg(&quot;pac_1929&quot;, float(pac[s1929]), &quot;pct1&quot;, &quot;Rendimento totale netto del PAC che parte a gennaio 1929&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;ls_1929&quot;, float(ls[s1929]), &quot;pct1&quot;, &quot;Rendimento totale netto del lump sum che parte a gennaio 1929&quot;, &quot;partenze.csv&quot;)
+    reg(&quot;indice_var_1929&quot;, float(p[s1929 + M] / p[s1929] - 1), &quot;pct0&quot;, &quot;Variazione dell&#x27;indice tra l&#x27;inizio e la fine del piano 1929&quot;, &quot;dati/&quot;)
+    reg(&quot;pac_1929_max_perdita&quot;, float((a9[1:] / c9[1:] - 1).min()), &quot;pct0&quot;, &quot;Peggior rapporto tra valore lordo del PAC 1929 e versato, meno uno&quot;, &quot;curva_1929.csv&quot;)
+
+    # --- Serie rimescolate ------------------------------------------------------------------------------------------
+    quote = np.empty(config.N_PERM)
+    neg = np.empty(config.N_PERM)
+    for k in range(config.N_PERM):
+        pr = fx.serie_rimescolata(p, rng)
+        pp, _ = fx.piani(pr)
+        quote[k] = (pp &lt;= pac[s2000]).mean()
+        neg[k] = (pp &lt; 0).mean()
+    pd.DataFrame({&quot;quota_peggiori&quot;: quote, &quot;quota_negativi&quot;: neg}).to_csv(config.RISULTATI / &quot;quote_perm.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    reg(&quot;perm_quota_media&quot;, float(quote.mean()), &quot;pct1&quot;, &quot;Quota media di piani con rendimento pari o peggiore di quello del 2000 sulle serie rimescolate&quot;, &quot;quote_perm.csv&quot;)
+    reg(&quot;perm_quota_p95&quot;, float(np.percentile(quote, 95)), &quot;pct1&quot;, &quot;Novantacinquesimo percentile della quota di piani peggiori del 2000 sulle serie rimescolate&quot;, &quot;quote_perm.csv&quot;)
+    reg(&quot;perm_neg_media&quot;, float(neg.mean()), &quot;pct1&quot;, &quot;Quota media di piani in perdita (sotto il versato) sulle serie rimescolate&quot;, &quot;quote_perm.csv&quot;)
+    reg(&quot;perm_serie_sopra_reale&quot;, float((quote &gt;= quota_real).mean()), &quot;pct1&quot;, &quot;Quota di serie rimescolate in cui la quota di piani peggiori del 2000 è pari o superiore a quella reale&quot;, &quot;quote_perm.csv&quot;)
+
+    # --- Verdetti sulle ipotesi -----------------------------------------------------------------------------------
+    h1 = bool(pac[s2000] - ls[s2000] &gt;= config.H3_PUNTI)
+    h2 = bool(abs(pac[s2000]) &lt;= config.H1_MARGINE)
+    h3 = bool(quota_real &lt;= config.H2_QUOTA)
+    h4 = bool(quote.mean() &lt; config.H4_QUOTA)
+    h5 = bool(pac[s1929] &lt; 0)
+    for i, v in enumerate([h1, h2, h3, h4, h5], 1):
+        reg(f&quot;h{i}_esito&quot;, int(v), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(h1 + h2 + h3 + h4 + h5), &quot;int&quot;, &quot;Ipotesi confermate (su cinque)&quot;, &quot;confronto con config.py&quot;)
+
+    meta = {&quot;generato&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+            &quot;numpy&quot;: np.__version__, &quot;pandas&quot;: pd.__version__, &quot;seme&quot;: config.SEME, &quot;ipotesi&quot;: config.IPOTESI}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps({&quot;meta&quot;: meta, &quot;valori&quot;: RIS}, ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    print(f&quot;Scritte {len(RIS)} metriche.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_piano_2000.png        l&#x27;indice e, mese per mese, PAC, lump sum e totale versato del piano che parte a gennaio 2000
+  fig2_tutte_le_partenze.png rendimento totale netto del PAC e del lump sum a dieci anni, per ogni mese di partenza
+  fig3_confronto_caso.png    quota di piani peggiori del 2000 su serie rimescolate, contro quella reale
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    m = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    c = pd.read_csv(R / &quot;curva_2000.csv&quot;, parse_dates=[&quot;data&quot;])
+    P = pd.read_csv(R / &quot;partenze.csv&quot;)
+    P[&quot;data&quot;] = pd.PeriodIndex(P[&quot;partenza&quot;], freq=&quot;M&quot;).to_timestamp()
+    Q = pd.read_csv(R / &quot;quote_perm.csv&quot;)
+
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(10, 7.5), sharex=True, gridspec_kw={&quot;height_ratios&quot;: [1, 1.4]})
+    a1.plot(c[&quot;data&quot;], c[&quot;prezzo&quot;], color=GRIGIO, lw=2)
+    a1.set_ylabel(&quot;S&amp;P 500&quot;)
+    a2.plot(c[&quot;data&quot;], c[&quot;versato&quot;], color=&quot;#555&quot;, lw=1.6, ls=&quot;--&quot;, label=&quot;Totale versato&quot;)
+    a2.plot(c[&quot;data&quot;], c[&quot;pac&quot;], color=BLU, lw=2.4, label=&quot;Piano di accumulo&quot;)
+    a2.plot(c[&quot;data&quot;], c[&quot;lump_sum&quot;], color=ARANCIO, lw=2.4, label=&quot;Tutto investito il primo giorno&quot;)
+    a2.set_ylabel(&quot;Valore lordo&quot;)
+    a2.legend(loc=&quot;upper left&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_piano_2000.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(P[&quot;data&quot;], P[&quot;lump_sum&quot;] * 100, color=ARANCIO, lw=1.2, alpha=0.8, label=&quot;Tutto investito il primo giorno&quot;)
+    ax.plot(P[&quot;data&quot;], P[&quot;pac&quot;] * 100, color=BLU, lw=1.8, label=&quot;Piano di accumulo&quot;)
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_ylim(top=ax.get_ylim()[1] * 1.25)
+    for anno, nome in ((config.ANNO_CASO, str(config.ANNO_CASO)), (config.ANNO_CRISI, str(config.ANNO_CRISI))):
+        d = pd.Timestamp(f&quot;{anno}-01-01&quot;)
+        ax.axvline(d, color=GRIGIO, lw=1, ls=&quot;:&quot;)
+        ax.text(d, ax.get_ylim()[1] * 0.80, nome, ha=&quot;center&quot;, fontsize=11, color=&quot;#333&quot;,
+                bbox=dict(boxstyle=&quot;round,pad=0.2&quot;, fc=&quot;white&quot;, ec=&quot;none&quot;, alpha=0.85))
+    ax.set_xlabel(&quot;Mese di partenza del piano di dieci anni&quot;)
+    ax.set_ylabel(&quot;Rendimento totale netto a dieci anni (%)&quot;)
+    ax.legend(loc=&quot;upper center&quot;, ncol=2, bbox_to_anchor=(0.5, 1.0))
+    fig.savefig(config.FIGURE / &quot;fig2_tutte_le_partenze.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    ax.hist(Q[&quot;quota_peggiori&quot;] * 100, bins=40, color=GRIGIO, alpha=0.85)
+    ax.axvline(m[&quot;quota_peggiori&quot;][&quot;valore&quot;] * 100, color=ARANCIO, lw=2.5, label=&quot;Storia reale&quot;)
+    ax.set_xlabel(&quot;Quota di piani con rendimento pari o peggiore di quello del 2000 (%)&quot;)
+    ax.set_ylabel(&quot;Serie rimescolate&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig3_confronto_caso.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 426 - &quot;PAC dal 2000: il decennio perso&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Piano di accumulo (PAC): ogni mese si versa la stessa somma e si comprano quote (frazionate) dell&#x27;indice S&amp;P 500 (indice di prezzo, senza
+dividendi) alla chiusura della prima seduta del mese. Il piano dura dieci anni (centoventi versamenti) e si liquida alla chiusura della
+prima seduta del mese successivo all&#x27;ultimo versamento, con commissione e imposta. Caso principale: il piano che parte a gennaio 2000.
+Confronti: il lump sum (la stessa somma totale investita tutta insieme il primo giorno), tutte le altre date di partenza dal 1928, e serie
+con gli stessi rendimenti mensili messi in ordine casuale.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;, &quot;PAC&quot;)
+
+# --- Il piano -------------------------------------------------------------------------------------------------
+VERSAMENTO = 100.0              # somma versata ogni mese
+MESI = 120                      # versamenti: dieci anni
+COMMISSIONE = 2.0               # per ogni acquisto e per la vendita finale
+ALIQUOTA = 0.26                 # sulla plusvalenza, alla vendita finale (nessuna compensazione: una sola vendita)
+ANNO_CASO = 2000                # il piano del caso principale parte a gennaio di quest&#x27;anno
+ANNO_CRISI = 1929               # secondo caso storico di confronto: parte a gennaio di quest&#x27;anno
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------
+H1_MARGINE = 0.10               # ipotesi 2: il piano 2000 chiude entro questo margine dal versato (in valore assoluto)
+H2_QUOTA = 0.10                 # ipotesi 3: il piano 2000 sta nel peggior 10% delle date di partenza
+H3_PUNTI = 0.10                 # ipotesi 1: il PAC supera il lump sum del 2000 di almeno 10 punti percentuali
+H4_QUOTA = 0.15                 # ipotesi 4: su serie rimescolate meno del 15% dei piani fa peggio del piano 2000
+
+# --- Confronto con il caso ----------------------------------------------------------------------------------------
+N_PERM = 1000
+SEME = 20261029
+SOGLIA = 0.05
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati ------------------------------------------------------------
+IPOTESI = (
+    &quot;1) Il piano di accumulo che parte a gennaio 2000 fa meglio del lump sum dello stesso mese di almeno dieci punti percentuali di &quot;
+    &quot;rendimento totale netto: il decennio perso colpisce molto di più chi investe tutto insieme. &quot;
+    &quot;2) Anche il piano 2000 resta vicino al pareggio: il suo valore finale netto sta entro il dieci per cento (in più o in meno) dal &quot;
+    &quot;totale versato. &quot;
+    &quot;3) Il piano 2000 sta tra il dieci per cento peggiore di tutte le date di partenza dal 1928 (a parità di durata di dieci anni). &quot;
+    &quot;4) Il caso non basta a spiegarlo: su serie con gli stessi rendimenti mensili messi in ordine casuale, meno del quindici per cento &quot;
+    &quot;dei piani decennali chiude con un rendimento pari o peggiore di quello del piano 2000. &quot;
+    &quot;5) Non è il solo decennio perso: il piano che parte a gennaio 1929 chiude sotto il totale versato (rendimento netto negativo).&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>└── verifica_motore.py     controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 426: prezzi mensili, piano di accumulo, lump sum, rimescolamento dei rendimenti mensili.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import config
+
+
+def prezzi_mensili(close: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Chiusura della prima seduta di ogni mese; il primo mese, se parziale, è scartato.&quot;&quot;&quot;
+    c = close.dropna()
+    c = c[c &gt; 0]
+    mese = c.index.to_period(&quot;M&quot;)
+    p = c.groupby(mese).first()
+    if c.index[0].day &gt; 5:                 # il primo mese dei dati è parziale: lo si scarta
+        p = p.iloc[1:]
+    return p
+
+
+def valore_netto(lordo: np.ndarray, versato: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Valore dopo la commissione di vendita e l&#x27;imposta sulla plusvalenza (se positiva).&quot;&quot;&quot;
+    plus = lordo - versato - config.COMMISSIONE
+    return lordo - config.COMMISSIONE - np.where(plus &gt; 0, config.ALIQUOTA * plus, 0.0)
+
+
+def piani(p: np.ndarray, mesi: int = None) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Rendimento totale netto del PAC e del lump sum per ogni data di partenza s con una finestra completa.
+
+    PAC: versamento a ogni mese s..s+mesi-1 (commissione su ogni acquisto), vendita alla chiusura del mese s+mesi.
+    Lump sum: la stessa somma totale investita nel mese s (una commissione), vendita nello stesso istante.
+    &quot;&quot;&quot;
+    mesi = mesi or config.MESI
+    n = len(p)
+    inv = np.r_[0.0, np.cumsum(1.0 / p)]
+    starts = np.arange(0, n - mesi)                       # s + mesi deve esistere
+    unita = (config.VERSAMENTO - config.COMMISSIONE) * (inv[starts + mesi] - inv[starts])
+    versato = config.VERSAMENTO * mesi
+    pac = valore_netto(unita * p[starts + mesi], versato) / versato - 1
+    quote_ls = (versato - config.COMMISSIONE) / p[starts]
+    ls = valore_netto(quote_ls * p[starts + mesi], versato) / versato - 1
+    return pac, ls
+
+
+def curva_piano(p: np.ndarray, s: int, mesi: int = None) -&gt; tuple[np.ndarray, np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Valore lordo del PAC, del lump sum e totale versato, mese per mese, per il piano che parte in s (mesi+1 punti).&quot;&quot;&quot;
+    mesi = mesi or config.MESI
+    k = np.arange(mesi + 1)
+    unita = np.r_[0.0, np.cumsum((config.VERSAMENTO - config.COMMISSIONE) / p[s:s + mesi])]
+    pac = unita * p[s:s + mesi + 1]
+    ls = (config.VERSAMENTO * mesi - config.COMMISSIONE) / p[s] * p[s:s + mesi + 1]
+    return pac, ls, config.VERSAMENTO * np.minimum(k, mesi)
+
+
+def serie_rimescolata(p: np.ndarray, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Serie con gli stessi rendimenti logaritmici mensili in ordine casuale, stesso punto di partenza.&quot;&quot;&quot;
+    r = np.diff(np.log(p))
+    return p[0] * np.exp(np.r_[0.0, np.cumsum(rng.permutation(r))])
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome, cond):
+    global n_ok
+    print((&quot;OK   &quot; if cond else &quot;FAIL &quot;) + nome)
+    if not cond:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+M, V, C, T = config.MESI, config.VERSAMENTO, config.COMMISSIONE, config.ALIQUOTA
+rng = np.random.default_rng(3)
+
+# prezzo costante: nessuna plusvalenza, restano versato meno le commissioni
+p = np.full(M + 30, 100.0)
+pac, ls = fx.piani(p)
+atteso_pac = (M * (V - C) - C) / (M * V) - 1
+controlla(&quot;prezzo costante: il PAC perde le sole commissioni&quot;, np.allclose(pac, atteso_pac))
+atteso_ls = (M * V - 2 * C) / (M * V) - 1
+controlla(&quot;prezzo costante: il lump sum perde le sole commissioni&quot;, np.allclose(ls, atteso_ls))
+controlla(&quot;numero di partenze = mesi disponibili meno la durata&quot;, len(pac) == len(p) - M)
+
+# prezzo che raddoppia con un salto: il lump sum fa +100% lordo, il PAC meno
+p2 = np.r_[np.full(M, 100.0), np.full(30, 200.0)]
+pac2, ls2 = fx.piani(p2)
+lordo_ls = (M * V - C) / 100 * 200
+atteso_ls2 = (lordo_ls - C - T * (lordo_ls - M * V - C)) / (M * V) - 1
+controlla(&quot;raddoppio: rendimento netto del lump sum con tassa&quot;, np.isclose(ls2[0], atteso_ls2))
+controlla(&quot;raddoppio: il PAC (comprato sempre a 100) rende come il lump sum&quot;, np.isclose(pac2[0], atteso_ls2, atol=0.05))
+
+# tassa solo sulla plusvalenza
+controlla(&quot;nessuna tassa se si perde&quot;, np.isclose(fx.valore_netto(np.array([900.0]), 1000.0)[0], 900.0 - C))
+controlla(&quot;tassa del 26% sulla plusvalenza netta&quot;, np.isclose(fx.valore_netto(np.array([1200.0]), 1000.0)[0], 1200.0 - C - T * (200.0 - C)))
+
+# crollo a metà piano: il PAC fa meglio del lump sum
+p3 = np.r_[np.full(1, 100.0), np.full(M // 2, 100.0), np.full(M // 2 + 29, 50.0)]
+pac3, ls3 = fx.piani(p3)
+controlla(&quot;crollo a metà piano: il PAC perde meno del lump sum&quot;, pac3[0] &gt; ls3[0])
+
+# curva del piano coerente con il rendimento finale
+pp = 100 * np.exp(np.cumsum(rng.normal(0.005, 0.04, M + 40)))
+a, b, c = fx.curva_piano(pp, 5)
+controlla(&quot;curva: il versato arriva a quello totale&quot;, np.isclose(c[-1], M * V) and len(a) == M + 1)
+pacx, lsx = fx.piani(pp)
+lordo = a[-1]
+netto = fx.valore_netto(np.array([lordo]), M * V)[0]
+controlla(&quot;curva e piani danno lo stesso valore finale&quot;, np.isclose(netto / (M * V) - 1, pacx[5]))
+
+# prezzi mensili: prima seduta di ogni mese, mese parziale iniziale scartato
+idx = pd.bdate_range(&quot;2000-01-20&quot;, &quot;2001-03-31&quot;)
+close = pd.Series(np.arange(1, len(idx) + 1, dtype=float), index=idx)
+pm = fx.prezzi_mensili(close)
+controlla(&quot;prezzi mensili: il primo mese parziale è scartato&quot;, str(pm.index[0]) == &quot;2000-02&quot;)
+controlla(&quot;prezzi mensili: chiusura della prima seduta del mese&quot;, pm.iloc[0] == close[&quot;2000-02-01&quot;:].iloc[0])
+
+# rimescolamento: stesso prodotto dei rendimenti, stesso inizio e fine
+s = fx.serie_rimescolata(pp, rng)
+controlla(&quot;rimescolata: stessi estremi&quot;, np.isclose(s[0], pp[0]) and np.isclose(s[-1], pp[-1]))
+controlla(&quot;rimescolata: ordine diverso&quot;, not np.allclose(s, pp))
+print(f&quot;{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
