@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Il p-value in finanza: quando provare tante regole inganna · il codice · TickerFight</title>
+<meta name="description" content="Il p-value in finanza: quando provare tante regole inganna">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Il p-value in finanza: quando provare tante regole inganna</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="il-p-value-in-finanza-quando-provare-tante-regole-inganna.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>il-p-value-in-finanza-quando-provare-tante-regole-inganna/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd il-p-value-in-finanza-quando-provare-tante-regole-inganna
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+scipy==1.18.1
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Il p-value in finanza: cinquanta regole a media mobile sull&#x27;S&amp;P 500, test multipli e replicazione.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json     ogni numero dell&#x27;articolo, con descrizione e origine
+  regole.csv        per ogni regola: t, p-value, p-value corretti (Holm, Benjamini-Hochberg), CAGR della regola
+  nulla.csv         per ogni spostamento circolare: massimo |t| e numero di regole sopra la soglia
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+GA = config.GIORNI_ANNO
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    L = list(config.LUNGHEZZE)
+    K = len(L)
+    S, r = fx.segnali_sma(close.to_numpy(), L, max(L))
+    date = close.index[max(L) + 1:]
+    m = len(r)
+    rng = np.random.default_rng(config.SEME)
+    ik = L.index(config.LUNGHEZZA_FAMOSA)
+
+    reg(&quot;prima_data&quot;, str(date[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta del campione comune alle regole&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(date[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;n_sedute&quot;, m, &quot;int&quot;, &quot;Rendimenti giornalieri del campione comune&quot;, &quot;dati/&quot;)
+    reg(&quot;anni&quot;, m / GA, &quot;num1&quot;, &quot;Anni del campione comune (sedute diviso 252)&quot;, &quot;dati/&quot;)
+    reg(&quot;n_regole&quot;, K, &quot;int&quot;, &quot;Regole provate&quot;, &quot;config.py, LUNGHEZZE&quot;)
+    reg(&quot;lung_min&quot;, min(L), &quot;int&quot;, &quot;Lunghezza minima della media mobile&quot;, &quot;config.py&quot;)
+    reg(&quot;lung_max&quot;, max(L), &quot;int&quot;, &quot;Lunghezza massima della media mobile&quot;, &quot;config.py&quot;)
+    reg(&quot;lung_famosa&quot;, config.LUNGHEZZA_FAMOSA, &quot;int&quot;, &quot;Lunghezza della regola più nota, dichiarata in anticipo&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia&quot;, config.SOGLIA, &quot;pct0&quot;, &quot;Livello di significatività&quot;, &quot;config.py&quot;)
+    reg(&quot;n_spost&quot;, config.N_SPOSTAMENTI, &quot;int&quot;, &quot;Spostamenti circolari del test a permutazione&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_regole&quot;, config.H2_REGOLE, &quot;int&quot;, &quot;Ipotesi 2: soglia sul numero di regole significative&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_regole&quot;, config.H3_REGOLE, &quot;int&quot;, &quot;Ipotesi 3: regole che devono restare significative dopo Holm&quot;, &quot;config.py&quot;)
+
+    # --- Test regola per regola -------------------------------------------------------------------------------------------
+    t = fx.welch_t(r, S)
+    p = fx.p_normale(t)
+    p_holm, p_bh = fx.holm(p), fx.benjamini_hochberg(p)
+    quota_inv = S.mean(axis=0)
+    diff_ann = np.array([(r[S[:, k] == 1].mean() - r[S[:, k] == 0].mean()) * GA for k in range(K)])
+    rule_cagr = np.array([fx.cagr(S[:, k] * r, GA) for k in range(K)])
+    cagr_bh = fx.cagr(r, GA)
+    pd.DataFrame({&quot;lunghezza&quot;: L, &quot;t&quot;: t, &quot;p&quot;: p, &quot;p_holm&quot;: p_holm, &quot;p_bh&quot;: p_bh, &quot;quota_investita&quot;: quota_inv,
+                  &quot;diff_annua&quot;: diff_ann, &quot;cagr_regola&quot;: rule_cagr}).to_csv(config.RISULTATI / &quot;regole.csv&quot;, index=False, float_format=&quot;%.6g&quot;)
+    reg(&quot;t_famosa&quot;, float(t[ik]), &quot;num2&quot;, &quot;Statistica t di Welch della regola a 200 sedute&quot;, &quot;funzioni.welch_t&quot;)
+    reg(&quot;p_famosa&quot;, float(p[ik]), &quot;pval&quot;, &quot;P-value (due code) della regola a 200 sedute, presa da sola&quot;, &quot;funzioni.p_normale&quot;)
+    reg(&quot;diff_famosa&quot;, float(diff_ann[ik]), &quot;pp1&quot;, &quot;Differenza annualizzata tra rendimento medio dei giorni investiti e dei giorni fermi, regola a 200 sedute, in punti&quot;, &quot;dati/&quot;)
+    reg(&quot;quota_inv_famosa&quot;, float(quota_inv[ik]), &quot;pct0&quot;, &quot;Quota di giorni in cui la regola a 200 sedute è investita&quot;, &quot;dati/&quot;)
+    reg(&quot;n_sig&quot;, int((p &lt; config.SOGLIA).sum()), &quot;int&quot;, &quot;Regole con p-value sotto il 5% (senza correzioni)&quot;, &quot;funzioni.p_normale&quot;)
+    reg(&quot;n_sig_holm&quot;, int((p_holm &lt; config.SOGLIA).sum()), &quot;int&quot;, &quot;Regole significative al 5% dopo la correzione di Holm&quot;, &quot;funzioni.holm&quot;)
+    reg(&quot;n_sig_bh&quot;, int((p_bh &lt; config.SOGLIA).sum()), &quot;int&quot;, &quot;Regole significative al 5% dopo la correzione di Benjamini-Hochberg&quot;, &quot;funzioni.benjamini_hochberg&quot;)
+    reg(&quot;n_sig_bonf&quot;, int((p &lt; config.SOGLIA / K).sum()), &quot;int&quot;, &quot;Regole significative con la soglia di Bonferroni (5% diviso il numero di regole)&quot;, &quot;funzioni.p_normale&quot;)
+    reg(&quot;soglia_bonf&quot;, config.SOGLIA / K, &quot;pct2&quot;, &quot;Soglia di Bonferroni&quot;, &quot;calcolo&quot;)
+    reg(&quot;fwer_indip&quot;, 1 - (1 - config.SOGLIA) ** K, &quot;pct0&quot;, &quot;Probabilità di almeno un falso positivo con cinquanta test indipendenti al 5%&quot;, &quot;formula 1 - 0,95^50&quot;)
+    ib = int(np.argmax(np.abs(t)))
+    reg(&quot;lung_migliore&quot;, L[ib], &quot;int&quot;, &quot;Lunghezza della regola con |t| massimo&quot;, &quot;funzioni.welch_t&quot;)
+    reg(&quot;t_migliore&quot;, float(t[ib]), &quot;num2&quot;, &quot;Statistica t della regola con |t| massimo&quot;, &quot;funzioni.welch_t&quot;)
+    reg(&quot;p_migliore&quot;, float(p[ib]), &quot;pval&quot;, &quot;P-value grezzo della regola con |t| massimo&quot;, &quot;funzioni.p_normale&quot;)
+    reg(&quot;t_min_sig&quot;, float(np.abs(t).min()), &quot;num2&quot;, &quot;|t| minimo tra le cinquanta regole&quot;, &quot;funzioni.welch_t&quot;)
+    reg(&quot;n_t_pos&quot;, int((t &gt; 0).sum()), &quot;int&quot;, &quot;Regole con t positivo (i giorni investiti rendono più dei giorni fermi)&quot;, &quot;funzioni.welch_t&quot;)
+
+    # --- Spostamenti circolari: il massimo |t| sotto l&#x27;ipotesi nulla -----------------------------------------------------
+    mx, cn = fx.spostamenti(r, S, config.N_SPOSTAMENTI, config.SPOSTAMENTO_MIN, rng)
+    pd.DataFrame({&quot;max_t&quot;: mx, &quot;n_sig&quot;: cn}).to_csv(config.RISULTATI / &quot;nulla.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    p_adj_best = float((1 + np.sum(mx &gt;= abs(t[ib]))) / (config.N_SPOSTAMENTI + 1))
+    p_adj_fam = float((1 + np.sum(mx &gt;= abs(t[ik]))) / (config.N_SPOSTAMENTI + 1))
+    soglia_t = float(np.percentile(mx, 95))
+    reg(&quot;p_adj_migliore&quot;, p_adj_best, &quot;pval&quot;, &quot;P-value corretto (massimo |t| con spostamenti circolari) della regola migliore&quot;, &quot;funzioni.spostamenti&quot;)
+    reg(&quot;p_adj_famosa&quot;, p_adj_fam, &quot;pval&quot;, &quot;P-value corretto della regola a 200 sedute con lo stesso metodo&quot;, &quot;funzioni.spostamenti&quot;)
+    reg(&quot;t_soglia_max&quot;, soglia_t, &quot;num2&quot;, &quot;95° percentile del massimo |t| sotto l&#x27;ipotesi nulla&quot;, &quot;funzioni.spostamenti&quot;)
+    reg(&quot;max_t_mediano&quot;, float(np.median(mx)), &quot;num2&quot;, &quot;Massimo |t| mediano sotto l&#x27;ipotesi nulla&quot;, &quot;funzioni.spostamenti&quot;)
+    reg(&quot;n_sig_maxt&quot;, int((np.abs(t) &gt; soglia_t).sum()), &quot;int&quot;, &quot;Regole con |t| sopra il 95° percentile del massimo nullo&quot;, &quot;funzioni.spostamenti&quot;)
+    reg(&quot;nulla_media&quot;, float(cn.mean()), &quot;num1&quot;, &quot;Numero medio di regole sopra la soglia per caso, negli spostamenti circolari&quot;, &quot;funzioni.spostamenti&quot;)
+    reg(&quot;nulla_quota_almeno1&quot;, float((cn &gt;= 1).mean()), &quot;pct0&quot;, &quot;Quota di spostamenti con almeno una regola sopra la soglia per caso&quot;, &quot;funzioni.spostamenti&quot;)
+    reg(&quot;nulla_max&quot;, int(cn.max()), &quot;int&quot;, &quot;Massimo numero di regole sopra la soglia per caso in uno spostamento&quot;, &quot;funzioni.spostamenti&quot;)
+
+    # --- Replicazione: migliore della prima metà, misurata sulla seconda -------------------------------------------------
+    h = m // 2
+    t1 = fx.welch_t(r[:h], S[:h])
+    j = int(np.argmax(np.abs(t1)))
+    t2 = fx.welch_t(r[h:], S[h:])
+    p2 = fx.p_normale(t2)
+    reg(&quot;rep_lung&quot;, L[j], &quot;int&quot;, &quot;Lunghezza della regola migliore nella prima metà&quot;, &quot;funzioni.welch_t&quot;)
+    reg(&quot;rep_t1&quot;, float(t1[j]), &quot;num2&quot;, &quot;t della regola migliore nella prima metà&quot;, &quot;funzioni.welch_t&quot;)
+    reg(&quot;rep_t2&quot;, float(t2[j]), &quot;num2&quot;, &quot;t della stessa regola nella seconda metà&quot;, &quot;funzioni.welch_t&quot;)
+    reg(&quot;rep_p2&quot;, float(p2[j]), &quot;pval&quot;, &quot;P-value della stessa regola nella seconda metà&quot;, &quot;funzioni.p_normale&quot;)
+    reg(&quot;rep_anno&quot;, int(date[h].year), &quot;annonum&quot;, &quot;Anno in cui comincia la seconda metà&quot;, &quot;dati/&quot;)
+    reg(&quot;rep_n_sig2&quot;, int((p2 &lt; config.SOGLIA).sum()), &quot;int&quot;, &quot;Regole con p-value sotto il 5% nella seconda metà&quot;, &quot;funzioni.p_normale&quot;)
+    reg(&quot;rep_n_sig1&quot;, int((fx.p_normale(t1) &lt; config.SOGLIA).sum()), &quot;int&quot;, &quot;Regole con p-value sotto il 5% nella prima metà&quot;, &quot;funzioni.p_normale&quot;)
+
+    # --- Significativa non vuol dire redditizia ---------------------------------------------------------------------------
+    reg(&quot;cagr_bh&quot;, cagr_bh, &quot;pct1&quot;, &quot;Rendimento annuo composto del buy &amp; hold sul campione comune (indice di prezzo)&quot;, &quot;funzioni.cagr&quot;)
+    reg(&quot;cagr_migliore&quot;, float(rule_cagr[ib]), &quot;pct1&quot;, &quot;Rendimento annuo composto della regola migliore (ferma = rendimento zero)&quot;, &quot;funzioni.cagr&quot;)
+    reg(&quot;cagr_famosa&quot;, float(rule_cagr[ik]), &quot;pct1&quot;, &quot;Rendimento annuo composto della regola a 200 sedute&quot;, &quot;funzioni.cagr&quot;)
+    reg(&quot;n_cagr_sopra_bh&quot;, int((rule_cagr &gt; cagr_bh).sum()), &quot;int&quot;, &quot;Regole con rendimento annuo composto sopra il buy &amp; hold&quot;, &quot;funzioni.cagr&quot;)
+    reg(&quot;sharpe_bh&quot;, fx.sharpe(r, GA), &quot;num2&quot;, &quot;Sharpe del buy &amp; hold nel campione comune&quot;, &quot;funzioni.sharpe&quot;)
+    reg(&quot;sharpe_migliore&quot;, fx.sharpe(S[:, ib] * r, GA), &quot;num2&quot;, &quot;Sharpe della regola migliore&quot;, &quot;funzioni.sharpe&quot;)
+    reg(&quot;quota_inv_migliore&quot;, float(quota_inv[ib]), &quot;pct0&quot;, &quot;Quota di giorni in cui la regola migliore è investita&quot;, &quot;dati/&quot;)
+
+    # --- Verdetti -----------------------------------------------------------------------------------------------------------
+    hh = [p[ik] &lt; config.SOGLIA,
+          int((p &lt; config.SOGLIA).sum()) &gt; config.H2_REGOLE,
+          int((p_holm &lt; config.SOGLIA).sum()) &gt;= config.H3_REGOLE,
+          p_adj_best &lt; config.SOGLIA,
+          bool(p2[j] &lt; config.SOGLIA and np.sign(t2[j]) == np.sign(t1[j])),
+          rule_cagr[ib] &lt; cagr_bh]
+    for i, v in enumerate(hh, 1):
+        reg(f&quot;h{i}_esito&quot;, int(bool(v)), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(bool(v) for v in hh)), &quot;int&quot;, &quot;Ipotesi confermate (su 6)&quot;, &quot;confronto con config.py&quot;)
+
+    meta = {&quot;generato&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+            &quot;numpy&quot;: np.__version__, &quot;pandas&quot;: pd.__version__, &quot;seme&quot;: config.SEME, &quot;ipotesi&quot;: config.IPOTESI}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps({&quot;meta&quot;: meta, &quot;valori&quot;: RIS}, ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    print(f&quot;Scritte {len(RIS)} metriche.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_pvalue_per_regola.png    p-value di ciascuna regola, con le soglie del 5% e di Bonferroni
+  fig2_massimo_nullo.png        massimo |t| sotto l&#x27;ipotesi nulla (spostamenti circolari), con la regola migliore e quella a 200 sedute
+  fig3_falsi_positivi.png       numero di regole «significative» per caso negli spostamenti, contro quello osservato
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False, &quot;axes.grid&quot;: True,
+                     &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;, &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    m = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    g = pd.read_csv(R / &quot;regole.csv&quot;)
+    nu = pd.read_csv(R / &quot;nulla.csv&quot;)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(g[&quot;lunghezza&quot;], np.clip(g[&quot;p&quot;], 1e-12, 1), width=4, color=BLU)
+    ax.set_yscale(&quot;log&quot;)
+    ax.axhline(0.05, color=ARANCIO, lw=2, label=&quot;Soglia del 5%&quot;)
+    ax.axhline(0.05 / len(g), color=&quot;#222&quot;, lw=2, ls=&quot;--&quot;, label=&quot;Soglia di Bonferroni&quot;)
+    ax.set_xlabel(&quot;Lunghezza della media mobile (sedute)&quot;)
+    ax.set_ylabel(&quot;P-value (scala logaritmica)&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig1_pvalue_per_regola.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    ax.hist(nu[&quot;max_t&quot;], bins=40, color=GRIGIO, alpha=0.85)
+    ax.axvline(m[&quot;t_soglia_max&quot;][&quot;valore&quot;], color=ARANCIO, lw=2, ls=&quot;--&quot;, label=&quot;95° percentile del massimo nullo&quot;)
+    ax.axvline(abs(m[&quot;t_migliore&quot;][&quot;valore&quot;]), color=BLU, lw=2.5, label=&quot;Regola migliore&quot;)
+    ax.axvline(abs(m[&quot;t_famosa&quot;][&quot;valore&quot;]), color=&quot;#222&quot;, lw=2.5, label=&quot;Regola a 200 sedute&quot;)
+    ax.set_xlabel(&quot;Massimo |t| tra le cinquanta regole, dopo uno spostamento circolare&quot;)
+    ax.set_ylabel(&quot;Spostamenti&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig2_massimo_nullo.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    ax.hist(nu[&quot;n_sig&quot;], bins=np.arange(nu[&quot;n_sig&quot;].max() + 2) - 0.5, color=GRIGIO, alpha=0.85)
+    ax.axvline(m[&quot;n_sig&quot;][&quot;valore&quot;], color=BLU, lw=2.5, label=&quot;Regole significative osservate&quot;)
+    ax.set_xlabel(&quot;Regole con p-value sotto il 5% per puro caso&quot;)
+    ax.set_ylabel(&quot;Spostamenti&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig3_falsi_positivi.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 26 - &quot;Il p-value in finanza&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Il p-value dice quanto sarebbe sorprendente un risultato se non ci fosse alcun effetto. Ma quando si provano molte regole, qualcuna risulta «significativa» per caso.
+Qui si prova una famiglia di cinquanta regole sull&#x27;S&amp;P 500 (indice di prezzo, dal 1927): «si resta investiti se la chiusura di ieri è sopra la media mobile di N
+sedute, altrimenti si sta fermi», con N da 5 a 250 a passi di 5. Per ogni regola si confronta il rendimento medio giornaliero dei giorni in cui è investita con quello
+dei giorni in cui è ferma (test t di Welch). Si guardano: il p-value della regola più famosa (la media a 200 sedute) presa da sola; quante regole risultano
+«significative» al 5% provandole tutte; le correzioni per test multipli (Holm, Benjamini-Hochberg, e un test a permutazione sul massimo, con spostamenti circolari
+dei rendimenti rispetto ai segnali, che conserva volatilità e memoria); la replicazione sulla seconda metà dei dati della regola migliore della prima; e infine se
+una regola «significativa» rende davvero più del buy &amp; hold.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;, &quot;Welch&quot;, &quot;Holm&quot;, &quot;Benjamini-Hochberg&quot;, &quot;Bonferroni&quot;, &quot;SMA&quot;)
+
+GIORNI_ANNO = 252
+LUNGHEZZE = tuple(range(5, 251, 5))           # cinquanta medie mobili: da 5 a 250 sedute
+LUNGHEZZA_FAMOSA = 200                         # la regola più nota, dichiarata in anticipo
+SOGLIA = 0.05
+N_SPOSTAMENTI = 1000                           # spostamenti circolari per il test a permutazione
+SPOSTAMENTO_MIN = 250                          # spostamento minimo (sedute) dei rendimenti rispetto ai segnali
+SEME = 20261030
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------
+H2_REGOLE = 25                   # ipotesi 2: più di 25 regole su 50 con p-value sotto il 5%
+H3_REGOLE = 10                   # ipotesi 3: almeno 10 regole restano significative dopo Holm
+
+IPOTESI = (
+    &quot;1) La media mobile a 200 sedute, presa da sola, ha un p-value sotto il 5%: i giorni in cui è investita hanno un rendimento medio diverso da quelli in cui è ferma. &quot;
+    &quot;2) Provando tutte e cinquanta le regole, più di 25 hanno un p-value sotto il 5%: le regole sono molto simili tra loro e il caso le fa «funzionare» insieme. &quot;
+    &quot;3) Dopo la correzione di Holm almeno 10 regole su 50 restano significative al 5%. &quot;
+    &quot;4) Il test a permutazione sul massimo (spostamenti circolari) dà alla regola migliore un p-value corretto sotto il 5%: l&#x27;effetto non è solo il frutto di aver provato cinquanta regole. &quot;
+    &quot;5) La regola migliore nella prima metà dei dati, misurata sulla seconda metà, ha ancora un p-value sotto il 5% e lo stesso segno. &quot;
+    &quot;6) Eppure la regola migliore rende, in rendimento annuo composto, meno del buy &amp; hold sullo stesso periodo: significativa non vuol dire redditizia.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 26: segnali da medie mobili, test t di Welch vettoriale, correzioni per test multipli, spostamenti circolari.&quot;&quot;&quot;
+import math
+
+import numpy as np
+
+
+def segnali_sma(c: np.ndarray, lunghezze, partenza: int) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Dati le chiusure c[0..n], restituisce (S, r) per le sedute t = partenza + 1 .. n:
+    r[t] = c[t] / c[t-1] - 1 e S[t, k] = 1 se la chiusura di ieri c[t-1] è sopra la media delle ultime N_k chiusure fino a ieri incluso.&quot;&quot;&quot;
+    c = np.asarray(c, dtype=float)
+    cs = np.concatenate([[0.0], np.cumsum(c)])
+    n = len(c) - 1
+    t = np.arange(partenza + 1, n + 1)
+    S = np.empty((len(t), len(lunghezze)))
+    for j, k in enumerate(lunghezze):
+        ieri = t - 1
+        sma = (cs[ieri + 1] - cs[ieri + 1 - k]) / k
+        S[:, j] = c[ieri] &gt; sma
+    r = c[t] / c[t - 1] - 1.0
+    return S, r
+
+
+def welch_t(r: np.ndarray, S: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Statistica t di Welch per la differenza tra il rendimento medio dei giorni con segnale (S = 1) e senza (S = 0), per ogni colonna di S.&quot;&quot;&quot;
+    m = len(r)
+    n1 = S.sum(axis=0)
+    n0 = m - n1
+    tot1, tot2 = r.sum(), (r * r).sum()
+    s1, q1 = S.T @ r, S.T @ (r * r)
+    m1, m0 = s1 / n1, (tot1 - s1) / n0
+    v1 = (q1 - n1 * m1 ** 2) / (n1 - 1)
+    v0 = ((tot2 - q1) - n0 * m0 ** 2) / (n0 - 1)
+    return (m1 - m0) / np.sqrt(v1 / n1 + v0 / n0)
+
+
+def p_normale(t) -&gt; np.ndarray:
+    &quot;&quot;&quot;P-value a due code con approssimazione normale (campioni molto grandi).&quot;&quot;&quot;
+    t = np.atleast_1d(np.asarray(t, dtype=float))
+    return np.array([math.erfc(abs(v) / math.sqrt(2)) for v in t])
+
+
+def holm(p) -&gt; np.ndarray:
+    p = np.asarray(p, float)
+    m = len(p)
+    adj = np.empty(m)
+    corrente = 0.0
+    for rango, i in enumerate(np.argsort(p)):
+        corrente = max(corrente, (m - rango) * p[i])
+        adj[i] = min(1.0, corrente)
+    return adj
+
+
+def benjamini_hochberg(p) -&gt; np.ndarray:
+    &quot;&quot;&quot;P-value corretti per il tasso di falsi scoperte (Benjamini-Hochberg).&quot;&quot;&quot;
+    p = np.asarray(p, float)
+    m = len(p)
+    ordine = np.argsort(p)
+    adj = np.empty(m)
+    minimo = 1.0
+    for rango in range(m - 1, -1, -1):
+        i = ordine[rango]
+        minimo = min(minimo, p[i] * m / (rango + 1))
+        adj[i] = minimo
+    return adj
+
+
+def spostamenti(r: np.ndarray, S: np.ndarray, n: int, minimo: int, rng) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Per n spostamenti circolari dei rendimenti rispetto ai segnali: (massimo |t| tra le regole, numero di regole con |t| sopra 1,96).&quot;&quot;&quot;
+    m = len(r)
+    massimi = np.empty(n)
+    conteggi = np.empty(n, dtype=int)
+    for i in range(n):
+        d = int(rng.integers(minimo, m - minimo))
+        t = welch_t(np.roll(r, d), S)
+        massimi[i] = np.abs(t).max()
+        conteggi[i] = int((np.abs(t) &gt; 1.959964).sum())
+    return massimi, conteggi
+
+
+def cagr(r: np.ndarray, ga: int) -&gt; float:
+    r = np.asarray(r, dtype=float)
+    return float(np.prod(1.0 + r) ** (ga / len(r)) - 1.0)
+
+
+def sharpe(r: np.ndarray, ga: int) -&gt; float:
+    r = np.asarray(r, dtype=float)
+    return float(r.mean() / r.std(ddof=1) * math.sqrt(ga))
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+from scipy import stats
+
+import funzioni as f
+
+
+def ok(nome, cond):
+    assert cond, nome
+    print(f&quot;ok  {nome}&quot;)
+
+
+rng = np.random.default_rng(1)
+# 1. segnali: prezzi crescenti 1, 2, 3, ... -&gt; la chiusura di ieri è sempre sopra la media delle precedenti
+c = np.arange(1.0, 301.0)
+S, r = f.segnali_sma(c, [5, 20], 25)
+ok(&quot;prezzi crescenti: segnale sempre acceso&quot;, S.min() == 1.0 and len(S) == len(r) == 300 - 1 - 25)
+ok(&quot;rendimento calcolato come c[t]/c[t-1]-1&quot;, abs(r[0] - (c[26] / c[25] - 1)) &lt; 1e-12)
+# 2. nessun look-ahead: il segnale di oggi non cambia se si altera la chiusura di oggi
+c2 = c.copy()
+c2[100] = 0.1
+S2, _ = f.segnali_sma(c2, [5, 20], 25)
+ok(&quot;il segnale del giorno 100 non dipende dalla chiusura del giorno 100&quot;, np.array_equal(S[100 - 26], S2[100 - 26]))
+ok(&quot;il segnale del giorno 101 dipende dalla chiusura del giorno 100&quot;, not np.array_equal(S[101 - 26], S2[101 - 26]))
+# 3. t di Welch contro scipy
+x = rng.normal(0.0003, 0.01, 4000)
+s = (rng.random(4000) &lt; 0.6).astype(float)
+t = f.welch_t(x, s[:, None])[0]
+ref = stats.ttest_ind(x[s == 1], x[s == 0], equal_var=False).statistic
+ok(&quot;t di Welch coincide con scipy&quot;, abs(t - ref) &lt; 1e-9)
+# 4. p-value normale vicino a quello di scipy con molti dati
+ok(&quot;p-value normale vicino a quello di scipy&quot;, abs(f.p_normale(t)[0] - stats.ttest_ind(x[s == 1], x[s == 0], equal_var=False).pvalue) &lt; 5e-3)
+# 5. Holm e Benjamini-Hochberg: valori noti
+p = np.array([0.01, 0.04, 0.03, 0.005])
+h = f.holm(p)
+ok(&quot;Holm: valori attesi&quot;, np.allclose(h, [0.03, 0.06, 0.06, 0.02]))
+bh = f.benjamini_hochberg(p)
+ok(&quot;Benjamini-Hochberg: valori attesi&quot;, np.allclose(bh, [0.02, 0.04, 0.04, 0.02]))
+ok(&quot;i p-value corretti non sono mai sotto quelli grezzi&quot;, (h &gt;= p).all() and (bh &gt;= p).all())
+# 6. spostamenti circolari su dati senza effetto: circa il 5% delle regole è «significativo» per caso
+S_ind = (rng.random((3000, 50)) &lt; 0.5).astype(float)
+r_ind = rng.normal(0, 0.01, 3000)
+mx, cn = f.spostamenti(r_ind, S_ind, 200, 100, rng)
+ok(&quot;senza effetto: in media circa il 5% di regole sopra la soglia&quot;, 0.02 * 50 &lt; cn.mean() &lt; 0.09 * 50)
+# 7. con un segnale vero il massimo |t| osservato supera nettamente il 95° percentile nullo
+y = rng.normal(0, 0.01, 3000)
+S_vero = S_ind.copy()
+S_vero[:, 0] = (y &gt; 0).astype(float)
+tmax = np.abs(f.welch_t(y, S_vero)).max()
+ok(&quot;segnale vero: |t| ben sopra il 95° percentile dello spostamento&quot;, tmax &gt; np.percentile(mx, 95) * 2)
+# 8. CAGR e Sharpe di serie note
+ok(&quot;CAGR di un rendimento costante&quot;, abs(f.cagr(np.full(252, 0.001), 252) - (1.001 ** 252 - 1)) &lt; 1e-9)
+ok(&quot;Sharpe di una serie alternata è nullo&quot;, abs(f.sharpe(np.tile([0.01, -0.01], 100), 252)) &lt; 1e-9)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
