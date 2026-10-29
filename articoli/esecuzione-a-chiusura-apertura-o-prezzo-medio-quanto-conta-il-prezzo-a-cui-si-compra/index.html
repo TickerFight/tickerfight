@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Esecuzione a chiusura, apertura o prezzo medio: quanto conta il prezzo a cui si compra · il codice · TickerFight</title>
+<meta name="description" content="Esecuzione a chiusura, apertura o prezzo medio: quanto conta il prezzo a cui si compra">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Esecuzione a chiusura, apertura o prezzo medio: quanto conta il prezzo a cui si compra</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="esecuzione-a-chiusura-apertura-o-prezzo-medio-quanto-conta-il-prezzo-a-cui-si-compra.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>esecuzione-a-chiusura-apertura-o-prezzo-medio-quanto-conta-il-prezzo-a-cui-si-compra/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd esecuzione-a-chiusura-apertura-o-prezzo-medio-quanto-conta-il-prezzo-a-cui-si-compra
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dello SPY (aperture, massimi, minimi, chiusure corretti per dividendi).
+
+Salva:
+  dati/spy_ohlc.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/spy_metadati.json       da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=True)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;SPDR S&amp;P 500 ETF (SPY), prezzi aperti, massimi, minimi e chiusure corretti per dividendi e frazionamenti&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/SPY/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Open, High, Low, Close corretti per dividendi (auto_adjust=True): rendimento totale&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Esecuzione a chiusura, apertura o prezzo medio: due regole a media mobile sullo SPY.
+
+Legge SOLO dati/spy_ohlc.csv e produce in risultati/:
+  metriche.json     ogni numero dell&#x27;articolo, con descrizione e origine
+  per_prezzo.csv    per regola e prezzo di esecuzione: CAGR, Sharpe, volatilità, perdita massima (senza e con costo)
+  costi.csv         CAGR della regola veloce con esecuzione all&#x27;apertura al variare del costo per operazione
+  curve.csv         valore di 1 dollaro per la regola veloce con i quattro prezzi e per il buy &amp; hold (una seduta su cinque)
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+GA = config.GIORNI_ANNO
+MODI = [(&quot;st&quot;, &quot;stessa_chiusura&quot;, &quot;alla stessa chiusura del segnale&quot;), (&quot;ap&quot;, &quot;apertura&quot;, &quot;all&#x27;apertura del giorno dopo&quot;),
+        (&quot;pm&quot;, &quot;prezzo_medio&quot;, &quot;al prezzo medio del giorno dopo&quot;), (&quot;cd&quot;, &quot;chiusura_dopo&quot;, &quot;alla chiusura del giorno dopo&quot;)]
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    for col in (&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;):
+        if (df[col] &lt;= 0).any() or df[col].isna().any():
+            raise SystemExit(f&quot;{col}: prezzi mancanti o non positivi.&quot;)
+    O, H, L, C = (df[k].to_numpy(dtype=float) for k in (&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;))
+    A = (O + H + L + C) / 4.0
+    date = df.index
+    n_tot = len(df)
+    rng = np.random.default_rng(config.SEME)
+    t0 = max(config.MEDIE) + 1                      # primo giorno in cui tutte le regole hanno il segnale del giorno t-2
+    sl = slice(t0, n_tot)
+    date_c = date[sl]
+    anni = len(date_c) / GA
+
+    reg(&quot;prima_data&quot;, str(date_c[0].date()), &quot;data_lunga&quot;, &quot;Primo giorno del campione comune alle due regole&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(date[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;n_sedute&quot;, len(date_c), &quot;int&quot;, &quot;Sedute del campione comune&quot;, &quot;dati/&quot;)
+    reg(&quot;anni&quot;, anni, &quot;num1&quot;, &quot;Anni del campione comune (sedute diviso 252)&quot;, &quot;dati/&quot;)
+    reg(&quot;media_lenta&quot;, config.MEDIE[0], &quot;int&quot;, &quot;Lunghezza della media mobile lenta&quot;, &quot;config.py, MEDIE&quot;)
+    reg(&quot;media_veloce&quot;, config.MEDIE[1], &quot;int&quot;, &quot;Lunghezza della media mobile veloce&quot;, &quot;config.py, MEDIE&quot;)
+    reg(&quot;costo_base&quot;, config.COSTO_BASE, &quot;pct2&quot;, &quot;Costo per ogni cambio di posizione nel caso con costi&quot;, &quot;config.py, COSTO_BASE&quot;)
+    reg(&quot;n_boot&quot;, config.N_BOOT, &quot;int&quot;, &quot;Ricampionamenti bootstrap&quot;, &quot;config.py, N_BOOT&quot;)
+    reg(&quot;blocco&quot;, config.BLOCCO, &quot;int&quot;, &quot;Sedute per blocco del bootstrap&quot;, &quot;config.py, BLOCCO&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_IC, &quot;pct0&quot;, &quot;Livello degli intervalli di confidenza&quot;, &quot;config.py&quot;)
+    reg(&quot;h1_punti&quot;, config.H1_PUNTI, &quot;pp1&quot;, &quot;Ipotesi 1: vantaggio minimo della stessa chiusura, in punti&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_punti&quot;, config.H2_PUNTI, &quot;pp1&quot;, &quot;Ipotesi 2: scarto massimo per la regola lenta, in punti&quot;, &quot;config.py&quot;)
+    reg(&quot;h4_quota&quot;, config.H4_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 4: quota minima del rendimento che avviene di notte&quot;, &quot;config.py&quot;)
+
+    # --- Buy &amp; hold e componenti del rendimento --------------------------------------------------------------------
+    r_bh = np.log(C[1:] / C[:-1])[t0 - 1:]
+    mbh = fx.metriche(r_bh, GA)
+    for k, v in mbh.items():
+        reg(f&quot;bh_{k}&quot;, v, {&quot;cagr&quot;: &quot;pct1&quot;, &quot;vol&quot;: &quot;pct1&quot;, &quot;sharpe&quot;: &quot;num2&quot;, &quot;dd&quot;: &quot;pct0&quot;}[k] if k != &quot;dd&quot; else &quot;pct0&quot;, f&quot;Buy &amp; hold, {k}&quot;, &quot;funzioni.metriche&quot;)
+    RIS[&quot;bh_dd&quot;][&quot;valore&quot;] = -mbh[&quot;dd&quot;]
+    notte = np.log(O[1:] / C[:-1])
+    giorno = np.log(C[1:] / O[1:])
+    tot = notte.sum() + giorno.sum()
+    reg(&quot;notte_quota&quot;, float(notte.sum() / tot), &quot;pct0&quot;, &quot;Quota del rendimento logaritmico totale dello SPY che avviene di notte (chiusura-apertura)&quot;, &quot;dati/&quot;)
+    reg(&quot;giorno_quota&quot;, float(giorno.sum() / tot), &quot;pct0&quot;, &quot;Quota del rendimento logaritmico totale che avviene di giorno (apertura-chiusura)&quot;, &quot;dati/&quot;)
+    reg(&quot;cagr_notte&quot;, float(np.exp(notte.mean() * GA) - 1), &quot;pct1&quot;, &quot;Rendimento annuo composto di chi tiene lo SPY solo di notte&quot;, &quot;dati/&quot;)
+    reg(&quot;cagr_giorno&quot;, float(np.exp(giorno.mean() * GA) - 1), &quot;pct1&quot;, &quot;Rendimento annuo composto di chi tiene lo SPY solo di giorno&quot;, &quot;dati/&quot;)
+    reg(&quot;cagr_totale&quot;, float(np.exp(np.log(C[-1] / C[0]) / ((n_tot - 1) / GA)) - 1), &quot;pct1&quot;, &quot;Rendimento annuo composto dello SPY su tutti i dati&quot;, &quot;dati/&quot;)
+
+    # --- Le due regole con i quattro prezzi ---------------------------------------------------------------------------
+    righe, serie = [], {}
+    cagr_matrix = {}
+    for n in config.MEDIE:
+        pos = fx.posizione(C, n)
+        tag = &quot;s200&quot; if n == config.MEDIE[0] else &quot;s20&quot;
+        reg(f&quot;{tag}_cambi&quot;, fx.cambi(pos[t0 - 2:]), &quot;int&quot;, f&quot;Cambi di posizione della regola a {n} sedute nel campione&quot;, &quot;funzioni.cambi&quot;)
+        reg(f&quot;{tag}_cambi_anno&quot;, fx.cambi(pos[t0 - 2:]) / anni, &quot;num1&quot;, f&quot;Cambi di posizione all&#x27;anno, regola a {n} sedute&quot;, &quot;funzioni.cambi&quot;)
+        reg(f&quot;{tag}_quota_inv&quot;, float(np.nanmean(pos[t0 - 2:])), &quot;pct0&quot;, f&quot;Quota di giorni investiti, regola a {n} sedute&quot;, &quot;funzioni.posizione&quot;)
+        for sig, modo, desc in MODI:
+            r0 = fx.log_rendimenti_regola(O, C, A, pos, modo, 0.0)[sl]
+            r1 = fx.log_rendimenti_regola(O, C, A, pos, modo, config.COSTO_BASE)[sl]
+            m0, m1 = fx.metriche(r0, GA), fx.metriche(r1, GA)
+            cagr_matrix[(tag, sig)] = m0[&quot;cagr&quot;]
+            serie[(tag, sig)] = r0
+            serie[(tag, sig, &quot;costo&quot;)] = r1
+            righe.append({&quot;regola&quot;: n, &quot;prezzo&quot;: modo, **{k: v for k, v in m0.items()}, **{k + &quot;_costo&quot;: v for k, v in m1.items()}})
+            reg(f&quot;{tag}_{sig}_cagr&quot;, m0[&quot;cagr&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo composto, regola a {n} sedute, esecuzione {desc}&quot;, &quot;funzioni.log_rendimenti_regola&quot;)
+            reg(f&quot;{tag}_{sig}_sharpe&quot;, m0[&quot;sharpe&quot;], &quot;num2&quot;, f&quot;Sharpe, regola a {n} sedute, esecuzione {desc}&quot;, &quot;funzioni.metriche&quot;)
+            reg(f&quot;{tag}_{sig}_dd&quot;, -m0[&quot;dd&quot;], &quot;pct0&quot;, f&quot;Perdita massima, regola a {n} sedute, esecuzione {desc}&quot;, &quot;funzioni.metriche&quot;)
+            reg(f&quot;{tag}_{sig}_cagr_c&quot;, m1[&quot;cagr&quot;], &quot;pct1&quot;, f&quot;Rendimento annuo composto con costo, regola a {n} sedute, esecuzione {desc}&quot;, &quot;funzioni.log_rendimenti_regola&quot;)
+        v = [cagr_matrix[(tag, s)] for s, _, _ in MODI]
+        reg(f&quot;{tag}_scarto&quot;, max(v) - min(v), &quot;pp1&quot;, f&quot;Scarto tra il migliore e il peggiore prezzo di esecuzione, CAGR, regola a {n} sedute, in punti&quot;, &quot;per_prezzo.csv&quot;)
+        reg(f&quot;{tag}_st_meno_ap&quot;, cagr_matrix[(tag, &quot;st&quot;)] - cagr_matrix[(tag, &quot;ap&quot;)], &quot;pp1&quot;, f&quot;CAGR con stessa chiusura meno CAGR con apertura, regola a {n} sedute, in punti&quot;, &quot;per_prezzo.csv&quot;)
+        reg(f&quot;{tag}_ap_meno_cd&quot;, cagr_matrix[(tag, &quot;ap&quot;)] - cagr_matrix[(tag, &quot;cd&quot;)], &quot;pp1&quot;, f&quot;CAGR con apertura meno CAGR con chiusura del giorno dopo, regola a {n} sedute, in punti&quot;, &quot;per_prezzo.csv&quot;)
+        reg(f&quot;{tag}_ap_meno_bh&quot;, cagr_matrix[(tag, &quot;ap&quot;)] - mbh[&quot;cagr&quot;], &quot;pp1&quot;, f&quot;CAGR con apertura meno CAGR del buy &amp; hold, regola a {n} sedute, in punti&quot;, &quot;per_prezzo.csv&quot;)
+    pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;per_prezzo.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+
+    # --- Costo per operazione, regola veloce con esecuzione all&#x27;apertura -----------------------------------------------------
+    pos20 = fx.posizione(C, config.MEDIE[1])
+    costi = []
+    for i, c in enumerate(config.COSTI_GRIGLIA):
+        m = fx.metriche(fx.log_rendimenti_regola(O, C, A, pos20, &quot;apertura&quot;, c)[sl], GA)
+        costi.append({&quot;costo&quot;: c, &quot;cagr&quot;: m[&quot;cagr&quot;]})
+        reg(f&quot;costo{i}&quot;, c, &quot;pct2&quot;, f&quot;Costo per operazione, punto {i} della griglia&quot;, &quot;config.py, COSTI_GRIGLIA&quot;)
+        reg(f&quot;costo{i}_cagr&quot;, m[&quot;cagr&quot;], &quot;pct1&quot;, f&quot;CAGR della regola veloce, apertura, con questo costo&quot;, &quot;funzioni.log_rendimenti_regola&quot;)
+    pd.DataFrame(costi).to_csv(config.RISULTATI / &quot;costi.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    lo_c, hi_c = 0.0, 0.05
+    f = lambda c: fx.metriche(fx.log_rendimenti_regola(O, C, A, pos20, &quot;apertura&quot;, c)[sl], GA)[&quot;cagr&quot;] - mbh[&quot;cagr&quot;]
+    if f(lo_c) &gt; 0 &gt; f(hi_c):
+        for _ in range(40):
+            mid = (lo_c + hi_c) / 2
+            if f(mid) &gt; 0:
+                lo_c = mid
+            else:
+                hi_c = mid
+        reg(&quot;costo_pareggio&quot;, (lo_c + hi_c) / 2, &quot;pct2&quot;, &quot;Costo per operazione al quale la regola veloce (apertura) rende come il buy &amp; hold&quot;, &quot;bisezione&quot;)
+    else:
+        reg(&quot;costo_pareggio&quot;, 0.0, &quot;pct2&quot;, &quot;Costo di pareggio non trovato (la regola veloce rende meno del buy &amp; hold anche senza costi)&quot;, &quot;bisezione&quot;)
+
+    # --- Bootstrap della differenza apertura - chiusura del giorno dopo, regola veloce ----------------------------------------
+    d = serie[(&quot;s20&quot;, &quot;ap&quot;)] - serie[(&quot;s20&quot;, &quot;cd&quot;)]
+    lo, hi = fx.bootstrap_differenza(d, config.N_BOOT, config.BLOCCO, GA, config.LIVELLO_IC, rng)
+    reg(&quot;boot_media&quot;, float(d.mean() * GA), &quot;pp1&quot;, &quot;Differenza media annualizzata tra apertura e chiusura del giorno dopo, regola veloce, in punti (log)&quot;, &quot;serie giornaliere&quot;)
+    reg(&quot;boot_lo&quot;, lo, &quot;pp1&quot;, &quot;Estremo inferiore dell&#x27;intervallo bootstrap della differenza, in punti&quot;, &quot;bootstrap a blocchi&quot;)
+    reg(&quot;boot_hi&quot;, hi, &quot;pp1&quot;, &quot;Estremo superiore dell&#x27;intervallo bootstrap della differenza, in punti&quot;, &quot;bootstrap a blocchi&quot;)
+
+    # --- Curve ---------------------------------------------------------------------------------------------------------------
+    camp = np.arange(0, len(date_c), 5)
+    cv = {&quot;data&quot;: date_c[camp].strftime(&quot;%Y-%m-%d&quot;), &quot;bh&quot;: np.exp(np.cumsum(r_bh))[camp]}
+    for sig, _, _ in MODI:
+        cv[f&quot;s20_{sig}&quot;] = np.exp(np.cumsum(serie[(&quot;s20&quot;, sig)]))[camp]
+    pd.DataFrame(cv).to_csv(config.RISULTATI / &quot;curve.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+
+    # --- Verdetti ---------------------------------------------------------------------------------------------------------------
+    h = [RIS[&quot;s20_st_meno_ap&quot;][&quot;valore&quot;] &gt;= config.H1_PUNTI,
+         RIS[&quot;s200_scarto&quot;][&quot;valore&quot;] &lt; config.H2_PUNTI,
+         RIS[&quot;s20_scarto&quot;][&quot;valore&quot;] &gt; RIS[&quot;s200_scarto&quot;][&quot;valore&quot;],
+         RIS[&quot;notte_quota&quot;][&quot;valore&quot;] &gt; config.H4_QUOTA,
+         RIS[&quot;s20_ap_cagr_c&quot;][&quot;valore&quot;] &lt; mbh[&quot;cagr&quot;],
+         lo &lt;= 0 &lt;= hi]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(bool(v)), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(bool(v) for v in h)), &quot;int&quot;, &quot;Ipotesi confermate (su 6)&quot;, &quot;confronto con config.py&quot;)
+
+    meta = {&quot;generato&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+            &quot;numpy&quot;: np.__version__, &quot;pandas&quot;: pd.__version__, &quot;seme&quot;: config.SEME, &quot;ipotesi&quot;: config.IPOTESI}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps({&quot;meta&quot;: meta, &quot;valori&quot;: RIS}, ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    print(f&quot;Scritte {len(RIS)} metriche.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_regola_veloce_quattro_prezzi.png   valore di 1 dollaro della regola veloce con i quattro prezzi, e buy &amp; hold
+  fig2_cagr_per_prezzo.png                CAGR delle due regole per prezzo di esecuzione, contro il buy &amp; hold
+  fig3_costi.png                          CAGR della regola veloce (apertura) al variare del costo per operazione
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO, VERDE = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;, &quot;#2a7f3f&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False, &quot;axes.grid&quot;: True,
+                     &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;, &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    m = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    cv = pd.read_csv(R / &quot;curve.csv&quot;, parse_dates=[&quot;data&quot;])
+    co = pd.read_csv(R / &quot;costi.csv&quot;)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    for col, nome, colore in ((&quot;bh&quot;, &quot;Buy &amp; hold&quot;, GRIGIO), (&quot;s20_st&quot;, &quot;Stessa chiusura&quot;, ARANCIO), (&quot;s20_ap&quot;, &quot;Apertura del giorno dopo&quot;, BLU),
+                              (&quot;s20_pm&quot;, &quot;Prezzo medio del giorno dopo&quot;, VERDE), (&quot;s20_cd&quot;, &quot;Chiusura del giorno dopo&quot;, &quot;#7a3b8f&quot;)):
+        ax.plot(cv[&quot;data&quot;], cv[col], lw=2, color=colore, label=nome)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_ylabel(&quot;Valore di 1 dollaro (scala logaritmica)&quot;)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_regola_veloce_quattro_prezzi.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    nomi = [&quot;Stessa\nchiusura&quot;, &quot;Apertura\ndopo&quot;, &quot;Prezzo medio\ndopo&quot;, &quot;Chiusura\ndopo&quot;]
+    xs = np.arange(4)
+    for off, tag, lab, col in ((-0.2, &quot;s200&quot;, &quot;Media a 200 sedute&quot;, BLU), (0.2, &quot;s20&quot;, &quot;Media a 20 sedute&quot;, ARANCIO)):
+        ax.bar(xs + off, [m[f&quot;{tag}_{s}_cagr&quot;][&quot;valore&quot;] * 100 for s in (&quot;st&quot;, &quot;ap&quot;, &quot;pm&quot;, &quot;cd&quot;)], 0.4, color=col, label=lab)
+    ax.axhline(m[&quot;bh_cagr&quot;][&quot;valore&quot;] * 100, color=&quot;#222&quot;, lw=2, ls=&quot;--&quot;, label=&quot;Buy &amp; hold&quot;)
+    ax.set_xticks(xs)
+    ax.set_xticklabels(nomi)
+    ax.set_ylabel(&quot;Rendimento annuo composto (%)&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig2_cagr_per_prezzo.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    ax.plot(co[&quot;costo&quot;] * 100, co[&quot;cagr&quot;] * 100, &quot;o-&quot;, color=ARANCIO, lw=2, label=&quot;Media a 20 sedute, apertura del giorno dopo&quot;)
+    ax.axhline(m[&quot;bh_cagr&quot;][&quot;valore&quot;] * 100, color=&quot;#222&quot;, lw=2, ls=&quot;--&quot;, label=&quot;Buy &amp; hold&quot;)
+    ax.set_xlabel(&quot;Costo per ogni cambio di posizione (%)&quot;)
+    ax.set_ylabel(&quot;Rendimento annuo composto (%)&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig3_costi.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 9 - &quot;Esecuzione a chiusura, apertura o prezzo medio&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Un backtest deve dire a che prezzo si eseguono gli ordini. Il segnale si calcola con la chiusura del giorno t; l&#x27;ordine si può eseguire (a) alla stessa chiusura
+del giorno t (comodo, ma presuppone di conoscere la chiusura prima che esista: la variante «look-ahead morbido» usata da molti codici con lo shift di un giorno),
+(b) all&#x27;apertura del giorno t+1, (c) al prezzo medio del giorno t+1 (media di apertura, massimo, minimo e chiusura), (d) alla chiusura del giorno t+1.
+Si prova sullo SPY (ETF sull&#x27;S&amp;P 500, prezzi corretti per i dividendi) con due regole a media mobile semplice sulla chiusura, una lenta (200 sedute) e una veloce
+(20 sedute): si resta investiti se la chiusura è sopra la media, altrimenti si sta fermi (rendimento zero). Si misura quanto cambiano rendimento e Sharpe con il
+prezzo di esecuzione, quanto pesa il costo per operazione, e quanta parte del rendimento dello SPY avviene di notte (dalla chiusura all&#x27;apertura successiva).
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;SPY&quot;
+INIZIO_DOWNLOAD = &quot;1993-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;spy_ohlc.csv&quot;
+FILE_METADATI = DATI / &quot;spy_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le aperture, i massimi, i minimi e le chiusure giornaliere dello SPY, corrette per dividendi e frazionamenti&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/SPY/history/&quot;
+NOTA_COLONNA = &quot;Prezzi corretti per dividendi (rendimento totale)&quot;
+NOMI_ESENTI = (&quot;SPY&quot;, &quot;S&amp;P 500&quot;, &quot;SMA&quot;, &quot;OHLC&quot;)
+
+GIORNI_ANNO = 252
+MEDIE = (200, 20)                    # lunghezze delle due medie mobili: lenta e veloce
+COSTO_BASE = 0.0005                  # 0,05% per ogni cambio di posizione (acquisto o vendita)
+COSTI_GRIGLIA = (0.0, 0.0005, 0.001, 0.002, 0.005)
+N_BOOT = 2000
+BLOCCO = 21
+LIVELLO_IC = 0.95
+SEME = 20261030
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------
+H1_PUNTI = 0.01                      # ipotesi 1: regola veloce, vantaggio della stessa chiusura sull&#x27;apertura successiva: almeno 1 punto all&#x27;anno
+H2_PUNTI = 0.01                      # ipotesi 2: regola lenta, scarto massimo tra i quattro prezzi di esecuzione: meno di 1 punto
+H4_QUOTA = 0.50                      # ipotesi 4: quota minima del rendimento logaritmico dello SPY che avviene di notte
+
+IPOTESI = (
+    &quot;1) Per la regola veloce (20 sedute) eseguire alla stessa chiusura del segnale rende almeno 1 punto percentuale all&#x27;anno in più dell&#x27;apertura del giorno dopo: il lookahead morbido ha un costo grande. &quot;
+    &quot;2) Per la regola lenta (200 sedute) i quattro prezzi di esecuzione danno rendimenti annui composti che differiscono tra loro di meno di 1 punto percentuale: una regola che scambia poco è insensibile al prezzo. &quot;
+    &quot;3) Lo scarto tra il miglior e il peggior prezzo di esecuzione è più grande per la regola veloce che per la lenta. &quot;
+    &quot;4) Più della metà del rendimento logaritmico totale dello SPY avviene di notte, dalla chiusura all&#x27;apertura successiva. &quot;
+    &quot;5) Con un costo di 0,05% a ogni cambio di posizione e l&#x27;esecuzione all&#x27;apertura del giorno dopo, la regola veloce rende meno del buy &amp; hold. &quot;
+    &quot;6) La differenza di rendimento giornaliero tra esecuzione all&#x27;apertura e alla chiusura del giorno dopo, per la regola veloce, non si distingue dallo zero: l&#x27;intervallo di confidenza (bootstrap a blocchi) la contiene.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 9: segnali da medie mobili, rendimenti di una regola per prezzo di esecuzione, costi, metriche, bootstrap a blocchi.&quot;&quot;&quot;
+import numpy as np
+
+
+def sma(c: np.ndarray, n: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Media mobile semplice delle ultime n chiusure (incluso oggi); NaN per i primi n-1 giorni.&quot;&quot;&quot;
+    c = np.asarray(c, dtype=float)
+    out = np.full(len(c), np.nan)
+    cs = np.concatenate([[0.0], np.cumsum(c)])
+    out[n - 1:] = (cs[n:] - cs[:-n]) / n
+    return out
+
+
+def posizione(c: np.ndarray, n: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posizione decisa alla chiusura del giorno t: 1 se la chiusura è sopra la media di n giorni, 0 altrimenti; NaN finché la media non esiste.&quot;&quot;&quot;
+    m = sma(c, n)
+    p = (np.asarray(c) &gt; m).astype(float)
+    p[np.isnan(m)] = np.nan
+    return p
+
+
+def log_rendimenti_regola(o, c, a, pos, modo: str, costo: float) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimenti logaritmici giornalieri per i giorni t = 1.. (indice relativo alle serie), dato il segnale `pos` deciso alla chiusura di ogni giorno.
+    `modo` è il prezzo di esecuzione dell&#x27;ordine per il segnale del giorno t-1:
+       &#x27;stessa_chiusura&#x27;  alla chiusura del giorno t-1 (quella con cui si calcola il segnale)
+       &#x27;apertura&#x27;         all&#x27;apertura del giorno t
+       &#x27;prezzo_medio&#x27;     al prezzo medio `a` del giorno t
+       &#x27;chiusura_dopo&#x27;    alla chiusura del giorno t
+    Il giorno t, la posizione precedente p0 = pos[t-2] vale fino al prezzo di esecuzione, la nuova p1 = pos[t-1] da lì alla chiusura del giorno t.
+    Il costo `costo` (frazione) si paga a ogni cambio di posizione. Il primo valore valido è il giorno t in cui pos[t-2] esiste.&quot;&quot;&quot;
+    o, c, a = (np.asarray(v, dtype=float) for v in (o, c, a))
+    pos = np.asarray(pos, dtype=float)
+    n = len(c)
+    out = np.full(n, np.nan)
+    t = np.arange(2, n)
+    p0, p1 = pos[t - 2], pos[t - 1]
+    if modo == &quot;stessa_chiusura&quot;:
+        f = c[t - 1]
+    elif modo == &quot;apertura&quot;:
+        f = o[t]
+    elif modo == &quot;prezzo_medio&quot;:
+        f = a[t]
+    elif modo == &quot;chiusura_dopo&quot;:
+        f = c[t]
+    else:
+        raise ValueError(modo)
+    r = p0 * np.log(f / c[t - 1]) + p1 * np.log(c[t] / f)
+    r = r + np.where(p0 != p1, np.log(1.0 - costo), 0.0)
+    out[t] = r
+    return out
+
+
+def metriche(r: np.ndarray, ga: int) -&gt; dict:
+    &quot;&quot;&quot;CAGR, volatilità, Sharpe (tasso zero) e perdita massima da rendimenti logaritmici giornalieri (senza NaN).&quot;&quot;&quot;
+    r = np.asarray(r, dtype=float)
+    e = np.exp(np.cumsum(r))
+    picco = np.maximum.accumulate(np.concatenate([[1.0], e]))[1:]
+    return {&quot;cagr&quot;: float(np.exp(r.mean() * ga) - 1.0), &quot;vol&quot;: float(r.std(ddof=1) * np.sqrt(ga)),
+            &quot;sharpe&quot;: float(r.mean() / r.std(ddof=1) * np.sqrt(ga)), &quot;dd&quot;: float(np.min(e / picco - 1.0))}
+
+
+def cambi(pos: np.ndarray) -&gt; int:
+    &quot;&quot;&quot;Numero di cambi di posizione (acquisti più vendite) lungo la serie dei segnali, ignorando i NaN iniziali.&quot;&quot;&quot;
+    p = np.asarray(pos, dtype=float)
+    p = p[~np.isnan(p)]
+    return int(np.sum(p[1:] != p[:-1]))
+
+
+def bootstrap_differenza(d: np.ndarray, n_boot: int, blocco: int, ga: int, livello: float, rng) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Intervallo del rendimento logaritmico medio annualizzato di una serie di differenze giornaliere, con blocchi circolari.&quot;&quot;&quot;
+    d = np.asarray(d, dtype=float)
+    n = len(d)
+    nb = int(np.ceil(n / blocco))
+    salti = np.arange(blocco)[None, :]
+    m = np.empty(n_boot)
+    for i in range(n_boot):
+        idx = ((rng.integers(0, n, nb)[:, None] + salti) % n).ravel()[:n]
+        m[i] = d[idx].mean()
+    lo, hi = np.quantile(m, [(1 - livello) / 2, 1 - (1 - livello) / 2])
+    return float(lo * ga), float(hi * ga)
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+
+import funzioni as f
+
+
+def ok(nome, cond):
+    assert cond, nome
+    print(f&quot;ok  {nome}&quot;)
+
+
+# 1. media mobile: 1, 2, 3, 4, 5 con finestra 3
+ok(&quot;media mobile semplice&quot;, np.allclose(f.sma(np.arange(1.0, 6.0), 3)[2:], [2.0, 3.0, 4.0]) and np.isnan(f.sma(np.arange(1.0, 6.0), 3)[:2]).all())
+# 2. posizione: prezzi crescenti -&gt; sempre investito dopo la partenza
+p = f.posizione(np.arange(1.0, 30.0), 5)
+ok(&quot;prezzi crescenti: sempre investito&quot;, np.nanmin(p) == 1.0 and np.isnan(p[:4]).all())
+# 3. serie con segnale che cambia a un giorno noto: closes 10,10,10,10,20 (media di 3 giorni): al giorno 4 la chiusura 20 &gt; media 13,3 -&gt; investito
+c = np.array([10.0, 10, 10, 10, 20, 20, 20, 20])
+o = c.copy()
+a = c.copy()
+pos = f.posizione(c, 3)
+ok(&quot;il segnale scatta il giorno del salto&quot;, pos[3] == 0.0 and pos[4] == 1.0)
+# 4. esecuzione: salto dell&#x27;ultima riga. Il segnale scatta alla chiusura del giorno 4 (da 10 a 20). Chi esegue alla stessa chiusura del giorno 4
+#    guadagna il rendimento del giorno 5 (20 -&gt; 20 = 0); nessun look-ahead qui perché il prezzo non si muove dopo. Verifica con prezzi che si muovono.
+c = np.array([10.0, 10, 10, 10, 20, 24, 24, 24])
+o = np.array([10.0, 10, 10, 10, 20, 22, 24, 24])    # apertura del giorno 5 a 22, chiusura a 24
+a = (o + c) / 2
+pos = f.posizione(c, 3)
+r_stessa = f.log_rendimenti_regola(o, c, a, pos, &quot;stessa_chiusura&quot;, 0.0)
+r_open = f.log_rendimenti_regola(o, c, a, pos, &quot;apertura&quot;, 0.0)
+r_dopo = f.log_rendimenti_regola(o, c, a, pos, &quot;chiusura_dopo&quot;, 0.0)
+ok(&quot;giorno 5, stessa chiusura: guadagna da 20 a 24&quot;, abs(r_stessa[5] - np.log(24 / 20)) &lt; 1e-12)
+ok(&quot;giorno 5, apertura: guadagna da 22 a 24&quot;, abs(r_open[5] - np.log(24 / 22)) &lt; 1e-12)
+ok(&quot;giorno 5, chiusura del giorno dopo: non guadagna ancora&quot;, abs(r_dopo[5]) &lt; 1e-12)
+ok(&quot;giorno 6, chiusura del giorno dopo: entra al 24 e non guadagna&quot;, abs(r_dopo[6]) &lt; 1e-12)
+# 5. costo: un cambio di posizione costa log(1 - costo)
+r_costo = f.log_rendimenti_regola(o, c, a, pos, &quot;apertura&quot;, 0.01)
+ok(&quot;il costo si paga una volta sul cambio&quot;, abs((r_open[5] - r_costo[5]) - (-np.log(0.99))) &lt; 1e-12 and abs(r_open[6] - r_costo[6]) &lt; 1e-12)
+# 6. metriche
+r = np.full(252, np.log(1.10) / 252)
+m = f.metriche(r, 252)
+ok(&quot;CAGR di un rendimento costante&quot;, abs(m[&quot;cagr&quot;] - 0.10) &lt; 1e-9 and abs(m[&quot;dd&quot;]) &lt; 1e-12)
+# 7. numero di cambi
+ok(&quot;conteggio dei cambi di posizione&quot;, f.cambi(np.array([np.nan, 0, 0, 1, 1, 0, 1])) == 3)
+# 8. bootstrap: differenza costante -&gt; intervallo stretto attorno al valore
+rng = np.random.default_rng(1)
+lo, hi = f.bootstrap_differenza(np.full(500, 0.001), 200, 21, 252, 0.95, rng)
+ok(&quot;differenza costante: intervallo coincide col valore&quot;, abs(lo - 0.252) &lt; 1e-9 and abs(hi - 0.252) &lt; 1e-9)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
