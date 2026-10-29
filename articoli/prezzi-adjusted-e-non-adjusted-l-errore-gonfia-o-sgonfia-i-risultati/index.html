@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prezzi adjusted e non adjusted: l&#x27;errore gonfia o sgonfia i risultati? · il codice · TickerFight</title>
+<meta name="description" content="quanto sbaglia chi valuta un backtest sulla colonna «Close» di Yahoo Finance invece che su «Adj Close», e che cosa succede se si usano prezzi non corretti per gli split?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Prezzi adjusted e non adjusted: l&#x27;errore gonfia o sgonfia i risultati?</h1>
+<p class="domanda">Quanto sbaglia chi valuta un backtest sulla colonna «Close» di Yahoo Finance invece che su «Adj Close», e che cosa succede se si usano prezzi non corretti per gli split?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="prezzi-adjusted-e-non-adjusted-l-errore-gonfia-o-sgonfia-i-risultati.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Close contro Adj Close:</strong> in Yahoo Finance <code>Close</code> è già corretta per gli split ma non per i dividendi; <code>Adj Close</code> è corretta anche per i dividendi (rendimento totale).</li>
+<li><strong>Sei strumenti scelti a priori:</strong> SPY, QQQ, XLU, VNQ, Coca-Cola, Apple.</li>
+<li><strong>Regola 50/200 in quattro versioni:</strong> segnale su Adj Close (corretta), segnale su Close, valutazione sui soli prezzi, segnale sul prezzo grezzo ricostruito (Close per il prodotto degli split successivi).</li>
+<li><strong>Niente commissioni né tasse:</strong> l'obiettivo è isolare l'effetto dei dati.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>prezzi-adjusted-e-non-adjusted-l-errore-gonfia-o-sgonfia-i-risultati/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica sei strumenti con dividendi e split
+    ├── 02_backtest_e_test.py  buy &amp; hold sui soli prezzi e a rendimento totale, regola 50/200 in quattro versioni
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              strumenti, regole e ipotesi, scritti prima dei risultati
+    ├── motore_vettoriale.py   segnale, posizione con ritardo, valore, rendimento annuo, ricostruzione del prezzo grezzo
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd prezzi-adjusted-e-non-adjusted-l-errore-gonfia-o-sgonfia-i-risultati
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance prezzi, dividendi e split dei sei strumenti.
+
+Salva in dati/ un file per strumento (&lt;ticker&gt;.csv con Close, Adj Close, Dividends, Stock Splits) e dati/metadati.json
+con da dove arrivano i dati, quando, con quale versione di yfinance e l&#x27;impronta SHA-256 di ogni file.
+Gli script successivi leggono SOLO i file salvati.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;strumenti&quot;: {}}
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    for chiave, ticker, _ in config.STRUMENTI:
+        g = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False, actions=True)
+        if g.empty:
+            raise SystemExit(f&quot;Nessun dato per {ticker}&quot;)
+        for col in (&quot;Dividends&quot;, &quot;Stock Splits&quot;):
+            if col not in g:
+                g[col] = 0.0
+        df = g[[&quot;Close&quot;, &quot;Adj Close&quot;, &quot;Dividends&quot;, &quot;Stock Splits&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;, &quot;Adj Close&quot;])
+        if (df[[&quot;Close&quot;, &quot;Adj Close&quot;]] &lt;= 0).any().any():
+            raise SystemExit(f&quot;Prezzi non positivi per {ticker}&quot;)
+        scartata = None
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+            scartata = str(df.index[-1].date())
+            df = df.iloc[:-1]
+        percorso = config.DATI / f&quot;{ticker}.csv&quot;
+        df.to_csv(percorso, float_format=&quot;%.8f&quot;)
+        meta[&quot;strumenti&quot;][ticker] = {
+            &quot;prima_data&quot;: str(df.index[0].date()), &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;righe&quot;: len(df),
+            &quot;dividendi&quot;: int((df[&quot;Dividends&quot;] &gt; 0).sum()), &quot;split&quot;: int((df[&quot;Stock Splits&quot;] &gt; 0).sum()),
+            &quot;barra_incompleta_scartata&quot;: scartata, &quot;sha256_file&quot;: hashlib.sha256(percorso.read_bytes()).hexdigest()}
+        print(ticker, meta[&quot;strumenti&quot;][ticker])
+    (config.DATI / &quot;metadati.json&quot;).write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>buy &amp; hold sui soli prezzi e a rendimento totale, regola 50/200 in quattro versioni</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Prezzi adjusted e non adjusted: quanto sbaglia chi usa la colonna sbagliata.
+
+Legge SOLO dati/&lt;ticker&gt;.csv e produce in risultati/:
+  metriche.json     ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  strumenti.csv     una riga per strumento con i rendimenti annui delle varie versioni
+  curve_spy.csv     SPY: valore di 500 euro a soli prezzi e a rendimento totale (una seduta su cinque)
+  aapl_prezzi.csv   Apple: chiusura corretta per gli split e prezzo grezzo ricostruito (una seduta su cinque)
+Versioni della regola 50/200 (sempre con segnale di ieri, senza commissioni né tasse):
+  A  segnale su Adj Close, rendimento su Adj Close   (riferimento corretto)
+  B  segnale su Close,     rendimento su Adj Close   (solo il segnale è «sbagliato»)
+  C  segnale su Close,     rendimento su Close       (si valuta anche il rendimento sui soli prezzi)
+  D  segnale sul prezzo grezzo (senza correzione split), rendimento su Adj Close
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import motore_vettoriale as m
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con motore_vettoriale.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def importo(x: float) -&gt; str:
+    if x &lt; 1e9:
+        return f&quot;{x:,.0f}&quot;.replace(&quot;,&quot;, &quot;.&quot;) + &quot; euro&quot;
+    return f&quot;un numero con {int(np.floor(np.log10(x))) + 1} cifre&quot;
+
+
+def regola(prezzo_segnale: pd.Series, rend: pd.Series, i0: int) -&gt; tuple[pd.Series, pd.Series]:
+    s = m.segnale_medie(prezzo_segnale, config.SMA_VELOCE, config.SMA_LENTA)
+    pos = m.posizione(s, config.RITARDO_ONESTO).iloc[i0:]
+    return pos, m.valore(rend.iloc[i0:], pos)
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    i0 = config.INIZIO_TEST_SEDUTE
+    righe = []
+    for chiave, ticker, nome in config.STRUMENTI:
+        df = pd.read_csv(config.DATI / f&quot;{ticker}.csv&quot;, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+        close, adj = df[&quot;Close&quot;].astype(float), df[&quot;Adj Close&quot;].astype(float)
+        div, spl = df[&quot;Dividends&quot;].astype(float), df[&quot;Stock Splits&quot;].astype(float)
+        if len(df) &lt;= i0 + 250:
+            raise SystemExit(f&quot;Dati troppo corti per {ticker}&quot;)
+        grezzo = m.ricostruisci_grezzo(close, spl)
+        r_close, r_adj, r_grezzo = m.rendimenti(close), m.rendimenti(adj), m.rendimenti(grezzo)
+        date = close.index
+        anni = (date[-1] - date[i0 - 1]).days / 365.25
+        w = slice(i0, None)
+        tutti = pd.Series(True, index=date[w])
+        v_p, v_t = m.valore(r_close.iloc[w], tutti), m.valore(r_adj.iloc[w], tutti)
+        c_p, c_t = m.cagr(v_p, anni), m.cagr(v_t, anni)
+        yld = float((div.iloc[w] / close.shift(1).iloc[w]).fillna(0).sum() / anni)
+        reg(f&quot;{chiave}_nome&quot;, nome, &quot;testo&quot;, f&quot;Nome dello strumento {ticker}&quot;, &quot;config.py, STRUMENTI&quot;)
+        reg(f&quot;{chiave}_inizio&quot;, str(date[i0].date()), &quot;anno&quot;, f&quot;Anno di inizio del test per {ticker}&quot;, f&quot;dati/{ticker}.csv&quot;)
+        reg(f&quot;{chiave}_anni&quot;, anni, &quot;num1&quot;, f&quot;Anni del test per {ticker}&quot;)
+        reg(f&quot;{chiave}_cagr_prezzo&quot;, c_p, &quot;pct1&quot;, f&quot;Rendimento annuo del buy &amp; hold sulla colonna Close (solo prezzo), {ticker}&quot;)
+        reg(f&quot;{chiave}_cagr_totale&quot;, c_t, &quot;pct1&quot;, f&quot;Rendimento annuo del buy &amp; hold sulla colonna Adj Close (rendimento totale), {ticker}&quot;)
+        reg(f&quot;{chiave}_gap&quot;, c_t - c_p, &quot;pp2&quot;, f&quot;Divario: rendimento annuo totale meno rendimento annuo dei soli prezzi, punti percentuali, {ticker}&quot;)
+        reg(f&quot;{chiave}_yield&quot;, yld, &quot;pct1&quot;, f&quot;Dividend yield medio annuo (somma dei dividendi diviso la chiusura precedente, per anno), {ticker}&quot;)
+        reg(f&quot;{chiave}_finale_prezzo&quot;, importo(config.CAPITALE * v_p.iloc[-1]), &quot;testo&quot;, f&quot;Valore finale di {config.CAPITALE:.0f} euro sui soli prezzi, {ticker}&quot;)
+        reg(f&quot;{chiave}_finale_totale&quot;, importo(config.CAPITALE * v_t.iloc[-1]), &quot;testo&quot;, f&quot;Valore finale di {config.CAPITALE:.0f} euro a rendimento totale, {ticker}&quot;)
+        rapporto = float(v_p.iloc[-1] / v_t.iloc[-1])
+        reg(f&quot;{chiave}_rapporto&quot;, rapporto, &quot;pct0&quot;, f&quot;Capitale finale a soli prezzi diviso capitale finale a rendimento totale, {ticker}&quot;)
+        reg(f&quot;{chiave}_n_split&quot;, int((spl &gt; 0).sum()), &quot;int&quot;, f&quot;Split nella storia scaricata, {ticker}&quot;, f&quot;dati/{ticker}.csv&quot;)
+        reg(f&quot;{chiave}_n_div&quot;, int((div.iloc[w] &gt; 0).sum()), &quot;int&quot;, f&quot;Stacchi di dividendo nel periodo del test, {ticker}&quot;, f&quot;dati/{ticker}.csv&quot;)
+
+        # --- regola 50/200 ---
+        pA, vA = regola(adj, r_adj, i0)
+        pB, vB = regola(close, r_adj, i0)
+        pC, vC = regola(close, r_close, i0)
+        pD, vD = regola(grezzo, r_adj, i0)
+        cA, cB, cC, cD = (m.cagr(v, anni) for v in (vA, vB, vC, vD))
+        cambi = lambda p: int(p.astype(int).diff().abs().sum())
+        reg(f&quot;{chiave}_s_A&quot;, cA, &quot;pct1&quot;, f&quot;Regola 50/200, segnale su Adj Close, rendimento totale (versione corretta), {ticker}&quot;)
+        reg(f&quot;{chiave}_s_B&quot;, cB, &quot;pct1&quot;, f&quot;Regola 50/200, segnale su Close, rendimento totale, {ticker}&quot;)
+        reg(f&quot;{chiave}_s_C&quot;, cC, &quot;pct1&quot;, f&quot;Regola 50/200, segnale su Close, rendimento sui soli prezzi, {ticker}&quot;)
+        reg(f&quot;{chiave}_s_D&quot;, cD, &quot;pct1&quot;, f&quot;Regola 50/200, segnale sul prezzo grezzo senza correzione degli split, rendimento totale, {ticker}&quot;)
+        reg(f&quot;{chiave}_s_diff_segnale&quot;, cB - cA, &quot;pp2&quot;, f&quot;Cambio di rendimento annuo usando Close invece di Adj Close per il segnale, punti percentuali, {ticker}&quot;)
+        reg(f&quot;{chiave}_s_err_misura&quot;, cB - cC, &quot;pp2&quot;, f&quot;Errore sul rendimento annuo della regola valutata sui soli prezzi, punti percentuali, {ticker}&quot;)
+        reg(f&quot;{chiave}_s_quota&quot;, float(pB.mean()), &quot;pct0&quot;, f&quot;Quota di sedute investite, regola 50/200, {ticker}&quot;)
+        reg(f&quot;{chiave}_s_cambi_A&quot;, cambi(pA), &quot;int&quot;, f&quot;Cambi di posizione con prezzi corretti, {ticker}&quot;)
+        reg(f&quot;{chiave}_s_cambi_D&quot;, cambi(pD), &quot;int&quot;, f&quot;Cambi di posizione con prezzi grezzi, {ticker}&quot;)
+        reg(f&quot;{chiave}_peggior_grezzo&quot;, float(r_grezzo.iloc[w].min()), &quot;pct0&quot;, f&quot;Peggior rendimento giornaliero sui prezzi grezzi, {ticker}&quot;)
+        reg(f&quot;{chiave}_peggior_corretto&quot;, float(r_close.iloc[w].min()), &quot;pct0&quot;, f&quot;Peggior rendimento giornaliero sui prezzi corretti per gli split, {ticker}&quot;)
+        righe.append({&quot;chiave&quot;: chiave, &quot;ticker&quot;: ticker, &quot;yield&quot;: yld, &quot;cagr_prezzo&quot;: c_p, &quot;cagr_totale&quot;: c_t, &quot;gap&quot;: c_t - c_p,
+                      &quot;A&quot;: cA, &quot;B&quot;: cB, &quot;C&quot;: cC, &quot;D&quot;: cD, &quot;err_misura&quot;: cB - cC, &quot;diff_segnale&quot;: cB - cA,
+                      &quot;cambi_A&quot;: cambi(pA), &quot;cambi_D&quot;: cambi(pD), &quot;n_split&quot;: int((spl &gt; 0).sum()), &quot;rapporto&quot;: rapporto})
+        if chiave == &quot;spy&quot;:
+            camp = np.r_[np.arange(0, len(v_p), 5), len(v_p) - 1]
+            pd.DataFrame({&quot;data&quot;: v_p.index[camp], &quot;prezzo&quot;: config.CAPITALE * v_p.iloc[camp].to_numpy(),
+                          &quot;totale&quot;: config.CAPITALE * v_t.iloc[camp].to_numpy()}).to_csv(config.RISULTATI / &quot;curve_spy.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+        if chiave == &quot;aapl&quot;:
+            camp = np.r_[np.arange(0, len(close), 5), len(close) - 1]
+            pd.DataFrame({&quot;data&quot;: date[camp], &quot;corretto&quot;: close.iloc[camp].to_numpy(), &quot;grezzo&quot;: grezzo.iloc[camp].to_numpy()}
+                         ).to_csv(config.RISULTATI / &quot;aapl_prezzi.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    t = pd.DataFrame(righe)
+    t.to_csv(config.RISULTATI / &quot;strumenti.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    n = len(t)
+    reg(&quot;n_strumenti&quot;, n, &quot;int&quot;, &quot;Strumenti analizzati&quot;, &quot;config.py, STRUMENTI&quot;)
+    reg(&quot;n_h1&quot;, int((t[&quot;gap&quot;] &gt; 0).sum()), &quot;int&quot;, &quot;Strumenti per cui il rendimento totale supera quello dei soli prezzi&quot;, &quot;strumenti.csv&quot;)
+    rho = float(t[&quot;yield&quot;].rank().corr(t[&quot;gap&quot;].rank()))
+    reg(&quot;spearman&quot;, rho, &quot;num2&quot;, &quot;Correlazione di rango (Spearman) tra dividend yield medio e divario&quot;, &quot;strumenti.csv&quot;)
+    reg(&quot;h2_ok&quot;, int(rho &gt; config.SOGLIA_SPEARMAN), &quot;int&quot;, &quot;1 se la correlazione di rango supera la soglia dell&#x27;ipotesi 2&quot;, &quot;config.py, SOGLIA_SPEARMAN&quot;)
+    reg(&quot;soglia_spearman&quot;, config.SOGLIA_SPEARMAN, &quot;num1&quot;, &quot;Soglia di correlazione dell&#x27;ipotesi 2&quot;, &quot;config.py&quot;)
+    spy = t.set_index(&quot;chiave&quot;).loc[&quot;spy&quot;]
+    reg(&quot;h3_ok&quot;, int(spy[&quot;rapporto&quot;] &lt; config.SOGLIA_RAPPORTO_SPY), &quot;int&quot;, &quot;1 se per SPY il capitale a soli prezzi è sotto la soglia del capitale totale&quot;, &quot;config.py, SOGLIA_RAPPORTO_SPY&quot;)
+    reg(&quot;soglia_rapporto&quot;, config.SOGLIA_RAPPORTO_SPY, &quot;pct0&quot;, &quot;Soglia dell&#x27;ipotesi 3&quot;, &quot;config.py&quot;)
+    reg(&quot;n_h4&quot;, int((t[&quot;diff_segnale&quot;].abs() &lt; config.SOGLIA_SEGNALE_PP).sum()), &quot;int&quot;, &quot;Strumenti per cui il segnale su Close cambia il rendimento annuo di meno della soglia&quot;, &quot;strumenti.csv&quot;)
+    reg(&quot;soglia_segnale&quot;, config.SOGLIA_SEGNALE_PP, &quot;pp1&quot;, &quot;Soglia dell&#x27;ipotesi 4, punti percentuali&quot;, &quot;config.py&quot;)
+    reg(&quot;diff_segnale_max&quot;, float(t[&quot;diff_segnale&quot;].abs().max()), &quot;pp2&quot;, &quot;Massimo scarto assoluto di rendimento annuo dovuto al segnale su Close, punti percentuali&quot;, &quot;strumenti.csv&quot;)
+    reg(&quot;n_h5&quot;, int((t[&quot;err_misura&quot;] &lt; t[&quot;gap&quot;]).sum()), &quot;int&quot;, &quot;Strumenti per cui l&#x27;errore di misura della regola è più piccolo del divario del buy &amp; hold&quot;, &quot;strumenti.csv&quot;)
+    ap = t.set_index(&quot;chiave&quot;).loc[&quot;aapl&quot;]
+    reg(&quot;h6_ok&quot;, int(ap[&quot;cambi_D&quot;] &gt; ap[&quot;cambi_A&quot;] and ap[&quot;D&quot;] &lt; ap[&quot;A&quot;]), &quot;int&quot;, &quot;1 se per Apple i prezzi grezzi producono più cambi e meno rendimento&quot;, &quot;strumenti.csv&quot;)
+    reg(&quot;n_strumenti_split&quot;, int((t[&quot;n_split&quot;] &gt; 0).sum()), &quot;int&quot;, &quot;Strumenti con almeno uno split nella storia&quot;, &quot;strumenti.csv&quot;)
+    reg(&quot;hs_anno&quot;, 2019, &quot;annonum&quot;, &quot;Anno di pubblicazione di Hartzmark e Solomon, «The Dividend Disconnect», Journal of Finance&quot;, &quot;doi.org/10.1111/jofi.12785&quot;)
+    reg(&quot;capitale&quot;, config.CAPITALE, &quot;int&quot;, &quot;Capitale iniziale, solo per dare un&#x27;idea (valori lordi)&quot;, &quot;config.py, CAPITALE&quot;)
+    reg(&quot;sma_veloce&quot;, config.SMA_VELOCE, &quot;annonum&quot;, &quot;Giorni della media veloce&quot;, &quot;config.py&quot;)
+    reg(&quot;sma_lenta&quot;, config.SMA_LENTA, &quot;annonum&quot;, &quot;Giorni della media lenta&quot;, &quot;config.py&quot;)
+    reg(&quot;sedute_avvio&quot;, config.INIZIO_TEST_SEDUTE, &quot;int&quot;, &quot;Sedute iniziali usate solo per calcolare le medie&quot;, &quot;config.py&quot;)
+    reg(&quot;gap_max&quot;, float(t[&quot;gap&quot;].max()), &quot;pp2&quot;, &quot;Divario massimo tra gli strumenti, punti percentuali&quot;, &quot;strumenti.csv&quot;)
+    reg(&quot;gap_min&quot;, float(t[&quot;gap&quot;].min()), &quot;pp2&quot;, &quot;Divario minimo tra gli strumenti, punti percentuali&quot;, &quot;strumenti.csv&quot;)
+
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri&quot;)
+    print(t.round(4).to_string())
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_cagr_prezzo_totale.png   rendimento annuo del buy &amp; hold: solo prezzo contro rendimento totale, per strumento
+  fig2_spy_curve.png            SPY: valore di 500 euro a soli prezzi e a rendimento totale (scala logaritmica)
+  fig3_regola_versioni.png      regola 50/200: rendimento annuo con segnale su Adj Close, su Close e valutata sui soli prezzi
+  fig4_apple_grezzo.png         Apple: prezzo grezzo contro prezzo corretto per gli split (scala logaritmica)
+&quot;&quot;&quot;
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+PCT = lambda x, _: f&quot;{x * 100:.0f}%&quot;
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    t = pd.read_csv(R / &quot;strumenti.csv&quot;)
+    nomi = {c: n.split(&quot; (&quot;)[0] for c, _, n in config.STRUMENTI}
+    etichette = [t.loc[i, &quot;ticker&quot;] for i in t.index]
+    x = np.arange(len(t))
+
+    # Figura 1
+    fig, ax = plt.subplots(figsize=(11, 5.2))
+    ax.bar(x - 0.2, t[&quot;cagr_prezzo&quot;], 0.4, color=ARANCIO, label=&quot;solo prezzo (colonna Close)&quot;)
+    ax.bar(x + 0.2, t[&quot;cagr_totale&quot;], 0.4, color=BLU, hatch=&quot;//&quot;, edgecolor=&quot;white&quot;, label=&quot;rendimento totale (colonna Adj Close)&quot;)
+    ax.set_xticks(x, etichette)
+    ax.yaxis.set_major_formatter(PCT)
+    ax.set_ylabel(&quot;rendimento annuo del buy &amp; hold&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_cagr_prezzo_totale.png&quot;)
+    plt.close(fig)
+
+    # Figura 2
+    c = pd.read_csv(R / &quot;curve_spy.csv&quot;, parse_dates=[&quot;data&quot;])
+    fig, ax = plt.subplots(figsize=(11, 5.4))
+    ax.plot(c[&quot;data&quot;], c[&quot;prezzo&quot;], color=ARANCIO, lw=2, label=&quot;solo prezzo (Close)&quot;)
+    ax.plot(c[&quot;data&quot;], c[&quot;totale&quot;], color=BLU, lw=2, ls=&quot;--&quot;, label=&quot;rendimento totale (Adj Close)&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.yaxis.set_major_formatter(lambda v, _: f&quot;{v:,.0f}&quot;.replace(&quot;,&quot;, &quot;.&quot;))
+    ax.set_ylabel(&quot;valore di 500 euro, scala logaritmica&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig2_spy_curve.png&quot;)
+    plt.close(fig)
+
+    # Figura 3
+    fig, ax = plt.subplots(figsize=(11, 5.2))
+    ax.bar(x - 0.27, t[&quot;A&quot;], 0.27, color=BLU, label=&quot;corretta: segnale e rendimento su Adj Close&quot;)
+    ax.bar(x, t[&quot;B&quot;], 0.27, color=GRIGIO, label=&quot;segnale su Close, rendimento totale&quot;)
+    ax.bar(x + 0.27, t[&quot;C&quot;], 0.27, color=ARANCIO, label=&quot;segnale su Close, rendimento solo prezzo&quot;)
+    ax.set_xticks(x, etichette)
+    ax.yaxis.set_major_formatter(PCT)
+    ax.set_ylabel(&quot;rendimento annuo della regola 50/200&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_regola_versioni.png&quot;)
+    plt.close(fig)
+
+    # Figura 4
+    a = pd.read_csv(R / &quot;aapl_prezzi.csv&quot;, parse_dates=[&quot;data&quot;])
+    fig, ax = plt.subplots(figsize=(11, 5.2))
+    ax.plot(a[&quot;data&quot;], a[&quot;grezzo&quot;], color=ARANCIO, lw=1.6, label=&quot;prezzo grezzo (senza correzione degli split)&quot;)
+    ax.plot(a[&quot;data&quot;], a[&quot;corretto&quot;], color=BLU, lw=2, ls=&quot;--&quot;, label=&quot;prezzo corretto per gli split&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.yaxis.set_major_formatter(lambda v, _: f&quot;{v:,.2f}&quot;.replace(&quot;,&quot;, &quot;X&quot;).replace(&quot;.&quot;, &quot;,&quot;).replace(&quot;X&quot;, &quot;.&quot;))
+    ax.set_ylabel(&quot;chiusura di Apple in dollari, scala logaritmica&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig4_apple_grezzo.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>strumenti, regole e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 3 - &quot;Prezzi adjusted e non adjusted: l&#x27;errore che gonfia i risultati&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Idea: Yahoo Finance dà due colonne di prezzo, «Close» (chiusura corretta per gli split ma NON per i dividendi) e
+«Adj Close» (corretta anche per i dividendi, cioè rendimento totale). Misuriamo quanto sbaglia chi usa la prima per
+valutare un buy &amp; hold e una regola a medie mobili, e che cosa succede se si usano prezzi non corretti per gli split
+(ricostruiti dai dati). Il test è su sei strumenti scelti a priori, con dividendi molto diversi.
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati ---------------------------------------------------------------
+# (chiave, ticker, descrizione). Scelti prima di vedere i dati: indice largo, tecnologia, utility, immobiliare,
+# un titolo con dividendi stabili e un titolo con molti split.
+STRUMENTI = [
+    (&quot;spy&quot;, &quot;SPY&quot;, &quot;SPY (S&amp;P 500)&quot;),
+    (&quot;qqq&quot;, &quot;QQQ&quot;, &quot;QQQ (Nasdaq 100)&quot;),
+    (&quot;xlu&quot;, &quot;XLU&quot;, &quot;XLU (utility USA)&quot;),
+    (&quot;vnq&quot;, &quot;VNQ&quot;, &quot;VNQ (immobiliare USA)&quot;),
+    (&quot;ko&quot;, &quot;KO&quot;, &quot;Coca-Cola&quot;),
+    (&quot;aapl&quot;, &quot;AAPL&quot;, &quot;Apple&quot;),
+]
+INIZIO_DOWNLOAD = &quot;1990-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+DESCRIZIONE_DATI = &quot;i prezzi giornalieri di sei strumenti USA (SPY, QQQ, XLU, VNQ, Coca-Cola e Apple), con dividendi e split&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+
+# --- Convenzioni di calcolo ---------------------------------------------
+INIZIO_TEST_SEDUTE = 300         # le prime sedute servono per le medie; tutto parte dallo stesso giorno
+SMA_VELOCE = 50
+SMA_LENTA = 200
+RITARDO_ONESTO = 1               # il segnale della chiusura di ieri decide la posizione di oggi
+CAPITALE = 500.0                 # solo per dare un&#x27;idea: valori lordi, senza commissioni né tasse
+SOGLIA_SEGNALE_PP = 0.005        # ipotesi 4: scarto massimo di rendimento annuo tra segnale su Close e su Adj Close
+SOGLIA_RAPPORTO_SPY = 0.75       # ipotesi 3: capitale finale a soli prezzi / capitale finale a rendimento totale (SPY)
+SOGLIA_SPEARMAN = 0.8            # ipotesi 2: correlazione di rango tra dividend yield e divario
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) Per tutti e sei gli strumenti il rendimento annuo del buy &amp; hold calcolato sulla colonna Close (solo prezzo) è più basso di quello &quot;
+    &quot;calcolato su Adj Close (rendimento totale). &quot;
+    &quot;2) Il divario è tanto più grande quanto più alto è il dividend yield: la correlazione di rango (Spearman) tra yield medio e divario è sopra 0,8. &quot;
+    &quot;3) Per SPY, su tutta la storia disponibile, il capitale finale calcolato sui soli prezzi è meno dei tre quarti di quello a rendimento totale. &quot;
+    &quot;4) Una regola a medie 50/200 che usa Close per il segnale invece di Adj Close cambia il rendimento annuo di meno di mezzo punto percentuale &quot;
+    &quot;per ogni strumento: l&#x27;errore grosso non sta nel segnale ma nel rendimento che si misura. &quot;
+    &quot;5) Valutare la regola sui soli prezzi sbaglia meno del buy &amp; hold (perché la regola è investita solo una parte del tempo): &quot;
+    &quot;l&#x27;errore sul rendimento annuo della regola è più piccolo del divario del buy &amp; hold per ogni strumento. &quot;
+    &quot;6) Per Apple, usare i prezzi grezzi non corretti per gli split (ricostruiti dai dati) fa scattare falsi segnali: la regola 50/200 fa più cambi di posizione &quot;
+    &quot;e rende meno della versione con prezzi corretti.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/motore_vettoriale.py<small>segnale, posizione con ritardo, valore, rendimento annuo, ricostruzione del prezzo grezzo</small></summary><pre><code class="language-python">&quot;&quot;&quot;Motore vettoriale minimo: segnale, posizione, rendimenti. Senza commissioni né tasse, per isolare l&#x27;effetto del look-ahead.
+
+Convenzioni:
+  - rend[t] è il rendimento della seduta t: chiusura di t su chiusura di t-1;
+  - il segnale[t] si calcola con le chiusure fino a t incluse;
+  - posizione(segnale, ritardo): ritardo = 0 usa il segnale di t per il rendimento di t (LOOK-AHEAD: si compra alla
+    chiusura di ieri sapendo la chiusura di oggi); ritardo = 1 usa il segnale di ieri (onesto).
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def rendimenti(close: pd.Series) -&gt; pd.Series:
+    return close.pct_change().fillna(0.0)
+
+
+def segnale_un_giorno(close: pd.Series) -&gt; pd.Series:
+    return close &gt; close.shift(1)
+
+
+def segnale_sopra_media(close: pd.Series, n: int) -&gt; pd.Series:
+    return (close &gt; close.rolling(n).mean()) &amp; close.rolling(n).mean().notna()
+
+
+def segnale_medie(close: pd.Series, veloce: int, lenta: int) -&gt; pd.Series:
+    sl = close.rolling(lenta).mean()
+    return (close.rolling(veloce).mean() &gt; sl) &amp; sl.notna()
+
+
+def posizione(segnale: pd.Series, ritardo: int) -&gt; pd.Series:
+    &quot;&quot;&quot;True se si è investiti nella seduta, dato il ritardo con cui il segnale è noto.&quot;&quot;&quot;
+    if ritardo &lt; 0:
+        raise ValueError(&quot;ritardo negativo: sarebbe usare il futuro&quot;)
+    return segnale.shift(ritardo, fill_value=False).astype(bool)
+
+
+def valore(rend: pd.Series, pos: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Valore di 1 investito, composto giorno per giorno: nei giorni in cassa il rendimento è zero.&quot;&quot;&quot;
+    return (1.0 + rend * pos.astype(float)).cumprod()
+
+
+def cagr(v: pd.Series, anni: float) -&gt; float:
+    return float(v.iloc[-1] ** (1.0 / anni) - 1.0)
+
+
+def perdita_massima(v: pd.Series) -&gt; float:
+    return float((v / v.cummax() - 1.0).min())
+
+
+def ricostruisci_grezzo(close: pd.Series, splits: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Prezzo come era scritto sullo schermo il giorno stesso, prima delle correzioni per gli split.
+
+    `close` è la chiusura già corretta per gli split (come la dà Yahoo Finance); `splits` vale 0 nei giorni senza split e
+    il rapporto (per esempio 7 per un 7 a 1) nel giorno dello split. Il prezzo grezzo di un giorno t è la chiusura corretta
+    moltiplicata per il prodotto dei rapporti di tutti gli split avvenuti DOPO t.
+    &quot;&quot;&quot;
+    r = splits.where(splits &gt; 0, 1.0).astype(float)
+    dopo = r[::-1].cumprod()[::-1].shift(-1, fill_value=1.0)   # prodotto degli split strettamente successivi
+    return close * dopo
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli del motore su dati inventati: se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import motore_vettoriale as m
+
+idx = pd.bdate_range(&quot;2020-01-01&quot;, periods=10)
+close = pd.Series([100, 101, 102, 103, 104, 52, 52.5, 53, 53.5, 54.0], index=idx)   # split 2 a 1 il sesto giorno
+spl = pd.Series(0.0, index=idx)
+spl.iloc[5] = 2.0
+g = m.ricostruisci_grezzo(close, spl)
+assert np.allclose(g.iloc[5:], close.iloc[5:]), &quot;dopo lo split grezzo = corretto&quot;
+assert np.allclose(g.iloc[:5], close.iloc[:5] * 2.0), &quot;prima dello split il grezzo è il corretto per 2&quot;
+# due split
+spl2 = pd.Series(0.0, index=idx); spl2.iloc[3] = 3.0; spl2.iloc[7] = 2.0
+g2 = m.ricostruisci_grezzo(pd.Series(10.0, index=idx), spl2)
+assert np.allclose(g2.to_numpy(), [60, 60, 60, 20, 20, 20, 20, 10, 10, 10]), g2.to_numpy()
+# posizione: il ritardo uno sposta il segnale
+s = pd.Series([False, True, True, False], index=idx[:4])
+assert list(m.posizione(s, 1)) == [False, False, True, True]
+assert list(m.posizione(s, 0)) == [False, True, True, False]
+try:
+    m.posizione(s, -1)
+    raise AssertionError(&quot;ritardo negativo accettato&quot;)
+except ValueError:
+    pass
+# valore e cagr
+v = m.valore(pd.Series([0.1, 0.1]), pd.Series([True, False]))
+assert abs(v.iloc[-1] - 1.1) &lt; 1e-12
+assert abs(m.cagr(pd.Series([2.0]), 2.0) - (2 ** 0.5 - 1)) &lt; 1e-12
+print(&quot;Tutti i controlli del motore sono passati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
