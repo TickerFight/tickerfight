@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-36 pubblicati, 12 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+36 pubblicati, 13 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -45,6 +45,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [Prezzi adjusted e non adjusted: l'errore gonfia o sgonfia i risultati?](https://tickerfight.github.io/tickerfight/articoli/prezzi-adjusted-e-non-adjusted-l-errore-gonfia-o-sgonfia-i-risultati/) | In revisione | — | — |
 | [La data di partenza cambia il verdetto](https://tickerfight.github.io/tickerfight/articoli/la-data-di-partenza-cambia-il-verdetto/) | In revisione | — | — |
 | [Quanti anni di dati servono per fidarsi?](https://tickerfight.github.io/tickerfight/articoli/quanti-anni-di-dati-servono-per-fidarsi/) | In revisione | — | — |
+| [Tasse sulle plusvalenze: strategia attiva contro buy & hold](https://tickerfight.github.io/tickerfight/articoli/tasse-sulle-plusvalenze-strategia-attiva-contro-buy-hold/) | In revisione | — | — |
 | [Whipsaw](https://tickerfight.github.io/tickerfight/articoli/whipsaw/) | In revisione | — | — |
 | [«Vendi a maggio e vai via»: Stati Uniti e Giappone, due crolli e la fortuna](https://tickerfight.github.io/tickerfight/articoli/vendi-a-maggio-e-vai-via-stati-uniti-e-giappone-due-crolli-e-la-fortuna/) | In revisione | — | — |
 | [SPY contro QQQ: l'S&P 500 o il Nasdaq-100?](https://tickerfight.github.io/tickerfight/articoli/spy-contro-qqq-l-sp-500-o-il-nasdaq-100/) | In revisione | — | — |
