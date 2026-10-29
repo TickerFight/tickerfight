@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-36 pubblicati, 13 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+36 pubblicati, 14 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -54,4 +54,5 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [Tech contro il resto: la tecnologia batte tutti gli altri settori?](https://tickerfight.github.io/tickerfight/articoli/tech-contro-il-resto-la-tecnologia-batte-tutti-gli-altri-settori/) | In revisione | — | — |
 | [PAC dal 2000: il decennio perso](https://tickerfight.github.io/tickerfight/articoli/pac-dal-2000-il-decennio-perso/) | In revisione | — | — |
 | [ETF covered call: rendita o rinuncia?](https://tickerfight.github.io/tickerfight/articoli/etf-covered-call-rendita-o-rinuncia/) | In revisione | — | — |
+| [Il lunedì è davvero il giorno peggiore?](https://tickerfight.github.io/tickerfight/articoli/il-lunedi-e-davvero-il-giorno-peggiore/) | In revisione | — | — |
 | [Trailing stop contro uscita a tempo: con 1.000 euro, quale delle due regole d'uscita regge meglio?](https://tickerfight.github.io/tickerfight/articoli/trailing-stop-contro-uscita-a-tempo-con-1-000-euro-quale-delle-due-regole-d-uscita-regge-meglio/) | In revisione | — | — |
