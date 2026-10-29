@@ -1,0 +1,567 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>L&#x27;intervallo di confidenza del CAGR: quanto è incerto il rendimento di una storia · il codice · TickerFight</title>
+<meta name="description" content="L&#x27;intervallo di confidenza del CAGR: quanto è incerto il rendimento di una storia">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>L&#x27;intervallo di confidenza del CAGR: quanto è incerto il rendimento di una storia</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="l-intervallo-di-confidenza-del-cagr-quanto-e-incerto-il-rendimento-di-una-storia.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>l-intervallo-di-confidenza-del-cagr-quanto-e-incerto-il-rendimento-di-una-storia/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd l-intervallo-di-confidenza-del-cagr-quanto-e-incerto-il-rendimento-di-una-storia
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - L&#x27;intervallo di confidenza del CAGR dell&#x27;S&amp;P 500.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json     ogni numero dell&#x27;articolo, con descrizione e origine
+  intervalli.csv    per ogni finestra: CAGR e tre intervalli (formula, bootstrap sui giorni, bootstrap a blocchi)
+  copertura.csv     per ogni lunghezza di finestra: quota di intervalli che contengono il CAGR dell&#x27;intero periodo
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+GA = config.GIORNI_ANNO
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    x = np.log(close).diff().dropna().to_numpy()
+    date = close.index[1:]
+    n = len(x)
+    rng = np.random.default_rng(config.SEME)
+
+    reg(&quot;prima_data&quot;, str(close.index[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(close.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;n_rend&quot;, n, &quot;int&quot;, &quot;Rendimenti giornalieri usati&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_tot&quot;, n / GA, &quot;num1&quot;, &quot;Anni di borsa nei dati (sedute diviso 252)&quot;, &quot;dati/&quot;)
+    reg(&quot;vol_ann&quot;, float(x.std(ddof=1) * np.sqrt(GA)), &quot;pct1&quot;, &quot;Volatilità annua dei rendimenti logaritmici giornalieri&quot;, &quot;dati/&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_IC, &quot;pct0&quot;, &quot;Livello degli intervalli di confidenza&quot;, &quot;config.py&quot;)
+    reg(&quot;n_boot&quot;, config.N_BOOT, &quot;int&quot;, &quot;Ricampionamenti bootstrap&quot;, &quot;config.py, N_BOOT&quot;)
+    reg(&quot;blocco&quot;, config.BLOCCO, &quot;int&quot;, &quot;Sedute per blocco del bootstrap a blocchi&quot;, &quot;config.py, BLOCCO&quot;)
+    reg(&quot;h1_amp&quot;, config.H1_AMPIEZZA, &quot;pp1&quot;, &quot;Ipotesi 1: ampiezza minima dell&#x27;intervallo, in punti&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_amp&quot;, config.H2_AMPIEZZA, &quot;pp1&quot;, &quot;Ipotesi 2: ampiezza minima dell&#x27;intervallo a dieci anni, in punti&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_min&quot;, config.H3_RAPPORTO_MIN, &quot;num1&quot;, &quot;Ipotesi 3: rapporto minimo tra le ampiezze&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_max&quot;, config.H3_RAPPORTO_MAX, &quot;num1&quot;, &quot;Ipotesi 3: rapporto massimo tra le ampiezze&quot;, &quot;config.py&quot;)
+    reg(&quot;h4_anni&quot;, config.H4_ANNI, &quot;int&quot;, &quot;Ipotesi 4: anni minimi per un intervallo di più o meno un punto&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_cop&quot;, config.H5_COPERTURA, &quot;pct0&quot;, &quot;Ipotesi 5: copertura nominale&quot;, &quot;config.py&quot;)
+
+    righe, finestre = [], [(a, n - a * GA) for a in config.FINESTRE_ANNI if a * GA &lt;= n] + [(&quot;tot&quot;, 0)]
+    for a, inizio in finestre:
+        w = x[inizio:]
+        c, lo, hi = fx.intervallo_formula(w, GA, config.Z95)
+        bi = fx.bootstrap_giorni(w, config.N_BOOT, GA, config.LIVELLO_IC, rng)
+        bb = fx.bootstrap_blocchi(w, config.N_BOOT, config.BLOCCO, GA, config.LIVELLO_IC, rng)
+        k = f&quot;w{a}&quot;
+        righe.append({&quot;finestra&quot;: str(a), &quot;anni&quot;: len(w) / GA, &quot;cagr&quot;: c, &quot;formula_lo&quot;: lo, &quot;formula_hi&quot;: hi,
+                      &quot;giorni_lo&quot;: bi[0], &quot;giorni_hi&quot;: bi[1], &quot;blocchi_lo&quot;: bb[0], &quot;blocchi_hi&quot;: bb[1]})
+        reg(f&quot;{k}_anni&quot;, len(w) / GA, &quot;num1&quot;, f&quot;Anni della finestra {a}&quot;, &quot;dati/&quot;)
+        reg(f&quot;{k}_cagr&quot;, c, &quot;pct1&quot;, f&quot;CAGR della finestra {a}&quot;, &quot;funzioni.intervallo_formula&quot;)
+        reg(f&quot;{k}_an_lo&quot;, lo, &quot;pct1&quot;, f&quot;Estremo basso dell&#x27;intervallo (formula), finestra {a}&quot;, &quot;funzioni.intervallo_formula&quot;)
+        reg(f&quot;{k}_an_hi&quot;, hi, &quot;pct1&quot;, f&quot;Estremo alto dell&#x27;intervallo (formula), finestra {a}&quot;, &quot;funzioni.intervallo_formula&quot;)
+        reg(f&quot;{k}_bi_lo&quot;, bi[0], &quot;pct1&quot;, f&quot;Estremo basso dell&#x27;intervallo (bootstrap sui giorni), finestra {a}&quot;, &quot;funzioni.bootstrap_giorni&quot;)
+        reg(f&quot;{k}_bi_hi&quot;, bi[1], &quot;pct1&quot;, f&quot;Estremo alto dell&#x27;intervallo (bootstrap sui giorni), finestra {a}&quot;, &quot;funzioni.bootstrap_giorni&quot;)
+        reg(f&quot;{k}_bb_lo&quot;, bb[0], &quot;pct1&quot;, f&quot;Estremo basso dell&#x27;intervallo (bootstrap a blocchi), finestra {a}&quot;, &quot;funzioni.bootstrap_blocchi&quot;)
+        reg(f&quot;{k}_bb_hi&quot;, bb[1], &quot;pct1&quot;, f&quot;Estremo alto dell&#x27;intervallo (bootstrap a blocchi), finestra {a}&quot;, &quot;funzioni.bootstrap_blocchi&quot;)
+        reg(f&quot;{k}_amp_an&quot;, hi - lo, &quot;pp1&quot;, f&quot;Ampiezza dell&#x27;intervallo (formula), finestra {a}, in punti&quot;, &quot;funzioni.intervallo_formula&quot;)
+        reg(f&quot;{k}_amp_bi&quot;, bi[1] - bi[0], &quot;pp1&quot;, f&quot;Ampiezza dell&#x27;intervallo (bootstrap sui giorni), finestra {a}, in punti&quot;, &quot;funzioni.bootstrap_giorni&quot;)
+        reg(f&quot;{k}_amp_bb&quot;, bb[1] - bb[0], &quot;pp1&quot;, f&quot;Ampiezza dell&#x27;intervallo (bootstrap a blocchi), finestra {a}, in punti&quot;, &quot;funzioni.bootstrap_blocchi&quot;)
+    pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;intervalli.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    reg(&quot;rapporto_bb_bi&quot;, RIS[&quot;wtot_amp_bb&quot;][&quot;valore&quot;] / RIS[&quot;wtot_amp_bi&quot;][&quot;valore&quot;], &quot;num2&quot;, &quot;Ampiezza a blocchi diviso ampiezza sui giorni, intero periodo&quot;, &quot;rapporto&quot;)
+    reg(&quot;se_tot&quot;, float(x.std(ddof=1) * np.sqrt(GA) / np.sqrt(n / GA)), &quot;pp1&quot;, &quot;Errore standard del rendimento logaritmico annuo medio, intero periodo, in punti&quot;, &quot;sigma diviso radice degli anni&quot;)
+
+    # --- Anni necessari -----------------------------------------------------------------------------------------------
+    sigma = float(x.std(ddof=1) * np.sqrt(GA))
+    for h, nome in ((0.02, &quot;2pp&quot;), (0.01, &quot;1pp&quot;), (0.005, &quot;05pp&quot;)):
+        reg(f&quot;anni_{nome}&quot;, fx.anni_necessari(sigma, h, config.Z95), &quot;int&quot;, f&quot;Anni per un intervallo di più o meno {h * 100:g} punti&quot;, &quot;funzioni.anni_necessari&quot;)
+
+    # --- Copertura ----------------------------------------------------------------------------------------------------
+    vero = float(x.mean() * GA)
+    inizi = fx.inizi_mese(date)
+    cop = []
+    for a in config.COPERTURA_ANNI:
+        q, k = fx.copertura(x, a * GA, inizi, vero, GA, config.Z95)
+        cop.append({&quot;anni&quot;: a, &quot;copertura&quot;: q, &quot;finestre&quot;: k})
+        reg(f&quot;cop{a}&quot;, q, &quot;pct0&quot;, f&quot;Quota di finestre di {a} anni il cui intervallo contiene il CAGR dell&#x27;intero periodo&quot;, &quot;funzioni.copertura&quot;)
+        reg(f&quot;cop{a}_n&quot;, k, &quot;int&quot;, f&quot;Finestre di {a} anni (una per mese)&quot;, &quot;funzioni.copertura&quot;)
+    # Controllo aggiunto dopo aver visto la copertura (ipotesi 5) vicina al cento per cento: il riferimento contiene la finestra stessa.
+    # Copertura onesta: il riferimento è la media di tutte le ALTRE sedute.
+    for riga in cop:
+        a = riga[&quot;anni&quot;]
+        q, k = fx.copertura_fuori(x, a * GA, inizi, GA, config.Z95)
+        riga[&quot;copertura_fuori&quot;] = q
+        reg(f&quot;cof{a}&quot;, q, &quot;pct0&quot;, f&quot;Copertura onesta, finestre di {a} anni: quota di intervalli che contengono il CAGR delle altre sedute&quot;, &quot;funzioni.copertura_fuori&quot;)
+    pd.DataFrame(cop).to_csv(config.RISULTATI / &quot;copertura.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    reg(&quot;cagr_tot_riferimento&quot;, float(np.exp(vero) - 1), &quot;pct1&quot;, &quot;CAGR dell&#x27;intero periodo usato come riferimento della copertura&quot;, &quot;dati/&quot;)
+
+    # --- Verdetti ---------------------------------------------------------------------------------------------------------
+    c30 = RIS[&quot;w30_cagr&quot;][&quot;valore&quot;]
+    h = [RIS[&quot;wtot_amp_bi&quot;][&quot;valore&quot;] &gt; config.H1_AMPIEZZA,
+         RIS[&quot;w10_amp_an&quot;][&quot;valore&quot;] &gt; config.H2_AMPIEZZA,
+         config.H3_RAPPORTO_MIN &lt;= RIS[&quot;rapporto_bb_bi&quot;][&quot;valore&quot;] &lt;= config.H3_RAPPORTO_MAX,
+         RIS[&quot;anni_1pp&quot;][&quot;valore&quot;] &gt; config.H4_ANNI,
+         RIS[&quot;cop20&quot;][&quot;valore&quot;] &lt; config.H5_COPERTURA,
+         RIS[&quot;wtot_bb_lo&quot;][&quot;valore&quot;] &lt;= c30 &lt;= RIS[&quot;wtot_bb_hi&quot;][&quot;valore&quot;]]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(bool(v)), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(bool(v) for v in h)), &quot;int&quot;, &quot;Ipotesi confermate (su 6)&quot;, &quot;confronto con config.py&quot;)
+
+    meta = {&quot;generato&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+            &quot;numpy&quot;: np.__version__, &quot;pandas&quot;: pd.__version__, &quot;seme&quot;: config.SEME, &quot;ipotesi&quot;: config.IPOTESI}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps({&quot;meta&quot;: meta, &quot;valori&quot;: RIS}, ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    print(f&quot;Scritte {len(RIS)} metriche.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_intervalli_per_finestra.png   CAGR e intervallo (bootstrap a blocchi) per finestra
+  fig2_ampiezza_e_anni.png           ampiezza dell&#x27;intervallo (formula) in funzione degli anni di dati
+  fig3_copertura.png                 quota di finestre il cui intervallo contiene il CAGR dell&#x27;intero periodo
+&quot;&quot;&quot;
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False, &quot;axes.grid&quot;: True,
+                     &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;, &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    w = pd.read_csv(R / &quot;intervalli.csv&quot;)
+    cop = pd.read_csv(R / &quot;copertura.csv&quot;)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    y = np.arange(len(w))[::-1]
+    nomi = [f&quot;ultimi {int(round(a))} anni&quot; if f != &quot;tot&quot; else f&quot;tutto ({a:.0f} anni)&quot; for f, a in zip(w[&quot;finestra&quot;], w[&quot;anni&quot;])]
+    ax.errorbar(w[&quot;cagr&quot;] * 100, y, xerr=[(w[&quot;cagr&quot;] - w[&quot;blocchi_lo&quot;]) * 100, (w[&quot;blocchi_hi&quot;] - w[&quot;cagr&quot;]) * 100],
+                fmt=&quot;o&quot;, color=ARANCIO, capsize=5, lw=2)
+    ax.axvline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_yticks(y)
+    ax.set_yticklabels(nomi)
+    ax.set_xlabel(&quot;CAGR e intervallo al 95% (bootstrap a blocchi), %&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_intervalli_per_finestra.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    amp = (w[&quot;formula_hi&quot;] - w[&quot;formula_lo&quot;]) * 100
+    ax.plot(w[&quot;anni&quot;], amp, &quot;o&quot;, color=ARANCIO, ms=9, label=&quot;Ampiezza osservata&quot;)
+    s = np.linspace(w[&quot;anni&quot;].min(), w[&quot;anni&quot;].max(), 100)
+    ax.plot(s, amp.iloc[-1] * np.sqrt(w[&quot;anni&quot;].iloc[-1] / s), color=GRIGIO, lw=2, label=&quot;Andamento 1 / radice degli anni&quot;)
+    ax.set_xlabel(&quot;Anni di dati&quot;)
+    ax.set_ylabel(&quot;Ampiezza dell&#x27;intervallo al 95% (punti percentuali)&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig2_ampiezza_e_anni.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    xs = np.arange(len(cop))
+    ax.bar(xs - 0.2, cop[&quot;copertura&quot;] * 100, 0.4, color=GRIGIO, label=&quot;Riferimento: intero periodo (contiene la finestra)&quot;)
+    ax.bar(xs + 0.2, cop[&quot;copertura_fuori&quot;] * 100, 0.4, color=BLU, label=&quot;Riferimento: le altre sedute (onesto)&quot;)
+    ax.set_xticks(xs)
+    ax.set_xticklabels([f&quot;{a} anni&quot; for a in cop[&quot;anni&quot;]])
+    ax.axhline(95, color=ARANCIO, lw=2, label=&quot;Livello nominale (95%)&quot;)
+    ax.set_ylim(0, 112)
+    ax.set_ylabel(&quot;Finestre il cui intervallo contiene il riferimento (%)&quot;)
+    ax.legend(loc=&quot;lower right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig3_copertura.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 83 - &quot;L&#x27;intervallo di confidenza del CAGR&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Il CAGR (rendimento annuo composto) di una storia è una stima: con altri anni sarebbe stato diverso. Qui si misura quanto è incerto, sull&#x27;S&amp;P 500
+(indice di prezzo, senza dividendi, dal 1927). Tre modi di calcolare l&#x27;intervallo di confidenza al 95%: (1) formula, dall&#x27;errore standard della media dei rendimenti
+logaritmici (σ diviso radice di n); (2) bootstrap sui giorni, pescando i rendimenti con reinserimento; (3) bootstrap a blocchi circolari di 21 sedute, che
+conserva i raggruppamenti di volatilità e l&#x27;eventuale memoria. Si calcola sull&#x27;intero periodo e sugli ultimi 10, 20, 30 e 50 anni. Poi si controlla che l&#x27;intervallo
+sia onesto: su finestre che partono da ogni mese, quante volte l&#x27;intervallo della finestra contiene il CAGR dell&#x27;intero periodo (la «copertura»)? Infine: quanti anni
+servirebbero per restringere l&#x27;intervallo a più o meno uno, due o mezzo punto percentuale?
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;, &quot;CAGR&quot;, &quot;σ&quot;, &quot;Newey-West&quot;)
+
+GIORNI_ANNO = 252
+FINESTRE_ANNI = (10, 20, 30, 50)                # ultime N anni di dati, oltre all&#x27;intero periodo
+COPERTURA_ANNI = (5, 10, 20, 30)               # lunghezze delle finestre per il controllo di copertura
+Z95 = 1.959964
+LIVELLO_IC = 0.95
+N_BOOT = 2000
+BLOCCO = 21
+SEME = 20261030
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------
+H1_AMPIEZZA = 0.05               # ipotesi 1: intero periodo, ampiezza dell&#x27;intervallo bootstrap sui giorni oltre 5 punti
+H2_AMPIEZZA = 0.20               # ipotesi 2: ultimi 10 anni, ampiezza dell&#x27;intervallo (formula) oltre 20 punti
+H3_RAPPORTO_MIN, H3_RAPPORTO_MAX = 0.90, 1.20   # ipotesi 3: ampiezza a blocchi / ampiezza sui giorni tra 0,9 e 1,2
+H4_ANNI = 500                    # ipotesi 4: per un intervallo di più o meno un punto servono oltre 500 anni
+H5_COPERTURA = 0.95              # ipotesi 5: con finestre di 20 anni la copertura è sotto il 95%
+
+IPOTESI = (
+    &quot;1) Sull&#x27;intero periodo l&#x27;intervallo di confidenza al 95% del CAGR, calcolato con il bootstrap sui giorni, è largo più di 5 punti percentuali. &quot;
+    &quot;2) Sugli ultimi 10 anni l&#x27;intervallo (formula) è largo più di 20 punti percentuali: un decennio dice quasi nulla sul rendimento atteso. &quot;
+    &quot;3) Il bootstrap a blocchi dà un intervallo di ampiezza tra 0,9 e 1,2 volte quella del bootstrap sui giorni sull&#x27;intero periodo: la memoria dei rendimenti giornalieri cambia poco l&#x27;incertezza sul CAGR. &quot;
+    &quot;4) Per restringere l&#x27;intervallo del CAGR a più o meno un punto percentuale servirebbero oltre 500 anni di dati. &quot;
+    &quot;5) Su finestre di 20 anni che partono da ogni mese, l&#x27;intervallo della finestra contiene il CAGR dell&#x27;intero periodo in meno del 95% dei casi: l&#x27;intervallo di una sola storia è più ottimista della realtà. &quot;
+    &quot;6) Il CAGR degli ultimi 30 anni sta dentro l&#x27;intervallo (bootstrap a blocchi) dell&#x27;intero periodo.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 83: CAGR dai rendimenti logaritmici, intervalli (formula, bootstrap sui giorni, bootstrap a blocchi), copertura, anni necessari.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def cagr_da_media(media_giornaliera: float, ga: int) -&gt; float:
+    &quot;&quot;&quot;CAGR dal rendimento logaritmico medio giornaliero.&quot;&quot;&quot;
+    return float(np.exp(media_giornaliera * ga) - 1.0)
+
+
+def intervallo_formula(x: np.ndarray, ga: int, z: float) -&gt; tuple[float, float, float]:
+    &quot;&quot;&quot;(cagr, estremo basso, estremo alto) con l&#x27;errore standard sigma / radice(n) della media dei rendimenti logaritmici.&quot;&quot;&quot;
+    x = np.asarray(x, dtype=float)
+    n = len(x)
+    media, sd = x.mean(), x.std(ddof=1)
+    se = sd / np.sqrt(n)
+    return cagr_da_media(media, ga), cagr_da_media(media - z * se, ga), cagr_da_media(media + z * se, ga)
+
+
+def bootstrap_giorni(x: np.ndarray, n_boot: int, ga: int, livello: float, rng) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Intervallo percentile del CAGR pescando i rendimenti giornalieri con reinserimento.&quot;&quot;&quot;
+    x = np.asarray(x, dtype=float)
+    n = len(x)
+    m = np.array([x[rng.integers(0, n, n)].mean() for _ in range(n_boot)])
+    lo, hi = np.quantile(m, [(1 - livello) / 2, 1 - (1 - livello) / 2])
+    return cagr_da_media(lo, ga), cagr_da_media(hi, ga)
+
+
+def bootstrap_blocchi(x: np.ndarray, n_boot: int, blocco: int, ga: int, livello: float, rng) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Intervallo percentile del CAGR con blocchi circolari di `blocco` sedute consecutive.&quot;&quot;&quot;
+    x = np.asarray(x, dtype=float)
+    n = len(x)
+    nb = int(np.ceil(n / blocco))
+    salti = np.arange(blocco)[None, :]
+    m = np.empty(n_boot)
+    for i in range(n_boot):
+        inizi = rng.integers(0, n, nb)[:, None]
+        idx = ((inizi + salti) % n).ravel()[:n]
+        m[i] = x[idx].mean()
+    lo, hi = np.quantile(m, [(1 - livello) / 2, 1 - (1 - livello) / 2])
+    return cagr_da_media(lo, ga), cagr_da_media(hi, ga)
+
+
+def copertura(x: np.ndarray, lung: int, inizi: np.ndarray, vero_annuo_log: float, ga: int, z: float) -&gt; tuple[float, int]:
+    &quot;&quot;&quot;Quota di finestre di `lung` sedute (partenze `inizi`) il cui intervallo (formula) contiene il rendimento logaritmico annuo `vero_annuo_log`.&quot;&quot;&quot;
+    x = np.asarray(x, dtype=float)
+    inizi = np.asarray(inizi)
+    inizi = inizi[inizi + lung &lt;= len(x)]
+    c1 = np.concatenate([[0.0], np.cumsum(x)])
+    c2 = np.concatenate([[0.0], np.cumsum(x * x)])
+    s1 = c1[inizi + lung] - c1[inizi]
+    s2 = c2[inizi + lung] - c2[inizi]
+    media = s1 / lung
+    sd = np.sqrt((s2 - lung * media ** 2) / (lung - 1))
+    se = sd / np.sqrt(lung)
+    lo, hi = (media - z * se) * ga, (media + z * se) * ga
+    return float(np.mean((lo &lt;= vero_annuo_log) &amp; (vero_annuo_log &lt;= hi))), int(len(inizi))
+
+
+def copertura_fuori(x: np.ndarray, lung: int, inizi: np.ndarray, ga: int, z: float) -&gt; tuple[float, int]:
+    &quot;&quot;&quot;Copertura onesta: per ogni finestra di `lung` sedute, l&#x27;intervallo della finestra (allargato per l&#x27;incertezza del riferimento) contiene il
+    rendimento logaritmico medio di TUTTE LE ALTRE sedute? Il riferimento non contiene la finestra stessa.&quot;&quot;&quot;
+    x = np.asarray(x, dtype=float)
+    n = len(x)
+    inizi = np.asarray(inizi)
+    inizi = inizi[inizi + lung &lt;= n]
+    c1 = np.concatenate([[0.0], np.cumsum(x)])
+    c2 = np.concatenate([[0.0], np.cumsum(x * x)])
+    s1 = c1[inizi + lung] - c1[inizi]
+    s2 = c2[inizi + lung] - c2[inizi]
+    media = s1 / lung
+    sd = np.sqrt((s2 - lung * media ** 2) / (lung - 1))
+    resto = (c1[-1] - s1) / (n - lung)
+    se2 = sd ** 2 / lung + x.var(ddof=1) / (n - lung)
+    return float(np.mean(np.abs(media - resto) &lt;= z * np.sqrt(se2))), int(len(inizi))
+
+
+def anni_necessari(sigma_annua: float, semiampiezza: float, z: float) -&gt; float:
+    &quot;&quot;&quot;Anni di dati perché la semiampiezza dell&#x27;intervallo del rendimento logaritmico annuo scenda a `semiampiezza`: (z sigma / h)^2.&quot;&quot;&quot;
+    return float((z * sigma_annua / semiampiezza) ** 2)
+
+
+def inizi_mese(date: pd.DatetimeIndex) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posizioni della prima seduta di ogni mese.&quot;&quot;&quot;
+    s = pd.Series(np.arange(len(date)), index=date)
+    return s.groupby([date.year, date.month]).first().to_numpy()
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as f
+
+
+def uguale(a, b, tol=1e-9, nome=&quot;&quot;):
+    assert abs(a - b) &lt; tol, f&quot;{nome}: {a} != {b}&quot;
+    print(f&quot;ok  {nome}&quot;)
+
+
+rng = np.random.default_rng(1)
+# 1. CAGR: rendimento logaritmico costante
+uguale(f.cagr_da_media(np.log(1.10) / 252, 252), 0.10, nome=&quot;CAGR di un rendimento costante del 10%&quot;)
+# 2. intervallo con formula: contiene il valore noto e l&#x27;ampiezza scende con la radice del numero di anni
+x = rng.normal(0.0004, 0.01, 252 * 40)
+c, lo, hi = f.intervallo_formula(x, 252, 1.96)
+assert lo &lt; c &lt; hi, &quot;centro nell&#x27;intervallo&quot;
+print(&quot;ok  il CAGR sta dentro il proprio intervallo&quot;)
+a1 = f.intervallo_formula(x[: 252 * 10], 252, 1.96)
+a4 = f.intervallo_formula(x, 252, 1.96)
+rapp = (a1[2] - a1[1]) / (a4[2] - a4[1])
+assert 1.7 &lt; rapp &lt; 2.4, f&quot;rapporto delle ampiezze {rapp}&quot;
+print(&quot;ok  quadruplicando i dati l&#x27;ampiezza si dimezza circa&quot;)
+# 3. bootstrap sui giorni e formula coincidono approssimativamente su dati indipendenti
+bl, bh = f.bootstrap_giorni(x, 600, 252, 0.95, rng)
+assert abs((bh - bl) - (hi - lo)) / (hi - lo) &lt; 0.15, &quot;bootstrap giorni vs formula&quot;
+print(&quot;ok  bootstrap sui giorni vicino alla formula&quot;)
+# 4. bootstrap a blocchi su dati indipendenti: ampiezza simile; su dati con memoria forte: più larga
+kl, kh = f.bootstrap_blocchi(x, 600, 21, 252, 0.95, rng)
+assert 0.8 &lt; (kh - kl) / (hi - lo) &lt; 1.25, &quot;blocchi su dati indipendenti&quot;
+m = np.zeros(252 * 40)
+e = rng.normal(0, 0.01, len(m))
+for t in range(1, len(m)):
+    m[t] = 0.3 * m[t - 1] + e[t]
+_, fl, fh = f.intervallo_formula(m, 252, 1.96)
+ml, mh = f.bootstrap_blocchi(m, 600, 63, 252, 0.95, rng)
+assert (mh - ml) &gt; 1.2 * (fh - fl), &quot;blocchi su dati con memoria&quot;
+print(&quot;ok  con memoria forte il bootstrap a blocchi è più largo della formula&quot;)
+# 5. copertura su dati iid: vicina al 95%
+y = rng.normal(0.0003, 0.01, 252 * 200)
+cop, n = f.copertura(y, 252 * 10, np.arange(0, len(y) - 252 * 10, 21), y.mean() * 252, 252, 1.959964)
+assert 0.88 &lt; cop &lt;= 1.0 and n &gt; 100, f&quot;copertura {cop}&quot;
+print(&quot;ok  copertura vicina al valore nominale su dati indipendenti&quot;)
+# 6. anni necessari: sigma 20%, semiampiezza 1 punto -&gt; (1,96*20)^2 = 1536,64 anni
+uguale(f.anni_necessari(0.20, 0.01, 1.96), (1.96 * 20) ** 2, tol=1e-6, nome=&quot;anni necessari&quot;)
+# 7. inizi_mese
+d = pd.bdate_range(&quot;2020-01-01&quot;, periods=70)
+i = f.inizi_mese(d)
+assert i[0] == 0 and d[i[1]].month == 2, &quot;inizi_mese&quot;
+print(&quot;ok  inizi_mese&quot;)
+# 8. copertura onesta su dati indipendenti: vicina al 95%; con un cambio di regime (media diversa nella seconda metà) crolla
+cf, nf = f.copertura_fuori(y, 252 * 10, np.arange(0, len(y) - 252 * 10, 21), 252, 1.959964)
+assert 0.88 &lt; cf &lt;= 1.0 and nf &gt; 100, f&quot;copertura onesta {cf}&quot;
+print(&quot;ok  copertura onesta vicina al valore nominale su dati indipendenti&quot;)
+y2 = y.copy()
+y2[len(y2) // 2:] += 0.0006
+cf2, _ = f.copertura_fuori(y2, 252 * 10, np.arange(0, len(y2) - 252 * 10, 21), 252, 1.959964)
+assert cf2 &lt; cf - 0.1, f&quot;copertura con regimi {cf2} contro {cf}&quot;
+print(&quot;ok  con regimi diversi la copertura onesta scende&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
