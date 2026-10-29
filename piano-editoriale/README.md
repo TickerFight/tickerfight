@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-36 pubblicati, 10 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+36 pubblicati, 11 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -48,6 +48,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [«Vendi a maggio e vai via»: Stati Uniti e Giappone, due crolli e la fortuna](https://tickerfight.github.io/tickerfight/articoli/vendi-a-maggio-e-vai-via-stati-uniti-e-giappone-due-crolli-e-la-fortuna/) | In revisione | — | — |
 | [SPY contro QQQ: l'S&P 500 o il Nasdaq-100?](https://tickerfight.github.io/tickerfight/articoli/spy-contro-qqq-l-sp-500-o-il-nasdaq-100/) | In revisione | — | — |
 | [VIX sopra 30: comprare la paura?](https://tickerfight.github.io/tickerfight/articoli/vix-sopra-30-comprare-la-paura/) | In revisione | — | — |
+| [Perdere i 10 giorni migliori](https://tickerfight.github.io/tickerfight/articoli/perdere-i-10-giorni-migliori/) | In revisione | — | — |
 | [Tech contro il resto: la tecnologia batte tutti gli altri settori?](https://tickerfight.github.io/tickerfight/articoli/tech-contro-il-resto-la-tecnologia-batte-tutti-gli-altri-settori/) | In revisione | — | — |
 | [PAC dal 2000: il decennio perso](https://tickerfight.github.io/tickerfight/articoli/pac-dal-2000-il-decennio-perso/) | In revisione | — | — |
 | [ETF covered call: rendita o rinuncia?](https://tickerfight.github.io/tickerfight/articoli/etf-covered-call-rendita-o-rinuncia/) | In revisione | — | — |
