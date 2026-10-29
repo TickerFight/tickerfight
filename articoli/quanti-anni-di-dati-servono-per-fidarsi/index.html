@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quanti anni di dati servono per fidarsi? · il codice · TickerFight</title>
+<meta name="description" content="quanto è stabile il rapporto di Sharpe misurato su pochi anni di dati? Quanti anni servono perché un backtest dica qualcosa di affidabile?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Quanti anni di dati servono per fidarsi?</h1>
+<p class="domanda">Quanto è stabile il rapporto di Sharpe misurato su pochi anni di dati? Quanti anni servono perché un backtest dica qualcosa di affidabile?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="quanti-anni-di-dati-servono-per-fidarsi.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Dati veri:</strong> Sharpe dell'S&amp;P 500 (indice di prezzo, tasso zero) su tutte le finestre di 1, 2, 3, 5, 10, 20 e 30 anni, una per mese di partenza.</li>
+<li><strong>Simulazione:</strong> una strategia con Sharpe vero 0,5 e rendimenti normali indipendenti; per ogni durata si estraggono media e varianza campionarie dalle loro distribuzioni esatte.</li>
+<li><strong>Misure:</strong> quota di Sharpe negativi, ampiezza tra 5° e 95° percentile, probabilità di Sharpe negativo e potenza del test al 95%.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>quanti-anni-di-dati-servono-per-fidarsi/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica l'S&amp;P 500 dal 1927 (i dati sono quelli già usati negli articoli 301, 426 e 13)
+    ├── 02_backtest_e_test.py  Sharpe su tutte le finestre di 1–30 anni e simulazione con Sharpe vero noto
+    ├── 03_grafici.py          i grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            Sharpe su finestre mobili, simulazione esatta dello Sharpe campionario
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd quanti-anni-di-dati-servono-per-fidarsi
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>Sharpe su tutte le finestre di 1–30 anni e simulazione con Sharpe vero noto</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Quanti anni di dati servono per fidarsi? Sharpe dell&#x27;S&amp;P 500 su finestre di N anni e simulazione di una strategia con Sharpe vero noto.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json        ogni numero dell&#x27;articolo, con descrizione e origine
+  sharpe_finestre.csv  per ogni durata: percentili, minimo, massimo e quote di finestre con Sharpe negativo, positivo e t oltre 1,96
+  sharpe_serie.csv     Sharpe di ogni finestra di 5, 10 e 20 anni, per mese di partenza (per il grafico)
+  simulazione.csv      per ogni durata in anni: probabilità di Sharpe negativo e potenza del test, con Sharpe vero noto
+&quot;&quot;&quot;
+import json
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as f
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+GA = config.GIORNI_ANNO
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    c = df[&quot;Close&quot;].astype(float)
+    if (c &lt;= 0).any() or c.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    date = c.index[1:]
+    r = (c.to_numpy()[1:] / c.to_numpy()[:-1]) - 1.0
+    inizi_tutti = f.inizi_mese(date)
+    rng = np.random.default_rng(config.SEME)
+
+    reg(&quot;dati_prima_data&quot;, str(date[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta con un rendimento&quot;, &quot;dati/&quot;)
+    reg(&quot;dati_ultima_data&quot;, str(date[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;dati_anni&quot;, (date[-1] - date[0]).days / 365.25, &quot;num1&quot;, &quot;Anni di storia dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;sharpe_totale&quot;, float(np.mean(r) / np.std(r, ddof=1) * np.sqrt(GA)), &quot;num2&quot;, &quot;Sharpe dell&#x27;S&amp;P 500 sull&#x27;intera storia (tasso zero)&quot;)
+    reg(&quot;sharpe_vero&quot;, config.SHARPE_VERO, &quot;num1&quot;, &quot;Sharpe vero della strategia simulata&quot;, &quot;config.py&quot;)
+    reg(&quot;sim_n&quot;, config.SIM_N, &quot;int&quot;, &quot;Backtest simulati per ogni durata&quot;, &quot;config.py&quot;)
+    reg(&quot;potenza&quot;, config.POTENZA, &quot;pct0&quot;, &quot;Potenza richiesta al test&quot;, &quot;config.py&quot;)
+    reg(&quot;giorni_anno&quot;, GA, &quot;int&quot;, &quot;Sedute in un anno&quot;, &quot;config.py&quot;)
+
+    righe, serie = [], {}
+    for N in config.ORIZZONTI:
+        lung = N * GA
+        inizi = inizi_tutti[inizi_tutti + lung &lt;= len(r)]
+        sh = f.sharpe_finestre(r, inizi, lung, GA)
+        t = sh * np.sqrt(N)
+        q = np.quantile(sh, [0.05, 0.25, 0.5, 0.75, 0.95])
+        righe.append(dict(anni=N, finestre=len(sh), p5=q[0], p25=q[1], p50=q[2], p75=q[3], p95=q[4], minimo=sh.min(), massimo=sh.max(),
+                          quota_neg=(sh &lt; 0).mean(), quota_pos=(sh &gt; 0).mean(), quota_t_sopra=(t &gt; config.Z_BILATERALE).mean(),
+                          quota_t_sotto=(t &lt; -config.Z_BILATERALE).mean()))
+        reg(f&quot;r{N}_n&quot;, len(sh), &quot;int&quot;, f&quot;Finestre di {N} anni (una per mese di partenza)&quot;)
+        reg(f&quot;r{N}_neg&quot;, float((sh &lt; 0).mean()), &quot;pct0&quot;, f&quot;Quota di finestre di {N} anni con Sharpe negativo&quot;)
+        reg(f&quot;r{N}_pos&quot;, float((sh &gt; 0).mean()), &quot;pct0&quot;, f&quot;Quota di finestre di {N} anni con Sharpe positivo&quot;)
+        reg(f&quot;r{N}_p5&quot;, float(q[0]), &quot;num2&quot;, f&quot;5° percentile dello Sharpe su finestre di {N} anni&quot;)
+        reg(f&quot;r{N}_p50&quot;, float(q[2]), &quot;num2&quot;, f&quot;Mediana dello Sharpe su finestre di {N} anni&quot;)
+        reg(f&quot;r{N}_p95&quot;, float(q[4]), &quot;num2&quot;, f&quot;95° percentile dello Sharpe su finestre di {N} anni&quot;)
+        reg(f&quot;r{N}_min&quot;, float(sh.min()), &quot;num2&quot;, f&quot;Sharpe minimo su finestre di {N} anni&quot;)
+        reg(f&quot;r{N}_max&quot;, float(sh.max()), &quot;num2&quot;, f&quot;Sharpe massimo su finestre di {N} anni&quot;)
+        reg(f&quot;r{N}_ampiezza&quot;, float(q[4] - q[0]), &quot;num2&quot;, f&quot;Ampiezza tra 5° e 95° percentile dello Sharpe, finestre di {N} anni&quot;)
+        reg(f&quot;r{N}_t_sopra&quot;, float((t &gt; config.Z_BILATERALE).mean()), &quot;pct0&quot;, f&quot;Quota di finestre di {N} anni in cui il t supera la soglia (Sharpe significativamente positivo)&quot;)
+        reg(f&quot;r{N}_t_sotto&quot;, float((t &lt; -config.Z_BILATERALE).mean()), &quot;pct0&quot;, f&quot;Quota di finestre di {N} anni in cui il t è sotto la soglia negativa (Sharpe significativamente negativo)&quot;)
+        if N in (5, 10, 20):
+            serie[N] = pd.Series(sh, index=date[inizi])
+    pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;sharpe_finestre.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    pd.concat({f&quot;anni_{k}&quot;: v for k, v in serie.items()}, axis=1).rename_axis(&quot;data&quot;).reset_index().to_csv(
+        config.RISULTATI / &quot;sharpe_serie.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+
+    # simulazione con Sharpe vero noto
+    sim = []
+    for N in config.ANNI_SIM:
+        s = f.sharpe_simulato(N, config.SHARPE_VERO, GA, config.SIM_N, rng)
+        t = s * np.sqrt(N)
+        sim.append(dict(anni=N, p_neg=float((s &lt; 0).mean()), potenza=float((np.abs(t) &gt; config.Z_BILATERALE).mean()),
+                        p5=float(np.quantile(s, 0.05)), p95=float(np.quantile(s, 0.95))))
+    S = pd.DataFrame(sim)
+    S.to_csv(config.RISULTATI / &quot;simulazione.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    for N in (1, 2, 3, 5, 10, 20, 30):
+        row = S[S[&quot;anni&quot;] == N].iloc[0]
+        reg(f&quot;s{N}_neg&quot;, float(row[&quot;p_neg&quot;]), &quot;pct0&quot;, f&quot;Probabilità che un backtest di {N} anni mostri Sharpe negativo con Sharpe vero {config.SHARPE_VERO}&quot;)
+        reg(f&quot;s{N}_potenza&quot;, float(row[&quot;potenza&quot;]), &quot;pct0&quot;, f&quot;Probabilità che un backtest di {N} anni distingua lo Sharpe vero dallo zero (95%, due code)&quot;)
+        reg(f&quot;s{N}_p5&quot;, float(row[&quot;p5&quot;]), &quot;num2&quot;, f&quot;5° percentile dello Sharpe misurato in backtest di {N} anni&quot;)
+        reg(f&quot;s{N}_p95&quot;, float(row[&quot;p95&quot;]), &quot;num2&quot;, f&quot;95° percentile dello Sharpe misurato in backtest di {N} anni&quot;)
+    ok = S[S[&quot;potenza&quot;] &gt;= config.POTENZA]
+    anni_potenza = int(ok[&quot;anni&quot;].iloc[0]) if len(ok) else int(S[&quot;anni&quot;].max()) + 1
+    reg(&quot;anni_potenza&quot;, anni_potenza, &quot;int&quot;, &quot;Anni minimi per una potenza dell&#x27;80% con Sharpe vero noto (dalla simulazione)&quot;)
+    reg(&quot;anni_teorici&quot;, float(((config.Z_BILATERALE + 0.8416212) / config.SHARPE_VERO) ** 2), &quot;num1&quot;, &quot;Anni teorici per potenza dell&#x27;80% (formula approssimata), per confronto&quot;, &quot;formula&quot;)
+
+    reg(&quot;h1_quota&quot;, config.H1_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 1: soglia&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_quota&quot;, config.H2_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 2: soglia&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_riduzione&quot;, config.H3_RIDUZIONE, &quot;pct0&quot;, &quot;Ipotesi 3: riduzione minima dell&#x27;ampiezza&quot;, &quot;config.py&quot;)
+    reg(&quot;h4_sharpe&quot;, config.H4_SHARPE, &quot;num2&quot;, &quot;Ipotesi 4: soglia dello Sharpe minimo a venti anni&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_quota&quot;, config.H5_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 5: soglia&quot;, &quot;config.py&quot;)
+    reg(&quot;h6_anni&quot;, config.H6_ANNI, &quot;int&quot;, &quot;Ipotesi 6: soglia in anni&quot;, &quot;config.py&quot;)
+    riduzione = 1.0 - RIS[&quot;r20_ampiezza&quot;][&quot;valore&quot;] / RIS[&quot;r5_ampiezza&quot;][&quot;valore&quot;]
+    reg(&quot;riduzione_ampiezza&quot;, riduzione, &quot;pct0&quot;, &quot;Riduzione dell&#x27;ampiezza dello Sharpe passando da cinque a venti anni&quot;)
+    h = [RIS[&quot;r1_neg&quot;][&quot;valore&quot;] &gt; config.H1_QUOTA,
+         RIS[&quot;r10_pos&quot;][&quot;valore&quot;] &gt;= config.H2_QUOTA,
+         riduzione &gt;= config.H3_RIDUZIONE,
+         RIS[&quot;r20_min&quot;][&quot;valore&quot;] &lt; config.H4_SHARPE,
+         RIS[&quot;s5_neg&quot;][&quot;valore&quot;] &gt; config.H5_QUOTA,
+         anni_potenza &gt; config.H6_ANNI]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(v), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(h)), &quot;int&quot;, &quot;Ipotesi confermate (su sei)&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;run_utc&quot;, datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;testo&quot;, &quot;Data di esecuzione dell&#x27;analisi&quot;)
+    json.dump({&quot;valori&quot;: RIS}, open(config.RISULTATI / &quot;metriche.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;), indent=1, ensure_ascii=False)
+    print(f&quot;Scritti {len(RIS)} numeri in metriche.json; esiti {h}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_sharpe_finestre.png  Sharpe dell&#x27;S&amp;P 500 su finestre di 5, 10 e 20 anni, per mese di partenza
+  fig2_ventaglio.png        intervallo tra 5° e 95° percentile dello Sharpe per durata della finestra
+  fig3_simulazione.png      strategia con Sharpe vero noto: probabilità di Sharpe negativo e potenza del test per durata
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO, VERDE = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;, &quot;#2a7f4f&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    se = pd.read_csv(R / &quot;sharpe_serie.csv&quot;, parse_dates=[&quot;data&quot;])
+    fig, ax = plt.subplots(figsize=(10, 5))
+    for col, nome, colore, lw in ((&quot;anni_5&quot;, &quot;Finestre di cinque anni&quot;, ARANCIO, 1.2), (&quot;anni_10&quot;, &quot;Finestre di dieci anni&quot;, BLU, 1.8), (&quot;anni_20&quot;, &quot;Finestre di venti anni&quot;, VERDE, 2.2)):
+        ax.plot(se[&quot;data&quot;], se[col], color=colore, lw=lw, label=nome)
+    ax.axhline(0, color=&quot;#333&quot;, lw=1)
+    ax.set_ylabel(&quot;Sharpe dell&#x27;S&amp;P 500 (tasso zero)&quot;)
+    ax.set_xlabel(&quot;Mese di partenza della finestra&quot;)
+    ax.legend(loc=&quot;upper right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig1_sharpe_finestre.png&quot;)
+    plt.close(fig)
+
+    sf = pd.read_csv(R / &quot;sharpe_finestre.csv&quot;)
+    x = np.arange(len(sf))
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.fill_between(x, sf[&quot;p5&quot;], sf[&quot;p95&quot;], color=BLU, alpha=0.25, label=&quot;Dal 5° al 95° percentile&quot;)
+    ax.plot(x, sf[&quot;p50&quot;], color=BLU, lw=2.2, marker=&quot;o&quot;, label=&quot;Mediana&quot;)
+    ax.plot(x, sf[&quot;minimo&quot;], color=ARANCIO, lw=1.2, ls=&quot;--&quot;, label=&quot;Minimo&quot;)
+    ax.plot(x, sf[&quot;massimo&quot;], color=VERDE, lw=1.2, ls=&quot;--&quot;, label=&quot;Massimo&quot;)
+    ax.axhline(0, color=&quot;#333&quot;, lw=1)
+    ax.set_xticks(x)
+    ax.set_xticklabels([f&quot;{a} anni&quot; if a &gt; 1 else &quot;1 anno&quot; for a in sf[&quot;anni&quot;]])
+    ax.set_ylabel(&quot;Sharpe dell&#x27;S&amp;P 500 (tasso zero)&quot;)
+    ax.legend(loc=&quot;upper right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig2_ventaglio.png&quot;)
+    plt.close(fig)
+
+    S = pd.read_csv(R / &quot;simulazione.csv&quot;)
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(S[&quot;anni&quot;], S[&quot;p_neg&quot;] * 100, color=ARANCIO, lw=2.2, label=&quot;Il backtest mostra uno Sharpe negativo&quot;)
+    ax.plot(S[&quot;anni&quot;], S[&quot;potenza&quot;] * 100, color=BLU, lw=2.2, label=&quot;Il backtest riconosce che lo Sharpe non è zero&quot;)
+    ax.axhline(config.POTENZA * 100, color=GRIGIO, ls=&quot;--&quot;, lw=1)
+    ax.axvline(V[&quot;anni_potenza&quot;][&quot;valore&quot;], color=GRIGIO, ls=&quot;:&quot;, lw=1.2)
+    ax.set_xlabel(&quot;Anni di dati del backtest&quot;)
+    ax.set_ylabel(&quot;Probabilità (%)&quot;)
+    ax.set_ylim(0, 100)
+    ax.legend(loc=&quot;center right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig3_simulazione.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 81 - &quot;Quanti anni di dati servono per fidarsi?&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Due parti. (A) Dati veri: il rapporto di Sharpe dell&#x27;S&amp;P 500 (indice di prezzo, tasso privo di rischio zero, rendimenti giornalieri) misurato su tutte le
+finestre di N anni che partono da ogni mese dal 1927, per N = 1, 2, 3, 5, 10, 20 e 30: quanto cambia, e quante volte ha il segno sbagliato?
+(B) Simulazione: una strategia che per costruzione ha uno Sharpe vero di SHARPE_VERO, con rendimenti giornalieri normali e indipendenti: quanto spesso
+un backtest di N anni la fa sembrare priva di vantaggio, e quanti anni servono per accorgersi, con potenza dell&#x27;80%, che il vantaggio c&#x27;è.
+Nella simulazione la media e la deviazione standard del campione si estraggono direttamente dalle loro distribuzioni esatte (normale e chi quadro),
+senza generare i singoli rendimenti: il risultato è identico e molto più veloce.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;,)
+
+GIORNI_ANNO = 252
+ORIZZONTI = (1, 2, 3, 5, 10, 20, 30)          # anni delle finestre
+SHARPE_VERO = 0.5                              # parte B: Sharpe annuo vero della strategia simulata
+ANNI_SIM = tuple(range(1, 61))                 # anni provati nella simulazione
+SIM_N = 20000                                  # backtest simulati per ogni durata
+Z_BILATERALE = 1.959964                        # soglia del test al 95% a due code
+POTENZA = 0.80
+SEME = 20261029
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------
+H1_QUOTA = 0.20                  # ipotesi 1: su un anno lo Sharpe è negativo in oltre il 20% delle finestre
+H2_QUOTA = 0.90                  # ipotesi 2: su dieci anni lo Sharpe è positivo in almeno il 90% delle finestre
+H3_RIDUZIONE = 0.40              # ipotesi 3: l&#x27;ampiezza 5-95 percentile dello Sharpe scende di almeno il 40% da cinque a venti anni
+H4_SHARPE = 0.25                 # ipotesi 4: su venti anni la finestra peggiore ha comunque uno Sharpe sotto questo valore
+H5_QUOTA = 0.10                  # ipotesi 5: con Sharpe vero 0,5, un backtest di cinque anni mostra Sharpe negativo con probabilità sopra il 10%
+H6_ANNI = 25                     # ipotesi 6: per riconoscere uno Sharpe vero di 0,5 con potenza dell&#x27;80% servono più di 25 anni
+
+IPOTESI = (
+    &quot;1) Sull&#x27;S&amp;P 500, su finestre di un anno, lo Sharpe è negativo in oltre il 20% delle finestre. &quot;
+    &quot;2) Su finestre di dieci anni lo Sharpe è positivo in almeno il 90% delle finestre. &quot;
+    &quot;3) L&#x27;ampiezza dell&#x27;intervallo tra il 5° e il 95° percentile dello Sharpe scende di almeno il 40% passando da finestre di cinque a finestre di venti anni. &quot;
+    &quot;4) Anche su finestre di venti anni la finestra peggiore ha uno Sharpe sotto 0,25: un solo ventennio basta a dare un verdetto pessimo. &quot;
+    &quot;5) Una strategia con Sharpe vero 0,5 mostra, in un backtest di cinque anni, uno Sharpe negativo con probabilità superiore al 10%. &quot;
+    &quot;6) Per accorgersi con potenza dell&#x27;80% (test al 95%, due code) che quella strategia ha uno Sharpe diverso da zero servono più di 25 anni di dati.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>Sharpe su finestre mobili, simulazione esatta dello Sharpe campionario</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 81: Sharpe su finestre mobili, simulazione esatta dello Sharpe campionario.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def sharpe_finestre(r: np.ndarray, inizi: np.ndarray, lung: int, ga: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Sharpe annuo (tasso zero) di r[i:i+lung] per ogni i in `inizi`; usa somme cumulate (media e deviazione standard campionaria).&quot;&quot;&quot;
+    r = np.asarray(r, dtype=float)
+    c1 = np.concatenate([[0.0], np.cumsum(r)])
+    c2 = np.concatenate([[0.0], np.cumsum(r * r)])
+    i = np.asarray(inizi)
+    s1 = c1[i + lung] - c1[i]
+    s2 = c2[i + lung] - c2[i]
+    media = s1 / lung
+    var = (s2 - lung * media ** 2) / (lung - 1)
+    return media / np.sqrt(var) * np.sqrt(ga)
+
+
+def sharpe_simulato(anni: float, sharpe_vero: float, ga: int, n: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;n Sharpe campionari (annui) di backtest di `anni` anni su rendimenti normali indipendenti con Sharpe vero `sharpe_vero`.
+
+    Per dati normali la media campionaria è normale e la varianza campionaria è chi quadro, indipendenti: si estraggono direttamente.&quot;&quot;&quot;
+    k = int(round(anni * ga))
+    mu = sharpe_vero / ga                 # media giornaliera con deviazione standard giornaliera = 1/sqrt(ga) (volatilità annua 1)
+    sd = 1.0 / np.sqrt(ga)
+    media = mu + sd / np.sqrt(k) * rng.standard_normal(n)
+    s = sd * np.sqrt(rng.chisquare(k - 1, size=n) / (k - 1))
+    return media / s * np.sqrt(ga)
+
+
+def inizi_mese(date: pd.DatetimeIndex) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posizioni della prima seduta di ogni mese.&quot;&quot;&quot;
+    s = pd.Series(np.arange(len(date)), index=date)
+    return s.groupby([date.year, date.month]).first().to_numpy()
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as f
+
+
+def uguale(a, b, tol=1e-9, nome=&quot;&quot;):
+    assert abs(a - b) &lt; tol, f&quot;{nome}: {a} != {b}&quot;
+    print(f&quot;ok  {nome}&quot;)
+
+
+rng = np.random.default_rng(1)
+# 1. Sharpe di una finestra contro il calcolo diretto
+r = rng.normal(0.0004, 0.01, 3000)
+dir_ = np.mean(r[100:600]) / np.std(r[100:600], ddof=1) * np.sqrt(252)
+uguale(f.sharpe_finestre(r, np.array([100]), 500, 252)[0], dir_, tol=1e-9, nome=&quot;Sharpe di una finestra&quot;)
+# 2. finestre multiple
+sh = f.sharpe_finestre(r, np.array([0, 10, 20]), 200, 252)
+uguale(sh[1], np.mean(r[10:210]) / np.std(r[10:210], ddof=1) * np.sqrt(252), nome=&quot;seconda finestra&quot;)
+# 3. simulazione: media dello Sharpe campionario vicina a quello vero, deviazione standard vicina a quella teorica
+s = f.sharpe_simulato(10, 0.5, 252, 200000, rng)
+assert abs(s.mean() - 0.5) &lt; 0.02, s.mean()
+teo = np.sqrt((1 + 0.5 ** 2 / 2) / 10)
+assert abs(s.std() - teo) &lt; 0.02, (s.std(), teo)
+print(&quot;ok  simulazione: media e dispersione dello Sharpe&quot;)
+# 4. simulazione con Sharpe vero zero: metà negativi
+z = f.sharpe_simulato(5, 0.0, 252, 100000, rng)
+assert abs((z &lt; 0).mean() - 0.5) &lt; 0.01
+print(&quot;ok  simmetria con Sharpe vero zero&quot;)
+# 5. inizi di mese
+idx = pd.bdate_range(&quot;2020-01-01&quot;, periods=70)
+p = f.inizi_mese(idx)
+assert idx[p[1]].month == 2 and idx[p[1]].day == 3
+print(&quot;ok  inizi di mese&quot;)
+print(&quot;Tutti i controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
