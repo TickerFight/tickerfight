@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Perdere i 10 giorni migliori · il codice · TickerFight</title>
+<meta name="description" content="Perdere i 10 giorni migliori">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Perdere i 10 giorni migliori</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="perdere-i-10-giorni-migliori.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>perdere-i-10-giorni-migliori/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd perdere-i-10-giorni-migliori
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Perdere i 10 giorni migliori: rendimento composto saltando i giorni estremi, finestre mobili, regime e filtro a 200 sedute.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json          ogni numero dell&#x27;articolo, con descrizione e origine
+  tabella_giorni.csv     per ogni numero di giorni saltati: rendimento composto senza i migliori, senza i peggiori, senza entrambi
+  giorni_estremi.csv     i 10 giorni migliori e i 10 peggiori: data, rendimento, regime, vicinanza
+  finestre_perdita.csv   per ogni mese di partenza: perdita in punti all&#x27;anno saltando i 10 giorni migliori della finestra (10 e 20 anni)
+  serie_indice.csv       chiusura settimanale e media a 200 sedute (per il grafico)
+&quot;&quot;&quot;
+import json
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as f
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+GA = config.GIORNI_ANNO
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def si_no(b) -&gt; str:
+    return &quot;sì&quot; if b else &quot;no&quot;
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    c = df[&quot;Close&quot;].astype(float)
+    if (c &lt;= 0).any() or c.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    cv = c.to_numpy()
+    date = c.index[1:]
+    r = cv[1:] / cv[:-1] - 1.0
+    lr = np.log1p(r)
+    n = len(r)
+    anni = (c.index[-1] - c.index[0]).days / 365.25
+    sotto = f.sotto_media(cv, config.SMA_GIORNI)
+    tot = lr.sum()
+    cagr_bh = f.cagr_da_log(tot, anni)
+
+    reg(&quot;dati_prima_data&quot;, str(c.index[0].date()), &quot;data_lunga&quot;, &quot;Prima chiusura dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;dati_ultima_data&quot;, str(c.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima chiusura dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;dati_anni&quot;, anni, &quot;num1&quot;, &quot;Anni di storia dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;sedute&quot;, n, &quot;int&quot;, &quot;Rendimenti giornalieri usati&quot;, &quot;dati/&quot;)
+    reg(&quot;cagr_bh&quot;, cagr_bh, &quot;pct2&quot;, &quot;Rendimento annuo composto del buy &amp; hold sull&#x27;intera storia (indice di prezzo)&quot;)
+    reg(&quot;sma_giorni&quot;, config.SMA_GIORNI, &quot;int&quot;, &quot;Sedute della media mobile del filtro&quot;, &quot;config.py&quot;)
+    reg(&quot;vicinanza&quot;, config.VICINANZA, &quot;int&quot;, &quot;Distanza massima in sedute per dire che un giorno è vicino a uno dei peggiori&quot;, &quot;config.py&quot;)
+
+    # --- A. saltare i giorni estremi sull&#x27;intera storia
+    righe = []
+    for N in config.N_GIORNI:
+        ib = f.indici_estremi(r, N, True)
+        ip = f.indici_estremi(r, N, False)
+        sb, sp = lr[ib].sum(), lr[ip].sum()
+        cb = f.cagr_da_log(tot - sb, anni)
+        cp = f.cagr_da_log(tot - sp, anni)
+        cx = f.cagr_da_log(tot - sb - sp, anni)
+        righe.append(dict(giorni=N, cagr_senza_migliori=cb, cagr_senza_peggiori=cp, cagr_senza_entrambi=cx))
+        reg(f&quot;cb{N}&quot;, cb, &quot;pct2&quot;, f&quot;Rendimento annuo composto saltando i {N} giorni migliori&quot;)
+        reg(f&quot;cp{N}&quot;, cp, &quot;pct2&quot;, f&quot;Rendimento annuo composto saltando i {N} giorni peggiori&quot;)
+        reg(f&quot;cx{N}&quot;, cx, &quot;pct2&quot;, f&quot;Rendimento annuo composto saltando i {N} migliori e i {N} peggiori&quot;)
+        reg(f&quot;lb{N}&quot;, cagr_bh - cb, &quot;pp2&quot;, f&quot;Punti all&#x27;anno persi saltando i {N} giorni migliori&quot;)
+        reg(f&quot;gp{N}&quot;, cp - cagr_bh, &quot;pp2&quot;, f&quot;Punti all&#x27;anno guadagnati saltando i {N} giorni peggiori&quot;)
+        reg(f&quot;dx{N}&quot;, cx - cagr_bh, &quot;pp2&quot;, f&quot;Differenza in punti all&#x27;anno saltando i {N} migliori e i {N} peggiori (positiva = meglio del buy &amp; hold)&quot;)
+        reg(f&quot;quota_b{N}&quot;, float(sb / tot), &quot;pct0&quot;, f&quot;Quota del rendimento logaritmico totale contenuta nei {N} giorni migliori&quot;)
+    pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;tabella_giorni.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    B = config.N_BASE
+    ib = f.indici_estremi(r, B, True)
+    ip = f.indici_estremi(r, B, False)
+    reg(&quot;n_base&quot;, B, &quot;int&quot;, &quot;Giorni migliori e peggiori del caso principale&quot;, &quot;config.py&quot;)
+    reg(&quot;somma_b&quot;, float(np.expm1(lr[ib].sum())), &quot;pct0&quot;, &quot;Rendimento composto dei soli 10 giorni migliori messi in fila&quot;)
+    reg(&quot;max_b&quot;, float(r[ib[0]]), &quot;pct2&quot;, &quot;Rendimento del giorno migliore&quot;)
+    reg(&quot;min_p&quot;, float(r[ip[0]]), &quot;pct2&quot;, &quot;Rendimento del giorno peggiore&quot;)
+    reg(&quot;medio_b&quot;, float(r[ib].mean()), &quot;pct1&quot;, &quot;Rendimento medio dei 10 giorni migliori&quot;)
+    reg(&quot;medio_p&quot;, float(r[ip].mean()), &quot;pct1&quot;, &quot;Rendimento medio dei 10 giorni peggiori&quot;)
+    reg(&quot;sedute_per_10&quot;, n / B, &quot;int&quot;, &quot;Sedute ogni giorno saltato nel caso principale (n sedute diviso 10)&quot;)
+
+    # --- B. i giorni estremi: regime e vicinanza
+    vic_b = f.vicino_a(ib, ip, config.VICINANZA)
+    vic_p = f.vicino_a(ip, ib, config.VICINANZA)
+    est = []
+    for i, p in enumerate(ib, 1):
+        reg(f&quot;mg{i}_data&quot;, str(date[p].date()), &quot;data&quot;, f&quot;Data del {i}° giorno migliore&quot;)
+        reg(f&quot;mg{i}_rend&quot;, float(r[p]), &quot;pct1&quot;, f&quot;Rendimento del {i}° giorno migliore&quot;)
+        reg(f&quot;mg{i}_sotto&quot;, si_no(sotto[p]), &quot;testo&quot;, f&quot;Il {i}° giorno migliore veniva dopo una chiusura sotto la media a {config.SMA_GIORNI} sedute?&quot;)
+        est.append(dict(tipo=&quot;migliore&quot;, posto=i, data=str(date[p].date()), rendimento=r[p], chiusura=cv[p + 1], sotto_media=bool(sotto[p]), vicino=bool(vic_b[i - 1])))
+    for i, p in enumerate(ip, 1):
+        reg(f&quot;pg{i}_data&quot;, str(date[p].date()), &quot;data&quot;, f&quot;Data del {i}° giorno peggiore&quot;)
+        reg(f&quot;pg{i}_rend&quot;, float(r[p]), &quot;pct1&quot;, f&quot;Rendimento del {i}° giorno peggiore&quot;)
+        reg(f&quot;pg{i}_sotto&quot;, si_no(sotto[p]), &quot;testo&quot;, f&quot;Il {i}° giorno peggiore veniva dopo una chiusura sotto la media a {config.SMA_GIORNI} sedute?&quot;)
+        est.append(dict(tipo=&quot;peggiore&quot;, posto=i, data=str(date[p].date()), rendimento=r[p], chiusura=cv[p + 1], sotto_media=bool(sotto[p]), vicino=bool(vic_p[i - 1])))
+    pd.DataFrame(est).to_csv(config.RISULTATI / &quot;giorni_estremi.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    n_sotto_b = int(sotto[ib].sum())
+    n_sotto_p = int(sotto[ip].sum())
+    reg(&quot;sotto_b_n&quot;, n_sotto_b, &quot;int&quot;, &quot;Dei 10 giorni migliori, quanti vengono dopo una chiusura sotto la media a 200 sedute&quot;)
+    reg(&quot;sotto_b_quota&quot;, n_sotto_b / B, &quot;pct0&quot;, &quot;Quota dei 10 giorni migliori che vengono sotto la media a 200 sedute&quot;)
+    reg(&quot;sotto_p_n&quot;, n_sotto_p, &quot;int&quot;, &quot;Dei 10 giorni peggiori, quanti vengono dopo una chiusura sotto la media a 200 sedute&quot;)
+    reg(&quot;sotto_tutti&quot;, float(sotto.mean()), &quot;pct0&quot;, &quot;Quota di tutte le sedute che vengono sotto la media a 200 sedute (riferimento)&quot;)
+    reg(&quot;vic_b_n&quot;, int(vic_b.sum()), &quot;int&quot;, &quot;Dei 10 giorni migliori, quanti cadono entro 30 sedute da uno dei 10 peggiori&quot;)
+    reg(&quot;vic_p_n&quot;, int(vic_p.sum()), &quot;int&quot;, &quot;Dei 10 giorni peggiori, quanti cadono entro 30 sedute da uno dei 10 migliori&quot;)
+    vic_tutti = f.vicino_a(np.arange(n), ip, config.VICINANZA)
+    reg(&quot;vic_base&quot;, float(vic_tutti.mean()), &quot;pct1&quot;, &quot;Quota di tutte le sedute entro 30 sedute da uno dei 10 peggiori (riferimento)&quot;)
+
+    # --- C. finestre mobili
+    inizi_tutti = f.inizi_mese(date)
+    serie = {}
+    for N in config.FINESTRE_ANNI:
+        lung = N * GA
+        inizi = inizi_tutti[inizi_tutti + lung &lt;= n]
+        bh, sal = f.perdita_finestre(lr, inizi, lung, B, float(N))
+        perdita = bh - sal
+        q = np.quantile(perdita, [0.10, 0.50, 0.90])
+        pos = bh &gt; 0
+        reg(f&quot;w{N}_n&quot;, len(inizi), &quot;int&quot;, f&quot;Finestre di {N} anni (una per mese di partenza)&quot;)
+        reg(f&quot;w{N}_p10&quot;, float(q[0]), &quot;pp2&quot;, f&quot;10° percentile della perdita (punti all&#x27;anno) saltando i 10 giorni migliori, finestre di {N} anni&quot;)
+        reg(f&quot;w{N}_p50&quot;, float(q[1]), &quot;pp2&quot;, f&quot;Perdita mediana (punti all&#x27;anno) saltando i 10 giorni migliori, finestre di {N} anni&quot;)
+        reg(f&quot;w{N}_p90&quot;, float(q[2]), &quot;pp2&quot;, f&quot;90° percentile della perdita (punti all&#x27;anno), finestre di {N} anni&quot;)
+        reg(f&quot;w{N}_max&quot;, float(perdita.max()), &quot;pp2&quot;, f&quot;Perdita massima (punti all&#x27;anno), finestre di {N} anni&quot;)
+        reg(f&quot;w{N}_bh_med&quot;, float(np.median(bh)), &quot;pct1&quot;, f&quot;Rendimento annuo composto mediano del buy &amp; hold, finestre di {N} anni&quot;)
+        reg(f&quot;w{N}_meta&quot;, float((perdita[pos] &gt;= bh[pos] / 2).mean()), &quot;pct0&quot;, f&quot;Tra le finestre di {N} anni con rendimento positivo, quota in cui saltare i 10 giorni migliori toglie almeno metà del rendimento&quot;)
+        reg(f&quot;w{N}_neg&quot;, float((sal &lt; 0).mean()), &quot;pct0&quot;, f&quot;Quota di finestre di {N} anni in cui, saltando i 10 giorni migliori, il rendimento annuo diventa negativo&quot;)
+        reg(f&quot;w{N}_neg_bh&quot;, float((bh &lt; 0).mean()), &quot;pct0&quot;, f&quot;Quota di finestre di {N} anni in cui il buy &amp; hold ha già rendimento negativo&quot;)
+        serie[N] = pd.Series(perdita, index=date[inizi])
+    pd.concat({f&quot;perdita_{k}_anni&quot;: v for k, v in serie.items()}, axis=1).rename_axis(&quot;data&quot;).reset_index().to_csv(
+        config.RISULTATI / &quot;finestre_perdita.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    # --- D. controllo: 10 giorni a caso
+    rng = np.random.default_rng(config.SEME)
+    perd = np.empty(config.CASUALI_N)
+    for k in range(config.CASUALI_N):
+        idx = rng.choice(n, B, replace=False)
+        perd[k] = cagr_bh - f.cagr_da_log(tot - lr[idx].sum(), anni)
+    reg(&quot;caso_n&quot;, config.CASUALI_N, &quot;int&quot;, &quot;Estrazioni di 10 giorni a caso&quot;, &quot;config.py&quot;)
+    reg(&quot;caso_media&quot;, float(perd.mean()), &quot;pp2&quot;, &quot;Perdita media (punti all&#x27;anno) saltando 10 giorni a caso&quot;)
+    reg(&quot;caso_p5&quot;, float(np.quantile(perd, 0.05)), &quot;pp2&quot;, &quot;5° percentile della perdita saltando 10 giorni a caso&quot;)
+    reg(&quot;caso_p95&quot;, float(np.quantile(perd, 0.95)), &quot;pp2&quot;, &quot;95° percentile della perdita saltando 10 giorni a caso&quot;)
+
+    # --- E. il filtro a 200 sedute
+    strat = np.where(sotto, 0.0, r)
+    cagr_f = f.cagr_da_log(np.log1p(strat).sum(), anni)
+    reg(&quot;cagr_filtro&quot;, cagr_f, &quot;pct2&quot;, &quot;Rendimento annuo composto del filtro a 200 sedute (fuori = rendimento zero)&quot;)
+    reg(&quot;diff_filtro&quot;, cagr_f - cagr_bh, &quot;pp2&quot;, &quot;Differenza del filtro rispetto al buy &amp; hold, punti all&#x27;anno (negativa = peggio)&quot;)
+    reg(&quot;esposizione&quot;, float(1 - sotto.mean()), &quot;pct0&quot;, &quot;Quota di sedute in cui il filtro è investito&quot;)
+    reg(&quot;filtro_manca_b&quot;, n_sotto_b, &quot;int&quot;, &quot;Dei 10 giorni migliori, quanti il filtro salta&quot;)
+    reg(&quot;filtro_evita_p&quot;, n_sotto_p, &quot;int&quot;, &quot;Dei 10 giorni peggiori, quanti il filtro evita&quot;)
+    c_ser = pd.DataFrame({&quot;chiusura&quot;: c, &quot;media&quot;: c.rolling(config.SMA_GIORNI).mean()})
+    c_ser.iloc[::5].rename_axis(&quot;data&quot;).reset_index().to_csv(config.RISULTATI / &quot;serie_indice.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+
+    # --- ipotesi
+    reg(&quot;h1_punti&quot;, config.H1_PUNTI, &quot;pp1&quot;, &quot;Ipotesi 1: soglia in punti all&#x27;anno&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_punti&quot;, config.H2_PUNTI, &quot;pp1&quot;, &quot;Ipotesi 2: soglia in punti all&#x27;anno&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_quota&quot;, config.H3_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 3: soglia&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_vicini&quot;, config.H5_VICINI, &quot;int&quot;, &quot;Ipotesi 5: soglia (giorni su dieci)&quot;, &quot;config.py&quot;)
+    h = [(cagr_bh - RIS[&quot;cb10&quot;][&quot;valore&quot;]) &gt;= config.H1_PUNTI,
+         RIS[&quot;w20_p50&quot;][&quot;valore&quot;] &gt;= config.H2_PUNTI,
+         n_sotto_b / B &gt;= config.H3_QUOTA,
+         RIS[&quot;gp10&quot;][&quot;valore&quot;] &gt; RIS[&quot;lb10&quot;][&quot;valore&quot;],
+         int(vic_b.sum()) &gt;= config.H5_VICINI,
+         cagr_f &lt; cagr_bh]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(v), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(h)), &quot;int&quot;, &quot;Ipotesi confermate (su sei)&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;run_utc&quot;, datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;testo&quot;, &quot;Data di esecuzione dell&#x27;analisi&quot;)
+    json.dump({&quot;valori&quot;: RIS}, open(config.RISULTATI / &quot;metriche.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;), indent=1, ensure_ascii=False)
+    print(f&quot;Scritti {len(RIS)} numeri in metriche.json; esiti {[int(x) for x in h]}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_giorni_saltati.png    rendimento annuo composto saltando i giorni migliori, i peggiori o entrambi (10, 20 e 40 giorni)
+  fig2_finestre.png          perdita in punti all&#x27;anno saltando i 10 giorni migliori, per mese di partenza di finestre di 10 e 20 anni
+  fig3_mappa_giorni.png      indice in scala logaritmica con i 10 giorni migliori e i 10 peggiori e la media a 200 sedute
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO, VERDE = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;, &quot;#2a7f4f&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+
+    # 1. barre
+    T = pd.read_csv(R / &quot;tabella_giorni.csv&quot;)
+    T = T[T[&quot;giorni&quot;].isin([10, 20, 40])]
+    x = np.arange(len(T))
+    w = 0.26
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(x - w, T[&quot;cagr_senza_migliori&quot;] * 100, w, color=ARANCIO, label=&quot;Senza i giorni migliori&quot;)
+    ax.bar(x, T[&quot;cagr_senza_peggiori&quot;] * 100, w, color=VERDE, label=&quot;Senza i giorni peggiori&quot;)
+    ax.bar(x + w, T[&quot;cagr_senza_entrambi&quot;] * 100, w, color=BLU, label=&quot;Senza i migliori e i peggiori&quot;)
+    ax.axhline(V[&quot;cagr_bh&quot;][&quot;valore&quot;] * 100, color=&quot;#333&quot;, lw=1.5, ls=&quot;--&quot;, label=&quot;Buy &amp; hold&quot;)
+    ax.axhline(0, color=&quot;#333&quot;, lw=0.8)
+    ax.set_xticks(x)
+    ax.set_xticklabels([f&quot;{g} giorni&quot; for g in T[&quot;giorni&quot;]])
+    ax.set_ylabel(&quot;Rendimento annuo composto (%)&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig1_giorni_saltati.png&quot;)
+    plt.close(fig)
+
+    # 2. finestre
+    F = pd.read_csv(R / &quot;finestre_perdita.csv&quot;, parse_dates=[&quot;data&quot;])
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.plot(F[&quot;data&quot;], F[&quot;perdita_10_anni&quot;] * 100, color=ARANCIO, lw=1.2, label=&quot;Finestre di 10 anni&quot;)
+    ax.plot(F[&quot;data&quot;], F[&quot;perdita_20_anni&quot;] * 100, color=BLU, lw=2.0, label=&quot;Finestre di 20 anni&quot;)
+    ax.axhline(V[&quot;lb10&quot;][&quot;valore&quot;] * 100, color=GRIGIO, ls=&quot;--&quot;, lw=1.2, label=&quot;Intera storia&quot;)
+    ax.set_ylabel(&quot;Punti all&#x27;anno persi saltando i 10 giorni migliori&quot;)
+    ax.set_xlabel(&quot;Mese di partenza della finestra&quot;)
+    ax.legend(loc=&quot;upper right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig2_finestre.png&quot;)
+    plt.close(fig)
+
+    # 3. mappa
+    S = pd.read_csv(R / &quot;serie_indice.csv&quot;, parse_dates=[&quot;data&quot;])
+    E = pd.read_csv(R / &quot;giorni_estremi.csv&quot;, parse_dates=[&quot;data&quot;])
+    fig, ax = plt.subplots(figsize=(10, 5.5))
+    ax.plot(S[&quot;data&quot;], S[&quot;chiusura&quot;], color=GRIGIO, lw=1.2, label=&quot;S&amp;P 500&quot;)
+    ax.plot(S[&quot;data&quot;], S[&quot;media&quot;], color=BLU, lw=1.0, alpha=0.8, label=&quot;Media a 200 sedute&quot;)
+    m, p = E[E[&quot;tipo&quot;] == &quot;migliore&quot;], E[E[&quot;tipo&quot;] == &quot;peggiore&quot;]
+    ax.scatter(m[&quot;data&quot;], m[&quot;chiusura&quot;], marker=&quot;^&quot;, s=70, color=VERDE, zorder=5, label=&quot;10 giorni migliori&quot;)
+    ax.scatter(p[&quot;data&quot;], p[&quot;chiusura&quot;], marker=&quot;v&quot;, s=70, color=ARANCIO, zorder=5, label=&quot;10 giorni peggiori&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_ylabel(&quot;Livello dell&#x27;indice (scala logaritmica)&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig3_mappa_giorni.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 326 - &quot;Perdere i 10 giorni migliori&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Si prendono i rendimenti giornalieri dell&#x27;S&amp;P 500 (indice di prezzo, senza dividendi) e si chiede: che cosa succede al rendimento annuo composto se si
+resta fuori dal mercato nei giorni migliori (rendimento zero in quei giorni, come se si fosse in liquidità senza interessi), nei giorni peggiori o in
+entrambi? E quanto vale lo stesso esercizio su finestre di 10 e 20 anni, invece che sull&#x27;intera storia?
+Poi: i giorni migliori sono sparsi a caso o vengono dopo i peggiori? E un filtro a 200 sedute, che sta fuori quando l&#x27;indice chiude sotto la sua
+media, salta i giorni migliori? Il regime di ogni giorno usa solo la chiusura del giorno prima (nessuna informazione dal futuro).
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;,)
+
+GIORNI_ANNO = 252
+N_GIORNI = (5, 10, 20, 30, 40)                 # quanti giorni migliori/peggiori saltare (nella tabella)
+N_BASE = 10                                    # il caso di cui parla il titolo
+FINESTRE_ANNI = (10, 20)                       # finestre mobili, una per mese di partenza
+SMA_GIORNI = 200                               # media mobile del filtro (segnale ritardato di una seduta)
+VICINANZA = 30                                 # &quot;vicino&quot;: entro 30 sedute da uno dei 10 peggiori giorni
+CASUALI_N = 10000                              # estrazioni del controllo &quot;10 giorni a caso&quot;
+SEME = 20261030
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------
+H1_PUNTI = 0.010                 # ipotesi 1: saltare i 10 giorni migliori costa almeno 1,0 punti all&#x27;anno sull&#x27;intera storia
+H2_PUNTI = 0.020                 # ipotesi 2: su finestre di 20 anni, la perdita mediana è di almeno 2,0 punti all&#x27;anno
+H3_QUOTA = 0.50                  # ipotesi 3: almeno la metà dei 10 giorni migliori viene con l&#x27;indice sotto la media a 200 sedute
+H5_VICINI = 7                    # ipotesi 5: almeno 7 dei 10 giorni migliori cadono entro 30 sedute da uno dei 10 peggiori
+
+IPOTESI = (
+    &quot;1) Sull&#x27;intera storia dell&#x27;S&amp;P 500, saltare i 10 giorni migliori costa almeno 1,0 punti di rendimento annuo composto. &quot;
+    &quot;2) Su finestre mobili di 20 anni, saltare i 10 giorni migliori della finestra costa in mediana almeno 2,0 punti all&#x27;anno. &quot;
+    &quot;3) Almeno metà dei 10 giorni migliori cade quando l&#x27;indice, alla chiusura precedente, era sotto la sua media a 200 sedute. &quot;
+    &quot;4) Saltare i 10 giorni peggiori fa guadagnare più punti di quanti ne faccia perdere saltare i 10 migliori. &quot;
+    &quot;5) Almeno 7 dei 10 giorni migliori cadono entro 30 sedute da uno dei 10 peggiori. &quot;
+    &quot;6) Il filtro a 200 sedute chiude la storia con un rendimento annuo composto inferiore al buy &amp; hold.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 326: rendimento composto saltando giorni, finestre mobili, regime sotto la media a 200 sedute.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def cagr_da_log(somma_log: float, anni: float) -&gt; float:
+    &quot;&quot;&quot;Rendimento annuo composto da una somma di logaritmi di (1 + r) su `anni` anni.&quot;&quot;&quot;
+    return float(np.exp(somma_log / anni) - 1.0)
+
+
+def indici_estremi(r: np.ndarray, n: int, migliori: bool) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posizioni degli n rendimenti più alti (migliori=True) o più bassi, in ordine dal più estremo; a parità vince la data più antica.&quot;&quot;&quot;
+    r = np.asarray(r, dtype=float)
+    ordine = np.argsort(-r if migliori else r, kind=&quot;stable&quot;)
+    return ordine[:n]
+
+
+def perdita_finestre(lr: np.ndarray, inizi: np.ndarray, lung: int, n: int, anni: float) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Per ogni finestra [i, i+lung): (rendimento annuo composto del buy &amp; hold, rendimento saltando gli n giorni migliori della finestra).&quot;&quot;&quot;
+    lr = np.asarray(lr, dtype=float)
+    bh = np.empty(len(inizi))
+    sal = np.empty(len(inizi))
+    for k, i in enumerate(inizi):
+        w = lr[i:i + lung]
+        tot = w.sum()
+        top = np.partition(w, -n)[-n:].sum()
+        bh[k] = cagr_da_log(tot, anni)
+        sal[k] = cagr_da_log(tot - top, anni)
+    return bh, sal
+
+
+def sotto_media(close: np.ndarray, lung: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Per ogni rendimento (dal secondo prezzo in poi): True se alla chiusura PRECEDENTE l&#x27;indice era sotto la media delle ultime `lung` chiusure
+    (inclusa quella). Dove la media non è ancora calcolabile vale False (si resta investiti).&quot;&quot;&quot;
+    c = pd.Series(np.asarray(close, dtype=float))
+    sma = c.rolling(lung).mean()
+    sotto = (c &lt; sma).to_numpy()          # sotto[t]: chiusura t sotto la media che termina in t (False se NaN)
+    return sotto[:-1]                     # il rendimento t -&gt; t+1 usa il segnale della chiusura t
+
+
+def vicino_a(posizioni: np.ndarray, riferimenti: np.ndarray, distanza: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;Per ogni posizione: True se almeno un riferimento dista al massimo `distanza` sedute (la posizione stessa esclusa).&quot;&quot;&quot;
+    out = []
+    for p in posizioni:
+        d = np.abs(np.asarray(riferimenti) - p)
+        out.append(bool(((d &gt; 0) &amp; (d &lt;= distanza)).any()))
+    return np.array(out)
+
+
+def inizi_mese(date: pd.DatetimeIndex) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posizioni della prima seduta di ogni mese.&quot;&quot;&quot;
+    s = pd.Series(np.arange(len(date)), index=date)
+    return s.groupby([date.year, date.month]).first().to_numpy()
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+
+import funzioni as f
+
+
+def uguale(a, b, tol=1e-9, nome=&quot;&quot;):
+    assert abs(a - b) &lt; tol, f&quot;{nome}: {a} != {b}&quot;
+    print(f&quot;ok  {nome}&quot;)
+
+
+# 1. rendimento composto: due anni al 10% annuo
+uguale(f.cagr_da_log(2 * np.log(1.1), 2.0), 0.10, nome=&quot;rendimento composto&quot;)
+# 2. giorni estremi
+r = np.array([0.01, -0.05, 0.03, 0.02, -0.01, 0.03])
+assert list(f.indici_estremi(r, 2, True)) == [2, 5], f.indici_estremi(r, 2, True)
+assert list(f.indici_estremi(r, 2, False)) == [1, 4]
+print(&quot;ok  giorni migliori e peggiori (a parità vince la data più antica)&quot;)
+# 3. saltare il giorno migliore su una finestra: confronto col calcolo diretto
+lr = np.log1p(r)
+bh, sal = f.perdita_finestre(lr, np.array([0]), 6, 1, 1.0)
+uguale(bh[0], np.exp(lr.sum()) - 1, nome=&quot;buy &amp; hold della finestra&quot;)
+uguale(sal[0], np.exp(lr.sum() - np.log1p(0.03)) - 1, nome=&quot;saltando il giorno migliore&quot;)
+# 4. regime: prezzi in salita poi in discesa, media a 3 chiusure
+c = np.array([10, 11, 12, 13, 9, 8, 14.0])
+s = f.sotto_media(c, 3)
+# chiusure: t=0..6; media a 3 da t=2: 11, 12, 11.33, 10, 11.0 (t=6); sotto: t=4 (9&lt;11.33), t=5 (8&lt;10)
+assert list(s) == [False, False, False, False, True, True], list(s)
+print(&quot;ok  regime sotto la media (usa la chiusura precedente)&quot;)
+# 5. vicinanza
+v = f.vicino_a(np.array([5, 101, 50]), np.array([5, 20, 70]), 30)
+assert list(v) == [True, False, True]
+print(&quot;ok  vicinanza&quot;)
+# 6. inizi di mese
+import pandas as pd
+idx = pd.bdate_range(&quot;2020-01-01&quot;, periods=70)
+p = f.inizi_mese(idx)
+assert idx[p[1]].month == 2 and idx[p[1]].day == 3
+print(&quot;ok  inizi di mese&quot;)
+print(&quot;Tutti i controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
