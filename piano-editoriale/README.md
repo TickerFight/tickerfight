@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-36 pubblicati, 22 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+36 pubblicati, 23 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -47,6 +47,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [La data di partenza cambia il verdetto](https://tickerfight.github.io/tickerfight/articoli/la-data-di-partenza-cambia-il-verdetto/) | In revisione | — | — |
 | [Il p-value in finanza: quando provare tante regole inganna](https://tickerfight.github.io/tickerfight/articoli/il-p-value-in-finanza-quando-provare-tante-regole-inganna/) | In revisione | — | — |
 | [Quanti anni di dati servono per fidarsi?](https://tickerfight.github.io/tickerfight/articoli/quanti-anni-di-dati-servono-per-fidarsi/) | In revisione | — | — |
+| [L'intervallo di confidenza dello Sharpe ratio: quanto vale davvero uno Sharpe di backtest](https://tickerfight.github.io/tickerfight/articoli/l-intervallo-di-confidenza-dello-sharpe-ratio-quanto-vale-davvero-uno-sharpe-di-backtest/) | In revisione | — | — |
 | [L'intervallo di confidenza del CAGR: quanto è incerto il rendimento di una storia](https://tickerfight.github.io/tickerfight/articoli/l-intervallo-di-confidenza-del-cagr-quanto-e-incerto-il-rendimento-di-una-storia/) | In revisione | — | — |
 | [Tasse sulle plusvalenze: strategia attiva contro buy & hold](https://tickerfight.github.io/tickerfight/articoli/tasse-sulle-plusvalenze-strategia-attiva-contro-buy-hold/) | In revisione | — | — |
 | [Whipsaw](https://tickerfight.github.io/tickerfight/articoli/whipsaw/) | In revisione | — | — |
