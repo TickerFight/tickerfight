@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-36 pubblicati, 30 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+36 pubblicati, 31 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -52,6 +52,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [Stimare lo spread denaro-lettera dai prezzi: quanto costa operare, secondo i dati gratuiti](https://tickerfight.github.io/tickerfight/articoli/stimare-lo-spread-denaro-lettera-dai-prezzi-quanto-costa-operare-secondo-i-dati-gratuiti/) | In revisione | — | — |
 | [Tasse sulle plusvalenze: strategia attiva contro buy & hold](https://tickerfight.github.io/tickerfight/articoli/tasse-sulle-plusvalenze-strategia-attiva-contro-buy-hold/) | In revisione | — | — |
 | [Media mobile a 200 giorni: un secolo di storia](https://tickerfight.github.io/tickerfight/articoli/media-mobile-a-200-giorni-un-secolo-di-storia/) | In revisione | — | — |
+| [Il filtro a 200 giorni riduce davvero i drawdown? Crisi per crisi](https://tickerfight.github.io/tickerfight/articoli/il-filtro-a-200-giorni-riduce-davvero-i-drawdown-crisi-per-crisi/) | In revisione | — | — |
 | [Whipsaw](https://tickerfight.github.io/tickerfight/articoli/whipsaw/) | In revisione | — | — |
 | [RSI: comprare l'ipervenduto funziona?](https://tickerfight.github.io/tickerfight/articoli/rsi-comprare-l-ipervenduto-funziona/) | In revisione | — | — |
 | [Comprare dopo un −10%: che cosa succede a uno, tre e dodici mesi](https://tickerfight.github.io/tickerfight/articoli/comprare-dopo-un-10-che-cosa-succede-a-uno-tre-e-dodici-mesi/) | In revisione | — | — |
