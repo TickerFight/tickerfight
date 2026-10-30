@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Se avessi azzeccato ogni anno il settore migliore, quanto avresti guadagnato? · il codice · TickerFight</title>
+<meta name="description" content="se all&#x27;inizio di ogni anno avessi saputo quale dei nove settori azionari americani sarebbe stato il migliore, quanto avresti guadagnato rispetto all&#x27;S&amp;P 500? E quanto di quel vantaggio sopravvive quando non si può sapere in anticipo?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Se avessi azzeccato ogni anno il settore migliore, quanto avresti guadagnato?</h1>
+<p class="domanda">Se all&#x27;inizio di ogni anno avessi saputo quale dei nove settori azionari americani sarebbe stato il migliore, quanto avresti guadagnato rispetto all&#x27;S&amp;P 500? E quanto di quel vantaggio sopravvive quando non si può sapere in anticipo?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="se-avessi-azzeccato-ogni-anno-il-settore-migliore-quanto-avresti-guadagnato.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Dati:</strong> XLB, XLE, XLF, XLI, XLK, XLP, XLU, XLV, XLY (i nove settori SPDR originali, nati a dicembre 1998) e SPY come S&amp;P 500; prezzi corretti per i dividendi, anni solari completi dal 1999 al 2025.</li>
+<li><strong>Senno di poi:</strong> ogni anno si tiene il settore col rendimento più alto di quell'anno (scelto a fine anno, quindi impossibile in pratica). Lo stesso a trimestri e a mesi.</li>
+<li><strong>Il caso:</strong> 10.000 scimmie che scelgono un settore a caso ogni anno.</li>
+<li><strong>La regola realizzabile:</strong> comprare il settore che ha vinto l'anno prima (solo dati passati).</li>
+<li><strong>Costi e tasse:</strong> 0,1% per ordine, 26% sulle plusvalenze con minusvalenze riportate; si vende e si ricompra tutto ogni anno (stima prudente: se il settore si ripete, in pratica non si venderebbe).</li>
+<li><strong>Test multipli:</strong> due test contro le scimmie, corretti con Holm.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>se-avessi-azzeccato-ogni-anno-il-settore-migliore-quanto-avresti-guadagnato/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica i nove ETF settoriali SPDR e SPY
+    ├── 02_backtest_e_test.py  senno di poi, caso, regola realizzabile, frequenze, costi e tasse
+    ├── 03_grafici.py          i cinque grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            rendimenti per periodo, scelta ex post, scimmie, regola realizzabile, tasse, Holm
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd se-avessi-azzeccato-ogni-anno-il-settore-migliore-quanto-avresti-guadagnato
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance i prezzi giornalieri (corretti per dividendi e frazionamenti) di nove ETF settoriali e di SPY.
+
+Salva dati/&lt;ticker&gt;.csv (Date, Close) e dati/metadati.json con fonte, data del download, versione di yfinance e
+impronta SHA-256 di ogni file. Gli script successivi leggono SOLO i file salvati.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=True)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;prezzi&quot;: &quot;Close con auto_adjust=True (dividendi reinvestiti)&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;strumenti&quot;: []}
+    for ticker in config.TICKER_DATI:
+        riga = {&quot;ticker&quot;: ticker}
+        grezzo = scarica(ticker)
+        if grezzo.empty:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;strumenti&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Close&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna()
+        df = df[df[&quot;Close&quot;] &gt; 0]
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;strumenti&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    if sum(1 for r in meta[&quot;strumenti&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;) &lt; len(config.TICKER_DATI):
+        raise SystemExit(&quot;Non tutti gli strumenti sono stati scaricati.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>senno di poi, caso, regola realizzabile, frequenze, costi e tasse</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Il settore migliore con il senno di poi: confronto con l&#x27;indice, il caso e la regola realizzabile.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json        ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  anni.csv             per anno: settore migliore, suo rendimento, rendimento di SPY, vincitore dell&#x27;anno prima e suo rendimento
+  curve_capitale.csv   capitale (da 10.000) anno per anno: senno di poi, SPY, regola realizzabile, scimmia mediana, media dei settori
+  scimmie.csv          rendimento annuo composto di ciascuna scimmia
+  frequenze.csv        rotazione con senno di poi ogni anno, trimestre, mese: rendimento annuo e capitale finale
+  settori.csv          per settore: rendimento annuo composto e numero di anni da migliore
+Nessun look-ahead nella regola realizzabile: il settore del periodo t si sceglie solo con i rendimenti fino a t-1.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    META = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    rng = np.random.default_rng(config.SEME)
+    tick = [t for t, _, _ in config.SETTORI]
+    nomi = {t: n for t, n, _ in config.SETTORI}
+    prezzi = pd.concat({t: pd.read_csv(config.file_dati(t), index_col=0, parse_dates=True)[&quot;Close&quot;] for t in tick + [config.BENCHMARK[0]]}, axis=1)
+    prezzi = prezzi.dropna()
+    S = config.SOGLIE
+    a1, a2 = config.ANNO_INIZIO, config.ANNO_FINE
+
+    # ---------------- rotazione annuale ----------------
+    ra = fx.rendimenti_periodo(prezzi, config.FREQUENZE[&quot;anno&quot;], a1, a2)
+    anni_lista = [int(x) for x in ra.index.year]
+    R = ra[tick].values
+    spy = ra[config.BENCHMARK[0]].values
+    T = len(R)
+    if T != a2 - a1 + 1:
+        raise SystemExit(f&quot;Anni completi attesi {a2 - a1 + 1}, trovati {T}&quot;)
+    idx, best = fx.migliore_ex_post(R)
+    cagr_best = fx.cagr(best, T)
+    cagr_spy = fx.cagr(spy, T)
+    eq = R.mean(axis=1)                      # media dei nove settori, ribilanciata ogni anno
+    cagr_eq = fx.cagr(eq, T)
+    cagr_set = {t: fx.cagr(R[:, i], T) for i, t in enumerate(tick)}
+    miglior_set = max(cagr_set, key=cagr_set.get)
+
+    reg(&quot;prima_anno&quot;, a1, &quot;annonum&quot;, &quot;Primo anno solare del confronto&quot;, &quot;config.py, ANNO_INIZIO&quot;)
+    reg(&quot;ultima_anno&quot;, a2, &quot;annonum&quot;, &quot;Ultimo anno solare del confronto&quot;, &quot;config.py, ANNO_FINE&quot;)
+    reg(&quot;n_anni&quot;, T, &quot;int&quot;, &quot;Anni solari completi del confronto&quot;, &quot;dati/&quot;)
+    reg(&quot;n_settori&quot;, len(tick), &quot;int&quot;, &quot;Settori (ETF SPDR) usati&quot;, &quot;config.py, SETTORI&quot;)
+    reg(&quot;data_scarico&quot;, META[&quot;scaricato_il_utc&quot;][:10], &quot;data&quot;, &quot;Data del download dei dati&quot;, &quot;dati/metadati.json&quot;)
+    reg(&quot;capitale_iniziale&quot;, config.CAPITALE_INIZIALE, &quot;int&quot;, &quot;Capitale di partenza (dollari)&quot;, &quot;config.py, CAPITALE_INIZIALE&quot;)
+    reg(&quot;cagr_senno&quot;, cagr_best, &quot;pct1&quot;, &quot;Rendimento annuo composto scegliendo ogni anno il settore migliore con il senno di poi&quot;)
+    reg(&quot;cagr_spy&quot;, cagr_spy, &quot;pct1&quot;, &quot;Rendimento annuo composto dell&#x27;S&amp;P 500 (SPY, dividendi reinvestiti), buy &amp; hold&quot;)
+    reg(&quot;cagr_media_settori&quot;, cagr_eq, &quot;pct1&quot;, &quot;Rendimento annuo composto della media dei nove settori ribilanciata ogni anno&quot;)
+    reg(&quot;miglior_settore_bh&quot;, nomi[miglior_set], &quot;testo&quot;, &quot;Settore col miglior rendimento annuo composto tenuto per tutto il periodo&quot;)
+    reg(&quot;miglior_settore_bh_cagr&quot;, cagr_set[miglior_set], &quot;pct1&quot;, &quot;Rendimento annuo composto di quel settore buy &amp; hold&quot;)
+    reg(&quot;peggior_settore_bh&quot;, nomi[min(cagr_set, key=cagr_set.get)], &quot;testo&quot;, &quot;Settore col peggior rendimento annuo composto tenuto per tutto il periodo&quot;)
+    reg(&quot;peggior_settore_bh_cagr&quot;, min(cagr_set.values()), &quot;pct1&quot;, &quot;Rendimento annuo composto di quel settore buy &amp; hold&quot;)
+    reg(&quot;vantaggio_senno_pp&quot;, (cagr_best - cagr_spy), &quot;pp1&quot;, &quot;Vantaggio annuo della scelta con il senno di poi sull&#x27;S&amp;P 500 (punti percentuali)&quot;)
+    reg(&quot;vantaggio_senno_su_best_pp&quot;, (cagr_best - cagr_set[miglior_set]), &quot;pp1&quot;, &quot;Vantaggio annuo del senno di poi sul miglior settore tenuto fermo (punti)&quot;)
+    cap_senno = fx.curva_capitale(best, config.CAPITALE_INIZIALE)
+    cap_spy = fx.curva_capitale(spy, config.CAPITALE_INIZIALE)
+    reg(&quot;cap_senno&quot;, cap_senno[-1], &quot;int&quot;, &quot;Capitale finale (lordo) della scelta con il senno di poi, partendo dal capitale iniziale&quot;)
+    reg(&quot;cap_spy&quot;, cap_spy[-1], &quot;int&quot;, &quot;Capitale finale (lordo) dell&#x27;S&amp;P 500 (SPY), partendo dal capitale iniziale&quot;)
+    reg(&quot;cap_rapporto&quot;, cap_senno[-1] / cap_spy[-1], &quot;num1&quot;, &quot;Rapporto tra capitale finale del senno di poi e quello dell&#x27;S&amp;P 500&quot;)
+    reg(&quot;best_mediano&quot;, float(np.median(best)), &quot;pct0&quot;, &quot;Rendimento mediano annuo del settore migliore&quot;)
+    reg(&quot;best_min&quot;, float(best.min()), &quot;pct0&quot;, &quot;Rendimento del settore migliore nell&#x27;anno in cui è andato peggio&quot;)
+    reg(&quot;best_min_anno&quot;, str(anni_lista[int(best.argmin())]), &quot;testo&quot;, &quot;Anno in cui il settore migliore è andato peggio&quot;, &quot;anni.csv&quot;)
+    reg(&quot;best_max&quot;, float(best.max()), &quot;pct0&quot;, &quot;Rendimento del settore migliore nell&#x27;anno in cui è andato meglio&quot;)
+    reg(&quot;best_max_anno&quot;, str(anni_lista[int(best.argmax())]), &quot;testo&quot;, &quot;Anno del miglior rendimento del settore migliore&quot;, &quot;anni.csv&quot;)
+    reg(&quot;best_max_nome&quot;, nomi[tick[int(idx[best.argmax()])]], &quot;testo&quot;, &quot;Settore migliore nell&#x27;anno record&quot;, &quot;anni.csv&quot;)
+    reg(&quot;spy_mediano&quot;, float(np.median(spy)), &quot;pct0&quot;, &quot;Rendimento mediano annuo dell&#x27;S&amp;P 500 (SPY)&quot;)
+    perdite = [(anni_lista[t], nomi[tick[idx[t]]], best[t]) for t in range(T) if best[t] &lt; 0]
+    reg(&quot;n_anni_best_perde&quot;, len(perdite), &quot;int&quot;, &quot;Anni in cui anche il settore migliore ha chiuso in perdita&quot;, &quot;anni.csv&quot;)
+    reg(&quot;anni_best_perde&quot;, &quot;, &quot;.join(str(p[0]) for p in perdite) if perdite else &quot;nessuno&quot;, &quot;testo&quot;, &quot;Quali anni&quot;, &quot;anni.csv&quot;)
+    n_dist = len(set(idx.tolist()))
+    reg(&quot;n_settori_vincenti&quot;, n_dist, &quot;int&quot;, &quot;Settori diversi che sono stati i migliori almeno una volta&quot;, &quot;anni.csv&quot;)
+    conta = np.bincount(idx, minlength=len(tick))
+    top = int(conta.argmax())
+    reg(&quot;settore_piu_vincente&quot;, nomi[tick[top]], &quot;testo&quot;, &quot;Settore che è stato il migliore più volte&quot;, &quot;anni.csv&quot;)
+    reg(&quot;settore_piu_vincente_n&quot;, int(conta[top]), &quot;int&quot;, &quot;Quante volte&quot;, &quot;anni.csv&quot;)
+    reg(&quot;anni_spy_batte_senno&quot;, int((spy &gt; best).sum()), &quot;int&quot;, &quot;Anni in cui l&#x27;S&amp;P 500 ha battuto il settore migliore&quot;, &quot;anni.csv&quot;)
+    reg(&quot;anni_senno_batte_spy&quot;, int((best &gt; spy).sum()), &quot;int&quot;, &quot;Anni in cui il settore migliore ha battuto l&#x27;S&amp;P 500&quot;, &quot;anni.csv&quot;)
+
+    # ---------------- il caso: scimmie ----------------
+    scim = fx.scimmie(R, config.N_SCIMMIE, T, rng)
+    a = (1 - config.LIVELLO_CONFIDENZA) / 2
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Scimmie (scelta casuale del settore ogni anno)&quot;, &quot;config.py, N_SCIMMIE&quot;)
+    reg(&quot;scimmia_mediana&quot;, float(np.median(scim)), &quot;pct1&quot;, &quot;Rendimento annuo composto della scimmia mediana&quot;)
+    reg(&quot;scimmia_lo&quot;, float(np.quantile(scim, a)), &quot;pct1&quot;, &quot;Estremo basso della fascia 95% delle scimmie&quot;)
+    reg(&quot;scimmia_hi&quot;, float(np.quantile(scim, 1 - a)), &quot;pct1&quot;, &quot;Estremo alto della fascia 95% delle scimmie&quot;)
+    reg(&quot;scimmie_battono_spy&quot;, float(np.mean(scim &gt; cagr_spy)), &quot;pct0&quot;, &quot;Quota di scimmie che battono l&#x27;S&amp;P 500&quot;)
+    reg(&quot;scimmie_battono_media&quot;, float(np.mean(scim &gt; cagr_eq)), &quot;pct0&quot;, &quot;Quota di scimmie che battono la media dei nove settori&quot;)
+    reg(&quot;scimmia_migliore&quot;, float(scim.max()), &quot;pct1&quot;, &quot;Rendimento annuo della scimmia più fortunata&quot;)
+    reg(&quot;scimmia_peggiore&quot;, float(scim.min()), &quot;pct1&quot;, &quot;Rendimento annuo della scimmia più sfortunata&quot;)
+    p_senno = (1 + np.sum(scim &gt;= cagr_best)) / (1 + config.N_SCIMMIE)
+    reg(&quot;n_scimmie_eguagliano_senno&quot;, int((scim &gt;= cagr_best).sum()), &quot;int&quot;, &quot;Scimmie che raggiungono il senno di poi&quot;)
+
+    # ---------------- regola realizzabile: compra il vincitore dell&#x27;anno prima ----------------
+    copia = fx.vincitore_precedente(R)
+    Tc = len(copia)
+    cagr_copia = fx.cagr(copia, Tc)
+    scim_c = fx.scimmie(R[1:], config.N_SCIMMIE, Tc, rng)
+    cagr_spy_c = fx.cagr(spy[1:], Tc)
+    p_copia = (1 + np.sum(scim_c &gt;= cagr_copia)) / (1 + config.N_SCIMMIE)
+    h = fx.holm({&quot;senno&quot;: p_senno, &quot;copia&quot;: p_copia})
+    reg(&quot;n_anni_copia&quot;, Tc, &quot;int&quot;, &quot;Anni della regola «compra il vincitore dell&#x27;anno prima» (il primo anno non ha un anno prima)&quot;)
+    reg(&quot;cagr_copia&quot;, cagr_copia, &quot;pct1&quot;, &quot;Rendimento annuo composto della regola «compra il vincitore dell&#x27;anno prima»&quot;)
+    reg(&quot;cagr_spy_copia&quot;, cagr_spy_c, &quot;pct1&quot;, &quot;Rendimento annuo composto dell&#x27;S&amp;P 500 sugli stessi anni&quot;)
+    reg(&quot;copia_vs_spy_pp&quot;, cagr_copia - cagr_spy_c, &quot;pp1&quot;, &quot;Vantaggio annuo (punti) della regola realizzabile sull&#x27;S&amp;P 500, stessi anni&quot;)
+    reg(&quot;copia_batte_scimmie&quot;, float(np.mean(scim_c &lt; cagr_copia)), &quot;pct0&quot;, &quot;Quota di scimmie (stessi anni) battute dalla regola realizzabile&quot;)
+    reg(&quot;copia_anni_vinti_spy&quot;, int((copia &gt; spy[1:]).sum()), &quot;int&quot;, &quot;Anni in cui la regola realizzabile batte l&#x27;S&amp;P 500&quot;)
+    reg(&quot;p_senno_grezzo&quot;, p_senno, &quot;pval&quot;, &quot;p-value (non corretto): scimmie con rendimento pari o superiore al senno di poi&quot;)
+    reg(&quot;p_copia_grezzo&quot;, p_copia, &quot;pval&quot;, &quot;p-value (non corretto): scimmie con rendimento pari o superiore alla regola realizzabile&quot;)
+    reg(&quot;p_senno_holm&quot;, h[&quot;senno&quot;], &quot;pval&quot;, &quot;p-value corretto per Holm, senno di poi&quot;)
+    reg(&quot;p_copia_holm&quot;, h[&quot;copia&quot;], &quot;pval&quot;, &quot;p-value corretto per Holm, regola realizzabile&quot;)
+    reg(&quot;n_test_holm&quot;, 2, &quot;int&quot;, &quot;Test corretti con Holm (senno di poi e regola realizzabile contro le scimmie)&quot;)
+    rango = fx.rango_vincitore_precedente(R)
+    reg(&quot;rango_mediano&quot;, float(np.median(rango)), &quot;num1&quot;, &quot;Posizione mediana (1 = migliore, 9 = peggiore) nell&#x27;anno dopo del settore che ha vinto l&#x27;anno prima&quot;)
+    reg(&quot;rango_medio&quot;, float(rango.mean()), &quot;num1&quot;, &quot;Posizione media nell&#x27;anno dopo del vincitore dell&#x27;anno prima (il caso darebbe 5,0)&quot;)
+    reg(&quot;vince_ancora&quot;, int((rango == 1).sum()), &quot;int&quot;, &quot;Volte in cui il vincitore dell&#x27;anno prima vince anche l&#x27;anno dopo&quot;)
+    reg(&quot;ultimo_ancora&quot;, int((rango == len(tick)).sum()), &quot;int&quot;, &quot;Volte in cui il vincitore dell&#x27;anno prima arriva ultimo l&#x27;anno dopo&quot;)
+    reg(&quot;rango_atteso&quot;, (len(tick) + 1) / 2, &quot;num1&quot;, &quot;Posizione media attesa col solo caso: (nove settori + 1) / 2&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello della fascia delle scimmie&quot;, &quot;config.py, LIVELLO_CONFIDENZA&quot;)
+    reg(&quot;vince_ancora_atteso&quot;, Tc / len(tick), &quot;num1&quot;, &quot;Volte attese col solo caso (anni diviso nove settori)&quot;)
+
+    # ---------------- frequenze: anno, trimestre, mese ----------------
+    righe_f = []
+    cap_per_freq = {}
+    for nome_f, alias in config.FREQUENZE.items():
+        rf = fx.rendimenti_periodo(prezzi, alias, a1, a2)
+        Rf = rf[tick].values
+        _, bf = fx.migliore_ex_post(Rf)
+        cap = config.CAPITALE_INIZIALE * float(np.prod(1 + bf))
+        cap_per_freq[nome_f] = cap
+        righe_f.append({&quot;frequenza&quot;: nome_f, &quot;n_periodi&quot;: len(bf), &quot;cagr&quot;: fx.cagr(bf, T), &quot;capitale_finale&quot;: cap})
+        reg(f&quot;cap_{nome_f}&quot;, cap, &quot;int&quot;, f&quot;Capitale finale (lordo) scegliendo con il senno di poi il settore migliore ogni {nome_f}&quot;)
+        reg(f&quot;cagr_{nome_f}&quot;, fx.cagr(bf, T), &quot;pct0&quot;, f&quot;Rendimento annuo composto scegliendo con il senno di poi ogni {nome_f}&quot;)
+        reg(f&quot;n_periodi_{nome_f}&quot;, len(bf), &quot;int&quot;, f&quot;Numero di scelte fatte ({nome_f})&quot;)
+        reg(f&quot;best_medio_{nome_f}&quot;, float(bf.mean()), &quot;pct1&quot;, f&quot;Rendimento medio del settore migliore in un {nome_f}&quot;)
+    reg(&quot;volte_mese_su_anno&quot;, cap_per_freq[&quot;mese&quot;] / cap_per_freq[&quot;anno&quot;], &quot;int&quot;, &quot;Capitale finale mensile diviso quello annuale (senno di poi)&quot;)
+    reg(&quot;cifre_mese&quot;, float(np.log10(cap_per_freq[&quot;mese&quot;])), &quot;num1&quot;, &quot;Logaritmo in base 10 del capitale finale mensile&quot;)
+
+    # ---------------- netto di costi e tasse ----------------
+    net_senno = fx.capitale_netto_rotazione(best, config.CAPITALE_INIZIALE, config.COSTO_ORDINE, config.TASSA)
+    net_spy = fx.capitale_netto_buy_hold(spy, config.CAPITALE_INIZIALE, config.COSTO_ORDINE, config.TASSA)
+    reg(&quot;costo_ordine&quot;, config.COSTO_ORDINE, &quot;pct1&quot;, &quot;Costo per ogni acquisto e ogni vendita&quot;, &quot;config.py, COSTO_ORDINE&quot;)
+    reg(&quot;tassa&quot;, config.TASSA, &quot;pct0&quot;, &quot;Tassa sulle plusvalenze&quot;, &quot;config.py, TASSA&quot;)
+    reg(&quot;net_senno&quot;, net_senno, &quot;int&quot;, &quot;Capitale finale netto (costi e tasse) della rotazione annuale con il senno di poi&quot;)
+    reg(&quot;net_spy&quot;, net_spy, &quot;int&quot;, &quot;Capitale finale netto (costi e tasse) dell&#x27;S&amp;P 500 buy &amp; hold&quot;)
+    reg(&quot;net_frazione&quot;, net_senno / cap_senno[-1], &quot;pct0&quot;, &quot;Quota del capitale lordo che resta dopo costi e tasse (senno di poi)&quot;)
+    reg(&quot;net_frazione_spy&quot;, net_spy / cap_spy[-1], &quot;pct0&quot;, &quot;Quota del capitale lordo che resta dopo costi e tasse (S&amp;P 500)&quot;)
+    reg(&quot;net_cagr_senno&quot;, float((net_senno / config.CAPITALE_INIZIALE) ** (1 / T) - 1), &quot;pct1&quot;, &quot;Rendimento annuo composto netto della rotazione con senno di poi&quot;)
+    reg(&quot;net_cagr_spy&quot;, float((net_spy / config.CAPITALE_INIZIALE) ** (1 / T) - 1), &quot;pct1&quot;, &quot;Rendimento annuo composto netto dell&#x27;S&amp;P 500&quot;)
+
+    # ---------------- soglie ----------------
+    for k, f, d in ((&quot;ip1_pp&quot;, &quot;int&quot;, &quot;Soglia ipotesi 1: vantaggio annuo (punti) sull&#x27;S&amp;P 500&quot;),
+                    (&quot;ip2_quota&quot;, &quot;pct0&quot;, &quot;Soglia ipotesi 2: quota di scimmie che battono l&#x27;indice&quot;),
+                    (&quot;ip3_pp&quot;, &quot;int&quot;, &quot;Soglia ipotesi 3: vantaggio massimo (punti) della regola realizzabile&quot;),
+                    (&quot;ip3_perc&quot;, &quot;pct0&quot;, &quot;Soglia ipotesi 3: quota di scimmie battute&quot;),
+                    (&quot;ip4_volte&quot;, &quot;int&quot;, &quot;Soglia ipotesi 4: multiplo del capitale finale mensile su quello annuale&quot;),
+                    (&quot;ip5_frazione&quot;, &quot;pct0&quot;, &quot;Soglia ipotesi 5: frazione del capitale lordo che resta&quot;),
+                    (&quot;ip7_lo&quot;, &quot;int&quot;, &quot;Soglia ipotesi 7: estremo basso della posizione mediana&quot;),
+                    (&quot;ip7_hi&quot;, &quot;int&quot;, &quot;Soglia ipotesi 7: estremo alto della posizione mediana&quot;),
+                    (&quot;alfa&quot;, &quot;num2&quot;, &quot;Soglia di significatività dopo Holm&quot;)):
+        reg(f&quot;s_{k}&quot;, S[k], f, d, &quot;config.py, SOGLIE&quot;)
+
+    # ---------------- tabelle ----------------
+    anni_df = pd.DataFrame({&quot;anno&quot;: anni_lista, &quot;settore_migliore&quot;: [tick[i] for i in idx], &quot;rendimento_migliore&quot;: best,
+                            &quot;rendimento_spy&quot;: spy, &quot;media_settori&quot;: eq})
+    vinc_prec = [&quot;&quot;] + [tick[i] for i in idx[:-1]]
+    anni_df[&quot;vincitore_anno_prima&quot;] = vinc_prec
+    anni_df[&quot;rendimento_vincitore_anno_prima&quot;] = [np.nan] + list(copia)
+    anni_df[&quot;rango_vincitore_anno_prima&quot;] = [np.nan] + list(rango)
+    anni_df.to_csv(config.RISULTATI / &quot;anni.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    curve = pd.DataFrame({&quot;anno&quot;: anni_lista, &quot;senno_di_poi&quot;: cap_senno, &quot;spy&quot;: cap_spy,
+                          &quot;media_settori&quot;: fx.curva_capitale(eq, config.CAPITALE_INIZIALE)})
+    curve[&quot;regola_realizzabile&quot;] = [np.nan] + list(fx.curva_capitale(copia, config.CAPITALE_INIZIALE))
+    mediana_lr = np.median(np.log1p(R), axis=1)       # settore «mediano» di ogni anno, come riferimento del caso tipico
+    curve[&quot;settore_mediano&quot;] = fx.curva_capitale(np.expm1(mediana_lr), config.CAPITALE_INIZIALE)
+    curve.to_csv(config.RISULTATI / &quot;curve_capitale.csv&quot;, index=False, float_format=&quot;%.2f&quot;)
+    pd.DataFrame({&quot;cagr&quot;: scim}).to_csv(config.RISULTATI / &quot;scimmie.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    pd.DataFrame({&quot;cagr_copia_scimmie&quot;: scim_c}).to_csv(config.RISULTATI / &quot;scimmie_stessi_anni_copia.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    pd.DataFrame(righe_f).to_csv(config.RISULTATI / &quot;frequenze.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+    pd.DataFrame([{&quot;ticker&quot;: t, &quot;nome&quot;: nomi[t], &quot;cagr&quot;: cagr_set[t], &quot;anni_migliore&quot;: int(conta[i])} for i, t in enumerate(tick)]).to_csv(
+        config.RISULTATI / &quot;settori.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    reg(&quot;cagr_bh_nomi&quot;, &quot;; &quot;.join(f&quot;{nomi[t]} {cagr_set[t]*100:.1f}%&quot;.replace(&quot;.&quot;, &quot;,&quot;) for t in tick), &quot;testo&quot;, &quot;Rendimento annuo composto di ciascun settore buy &amp; hold&quot;, &quot;settori.csv&quot;)
+
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    (config.RISULTATI / &quot;indici_usati.json&quot;).write_text(json.dumps({&quot;settori&quot;: tick, &quot;benchmark&quot;: config.BENCHMARK[0]}, indent=1), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i cinque grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_migliore_ogni_anno.png   rendimento del settore migliore di ogni anno contro l&#x27;S&amp;P 500
+  fig2_capitale.png             capitale nel tempo: senno di poi, S&amp;P 500, regola realizzabile, media dei settori
+  fig3_scimmie.png              rendimento annuo delle scimmie contro S&amp;P 500, regola realizzabile e senno di poi
+  fig4_frequenze.png            capitale finale del senno di poi scegliendo ogni anno, trimestre, mese
+  fig5_lordo_netto.png          capitale finale lordo e netto di costi e tasse
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import matplotlib.ticker as mt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def migliaia(y, _=None):
+    return f&quot;{y:,.0f}&quot;.replace(&quot;,&quot;, &quot;.&quot;)
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    v = lambda k: V[k][&quot;valore&quot;]
+    anni = pd.read_csv(R / &quot;anni.csv&quot;)
+    curve = pd.read_csv(R / &quot;curve_capitale.csv&quot;)
+    scim = pd.read_csv(R / &quot;scimmie.csv&quot;)[&quot;cagr&quot;].values * 100
+
+    # --- Figura 1: il settore migliore di ogni anno contro l&#x27;indice ---
+    fig, ax = plt.subplots(figsize=(10, 5))
+    x = np.arange(len(anni))
+    ax.bar(x, anni[&quot;rendimento_migliore&quot;] * 100, color=BLU, label=&quot;Settore migliore dell&#x27;anno&quot;)
+    ax.plot(x, anni[&quot;rendimento_spy&quot;] * 100, &quot;o&quot;, color=ARANCIO, ms=5, label=&quot;S&amp;P 500 (SPY)&quot;)
+    for xi, t, r in zip(x, anni[&quot;settore_migliore&quot;], anni[&quot;rendimento_migliore&quot;]):
+        ax.text(xi, max(r * 100, 0) + 1.2, t, rotation=90, ha=&quot;center&quot;, va=&quot;bottom&quot;, fontsize=8.5, color=BLU)
+    ax.axhline(0, color=&quot;black&quot;, lw=0.8)
+    ax.set_xticks(x[::2], anni[&quot;anno&quot;].astype(str)[::2], rotation=45)
+    ax.set_ylabel(&quot;Rendimento nell&#x27;anno (%)&quot;)
+    ax.set_title(&quot;Ogni anno, il settore migliore batte l&#x27;indice&quot;, loc=&quot;left&quot;)
+    ax.set_ylim(top=anni[&quot;rendimento_migliore&quot;].max() * 100 * 1.3)
+    ax.legend(loc=&quot;lower right&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_migliore_ogni_anno.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 2: crescita del capitale ---
+    fig, ax = plt.subplots(figsize=(9, 5))
+    x0 = [curve[&quot;anno&quot;].iloc[0] - 1] + list(curve[&quot;anno&quot;])
+    cap0 = config.CAPITALE_INIZIALE
+    for col, colore, lab, stile in ((&quot;senno_di_poi&quot;, BLU, &quot;Settore migliore, con il senno di poi&quot;, &quot;--&quot;),
+                                    (&quot;spy&quot;, GRIGIO, &quot;S&amp;P 500 (SPY)&quot;, &quot;-&quot;),
+                                    (&quot;regola_realizzabile&quot;, ARANCIO, &quot;Compra il vincitore dell&#x27;anno prima&quot;, &quot;-&quot;),
+                                    (&quot;media_settori&quot;, &quot;#7fa6d1&quot;, &quot;Media dei nove settori&quot;, &quot;:&quot;)):
+        serie = curve[col].values
+        ys = [cap0, cap0] + list(serie[1:]) if col == &quot;regola_realizzabile&quot; else [cap0] + list(serie)
+        ax.plot(x0, ys, color=colore, ls=stile, lw=2.4 if col == &quot;senno_di_poi&quot; else 2, label=lab)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_ylabel(&quot;Capitale (dollari, scala logaritmica)&quot;)
+    ax.yaxis.set_major_formatter(mt.FuncFormatter(migliaia))
+    ax.set_title(f&quot;Da {migliaia(cap0)} dollari: il vantaggio è tutto nel senno di poi&quot;, loc=&quot;left&quot;)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.savefig(config.FIGURE / &quot;fig2_capitale.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 3: le scimmie ---
+    fig, ax = plt.subplots(figsize=(9, 4.8))
+    ax.hist(scim, bins=60, color=&quot;#7fa6d1&quot;)
+    for val, col, lab, ls in ((v(&quot;cagr_spy&quot;) * 100, GRIGIO, &quot;S&amp;P 500&quot;, &quot;-&quot;),
+                              (v(&quot;cagr_copia&quot;) * 100, ARANCIO, &quot;Vincitore dell&#x27;anno prima&quot;, &quot;-&quot;),
+                              (v(&quot;cagr_senno&quot;) * 100, BLU, &quot;Senno di poi&quot;, &quot;--&quot;)):
+        ax.axvline(val, color=col, lw=2.5, ls=ls, label=f&quot;{lab}: {val:.1f}%&quot;.replace(&quot;.&quot;, &quot;,&quot;))
+    ax.set_xlabel(&quot;Rendimento annuo composto (%)&quot;)
+    ax.set_ylabel(&quot;Numero di scimmie&quot;)
+    ax.set_title(&quot;Diecimila scimmie scelgono un settore a caso ogni anno&quot;, loc=&quot;left&quot;)
+    ax.legend(loc=&quot;upper right&quot;)
+    fig.savefig(config.FIGURE / &quot;fig3_scimmie.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 4: ogni anno, trimestre, mese ---
+    fig, ax = plt.subplots(figsize=(8, 4.8))
+    vals = [v(f&quot;cap_{n}&quot;) for n in (&quot;anno&quot;, &quot;trimestre&quot;, &quot;mese&quot;)]
+    barre = ax.bar([&quot;Ogni anno&quot;, &quot;Ogni trimestre&quot;, &quot;Ogni mese&quot;], vals, color=BLU)
+    ax.axhline(v(&quot;cap_spy&quot;), color=GRIGIO, lw=2, label=&quot;S&amp;P 500 (SPY)&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.yaxis.set_major_formatter(mt.FuncFormatter(migliaia))
+    for b, val in zip(barre, vals):
+        ax.text(b.get_x() + b.get_width() / 2, val * 1.15, migliaia(val), ha=&quot;center&quot;, fontsize=11)
+    ax.set_ylabel(&quot;Capitale finale (dollari, scala logaritmica)&quot;)
+    ax.set_title(&quot;Più spesso si sceglie, più il senno di poi esplode&quot;, loc=&quot;left&quot;)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.savefig(config.FIGURE / &quot;fig4_frequenze.png&quot;)
+    plt.close(fig)
+
+    # --- Figura 5: lordo e netto ---
+    fig, ax = plt.subplots(figsize=(8, 4.8))
+    x = np.arange(2)
+    lordo = [v(&quot;cap_senno&quot;), v(&quot;cap_spy&quot;)]
+    netto = [v(&quot;net_senno&quot;), v(&quot;net_spy&quot;)]
+    ax.bar(x - 0.19, lordo, 0.36, color=&quot;#7fa6d1&quot;, label=&quot;Lordo&quot;)
+    ax.bar(x + 0.19, netto, 0.36, color=BLU, label=&quot;Netto di costi e tasse&quot;)
+    for xi, a, b in zip(x, lordo, netto):
+        ax.text(xi - 0.19, a * 1.08, migliaia(a), ha=&quot;center&quot;, fontsize=10)
+        ax.text(xi + 0.19, b * 1.08, migliaia(b), ha=&quot;center&quot;, fontsize=10)
+    ax.set_xticks(x, [&quot;Settore migliore\ncon il senno di poi&quot;, &quot;S&amp;P 500 (SPY)&quot;])
+    ax.set_yscale(&quot;log&quot;)
+    ax.yaxis.set_major_formatter(mt.FuncFormatter(migliaia))
+    ax.set_ylabel(&quot;Capitale finale (dollari, scala logaritmica)&quot;)
+    ax.set_title(&quot;Anche la rotazione perfetta paga le tasse&quot;, loc=&quot;left&quot;)
+    ax.legend(loc=&quot;upper right&quot;)
+    fig.savefig(config.FIGURE / &quot;fig5_lordo_netto.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate in&quot;, config.FIGURE)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 523 - &quot;Se avessi azzeccato ogni anno il settore migliore&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Idea: con il senno di poi, ogni anno si compra il settore (tra i nove ETF settoriali SPDR originali) che a fine anno
+risulterà il migliore. Si confronta con l&#x27;S&amp;P 500 (SPY), con il caso (scimmie che scelgono un settore a caso ogni anno)
+e con una regola che si poteva davvero applicare (comprare il vincitore dell&#x27;anno prima).
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati: ETF (ticker Yahoo Finance, nome, descrizione). Prezzi corretti per dividendi e frazionamenti ----------
+SETTORI = [
+    (&quot;XLB&quot;, &quot;Materiali&quot;, &quot;materiali&quot;),
+    (&quot;XLE&quot;, &quot;Energia&quot;, &quot;energia&quot;),
+    (&quot;XLF&quot;, &quot;Finanza&quot;, &quot;finanza&quot;),
+    (&quot;XLI&quot;, &quot;Industria&quot;, &quot;industria&quot;),
+    (&quot;XLK&quot;, &quot;Tecnologia&quot;, &quot;tecnologia&quot;),
+    (&quot;XLP&quot;, &quot;Beni di prima necessità&quot;, &quot;beni di prima necessità&quot;),
+    (&quot;XLU&quot;, &quot;Servizi di pubblica utilità&quot;, &quot;servizi di pubblica utilità&quot;),
+    (&quot;XLV&quot;, &quot;Sanità&quot;, &quot;sanità&quot;),
+    (&quot;XLY&quot;, &quot;Consumi discrezionali&quot;, &quot;consumi discrezionali&quot;),
+]
+BENCHMARK = (&quot;SPY&quot;, &quot;S&amp;P 500 (ETF SPY)&quot;)
+TICKER_DATI = [t for t, _, _ in SETTORI] + [BENCHMARK[0]]
+INIZIO_DOWNLOAD = &quot;1998-12-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;i prezzi giornalieri, corretti per i dividendi, dei nove ETF settoriali SPDR originali e dell&#x27;ETF SPY sull&#x27;S&amp;P 500&quot;
+NOMI_ESENTI = (&quot;S&amp;P&quot;, &quot;523&quot;, &quot;Moskowitz e Grinblatt (1999)&quot;, &quot;Hong, Torous e Valkanov (2002)&quot;, &quot;Sharpe (1975)&quot;,
+               &quot;Buzzacchi e Ghezzi (2021)&quot;, &quot;SPDR&quot;, &quot;Select Sector&quot;,
+               &quot;(1999)&quot;, &quot;(2002)&quot;, &quot;(2021)&quot;, &quot;(1975)&quot;, &quot;54(4), 1249–1290&quot;, &quot;doi:10.1111/0022-1082.00146&quot;, &quot;14(6), 250&quot;)
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+# --- Periodo e definizioni -----------------------------------------------------------------------------------
+ANNO_INIZIO = 1999            # primo anno solare completo di tutti i nove ETF (nati a dicembre 1998)
+ANNO_FINE = 2025              # ultimo anno solare completo alla data del download
+CAPITALE_INIZIALE = 10000     # in dollari, per le curve di capitale
+FREQUENZE = {&quot;anno&quot;: &quot;YE&quot;, &quot;trimestre&quot;: &quot;QE&quot;, &quot;mese&quot;: &quot;ME&quot;}   # rotazione con senno di poi ogni anno / trimestre / mese
+
+# --- Il caso -------------------------------------------------------------------------------------------------
+SEME = 20261030
+N_SCIMMIE = 10000             # scimmie: ognuna sceglie un settore a caso all&#x27;inizio di ogni anno
+LIVELLO_CONFIDENZA = 0.95
+
+# --- Costi e tasse (scenario netto) -------------------------------------------------------------------------
+COSTO_ORDINE = 0.001          # 0,1% per ogni acquisto e per ogni vendita
+TASSA = 0.26                  # tassa sulle plusvalenze, con minusvalenze riportate; rotazione: si vende tutto a fine anno
+
+SOGLIE = {&quot;ip1_pp&quot;: 10.0, &quot;ip2_quota&quot;: 0.50, &quot;ip3_pp&quot;: 1.0, &quot;ip3_perc&quot;: 0.95, &quot;ip4_volte&quot;: 100.0,
+          &quot;ip5_frazione&quot;: 0.50, &quot;ip7_lo&quot;: 3.0, &quot;ip7_hi&quot;: 7.0, &quot;alfa&quot;: 0.05}
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) Scegliendo ogni anno, con il senno di poi, il settore migliore, il rendimento annuo composto supera quello dell&#x27;S&amp;P 500 (SPY) &quot;
+    &quot;di almeno 10 punti percentuali. &quot;
+    &quot;2) Una scimmia che sceglie un settore a caso ogni anno batte l&#x27;S&amp;P 500 (SPY) in meno della metà dei casi: i settori scelti a caso non sono &quot;
+    &quot;una scorciatoia per battere l&#x27;indice. &quot;
+    &quot;3) La regola realizzabile «compra ogni anno il settore che ha vinto l&#x27;anno prima» non supera l&#x27;S&amp;P 500 (SPY) di più di un punto percentuale &quot;
+    &quot;all&#x27;anno e non batte il 95% delle scimmie (p-value corretto per Holm sopra 0,05); il vantaggio della prima ipotesi è tutto senno di poi. &quot;
+    &quot;4) Se la stessa scelta con il senno di poi si facesse ogni mese invece che ogni anno, il capitale finale sarebbe almeno 100 volte quello della &quot;
+    &quot;rotazione annuale. &quot;
+    &quot;5) Con 0,1% di costo per ordine e 26% di tassa sulle plusvalenze, la rotazione annuale perfetta tiene meno della metà del capitale finale lordo, &quot;
+    &quot;ma resta sopra l&#x27;S&amp;P 500 (SPY) a parità di costi e tasse. &quot;
+    &quot;6) In almeno un anno anche il settore migliore ha chiuso in perdita. &quot;
+    &quot;7) Il vincitore dell&#x27;anno prima, l&#x27;anno dopo, si piazza in media a metà classifica: la sua posizione mediana tra i nove settori è compresa tra 3 e 7 &quot;
+    &quot;(nessuna persistenza evidente).&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>rendimenti per periodo, scelta ex post, scimmie, regola realizzabile, tasse, Holm</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;esperimento: rendimenti per periodo, scelta con il senno di poi, scimmie, regola realizzabile, tasse.
+
+R è una matrice (periodi x settori) di rendimenti semplici. La regola realizzabile usa solo rendimenti dei periodi
+precedenti (nessun look-ahead); la scelta «con il senno di poi» lo usa apposta, ed è il punto dell&#x27;articolo.
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def rendimenti_periodo(prezzi: pd.DataFrame, freq: str, anno_inizio: int, anno_fine: int) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Rendimenti per periodo (anno &#x27;YE&#x27;, trimestre &#x27;QE&#x27;, mese &#x27;ME&#x27;) dall&#x27;ultimo prezzo del periodo prima all&#x27;ultimo del periodo.&quot;&quot;&quot;
+    ultimo = prezzi.sort_index().resample(freq).last()
+    r = ultimo.pct_change().dropna(how=&quot;all&quot;)
+    return r[(r.index.year &gt;= anno_inizio) &amp; (r.index.year &lt;= anno_fine)]
+
+
+def migliore_ex_post(R: np.ndarray) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Per ogni periodo, indice del settore col rendimento più alto e quel rendimento.&quot;&quot;&quot;
+    idx = R.argmax(axis=1)
+    return idx, R[np.arange(len(R)), idx]
+
+
+def cagr(r: np.ndarray, anni: float) -&gt; float:
+    return float(np.exp(np.sum(np.log1p(r)) / anni) - 1.0)
+
+
+def curva_capitale(r: np.ndarray, capitale: float) -&gt; np.ndarray:
+    return capitale * np.cumprod(1 + r)
+
+
+def scimmie(R: np.ndarray, n: int, anni: float, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimento annuo composto di n scimmie: ognuna sceglie un settore a caso in ogni periodo.&quot;&quot;&quot;
+    T, K = R.shape
+    lr = np.log1p(R)
+    idx = rng.integers(0, K, size=(n, T))
+    return np.exp(lr[np.arange(T)[None, :], idx].sum(axis=1) / anni) - 1.0
+
+
+def vincitore_precedente(R: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimento del periodo t del settore che ha vinto il periodo t-1 (per t &gt;= 1). Nessun look-ahead.&quot;&quot;&quot;
+    idx = R.argmax(axis=1)
+    return R[np.arange(1, len(R)), idx[:-1]]
+
+
+def rango_vincitore_precedente(R: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posizione (1 = migliore) che nel periodo t occupa il settore che ha vinto il periodo t-1.&quot;&quot;&quot;
+    idx = R.argmax(axis=1)
+    out = []
+    for t in range(1, len(R)):
+        ordine = (-R[t]).argsort().argsort() + 1
+        out.append(ordine[idx[t - 1]])
+    return np.array(out)
+
+
+def capitale_netto_rotazione(r: np.ndarray, capitale: float, costo: float, tassa: float) -&gt; float:
+    &quot;&quot;&quot;Rotazione: a fine periodo si vende tutto (tassa sulle plusvalenze, minusvalenze riportate) e si ricompra.
+    Il costo si paga su ogni acquisto e su ogni vendita; qui il primo acquisto e l&#x27;ultima vendita sono inclusi.&quot;&quot;&quot;
+    cap = capitale * (1 - costo)          # primo acquisto
+    credito = 0.0
+    for i, x in enumerate(r):
+        guadagno = cap * x
+        if guadagno &lt; 0:
+            credito += -guadagno
+            imponibile = 0.0
+        else:
+            usa = min(credito, guadagno)
+            credito -= usa
+            imponibile = guadagno - usa
+        cap = cap + guadagno - tassa * imponibile
+        cap *= (1 - costo)                  # vendita
+        if i &lt; len(r) - 1:
+            cap *= (1 - costo)              # nuovo acquisto (non dopo l&#x27;ultima vendita)
+    return cap
+
+
+def capitale_netto_buy_hold(r: np.ndarray, capitale: float, costo: float, tassa: float) -&gt; float:
+    &quot;&quot;&quot;Compra all&#x27;inizio, vende alla fine; tassa sulla plusvalenza complessiva (se c&#x27;è).&quot;&quot;&quot;
+    cap0 = capitale * (1 - costo)
+    cap = cap0 * np.prod(1 + r)
+    plus = max(0.0, cap - cap0)
+    return (cap - tassa * plus) * (1 - costo)
+
+
+def holm(p: dict) -&gt; dict:
+    ordine = sorted(p, key=p.get)
+    m = len(ordine)
+    out, massimo = {}, 0.0
+    for k, nome in enumerate(ordine):
+        massimo = max(massimo, min(1.0, (m - k) * p[nome]))
+        out[nome] = massimo
+    return out
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+# 1. Scelta con il senno di poi
+R = np.array([[0.10, 0.02, -0.05], [0.01, 0.30, 0.00], [-0.10, -0.20, -0.02]])
+idx, best = fx.migliore_ex_post(R)
+controlla(&quot;il migliore di ogni periodo&quot;, list(idx) == [0, 1, 2] and np.allclose(best, [0.10, 0.30, -0.02]))
+
+# 2. CAGR e curva
+controlla(&quot;cagr di due anni al 21% e 0% = 10%&quot;, abs(fx.cagr(np.array([0.21, 0.0]), 2) - (1.21 ** 0.5 - 1)) &lt; 1e-12)
+controlla(&quot;curva di capitale&quot;, np.allclose(fx.curva_capitale(np.array([0.1, 0.1]), 100), [110, 121]))
+
+# 3. Regola realizzabile: nessun look-ahead
+v = fx.vincitore_precedente(R)
+controlla(&quot;vincitore precedente: anno 2 usa il settore 0 (vinse l&#x27;anno 1)&quot;, np.allclose(v, [0.01, 0.00 - 0.0 + R[2, 1]]))
+r2 = R.copy()
+r2[2] = [9.0, 9.0, 9.0]
+controlla(&quot;cambiare l&#x27;ultimo anno non cambia la scelta fatta per l&#x27;ultimo anno&quot;, fx.vincitore_precedente(r2)[0] == v[0])
+rg = fx.rango_vincitore_precedente(R)
+controlla(&quot;rango del vincitore dell&#x27;anno prima&quot;, list(rg) == [2, 3])
+
+# 4. Scimmie: con un solo settore il risultato è fisso; con settori identici pure
+Rf = np.full((5, 4), 0.05)
+s = fx.scimmie(Rf, 10, 5, np.random.default_rng(1))
+controlla(&quot;scimmie con settori identici = 5%&quot;, np.allclose(s, 0.05))
+rng = np.random.default_rng(2)
+Rr = rng.normal(0.08, 0.2, size=(27, 9))
+sc = fx.scimmie(Rr, 5000, 27, np.random.default_rng(3))
+media_lr = np.expm1(np.mean(np.log1p(Rr)))
+controlla(&quot;la scimmia mediana sta vicino alla media dei settori&quot;, abs(np.median(sc) - media_lr) &lt; 0.03)
+_, bb = fx.migliore_ex_post(Rr)
+controlla(&quot;il senno di poi batte tutte le scimmie&quot;, fx.cagr(bb, 27) &gt; sc.max())
+
+# 5. Tasse e costi
+net = fx.capitale_netto_rotazione(np.array([0.2, 0.2]), 1000, 0.0, 0.26)
+atteso = 1000 * (1 + 0.2 * 0.74)
+atteso = atteso * (1 + 0.2 * 0.74)
+controlla(&quot;rotazione senza costi: tassa a ogni anno&quot;, abs(net - atteso) &lt; 1e-9)
+net2 = fx.capitale_netto_rotazione(np.array([-0.2, 0.3]), 1000, 0.0, 0.26)
+# anno 1: -200 (credito 200), capitale 800; anno 2: +240, imponibile 40, tassa 10,4
+controlla(&quot;minusvalenza riportata&quot;, abs(net2 - (800 + 240 - 0.26 * 40)) &lt; 1e-9)
+bh = fx.capitale_netto_buy_hold(np.array([0.2, 0.2]), 1000, 0.0, 0.26)
+controlla(&quot;buy &amp; hold: tassa solo alla fine&quot;, abs(bh - (1440 - 0.26 * 440)) &lt; 1e-9)
+cc = fx.capitale_netto_rotazione(np.array([0.0]), 1000, 0.001, 0.26)
+controlla(&quot;costi: un acquisto e una vendita&quot;, abs(cc - 1000 * 0.999 * 0.999) &lt; 1e-9)
+
+# 6. Periodi: anni solari da prezzi giornalieri
+d = pd.bdate_range(&quot;1998-12-01&quot;, &quot;2001-12-31&quot;)
+p = pd.DataFrame({&quot;A&quot;: np.linspace(100, 200, len(d)), &quot;B&quot;: np.linspace(100, 150, len(d))}, index=d)
+ra = fx.rendimenti_periodo(p, &quot;YE&quot;, 1999, 2000)
+controlla(&quot;due anni solari completi&quot;, list(ra.index.year) == [1999, 2000])
+val_1999 = p[&quot;A&quot;][p.index &lt;= &quot;1999-12-31&quot;].iloc[-1] / p[&quot;A&quot;][p.index &lt;= &quot;1998-12-31&quot;].iloc[-1] - 1
+controlla(&quot;rendimento 1999 = ultimo 1999 / ultimo 1998&quot;, abs(ra.loc[ra.index.year == 1999, &quot;A&quot;].iloc[0] - val_1999) &lt; 1e-12)
+
+# 7. Holm
+h = fx.holm({&quot;a&quot;: 0.01, &quot;b&quot;: 0.04})
+controlla(&quot;Holm&quot;, abs(h[&quot;a&quot;] - 0.02) &lt; 1e-12 and abs(h[&quot;b&quot;] - 0.04) &lt; 1e-12)
+print(f&quot;\n{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
