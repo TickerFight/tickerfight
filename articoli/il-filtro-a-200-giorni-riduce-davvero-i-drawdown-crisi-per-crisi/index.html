@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Il filtro a 200 giorni riduce davvero i drawdown? Crisi per crisi · il codice · TickerFight</title>
+<meta name="description" content="Il filtro a 200 giorni riduce davvero i drawdown? Crisi per crisi">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Il filtro a 200 giorni riduce davvero i drawdown? Crisi per crisi</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="il-filtro-a-200-giorni-riduce-davvero-i-drawdown-crisi-per-crisi.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>il-filtro-a-200-giorni-riduce-davvero-i-drawdown-crisi-per-crisi/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd il-filtro-a-200-giorni-riduce-davvero-i-drawdown-crisi-per-crisi
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Il filtro a 200 sedute, crisi per crisi, sull&#x27;S&amp;P 500.
+
+Legge SOLO dati/gspc_giornaliero.csv; produce in risultati/: metriche.json, episodi.csv.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+GA = config.GIORNI_ANNO
+MESI = [&quot;gen&quot;, &quot;feb&quot;, &quot;mar&quot;, &quot;apr&quot;, &quot;mag&quot;, &quot;giu&quot;, &quot;lug&quot;, &quot;ago&quot;, &quot;set&quot;, &quot;ott&quot;, &quot;nov&quot;, &quot;dic&quot;]
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    c = close.to_numpy()
+    pos = fx.posizione_sma(c, config.MEDIA)
+    rr, bh, p = fx.rendimenti_regola(c, pos, 0.0)
+    date = close.index[1:][~np.isnan(pos[:-1])]
+    # indici della curva: 0 = prima del primo rendimento (data = giorno precedente)
+    date_curva = [close.index[1:][~np.isnan(pos[:-1])][0] - pd.Timedelta(days=1)] + list(date)
+    eb = np.concatenate([[1.0], np.cumprod(1 + bh)])
+    er = np.concatenate([[1.0], np.cumprod(1 + rr)])
+    ep = fx.episodi(bh, config.SOGLIA_EPISODIO)
+
+    reg(&quot;prima_data&quot;, str(close.index[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(close.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;data_inizio_regola&quot;, str(date[0].date()), &quot;data_lunga&quot;, &quot;Primo giorno con il segnale della media&quot;, &quot;dati/&quot;)
+    reg(&quot;media&quot;, config.MEDIA, &quot;int&quot;, &quot;Lunghezza della media mobile&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_episodio&quot;, config.SOGLIA_EPISODIO, &quot;pct0&quot;, &quot;Perdita minima del buy &amp; hold per contare un episodio&quot;, &quot;config.py&quot;)
+    reg(&quot;sessioni_rapido&quot;, config.SESSIONI_RAPIDO, &quot;int&quot;, &quot;Sedute massime dal massimo al minimo per un episodio rapido&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_quota&quot;, config.H2_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 2: quota minima di episodi con protezione debole&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_uscita&quot;, config.H3_USCITA, &quot;pct0&quot;, &quot;Ipotesi 3: perdita dell&#x27;indice alla mediana al momento dell&#x27;uscita&quot;, &quot;config.py&quot;)
+    reg(&quot;h6_episodi&quot;, config.H6_EPISODI, &quot;int&quot;, &quot;Ipotesi 6: numero minimo di episodi&quot;, &quot;config.py&quot;)
+    reg(&quot;n_episodi&quot;, len(ep), &quot;int&quot;, &quot;Episodi con perdita del buy &amp; hold di almeno il 20%&quot;, &quot;funzioni.episodi&quot;)
+
+    righe = []
+    for pk, tr in ep:
+        j = next((k for k in range(pk, len(p)) if p[k] == 0.0), tr)
+        j = min(j, tr)
+        rb = eb[tr + GA] / eb[tr] - 1 if tr + GA &lt; len(eb) else np.nan
+        rg = er[tr + GA] / er[tr] - 1 if tr + GA &lt; len(er) else np.nan
+        righe.append({&quot;massimo&quot;: str(date_curva[pk].date()), &quot;minimo&quot;: str(date_curva[tr].date()), &quot;durata&quot;: tr - pk,
+                      &quot;perdita_bh&quot;: eb[tr] / eb[pk] - 1, &quot;perdita_reg&quot;: er[tr] / er[pk] - 1,
+                      &quot;sedute_uscita&quot;: j - pk, &quot;calo_all_uscita&quot;: eb[j] / eb[pk] - 1, &quot;rimbalzo_bh&quot;: rb, &quot;rimbalzo_reg&quot;: rg})
+    e = pd.DataFrame(righe)
+    e[&quot;quota_persa&quot;] = e[&quot;perdita_reg&quot;] / e[&quot;perdita_bh&quot;]
+    e[&quot;etichetta&quot;] = [f&quot;{MESI[int(d[5:7]) - 1]} {d[:4]}&quot; for d in e[&quot;massimo&quot;]]
+    e.to_csv(config.RISULTATI / &quot;episodi.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+
+    reg(&quot;dd_reg_tot&quot;, fx.max_drawdown(rr), &quot;pct0&quot;, &quot;Drawdown massimo della regola su tutto il campione (anche fuori dagli episodi del buy &amp; hold)&quot;, &quot;funzioni.max_drawdown&quot;)
+    reg(&quot;dd_bh_tot&quot;, fx.max_drawdown(bh), &quot;pct0&quot;, &quot;Drawdown massimo del buy &amp; hold su tutto il campione&quot;, &quot;funzioni.max_drawdown&quot;)
+    reg(&quot;perdita_reg_max_ep&quot;, float(e[&quot;perdita_reg&quot;].min()), &quot;pct0&quot;, &quot;La perdita peggiore della regola dentro un episodio del buy &amp; hold&quot;, &quot;funzioni&quot;)
+    mi = e[&quot;perdita_bh&quot;].idxmin()
+    reg(&quot;peggiore_bh&quot;, float(e[&quot;perdita_bh&quot;].min()), &quot;pct0&quot;, &quot;Perdita del buy &amp; hold nell&#x27;episodio peggiore&quot;, &quot;funzioni&quot;)
+    reg(&quot;peggiore_reg&quot;, float(e.loc[mi, &quot;perdita_reg&quot;]), &quot;pct0&quot;, &quot;Perdita della regola nello stesso episodio&quot;, &quot;funzioni&quot;)
+    reg(&quot;peggiore_massimo&quot;, e.loc[mi, &quot;massimo&quot;], &quot;data_lunga&quot;, &quot;Data del massimo dell&#x27;episodio peggiore&quot;, &quot;funzioni&quot;)
+    reg(&quot;n_meno&quot;, int((e[&quot;perdita_reg&quot;] &gt; e[&quot;perdita_bh&quot;]).sum()), &quot;int&quot;, &quot;Episodi in cui la regola perde meno del buy &amp; hold&quot;, &quot;funzioni&quot;)
+    reg(&quot;n_debole&quot;, int((e[&quot;quota_persa&quot;] &gt; 0.5).sum()), &quot;int&quot;, &quot;Episodi in cui la regola evita meno della metà della perdita&quot;, &quot;funzioni&quot;)
+    reg(&quot;quota_debole&quot;, float((e[&quot;quota_persa&quot;] &gt; 0.5).mean()), &quot;pct0&quot;, &quot;Quota di episodi con protezione debole&quot;, &quot;funzioni&quot;)
+    reg(&quot;quota_persa_media&quot;, float(e[&quot;quota_persa&quot;].mean()), &quot;pct0&quot;, &quot;Quota media della perdita del buy &amp; hold che la regola subisce&quot;, &quot;funzioni&quot;)
+    reg(&quot;uscita_sedute_med&quot;, float(e[&quot;sedute_uscita&quot;].median()), &quot;num1&quot;, &quot;Sedute mediane dal massimo all&#x27;uscita della regola&quot;, &quot;funzioni&quot;)
+    reg(&quot;uscita_calo_med&quot;, float(e[&quot;calo_all_uscita&quot;].median()), &quot;pct1&quot;, &quot;Calo mediano dell&#x27;indice dal massimo al momento dell&#x27;uscita&quot;, &quot;funzioni&quot;)
+    ok_r = e.dropna(subset=[&quot;rimbalzo_bh&quot;])
+    reg(&quot;n_rimbalzo&quot;, len(ok_r), &quot;int&quot;, &quot;Episodi con dodici mesi di dati dopo il minimo&quot;, &quot;funzioni&quot;)
+    reg(&quot;rimbalzo_bh_med&quot;, float(ok_r[&quot;rimbalzo_bh&quot;].median()), &quot;pct0&quot;, &quot;Rendimento mediano del buy &amp; hold nei dodici mesi dopo il minimo&quot;, &quot;funzioni&quot;)
+    reg(&quot;rimbalzo_reg_med&quot;, float(ok_r[&quot;rimbalzo_reg&quot;].median()), &quot;pct0&quot;, &quot;Rendimento mediano della regola nei dodici mesi dopo il minimo&quot;, &quot;funzioni&quot;)
+    reg(&quot;n_rimbalzo_perso&quot;, int((ok_r[&quot;rimbalzo_reg&quot;] &lt; ok_r[&quot;rimbalzo_bh&quot;]).sum()), &quot;int&quot;, &quot;Episodi in cui la regola rende meno del buy &amp; hold nei dodici mesi dopo il minimo&quot;, &quot;funzioni&quot;)
+    rap = e[e[&quot;durata&quot;] &lt; config.SESSIONI_RAPIDO]
+    len_ = e[e[&quot;durata&quot;] &gt;= config.SESSIONI_RAPIDO]
+    reg(&quot;n_rapidi&quot;, len(rap), &quot;int&quot;, &quot;Episodi rapidi&quot;, &quot;funzioni&quot;)
+    reg(&quot;n_lenti&quot;, len(len_), &quot;int&quot;, &quot;Episodi lenti&quot;, &quot;funzioni&quot;)
+    reg(&quot;persa_rapidi&quot;, float(rap[&quot;quota_persa&quot;].mean()) if len(rap) else 0.0, &quot;pct0&quot;, &quot;Quota media persa dalla regola negli episodi rapidi&quot;, &quot;funzioni&quot;)
+    reg(&quot;persa_lenti&quot;, float(len_[&quot;quota_persa&quot;].mean()) if len(len_) else 0.0, &quot;pct0&quot;, &quot;Quota media persa dalla regola negli episodi lenti&quot;, &quot;funzioni&quot;)
+
+    h = [len(e) &gt; 0 and bool((e[&quot;perdita_reg&quot;] &gt; e[&quot;perdita_bh&quot;]).all()),
+         RIS[&quot;quota_debole&quot;][&quot;valore&quot;] &gt;= config.H2_QUOTA,
+         RIS[&quot;uscita_calo_med&quot;][&quot;valore&quot;] &lt;= -config.H3_USCITA,
+         RIS[&quot;n_rimbalzo_perso&quot;][&quot;valore&quot;] &gt; RIS[&quot;n_rimbalzo&quot;][&quot;valore&quot;] / 2,
+         RIS[&quot;persa_rapidi&quot;][&quot;valore&quot;] &gt; RIS[&quot;persa_lenti&quot;][&quot;valore&quot;],
+         len(e) &gt;= config.H6_EPISODI]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(bool(v)), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(bool(v) for v in h)), &quot;int&quot;, &quot;Ipotesi confermate (su 6)&quot;, &quot;confronto con config.py&quot;)
+
+    meta = {&quot;generato&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+            &quot;numpy&quot;: np.__version__, &quot;pandas&quot;: pd.__version__, &quot;ipotesi&quot;: config.IPOTESI}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps({&quot;meta&quot;: meta, &quot;valori&quot;: RIS}, ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    print(f&quot;Scritte {len(RIS)} metriche.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_perdite_per_episodio.png   perdita del buy &amp; hold e della regola in ogni episodio
+  fig2_uscita.png                 calo dell&#x27;indice al momento dell&#x27;uscita della regola
+&quot;&quot;&quot;
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False, &quot;axes.grid&quot;: True,
+                     &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;, &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    e = pd.read_csv(R / &quot;episodi.csv&quot;)
+    xs = np.arange(len(e))
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(xs - 0.2, e[&quot;perdita_bh&quot;] * 100, 0.4, color=GRIGIO, label=&quot;Buy &amp; hold&quot;)
+    ax.bar(xs + 0.2, e[&quot;perdita_reg&quot;] * 100, 0.4, color=BLU, label=&quot;Regola&quot;)
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_xticks(xs)
+    ax.set_xticklabels(e[&quot;etichetta&quot;], rotation=60, ha=&quot;right&quot;, fontsize=10)
+    ax.set_ylabel(&quot;Perdita dal massimo al minimo dell&#x27;episodio, %&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig1_perdite_per_episodio.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    ax.bar(xs, e[&quot;calo_all_uscita&quot;] * 100, color=ARANCIO)
+    ax.set_xticks(xs)
+    ax.set_xticklabels(e[&quot;etichetta&quot;], rotation=60, ha=&quot;right&quot;, fontsize=10)
+    ax.set_ylabel(&quot;Calo dell&#x27;indice dal massimo quando la regola esce, %&quot;)
+    fig.savefig(config.FIGURE / &quot;fig2_uscita.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 133 - &quot;Il filtro a 200 giorni riduce davvero i drawdown?&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati di QUESTO articolo.
+Attenzione: nell&#x27;articolo 122 abbiamo già visto, in aggregato, che il drawdown massimo della regola è il 60% circa di quello del buy &amp; hold. Qui si guarda crisi per crisi.
+
+Una crisi (episodio) è un tratto dal massimo al minimo del buy &amp; hold sull&#x27;S&amp;P 500 (indice di prezzo, dal 1927, senza dividendi) in cui la perdita arriva ad almeno il 20% prima di tornare a un
+nuovo massimo. Per ogni episodio si misura quanto perde il buy &amp; hold e quanto perde la regola a media mobile a 200 sedute (liquidi sotto la media, segnale ritardato di una seduta, rendimento
+zero in liquidità) nello stesso tratto, dopo quante sedute dal massimo la regola esce, quanto aveva già perso l&#x27;indice a quel punto, e che cosa succede nei dodici mesi dopo il minimo.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;,)
+
+MEDIA = 200
+GIORNI_ANNO = 252
+SOGLIA_EPISODIO = 0.20               # perdita minima del buy &amp; hold per contare l&#x27;episodio
+SESSIONI_RAPIDO = 60                 # un episodio è «rapido» se dal massimo al minimo passano meno di 60 sedute
+H2_QUOTA = 1.0 / 3.0                 # 2) in almeno un terzo degli episodi la regola evita meno della metà della perdita
+H3_USCITA = 0.10                     # 3) alla mediana la regola esce quando l&#x27;indice ha già perso almeno il 10%
+H6_EPISODI = 10                      # 6) almeno 10 episodi
+
+IPOTESI = (
+    &quot;1) In ogni episodio (perdita del buy &amp; hold di almeno il 20%) la regola perde meno del buy &amp; hold. &quot;
+    &quot;2) In almeno un terzo degli episodi la regola evita meno della metà della perdita del buy &amp; hold, cioè la protezione è debole. &quot;
+    &quot;3) La regola esce, in mediana, quando l&#x27;indice ha già perso almeno il 10% dal massimo. &quot;
+    &quot;4) Nei dodici mesi dopo il minimo, la regola rende meno del buy &amp; hold nella maggioranza degli episodi: il filtro perde il rimbalzo. &quot;
+    &quot;5) La protezione è più debole negli episodi rapidi (meno di 60 sedute dal massimo al minimo) che in quelli lenti: la perdita media della regola, in rapporto a quella del buy &amp; hold, è più alta. &quot;
+    &quot;6) Gli episodi sono almeno 10 nel campione.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni di calcolo dell&#x27;articolo 122: regola a media mobile, metriche, drawdown.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def posizione_sma(close: np.ndarray, n: int) -&gt; np.ndarray:
+    &quot;&quot;&quot;1 se la chiusura è sopra la media semplice delle ultime n chiusure (inclusa quella di oggi), 0 altrimenti; nan nei primi n-1 giorni.&quot;&quot;&quot;
+    c = pd.Series(close, dtype=float)
+    m = c.rolling(n).mean()
+    pos = (c &gt; m).astype(float).to_numpy().copy()
+    pos[np.isnan(m.to_numpy())] = np.nan
+    return pos
+
+
+def rendimenti_regola(close: np.ndarray, pos: np.ndarray, costo: float) -&gt; tuple[np.ndarray, np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Rendimenti giornalieri semplici della regola e del buy &amp; hold sugli stessi giorni, e posizioni effettive.
+    La posizione decisa alla chiusura di t-1 vale per il rendimento di t; a ogni cambio di posizione si paga `costo`.
+    I giorni senza segnale (prime n-1 sedute e il primo giorno dopo) sono scartati.&quot;&quot;&quot;
+    c = np.asarray(close, float)
+    r = c[1:] / c[:-1] - 1.0
+    p = pos[:-1]
+    ok = ~np.isnan(p)
+    r, p = r[ok], p[ok]
+    cambi = np.abs(np.diff(np.concatenate([[p[0]], p])))
+    return p * r - costo * cambi, r, p
+
+
+def cagr(x: np.ndarray, ga: int) -&gt; float:
+    return float(np.exp(np.mean(np.log1p(x)) * ga) - 1.0)
+
+
+def sharpe(x: np.ndarray, ga: int) -&gt; float:
+    s = np.std(x, ddof=1)
+    return float(np.mean(x) / s * np.sqrt(ga)) if s &gt; 0 else float(&quot;nan&quot;)
+
+
+def max_drawdown(x: np.ndarray) -&gt; float:
+    &quot;&quot;&quot;Massima perdita dal massimo precedente della curva dei rendimenti composti (negativa).&quot;&quot;&quot;
+    eq = np.cumprod(1.0 + np.asarray(x, float))
+    picco = np.maximum.accumulate(eq)
+    return float((eq / picco - 1.0).min())
+
+
+def n_cambi(p: np.ndarray) -&gt; int:
+    return int(np.sum(np.abs(np.diff(p)) &gt; 0))
+
+
+def episodi(rend: np.ndarray, soglia: float) -&gt; list[tuple[int, int]]:
+    &quot;&quot;&quot;Episodi del buy &amp; hold: per ogni tratto tra un massimo e il successivo nuovo massimo, se la perdita massima arriva a `soglia`, restituisce (indice del massimo, indice del minimo).
+    Gli indici si riferiscono alla curva dei rendimenti composti con un punto iniziale (indice 0 = prima dei rendimenti).&quot;&quot;&quot;
+    eq = np.concatenate([[1.0], np.cumprod(1.0 + np.asarray(rend, float))])
+    out = []
+    picco = 0
+    minimo = 0
+    for t in range(1, len(eq)):
+        if eq[t] &gt;= eq[picco]:
+            if eq[minimo] / eq[picco] - 1.0 &lt;= -soglia:
+                out.append((picco, minimo))
+            picco = t
+            minimo = t
+        elif eq[t] &lt; eq[minimo]:
+            minimo = t
+    if eq[minimo] / eq[picco] - 1.0 &lt;= -soglia:
+        out.append((picco, minimo))
+    return out
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+
+import funzioni as f
+
+
+def ok(nome, cond):
+    assert cond, nome
+    print(f&quot;ok  {nome}&quot;)
+
+
+c = np.array([10.0, 10, 10, 10, 20, 24, 24, 12, 12, 12])
+pos = f.posizione_sma(c, 3)
+ok(&quot;media su tre giorni: i primi due sono nan&quot;, np.isnan(pos[:2]).all())
+ok(&quot;salto a 20: sopra la media di (10+10+20)/3&quot;, pos[4] == 1.0 and pos[3] == 0.0)
+rr, bh, p = f.rendimenti_regola(c, pos, 0.0)
+# giorni validi: dal giorno 2 (pos[2]) in poi per i rendimenti dei giorni 3..9
+ok(&quot;lunghezza dei rendimenti validi&quot;, len(rr) == 7 and len(bh) == 7)
+ok(&quot;il rendimento del giorno 5 usa la posizione del giorno 4&quot;, abs(rr[2] - (24 / 20 - 1)) &lt; 1e-12)
+ok(&quot;posizione 0 prima del salto&quot;, rr[0] == 0.0 and rr[1] == 0.0)
+rc, _, _ = f.rendimenti_regola(c, pos, 0.01)
+ok(&quot;il costo si paga sul cambio di posizione&quot;, abs((rr - rc).sum() - 0.01 * f.n_cambi(p)) &lt; 1e-12)
+ok(&quot;buy &amp; hold sugli stessi giorni&quot;, abs(bh[2] - 0.2) &lt; 1e-12)
+ok(&quot;drawdown di +10%, -50%&quot;, abs(f.max_drawdown(np.array([0.10, -0.50])) - (-0.5)) &lt; 1e-12)
+ok(&quot;drawdown nullo se sempre su&quot;, f.max_drawdown(np.full(10, 0.01)) == 0.0)
+ok(&quot;CAGR costante&quot;, abs(f.cagr(np.full(252, np.log(1.1) / 252 * 1.0), 252) - (np.exp(252 * np.log1p(np.log(1.1) / 252)) - 1)) &lt; 1e-9)
+ok(&quot;conteggio cambi&quot;, f.n_cambi(np.array([0.0, 0, 1, 1, 0])) == 2)
+
+# episodi: +10%, -30% (-&gt; episodio), +50% (nuovo massimo), -5% (non è un episodio)
+e = f.episodi(np.array([0.10, -0.10, -0.10, -0.10, 0.80, -0.05]), 0.20)
+ok(&quot;un solo episodio sopra il 20%: massimo dopo il primo giorno, minimo al quarto&quot;, e == [(1, 4)])
+e2 = f.episodi(np.array([0.1, -0.3, -0.2, 0.1]), 0.20)
+ok(&quot;episodio ancora aperto alla fine della serie&quot;, e2 == [(1, 3)])
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
