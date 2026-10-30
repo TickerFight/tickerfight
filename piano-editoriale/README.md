@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-36 pubblicati, 25 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+36 pubblicati, 26 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -52,6 +52,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [Stimare lo spread denaro-lettera dai prezzi: quanto costa operare, secondo i dati gratuiti](https://tickerfight.github.io/tickerfight/articoli/stimare-lo-spread-denaro-lettera-dai-prezzi-quanto-costa-operare-secondo-i-dati-gratuiti/) | In revisione | — | — |
 | [Tasse sulle plusvalenze: strategia attiva contro buy & hold](https://tickerfight.github.io/tickerfight/articoli/tasse-sulle-plusvalenze-strategia-attiva-contro-buy-hold/) | In revisione | — | — |
 | [Whipsaw](https://tickerfight.github.io/tickerfight/articoli/whipsaw/) | In revisione | — | — |
+| [RSI: comprare l'ipervenduto funziona?](https://tickerfight.github.io/tickerfight/articoli/rsi-comprare-l-ipervenduto-funziona/) | In revisione | — | — |
 | [«Vendi a maggio e vai via»: Stati Uniti e Giappone, due crolli e la fortuna](https://tickerfight.github.io/tickerfight/articoli/vendi-a-maggio-e-vai-via-stati-uniti-e-giappone-due-crolli-e-la-fortuna/) | In revisione | — | — |
 | [Equal weight contro market cap: RSP o SPY?](https://tickerfight.github.io/tickerfight/articoli/equal-weight-contro-market-cap-rsp-o-spy/) | In revisione | — | — |
 | [Growth contro value: crescita o valore?](https://tickerfight.github.io/tickerfight/articoli/growth-contro-value-crescita-o-valore/) | In revisione | — | — |
