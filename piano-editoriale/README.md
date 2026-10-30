@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-36 pubblicati, 29 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+36 pubblicati, 30 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -51,6 +51,7 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [L'intervallo di confidenza del CAGR: quanto è incerto il rendimento di una storia](https://tickerfight.github.io/tickerfight/articoli/l-intervallo-di-confidenza-del-cagr-quanto-e-incerto-il-rendimento-di-una-storia/) | In revisione | — | — |
 | [Stimare lo spread denaro-lettera dai prezzi: quanto costa operare, secondo i dati gratuiti](https://tickerfight.github.io/tickerfight/articoli/stimare-lo-spread-denaro-lettera-dai-prezzi-quanto-costa-operare-secondo-i-dati-gratuiti/) | In revisione | — | — |
 | [Tasse sulle plusvalenze: strategia attiva contro buy & hold](https://tickerfight.github.io/tickerfight/articoli/tasse-sulle-plusvalenze-strategia-attiva-contro-buy-hold/) | In revisione | — | — |
+| [Media mobile a 200 giorni: un secolo di storia](https://tickerfight.github.io/tickerfight/articoli/media-mobile-a-200-giorni-un-secolo-di-storia/) | In revisione | — | — |
 | [Whipsaw](https://tickerfight.github.io/tickerfight/articoli/whipsaw/) | In revisione | — | — |
 | [RSI: comprare l'ipervenduto funziona?](https://tickerfight.github.io/tickerfight/articoli/rsi-comprare-l-ipervenduto-funziona/) | In revisione | — | — |
 | [Comprare dopo un −10%: che cosa succede a uno, tre e dodici mesi](https://tickerfight.github.io/tickerfight/articoli/comprare-dopo-un-10-che-cosa-succede-a-uno-tre-e-dodici-mesi/) | In revisione | — | — |
