@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Il mito di settembre: il mese peggiore regge ai test? · il codice · TickerFight</title>
+<meta name="description" content="Il mito di settembre: il mese peggiore regge ai test?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Il mito di settembre: il mese peggiore regge ai test?</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="il-mito-di-settembre-il-mese-peggiore-regge-ai-test.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>il-mito-di-settembre-il-mese-peggiore-regge-ai-test/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd il-mito-di-settembre-il-mese-peggiore-regge-ai-test
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Il mito di settembre sull&#x27;S&amp;P 500.
+
+Legge SOLO dati/gspc_giornaliero.csv; produce in risultati/: metriche.json, medie_mensili.csv, settembri.csv.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+MESI = [&quot;gennaio&quot;, &quot;febbraio&quot;, &quot;marzo&quot;, &quot;aprile&quot;, &quot;maggio&quot;, &quot;giugno&quot;, &quot;luglio&quot;, &quot;agosto&quot;, &quot;settembre&quot;, &quot;ottobre&quot;, &quot;novembre&quot;, &quot;dicembre&quot;]
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def mese_peggiore(x: pd.Series) -&gt; int:
+    return int(x.groupby(x.index.month).mean().idxmin())
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    rng = np.random.default_rng(config.SEME)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    rs = fx.rendimenti_mensili(close)
+    mm = rs.index.month.to_numpy()
+    sett = (mm == config.MESE)
+    reg(&quot;prima_data&quot;, str(close.index[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(close.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;n_mesi&quot;, len(rs), &quot;int&quot;, &quot;Mesi completi&quot;, &quot;dati/&quot;)
+    reg(&quot;n_sett&quot;, int(sett.sum()), &quot;int&quot;, &quot;Settembri nel campione&quot;, &quot;dati/&quot;)
+    reg(&quot;n_perm&quot;, config.N_PERMUTAZIONI, &quot;int&quot;, &quot;Permutazioni&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_p&quot;, config.SOGLIA_P, &quot;num2&quot;, &quot;Soglia di significatività&quot;, &quot;config.py&quot;)
+    reg(&quot;n_peggiori&quot;, config.N_PEGGIORI, &quot;int&quot;, &quot;Settembri peggiori tolti nell&#x27;ipotesi 6&quot;, &quot;config.py&quot;)
+
+    medie = rs.groupby(rs.index.month).mean()
+    pd.DataFrame({&quot;mese&quot;: MESI, &quot;media&quot;: medie.to_numpy()}).to_csv(config.RISULTATI / &quot;medie_mensili.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    ordine = medie.sort_values().index.tolist()
+    reg(&quot;rango_sett&quot;, ordine.index(config.MESE) + 1, &quot;int&quot;, &quot;Posizione di settembre dal peggiore (1 = il più basso)&quot;, &quot;pandas&quot;)
+    reg(&quot;sett_media&quot;, float(medie.loc[config.MESE]), &quot;pct2&quot;, &quot;Rendimento medio di settembre&quot;, &quot;pandas&quot;)
+    reg(&quot;altri_media&quot;, float(rs[~sett].mean()), &quot;pct2&quot;, &quot;Rendimento medio degli altri undici mesi&quot;, &quot;pandas&quot;)
+    reg(&quot;sett_mediana&quot;, float(rs[sett].median()), &quot;pct2&quot;, &quot;Rendimento mediano di settembre&quot;, &quot;pandas&quot;)
+    reg(&quot;sett_neg&quot;, float((rs[sett] &lt; 0).mean()), &quot;pct0&quot;, &quot;Quota di settembri in calo&quot;, &quot;pandas&quot;)
+    reg(&quot;altri_neg&quot;, float((rs[~sett] &lt; 0).mean()), &quot;pct0&quot;, &quot;Quota degli altri mesi in calo&quot;, &quot;pandas&quot;)
+    secondo = ordine[1]
+    reg(&quot;secondo_nome&quot;, MESI[secondo - 1], &quot;testo&quot;, &quot;Secondo mese peggiore&quot;, &quot;pandas&quot;)
+    reg(&quot;secondo_media&quot;, float(medie.loc[secondo]), &quot;pct2&quot;, &quot;Rendimento medio del secondo mese peggiore&quot;, &quot;pandas&quot;)
+    reg(&quot;migliore_nome&quot;, MESI[ordine[-1] - 1], &quot;testo&quot;, &quot;Mese migliore&quot;, &quot;pandas&quot;)
+    reg(&quot;migliore_media&quot;, float(medie.loc[ordine[-1]]), &quot;pct2&quot;, &quot;Rendimento medio del mese migliore&quot;, &quot;pandas&quot;)
+
+    d, p = fx.permutazione_differenza(rs.to_numpy(), sett, config.N_PERMUTAZIONI, rng)
+    reg(&quot;diff&quot;, d, &quot;pp2&quot;, &quot;Settembre meno gli altri mesi, punti percentuali&quot;, &quot;funzioni&quot;)
+    reg(&quot;pval&quot;, p, &quot;pval&quot;, &quot;P-value di permutazione di settembre contro gli altri mesi&quot;, &quot;funzioni.permutazione_differenza&quot;)
+    mn, pm = fx.minimo_permutazione(rs.to_numpy(), mm, config.N_PERMUTAZIONI, rng)
+    reg(&quot;minimo&quot;, mn, &quot;pct2&quot;, &quot;Media più bassa tra i dodici mesi&quot;, &quot;funzioni.minimo_permutazione&quot;)
+    reg(&quot;pval_min&quot;, pm, &quot;pval&quot;, &quot;P-value della media più bassa dei dodici mesi, per permutazione dei rendimenti tra i mesi&quot;, &quot;funzioni.minimo_permutazione&quot;)
+
+    anni = sorted(set(rs.index.year))
+    meta_anno = anni[len(anni) // 2]
+    reg(&quot;anno_meta&quot;, meta_anno, &quot;annonum&quot;, &quot;Anno che divide il campione a metà&quot;, &quot;dati/&quot;)
+    for tag, sel in ((&quot;p&quot;, rs.index.year &lt; meta_anno), (&quot;d&quot;, rs.index.year &gt;= meta_anno)):
+        x = rs[sel]
+        mp = mese_peggiore(x)
+        reg(f&quot;peggiore_{tag}&quot;, MESI[mp - 1], &quot;testo&quot;, f&quot;Mese con la media più bassa, metà {&#x27;prima&#x27; if tag == &#x27;p&#x27; else &#x27;seconda&#x27;}&quot;, &quot;pandas&quot;)
+        reg(f&quot;sett_media_{tag}&quot;, float(x[x.index.month == config.MESE].mean()), &quot;pct2&quot;, f&quot;Rendimento medio di settembre, metà {&#x27;prima&#x27; if tag == &#x27;p&#x27; else &#x27;seconda&#x27;}&quot;, &quot;pandas&quot;)
+        reg(f&quot;sett_rango_{tag}&quot;, int(x.groupby(x.index.month).mean().sort_values().index.tolist().index(config.MESE) + 1), &quot;int&quot;, f&quot;Posizione di settembre dal peggiore, metà {&#x27;prima&#x27; if tag == &#x27;p&#x27; else &#x27;seconda&#x27;}&quot;, &quot;pandas&quot;)
+
+    s = rs[sett].sort_values()
+    pd.DataFrame({&quot;anno&quot;: s.index.year, &quot;rendimento&quot;: s.to_numpy()}).to_csv(config.RISULTATI / &quot;settembri.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    reg(&quot;peggiore1&quot;, float(s.iloc[0]), &quot;pct1&quot;, &quot;Il settembre peggiore&quot;, &quot;pandas&quot;)
+    reg(&quot;anno_peggiore1&quot;, str(int(s.index[0].year)), &quot;testo&quot;, &quot;Anno del settembre peggiore&quot;, &quot;pandas&quot;)
+    senza = s.iloc[config.N_PEGGIORI:]
+    reg(&quot;sett_media_senza&quot;, float(senza.mean()), &quot;pct2&quot;, &quot;Rendimento medio di settembre senza i tre peggiori&quot;, &quot;pandas&quot;)
+
+    h = [RIS[&quot;rango_sett&quot;][&quot;valore&quot;] == 1, p &lt; config.SOGLIA_P, pm &gt;= config.SOGLIA_P,
+         RIS[&quot;peggiore_p&quot;][&quot;valore&quot;] == &quot;settembre&quot; and RIS[&quot;peggiore_d&quot;][&quot;valore&quot;] == &quot;settembre&quot;,
+         RIS[&quot;sett_neg&quot;][&quot;valore&quot;] &gt; 0.5, float(senza.mean()) &gt; 0]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(bool(v)), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(bool(v) for v in h)), &quot;int&quot;, &quot;Ipotesi confermate (su 6)&quot;, &quot;confronto con config.py&quot;)
+
+    meta = {&quot;generato&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+            &quot;numpy&quot;: np.__version__, &quot;pandas&quot;: pd.__version__, &quot;seme&quot;: config.SEME, &quot;ipotesi&quot;: config.IPOTESI}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps({&quot;meta&quot;: meta, &quot;valori&quot;: RIS}, ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    print(f&quot;Scritte {len(RIS)} metriche.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_media_per_mese.png   rendimento medio dell&#x27;S&amp;P 500 per mese, settembre in arancio
+  fig2_settembri.png        rendimento di ogni settembre, dal peggiore al migliore
+&quot;&quot;&quot;
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False, &quot;axes.grid&quot;: True,
+                     &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;, &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    m = pd.read_csv(R / &quot;medie_mensili.csv&quot;)
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar([s[:3] for s in m[&quot;mese&quot;]], m[&quot;media&quot;] * 100, color=[ARANCIO if i == 8 else BLU for i in range(12)])
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_ylabel(&quot;Rendimento medio del mese, %&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_media_per_mese.png&quot;)
+    plt.close(fig)
+
+    s = pd.read_csv(R / &quot;settembri.csv&quot;)
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    ax.bar(range(len(s)), s[&quot;rendimento&quot;] * 100, color=[ARANCIO if x &lt; 0 else BLU for x in s[&quot;rendimento&quot;]], width=0.9)
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_xlabel(&quot;Settembri, dal peggiore al migliore&quot;)
+    ax.set_ylabel(&quot;Rendimento del mese, %&quot;)
+    fig.savefig(config.FIGURE / &quot;fig2_settembri.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 170 - &quot;Il mito di settembre&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati di QUESTO articolo.
+Attenzione: nell&#x27;articolo 162 (effetto gennaio) abbiamo già visto la classifica dei mesi dell&#x27;S&amp;P 500 sull&#x27;intero periodo, e settembre era l&#x27;ultimo. Per questo la prima
+ipotesi è dichiarata come già nota, e le altre riguardano aspetti che non avevamo guardato: significatività, correzione per la scelta del peggiore dei dodici mesi, stabilità
+tra le due metà del campione.
+
+«Settembre è il mese peggiore dell&#x27;anno». Si prova sull&#x27;S&amp;P 500 (indice di prezzo, dal 1927, rendimenti mensili da fine mese a fine mese, senza dividendi). Il punto delicato:
+tra dodici mesi uno è per forza il peggiore, quindi il confronto onesto non è «settembre contro gli altri» ma «il peggiore dei dodici contro il peggiore che si avrebbe se i
+mesi non avessero nessuna differenza» (permutazione dei rendimenti tra i mesi). La permutazione mescola i rendimenti mensili tra tutti i mesi del campione.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;,)
+
+MESE = 9                             # settembre
+N_PERMUTAZIONI = 10000
+SEME = 20261030
+SOGLIA_P = 0.05
+N_PEGGIORI = 3                       # 6) si tolgono i tre settembri peggiori
+
+IPOTESI = (
+    &quot;1) (Già nota dall&#x27;articolo 162) Sull&#x27;intero periodo settembre ha il rendimento medio più basso dei dodici mesi. &quot;
+    &quot;2) La differenza tra settembre e gli altri undici mesi ha un p-value di permutazione sotto 0,05. &quot;
+    &quot;3) Il confronto onesto, che tiene conto del fatto che il peggiore dei dodici è comunque qualcuno (permutazione del minimo), ha un p-value di almeno 0,05. &quot;
+    &quot;4) Settembre è il mese peggiore in entrambe le metà del campione (divise a metà del numero di anni). &quot;
+    &quot;5) In oltre la metà dei settembri l&#x27;S&amp;P 500 scende. &quot;
+    &quot;6) Tolti i tre settembri peggiori, la media di settembre diventa positiva.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni di calcolo dell&#x27;articolo 162: rendimenti mensili e test di permutazione.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def rendimenti_mensili(close: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Rendimento semplice da fine mese a fine mese. Il primo mese (incompleto) è perso. Indice: Period mensile.&quot;&quot;&quot;
+    m = close.groupby(close.index.to_period(&quot;M&quot;)).last()
+    return m.pct_change().dropna()
+
+
+def permutazione_differenza(x: np.ndarray, etichetta: np.ndarray, n: int, rng: np.random.Generator) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Differenza tra la media dei rendimenti con etichetta vera e quella degli altri; p-value bilaterale per permutazione delle etichette
+    (con +1 al numeratore e al denominatore).&quot;&quot;&quot;
+    x = np.asarray(x, float)
+    e = np.asarray(etichetta, bool)
+    oss = x[e].mean() - x[~e].mean()
+    k = int(e.sum())
+    cont = 0
+    for _ in range(n):
+        idx = rng.permutation(len(x))[:k]
+        m = np.zeros(len(x), bool)
+        m[idx] = True
+        if abs(x[m].mean() - x[~m].mean()) &gt;= abs(oss):
+            cont += 1
+    return float(oss), float((1 + cont) / (n + 1))
+
+
+def resto_anno(rend_mensili: pd.Series) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Per ogni anno completo: rendimento di gennaio e rendimento composto da febbraio a dicembre.&quot;&quot;&quot;
+    righe = []
+    for anno, g in rend_mensili.groupby(rend_mensili.index.year):
+        if len(g) == 12 and g.index[0].month == 1:
+            righe.append({&quot;anno&quot;: anno, &quot;gennaio&quot;: g.iloc[0], &quot;resto&quot;: float(np.prod(1 + g.iloc[1:].to_numpy()) - 1)})
+    return pd.DataFrame(righe)
+
+
+def minimo_permutazione(x: np.ndarray, mese: np.ndarray, n: int, rng: np.random.Generator) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Media più bassa tra i dodici mesi di calendario: valore osservato e p-value per permutazione dei rendimenti tra i mesi
+    (quota di permutazioni con un minimo almeno così basso, con +1). Misura quanto è raro il «peggiore dei dodici», non di un mese scelto prima.&quot;&quot;&quot;
+    x = np.asarray(x, float)
+    mese = np.asarray(mese, int)
+    conta = np.bincount(mese, minlength=13)[1:]
+    oss = (np.bincount(mese, weights=x, minlength=13)[1:] / conta).min()
+    cont = 0
+    for _ in range(n):
+        xp = rng.permutation(x)
+        m = (np.bincount(mese, weights=xp, minlength=13)[1:] / conta).min()
+        if m &lt;= oss:
+            cont += 1
+    return float(oss), float((1 + cont) / (n + 1))
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as f
+
+
+def ok(nome, cond):
+    assert cond, nome
+    print(f&quot;ok  {nome}&quot;)
+
+
+idx = pd.bdate_range(&quot;2020-01-01&quot;, &quot;2021-12-31&quot;)
+c = pd.Series(np.arange(1.0, len(idx) + 1), index=idx)
+r = f.rendimenti_mensili(c)
+ok(&quot;il primo mese incompleto è perso&quot;, r.index[0] == pd.Period(&quot;2020-02&quot;))
+m = c.groupby(c.index.to_period(&quot;M&quot;)).last()
+ok(&quot;rendimento da fine mese a fine mese&quot;, abs(r.iloc[0] - (m.iloc[1] / m.iloc[0] - 1)) &lt; 1e-12)
+rng = np.random.default_rng(0)
+x = rng.normal(0, 1, 600)
+e = np.zeros(600, bool)
+e[:50] = True
+x[e] += 3.0
+d, p = f.permutazione_differenza(x, e, 500, rng)
+ok(&quot;differenza grande: p-value piccolo&quot;, d &gt; 2.5 and p &lt; 0.01)
+x2 = rng.normal(0, 1, 600)
+d2, p2 = f.permutazione_differenza(x2, e, 500, rng)
+ok(&quot;nessuna differenza: p-value non piccolo&quot;, p2 &gt; 0.05)
+idx2 = pd.period_range(&quot;2020-01&quot;, &quot;2020-12&quot;, freq=&quot;M&quot;)
+rm = pd.Series([0.10] + [0.01] * 11, index=idx2)
+d3 = f.resto_anno(rm)
+ok(&quot;resto dell&#x27;anno: undici mesi composti&quot;, len(d3) == 1 and abs(d3[&quot;resto&quot;].iloc[0] - (1.01 ** 11 - 1)) &lt; 1e-12 and d3[&quot;gennaio&quot;].iloc[0] == 0.10)
+# minimo per permutazione: un mese molto più basso degli altri -&gt; p-value piccolo; nessuna differenza -&gt; p-value grande
+mese = np.tile(np.arange(1, 13), 60)
+y = rng.normal(0, 1, len(mese))
+y[mese == 9] -= 1.5
+mn, pm = f.minimo_permutazione(y, mese, 400, rng)
+ok(&quot;un mese molto più basso: p-value piccolo&quot;, pm &lt; 0.01 and mn &lt; -0.8)
+y2 = rng.normal(0, 1, len(mese))
+mn2, pm2 = f.minimo_permutazione(y2, mese, 400, rng)
+ok(&quot;nessun mese diverso: il minimo non è raro&quot;, pm2 &gt; 0.05)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
