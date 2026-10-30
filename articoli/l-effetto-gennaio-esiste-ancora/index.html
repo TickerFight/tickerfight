@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>L&#x27;effetto gennaio: esiste ancora? · il codice · TickerFight</title>
+<meta name="description" content="L&#x27;effetto gennaio: esiste ancora?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>L&#x27;effetto gennaio: esiste ancora?</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="l-effetto-gennaio-esiste-ancora.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>l-effetto-gennaio-esiste-ancora/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd l-effetto-gennaio-esiste-ancora
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance le chiusure giornaliere dell&#x27;S&amp;P 500 e del Russell 2000 (indici di prezzo).
+
+Salva dati/gspc_giornaliero.csv, dati/rut_giornaliero.csv e dati/gspc_metadati.json (fonte, data, versione, SHA-256).
+Gli script successivi leggono SOLO i file salvati.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;serie&quot;: {}}
+    for t, f in ((config.TICKER, config.FILE_DATI), (config.TICKER_PICCOLE, config.FILE_PICCOLE)):
+        g = yf.Ticker(t).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if g.empty:
+            raise SystemExit(f&quot;Nessun dato per {t}&quot;)
+        df = g[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;])
+        if (df[&quot;Close&quot;] &lt;= 0).any():
+            raise SystemExit(f&quot;Chiusure non positive in {t}&quot;)
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+            df = df.iloc[:-1]
+        df.to_csv(f, float_format=&quot;%.6f&quot;)
+        meta[&quot;serie&quot;][t] = {&quot;righe&quot;: len(df), &quot;prima&quot;: str(df.index[0].date()), &quot;ultima&quot;: str(df.index[-1].date()),
+                            &quot;sha256&quot;: hashlib.sha256(f.read_bytes()).hexdigest()}
+        print(t, meta[&quot;serie&quot;][t])
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - L&#x27;effetto gennaio su S&amp;P 500 e Russell 2000.
+
+Legge SOLO dati/gspc_giornaliero.csv e dati/rut_giornaliero.csv; produce in risultati/: metriche.json, medie_mensili.csv, anni.csv.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+MESI = [&quot;gennaio&quot;, &quot;febbraio&quot;, &quot;marzo&quot;, &quot;aprile&quot;, &quot;maggio&quot;, &quot;giugno&quot;, &quot;luglio&quot;, &quot;agosto&quot;, &quot;settembre&quot;, &quot;ottobre&quot;, &quot;novembre&quot;, &quot;dicembre&quot;]
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def leggi(f):
+    df = pd.read_csv(f, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    if (df[&quot;Close&quot;] &lt;= 0).any() or df[&quot;Close&quot;].isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    return df[&quot;Close&quot;].astype(float)
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    rng = np.random.default_rng(config.SEME)
+    cs, cr = leggi(config.FILE_DATI), leggi(config.FILE_PICCOLE)
+    rs, rr = fx.rendimenti_mensili(cs), fx.rendimenti_mensili(cr)
+    reg(&quot;prima_data&quot;, str(cs.index[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dell&#x27;S&amp;P 500&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(cs.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;prima_data_rut&quot;, str(cr.index[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta del Russell 2000&quot;, &quot;dati/&quot;)
+    reg(&quot;n_mesi&quot;, len(rs), &quot;int&quot;, &quot;Mesi completi dell&#x27;S&amp;P 500&quot;, &quot;dati/&quot;)
+    reg(&quot;n_gennai&quot;, int((rs.index.month == 1).sum()), &quot;int&quot;, &quot;Gennai nel campione S&amp;P 500&quot;, &quot;dati/&quot;)
+    reg(&quot;anno_spartiacque&quot;, config.ANNO_SPARTIACQUE, &quot;annonum&quot;, &quot;Anno dei primi studi sull&#x27;effetto gennaio&quot;, &quot;config.py&quot;)
+    reg(&quot;n_perm&quot;, config.N_PERMUTAZIONI, &quot;int&quot;, &quot;Permutazioni delle etichette dei mesi&quot;, &quot;config.py&quot;)
+    reg(&quot;h6_quota&quot;, config.H6_QUOTA, &quot;pct0&quot;, &quot;Ipotesi 6: quota minima di anni in cui il barometro funziona&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_p&quot;, config.SOGLIA_P, &quot;num2&quot;, &quot;Soglia di significatività&quot;, &quot;config.py&quot;)
+
+    gen = (rs.index.month == 1)
+    d, p = fx.permutazione_differenza(rs.to_numpy(), gen, config.N_PERMUTAZIONI, rng)
+    reg(&quot;jan_media&quot;, float(rs[gen].mean()), &quot;pct2&quot;, &quot;Rendimento medio di gennaio, S&amp;P 500&quot;, &quot;pandas&quot;)
+    reg(&quot;altri_media&quot;, float(rs[~gen].mean()), &quot;pct2&quot;, &quot;Rendimento medio degli altri undici mesi, S&amp;P 500&quot;, &quot;pandas&quot;)
+    reg(&quot;diff&quot;, d, &quot;pp2&quot;, &quot;Gennaio meno gli altri mesi, punti percentuali, S&amp;P 500&quot;, &quot;funzioni&quot;)
+    reg(&quot;pval&quot;, p, &quot;pval&quot;, &quot;P-value di permutazione della differenza, S&amp;P 500&quot;, &quot;funzioni.permutazione_differenza&quot;)
+    reg(&quot;jan_pos&quot;, float((rs[gen] &gt; 0).mean()), &quot;pct0&quot;, &quot;Quota di gennai positivi&quot;, &quot;pandas&quot;)
+    reg(&quot;altri_pos&quot;, float((rs[~gen] &gt; 0).mean()), &quot;pct0&quot;, &quot;Quota di altri mesi positivi&quot;, &quot;pandas&quot;)
+
+    # Medie per mese
+    medie = rs.groupby(rs.index.month).mean()
+    pd.DataFrame({&quot;mese&quot;: MESI, &quot;media&quot;: medie.to_numpy()}).to_csv(config.RISULTATI / &quot;medie_mensili.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    ordine = medie.sort_values(ascending=False).index.tolist()
+    reg(&quot;rango_jan&quot;, ordine.index(1) + 1, &quot;int&quot;, &quot;Posizione di gennaio nella classifica dei mesi per rendimento medio (1 = il più alto)&quot;, &quot;pandas&quot;)
+    reg(&quot;mese_migliore&quot;, MESI[ordine[0] - 1], &quot;testo&quot;, &quot;Mese con il rendimento medio più alto&quot;, &quot;pandas&quot;)
+    reg(&quot;media_migliore&quot;, float(medie.loc[ordine[0]]), &quot;pct2&quot;, &quot;Rendimento medio del mese migliore&quot;, &quot;pandas&quot;)
+    reg(&quot;mese_peggiore&quot;, MESI[ordine[-1] - 1], &quot;testo&quot;, &quot;Mese con il rendimento medio più basso&quot;, &quot;pandas&quot;)
+    reg(&quot;media_peggiore&quot;, float(medie.loc[ordine[-1]]), &quot;pct2&quot;, &quot;Rendimento medio del mese peggiore&quot;, &quot;pandas&quot;)
+
+    # Prima e dopo
+    for nome, sel, tag in ((&quot;prima&quot;, rs.index.year &lt; config.ANNO_SPARTIACQUE, &quot;p&quot;), (&quot;dopo&quot;, rs.index.year &gt;= config.ANNO_SPARTIACQUE, &quot;d&quot;)):
+        x, g = rs[sel], (rs[sel].index.month == 1)
+        dd = float(x[g].mean() - x[~g].mean())
+        reg(f&quot;diff_{tag}&quot;, dd, &quot;pp2&quot;, f&quot;Gennaio meno gli altri mesi, periodo {nome} lo spartiacque, S&amp;P 500&quot;, &quot;pandas&quot;)
+        reg(f&quot;n_jan_{tag}&quot;, int(g.sum()), &quot;int&quot;, f&quot;Gennai {nome} lo spartiacque&quot;, &quot;pandas&quot;)
+
+    # Piccole capitalizzazioni
+    comune = rs.index.intersection(rr.index)
+    xs, xr = rs[comune], rr[comune]
+    gc = (comune.month == 1)
+    dr, pr = fx.permutazione_differenza(xr.to_numpy(), gc, config.N_PERMUTAZIONI, rng)
+    ds = float(xs[gc].mean() - xs[~gc].mean())
+    reg(&quot;n_mesi_rut&quot;, len(comune), &quot;int&quot;, &quot;Mesi in comune tra S&amp;P 500 e Russell 2000&quot;, &quot;dati/&quot;)
+    reg(&quot;diff_rut&quot;, dr, &quot;pp2&quot;, &quot;Gennaio meno gli altri mesi, Russell 2000, punti percentuali&quot;, &quot;funzioni&quot;)
+    reg(&quot;diff_sp_stesso&quot;, ds, &quot;pp2&quot;, &quot;Gennaio meno gli altri mesi, S&amp;P 500 nello stesso periodo, punti percentuali&quot;, &quot;pandas&quot;)
+    reg(&quot;pval_rut&quot;, pr, &quot;pval&quot;, &quot;P-value di permutazione, Russell 2000&quot;, &quot;funzioni&quot;)
+    sl = xr - xs
+    dsl = float(sl[gc].mean() - sl[~gc].mean())
+    reg(&quot;diff_sl&quot;, dsl, &quot;pp2&quot;, &quot;Differenza piccole meno grandi: gennaio meno altri mesi, punti percentuali&quot;, &quot;pandas&quot;)
+
+    # Barometro
+    ba = fx.resto_anno(rs)
+    ba.to_csv(config.RISULTATI / &quot;anni.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    conc = float(((ba[&quot;gennaio&quot;] &gt; 0) == (ba[&quot;resto&quot;] &gt; 0)).mean())
+    reg(&quot;n_anni_baro&quot;, len(ba), &quot;int&quot;, &quot;Anni completi per il barometro&quot;, &quot;dati/&quot;)
+    reg(&quot;baro&quot;, conc, &quot;pct0&quot;, &quot;Quota di anni in cui il segno di gennaio coincide con quello del resto dell&#x27;anno&quot;, &quot;pandas&quot;)
+    base = float((ba[&quot;resto&quot;] &gt; 0).mean())
+    reg(&quot;base_resto&quot;, base, &quot;pct0&quot;, &quot;Quota di anni con il resto dell&#x27;anno positivo&quot;, &quot;pandas&quot;)
+    reg(&quot;baro_dopo_pos&quot;, float((ba[ba[&quot;gennaio&quot;] &gt; 0][&quot;resto&quot;] &gt; 0).mean()), &quot;pct0&quot;, &quot;Dopo un gennaio positivo: quota di anni con il resto positivo&quot;, &quot;pandas&quot;)
+    reg(&quot;baro_dopo_neg&quot;, float((ba[ba[&quot;gennaio&quot;] &lt;= 0][&quot;resto&quot;] &gt; 0).mean()), &quot;pct0&quot;, &quot;Dopo un gennaio negativo: quota di anni con il resto positivo&quot;, &quot;pandas&quot;)
+
+    h = [d &gt; 0, p &gt;= config.SOGLIA_P, RIS[&quot;diff_d&quot;][&quot;valore&quot;] &lt; RIS[&quot;diff_p&quot;][&quot;valore&quot;], dr &gt; ds, RIS[&quot;rango_jan&quot;][&quot;valore&quot;] &gt; 3, conc &gt; config.H6_QUOTA]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(bool(v)), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(bool(v) for v in h)), &quot;int&quot;, &quot;Ipotesi confermate (su 6)&quot;, &quot;confronto con config.py&quot;)
+
+    meta = {&quot;generato&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+            &quot;numpy&quot;: np.__version__, &quot;pandas&quot;: pd.__version__, &quot;seme&quot;: config.SEME, &quot;ipotesi&quot;: config.IPOTESI}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps({&quot;meta&quot;: meta, &quot;valori&quot;: RIS}, ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    print(f&quot;Scritte {len(RIS)} metriche.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_media_per_mese.png     rendimento medio dell&#x27;S&amp;P 500 per mese
+  fig2_gennaio_per_anno.png   rendimento di gennaio anno per anno
+  fig3_differenze.png         gennaio meno altri mesi: S&amp;P 500 prima/dopo, S&amp;P 500 e Russell 2000 nello stesso periodo
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False, &quot;axes.grid&quot;: True,
+                     &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;, &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    v = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    m = pd.read_csv(R / &quot;medie_mensili.csv&quot;)
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar([s[:3] for s in m[&quot;mese&quot;]], m[&quot;media&quot;] * 100, color=[ARANCIO if i == 0 else BLU for i in range(12)])
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_ylabel(&quot;Rendimento medio del mese, %&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_media_per_mese.png&quot;)
+    plt.close(fig)
+
+    a = pd.read_csv(R / &quot;anni.csv&quot;)
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    ax.bar(a[&quot;anno&quot;], a[&quot;gennaio&quot;] * 100, color=[BLU if x &gt; 0 else ARANCIO for x in a[&quot;gennaio&quot;]])
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_ylabel(&quot;Rendimento di gennaio, %&quot;)
+    fig.savefig(config.FIGURE / &quot;fig2_gennaio_per_anno.png&quot;)
+    plt.close(fig)
+
+    nomi = [&quot;S&amp;P 500\nprima&quot;, &quot;S&amp;P 500\ndopo&quot;, &quot;S&amp;P 500\n(dal 1987)&quot;, &quot;Russell 2000\n(dal 1987)&quot;]
+    val = [v[&quot;diff_p&quot;][&quot;valore&quot;], v[&quot;diff_d&quot;][&quot;valore&quot;], v[&quot;diff_sp_stesso&quot;][&quot;valore&quot;], v[&quot;diff_rut&quot;][&quot;valore&quot;]]
+    nomi[0] = nomi[0].replace(&quot;prima&quot;, &quot;prima dello\nspartiacque&quot;)
+    nomi[1] = nomi[1].replace(&quot;dopo&quot;, &quot;dopo lo\nspartiacque&quot;)
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    ax.bar(nomi, val, color=[GRIGIO, GRIGIO, BLU, ARANCIO])
+    ax.axhline(0, color=&quot;#555&quot;, lw=1)
+    ax.set_ylabel(&quot;Gennaio meno gli altri mesi, punti percentuali&quot;)
+    fig.savefig(config.FIGURE / &quot;fig3_differenze.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 162 - &quot;L&#x27;effetto gennaio&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+L&#x27;«effetto gennaio» dice due cose: gennaio rende in media più degli altri mesi, e rende di più per le azioni di piccole dimensioni. Lo si prova sull&#x27;S&amp;P 500 (indice di
+prezzo, dal 1927, rendimenti mensili da fine mese a fine mese, senza dividendi) e sul Russell 2000 (piccole capitalizzazioni, dal 1987). Il confronto è tra gennaio e
+gli altri undici mesi; la significatività si misura con un test di permutazione (le etichette dei mesi mescolate a caso). Si guarda anche se l&#x27;effetto è cambiato dopo la
+pubblicazione dei primi studi (1976) e se la direzione di gennaio anticipa quella dei mesi restanti dell&#x27;anno («barometro di gennaio»).
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKER = &quot;^GSPC&quot;
+TICKER_PICCOLE = &quot;^RUT&quot;
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_PICCOLE = DATI / &quot;rut_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;S&amp;P 500 e del Russell 2000&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;, &quot;Russell 2000&quot;, &quot;Russell&quot;)
+
+ANNO_SPARTIACQUE = 1976              # primi studi sull&#x27;effetto gennaio: prima e dopo
+N_PERMUTAZIONI = 10000
+SEME = 20261030
+SOGLIA_P = 0.05
+H6_QUOTA = 0.60                      # 6) barometro: gennaio e il resto dell&#x27;anno hanno lo stesso segno in oltre il 60% degli anni
+
+IPOTESI = (
+    &quot;1) Sull&#x27;S&amp;P 500 il rendimento medio di gennaio è più alto di quello medio degli altri undici mesi. &quot;
+    &quot;2) La differenza non è significativa al 5% con il test di permutazione: tra le oscillazioni dei mesi il vantaggio di gennaio si confonde. &quot;
+    &quot;3) La differenza di gennaio è più piccola dopo il 1976 che prima. &quot;
+    &quot;4) Sul Russell 2000 (dal 1987) la differenza tra il rendimento di gennaio e quello degli altri mesi è più grande di quella dell&#x27;S&amp;P 500 nello stesso periodo: l&#x27;effetto è delle piccole. &quot;
+    &quot;5) Gennaio non è il mese con il rendimento medio più alto sull&#x27;S&amp;P 500: sta fuori dai primi tre. &quot;
+    &quot;6) Il barometro di gennaio funziona: il segno di gennaio coincide con quello del rendimento da febbraio a dicembre in oltre il 60% degli anni.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni di calcolo dell&#x27;articolo 162: rendimenti mensili e test di permutazione.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def rendimenti_mensili(close: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Rendimento semplice da fine mese a fine mese. Il primo mese (incompleto) è perso. Indice: Period mensile.&quot;&quot;&quot;
+    m = close.groupby(close.index.to_period(&quot;M&quot;)).last()
+    return m.pct_change().dropna()
+
+
+def permutazione_differenza(x: np.ndarray, etichetta: np.ndarray, n: int, rng: np.random.Generator) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Differenza tra la media dei rendimenti con etichetta vera e quella degli altri; p-value bilaterale per permutazione delle etichette
+    (con +1 al numeratore e al denominatore).&quot;&quot;&quot;
+    x = np.asarray(x, float)
+    e = np.asarray(etichetta, bool)
+    oss = x[e].mean() - x[~e].mean()
+    k = int(e.sum())
+    cont = 0
+    for _ in range(n):
+        idx = rng.permutation(len(x))[:k]
+        m = np.zeros(len(x), bool)
+        m[idx] = True
+        if abs(x[m].mean() - x[~m].mean()) &gt;= abs(oss):
+            cont += 1
+    return float(oss), float((1 + cont) / (n + 1))
+
+
+def resto_anno(rend_mensili: pd.Series) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Per ogni anno completo: rendimento di gennaio e rendimento composto da febbraio a dicembre.&quot;&quot;&quot;
+    righe = []
+    for anno, g in rend_mensili.groupby(rend_mensili.index.year):
+        if len(g) == 12 and g.index[0].month == 1:
+            righe.append({&quot;anno&quot;: anno, &quot;gennaio&quot;: g.iloc[0], &quot;resto&quot;: float(np.prod(1 + g.iloc[1:].to_numpy()) - 1)})
+    return pd.DataFrame(righe)
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as f
+
+
+def ok(nome, cond):
+    assert cond, nome
+    print(f&quot;ok  {nome}&quot;)
+
+
+idx = pd.bdate_range(&quot;2020-01-01&quot;, &quot;2021-12-31&quot;)
+c = pd.Series(np.arange(1.0, len(idx) + 1), index=idx)
+r = f.rendimenti_mensili(c)
+ok(&quot;il primo mese incompleto è perso&quot;, r.index[0] == pd.Period(&quot;2020-02&quot;))
+m = c.groupby(c.index.to_period(&quot;M&quot;)).last()
+ok(&quot;rendimento da fine mese a fine mese&quot;, abs(r.iloc[0] - (m.iloc[1] / m.iloc[0] - 1)) &lt; 1e-12)
+rng = np.random.default_rng(0)
+x = rng.normal(0, 1, 600)
+e = np.zeros(600, bool)
+e[:50] = True
+x[e] += 3.0
+d, p = f.permutazione_differenza(x, e, 500, rng)
+ok(&quot;differenza grande: p-value piccolo&quot;, d &gt; 2.5 and p &lt; 0.01)
+x2 = rng.normal(0, 1, 600)
+d2, p2 = f.permutazione_differenza(x2, e, 500, rng)
+ok(&quot;nessuna differenza: p-value non piccolo&quot;, p2 &gt; 0.05)
+idx2 = pd.period_range(&quot;2020-01&quot;, &quot;2020-12&quot;, freq=&quot;M&quot;)
+rm = pd.Series([0.10] + [0.01] * 11, index=idx2)
+d3 = f.resto_anno(rm)
+ok(&quot;resto dell&#x27;anno: undici mesi composti&quot;, len(d3) == 1 and abs(d3[&quot;resto&quot;].iloc[0] - (1.01 ** 11 - 1)) &lt; 1e-12 and d3[&quot;gennaio&quot;].iloc[0] == 0.10)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
