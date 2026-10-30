@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stimare lo spread denaro-lettera dai prezzi: quanto costa operare, secondo i dati gratuiti · il codice · TickerFight</title>
+<meta name="description" content="Stimare lo spread denaro-lettera dai prezzi: quanto costa operare, secondo i dati gratuiti">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Stimare lo spread denaro-lettera dai prezzi: quanto costa operare, secondo i dati gratuiti</h1>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="stimare-lo-spread-denaro-lettera-dai-prezzi-quanto-costa-operare-secondo-i-dati-gratuiti.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>stimare-lo-spread-denaro-lettera-dai-prezzi-quanto-costa-operare-secondo-i-dati-gratuiti/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py
+    ├── 02_backtest_e_test.py
+    ├── 03_grafici.py
+    ├── config.py
+    ├── funzioni.py
+    └── verifica_motore.py
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd stimare-lo-spread-denaro-lettera-dai-prezzi-quanto-costa-operare-secondo-i-dati-gratuiti
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+statsmodels==0.15.0
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance aperture, massimi, minimi e chiusure NON corretti di sette ETF.
+
+Salva dati/&lt;ticker&gt;.csv per ogni ETF e dati/metadati.json (fonte, data, versione, SHA-256).
+Gli script successivi leggono SOLO i file salvati.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+            &quot;colonne&quot;: &quot;Open, High, Low, Close non corretti (auto_adjust=False)&quot;, &quot;serie&quot;: {}}
+    for t in config.TICKERS:
+        g = yf.Ticker(t).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if g.empty:
+            raise SystemExit(f&quot;Nessun dato per {t}&quot;)
+        df = g[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;, &quot;High&quot;, &quot;Low&quot;])
+        if (df[[&quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;]] &lt;= 0).any().any():
+            raise SystemExit(f&quot;Prezzi non positivi in {t}&quot;)
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+            df = df.iloc[:-1]
+        f = config.file_dati(t)
+        df.to_csv(f, float_format=&quot;%.6f&quot;)
+        meta[&quot;serie&quot;][t] = {&quot;righe&quot;: len(df), &quot;prima&quot;: str(df.index[0].date()), &quot;ultima&quot;: str(df.index[-1].date()),
+                            &quot;sha256&quot;: hashlib.sha256(f.read_bytes()).hexdigest()}
+        print(t, meta[&quot;serie&quot;][t])
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>├── 03_grafici.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Stima dello spread dai prezzi (Corwin-Schultz e Roll) su sette ETF.
+
+Legge SOLO dati/&lt;ticker&gt;.csv e produce in risultati/: metriche.json, per_etf.csv, mensile_spy.csv.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    righe, serie = [], {}
+    for t in config.TICKERS:
+        df = pd.read_csv(config.file_dati(t), parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+        df = df[(df[&quot;High&quot;] &gt;= df[&quot;Low&quot;]) &amp; (df[&quot;Low&quot;] &gt; 0)]
+        raw = pd.Series(fx.cs_grezzo(df[&quot;High&quot;].to_numpy(), df[&quot;Low&quot;].to_numpy()), index=df.index).dropna()
+        cs = raw.clip(lower=0)
+        tick = (config.TICK / df[&quot;Close&quot;]).mean()
+        roll = fx.roll_mensile(df[&quot;Close&quot;])
+        k = t.lower()
+        serie[t] = (df, raw, cs)
+        reg(f&quot;{k}_prima&quot;, str(df.index[0].date()), &quot;data_lunga&quot;, f&quot;Prima seduta di {t}&quot;, &quot;dati/&quot;)
+        reg(f&quot;{k}_n&quot;, len(raw), &quot;int&quot;, f&quot;Coppie di giorni usate per {t}&quot;, &quot;dati/&quot;)
+        reg(f&quot;{k}_cs&quot;, cs.mean(), &quot;pct3&quot;, f&quot;Stima media di Corwin-Schultz per {t} (negativi posti a zero)&quot;, &quot;funzioni.cs_grezzo&quot;)
+        reg(f&quot;{k}_cs_med&quot;, cs.median(), &quot;pct3&quot;, f&quot;Stima mediana di Corwin-Schultz per {t}&quot;, &quot;funzioni.cs_grezzo&quot;)
+        reg(f&quot;{k}_neg&quot;, float((raw &lt; 0).mean()), &quot;pct0&quot;, f&quot;Quota di stime grezze negative per {t}&quot;, &quot;funzioni.cs_grezzo&quot;)
+        reg(f&quot;{k}_tick&quot;, tick, &quot;pct3&quot;, f&quot;Minimo teorico dello spread per {t}: un centesimo diviso la chiusura, in media&quot;, &quot;config.TICK / Close&quot;)
+        reg(f&quot;{k}_mult&quot;, cs.mean() / tick, &quot;num1&quot;, f&quot;Stima media diviso minimo teorico per {t}&quot;, &quot;rapporto&quot;)
+        reg(f&quot;{k}_roll_nan&quot;, float(roll.isna().mean()), &quot;pct0&quot;, f&quot;Quota di mesi in cui Roll non è definito per {t}&quot;, &quot;funzioni.roll_mensile&quot;)
+        reg(f&quot;{k}_roll_med&quot;, float(roll.median()), &quot;pct3&quot;, f&quot;Stima mediana di Roll sui mesi in cui è definita, {t}&quot;, &quot;funzioni.roll_mensile&quot;)
+        righe.append({&quot;etf&quot;: t, &quot;cs&quot;: cs.mean(), &quot;cs_mediana&quot;: cs.median(), &quot;neg&quot;: (raw &lt; 0).mean(), &quot;tick&quot;: tick,
+                      &quot;roll_nan&quot;: roll.isna().mean(), &quot;roll_mediana&quot;: roll.median()})
+    pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;per_etf.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    reg(&quot;n_etf&quot;, len(config.TICKERS), &quot;int&quot;, &quot;ETF analizzati&quot;, &quot;config.py&quot;)
+    df, raw, cs = serie[&quot;SPY&quot;]
+    reg(&quot;data_ultima&quot;, str(df.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta dei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;tick_dollari&quot;, config.TICK, &quot;num2&quot;, &quot;Tick minimo in dollari&quot;, &quot;config.py&quot;)
+
+    # Stima mensile di SPY contro la volatilità del mese
+    m_cs = fx.media_mensile(cs)
+    m_vol = fx.vol_mensile(df[&quot;Close&quot;])
+    mm = pd.concat([m_cs.rename(&quot;cs&quot;), m_vol.rename(&quot;vol&quot;)], axis=1).dropna()
+    mm.to_csv(config.RISULTATI / &quot;mensile_spy.csv&quot;, float_format=&quot;%.6f&quot;)
+    corr = float(mm[&quot;cs&quot;].corr(mm[&quot;vol&quot;]))
+    reg(&quot;corr_vol&quot;, corr, &quot;num2&quot;, &quot;Correlazione mensile tra la stima di SPY e la volatilità giornaliera del mese&quot;, &quot;pandas corr&quot;)
+    reg(&quot;n_mesi&quot;, len(mm), &quot;int&quot;, &quot;Mesi usati per la correlazione&quot;, &quot;dati/&quot;)
+    mediana_mesi = float(m_cs.median())
+    mar = float(m_cs[pd.Period(config.MESE_CRISI)])
+    reg(&quot;mese_crisi&quot;, config.MESE_CRISI + &quot;-01&quot;, &quot;data_lunga&quot;, &quot;Mese del crollo del Covid&quot;, &quot;config.py&quot;)
+    reg(&quot;cs_crisi&quot;, mar, &quot;pct3&quot;, &quot;Stima media di SPY nel mese del crollo&quot;, &quot;funzioni&quot;)
+    reg(&quot;cs_med_mesi&quot;, mediana_mesi, &quot;pct3&quot;, &quot;Mediana delle stime mensili di SPY&quot;, &quot;funzioni&quot;)
+    reg(&quot;mult_crisi&quot;, mar / mediana_mesi, &quot;num1&quot;, &quot;Stima del mese del crollo diviso la mediana dei mesi, SPY&quot;, &quot;rapporto&quot;)
+    prima = cs[cs.index &lt; config.SOGLIA_PRIMA_ANNO].mean()
+    seconda = cs[cs.index &gt;= config.SOGLIA_PRIMA_ANNO].mean()
+    reg(&quot;cs_prima&quot;, prima, &quot;pct3&quot;, &quot;Stima media di SPY prima del 2013&quot;, &quot;funzioni&quot;)
+    reg(&quot;cs_seconda&quot;, seconda, &quot;pct3&quot;, &quot;Stima media di SPY dal 2013&quot;, &quot;funzioni&quot;)
+    reg(&quot;costo_giro&quot;, RIS[&quot;spy_cs&quot;][&quot;valore&quot;], &quot;pct3&quot;, &quot;Costo di un acquisto e una vendita di SPY se si pagasse l&#x27;intera stima (un giro completo)&quot;, &quot;funzioni&quot;)
+
+    # Costanti di soglia
+    reg(&quot;h1_mult&quot;, config.H1_MULTIPLO, &quot;int&quot;, &quot;Ipotesi 1: multiplo minimo&quot;, &quot;config.py&quot;)
+    reg(&quot;h2_quota&quot;, config.H2_QUOTA_NEG, &quot;pct0&quot;, &quot;Ipotesi 2: quota minima di stime negative&quot;, &quot;config.py&quot;)
+    reg(&quot;h3_corr&quot;, config.H3_CORR, &quot;num1&quot;, &quot;Ipotesi 3: correlazione minima&quot;, &quot;config.py&quot;)
+    reg(&quot;h5_mult&quot;, config.H5_MULTIPLO, &quot;int&quot;, &quot;Ipotesi 5: multiplo minimo&quot;, &quot;config.py&quot;)
+    reg(&quot;h6_quota&quot;, config.H6_QUOTA_ROLL, &quot;pct0&quot;, &quot;Ipotesi 6: quota minima di mesi con Roll non definito&quot;, &quot;config.py&quot;)
+
+    h = [RIS[&quot;spy_mult&quot;][&quot;valore&quot;] &gt;= config.H1_MULTIPLO,
+         RIS[&quot;spy_neg&quot;][&quot;valore&quot;] &gt; config.H2_QUOTA_NEG,
+         corr &gt; config.H3_CORR,
+         RIS[&quot;eem_cs&quot;][&quot;valore&quot;] &gt; RIS[&quot;spy_cs&quot;][&quot;valore&quot;] and RIS[&quot;iwm_cs&quot;][&quot;valore&quot;] &gt; RIS[&quot;spy_cs&quot;][&quot;valore&quot;],
+         mar / mediana_mesi &gt;= config.H5_MULTIPLO,
+         RIS[&quot;spy_roll_nan&quot;][&quot;valore&quot;] &gt; config.H6_QUOTA_ROLL]
+    for i, v in enumerate(h, 1):
+        reg(f&quot;h{i}_esito&quot;, int(bool(v)), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(bool(v) for v in h)), &quot;int&quot;, &quot;Ipotesi confermate (su 6)&quot;, &quot;confronto con config.py&quot;)
+
+    meta = {&quot;generato&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+            &quot;numpy&quot;: np.__version__, &quot;pandas&quot;: pd.__version__, &quot;ipotesi&quot;: config.IPOTESI}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps({&quot;meta&quot;: meta, &quot;valori&quot;: RIS}, ensure_ascii=False, indent=1), encoding=&quot;utf-8&quot;)
+    print(f&quot;Scritte {len(RIS)} metriche.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_stima_e_tick.png         stima media di Corwin-Schultz e minimo teorico per ETF
+  fig2_stima_e_volatilita.png   SPY: stima mensile contro volatilità del mese
+  fig3_serie_mensile_spy.png    SPY: stima mensile nel tempo
+&quot;&quot;&quot;
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False, &quot;axes.grid&quot;: True,
+                     &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;, &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    e = pd.read_csv(R / &quot;per_etf.csv&quot;)
+    mm = pd.read_csv(R / &quot;mensile_spy.csv&quot;, index_col=0)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    xs = np.arange(len(e))
+    ax.bar(xs - 0.2, e[&quot;cs&quot;] * 100, 0.4, color=BLU, label=&quot;Stima media (Corwin-Schultz)&quot;)
+    ax.bar(xs + 0.2, e[&quot;tick&quot;] * 100, 0.4, color=ARANCIO, label=&quot;Minimo teorico (un centesimo)&quot;)
+    ax.set_xticks(xs)
+    ax.set_xticklabels(e[&quot;etf&quot;])
+    ax.set_ylabel(&quot;Spread, % del prezzo&quot;)
+    ax.legend()
+    fig.savefig(config.FIGURE / &quot;fig1_stima_e_tick.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.scatter(mm[&quot;vol&quot;] * 100, mm[&quot;cs&quot;] * 100, s=14, color=BLU, alpha=0.6)
+    crisi = config.MESE_CRISI
+    if crisi in mm.index:
+        ax.scatter([mm.loc[crisi, &quot;vol&quot;] * 100], [mm.loc[crisi, &quot;cs&quot;] * 100], s=80, color=ARANCIO, label=&quot;Marzo 2020&quot;)
+        ax.legend()
+    ax.set_xlabel(&quot;Volatilità giornaliera del mese, %&quot;)
+    ax.set_ylabel(&quot;Stima mensile dello spread di SPY, %&quot;)
+    fig.savefig(config.FIGURE / &quot;fig2_stima_e_volatilita.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 4.8))
+    ax.plot(pd.to_datetime(mm.index.astype(str)), mm[&quot;cs&quot;] * 100, color=BLU, lw=1.6)
+    ax.set_ylabel(&quot;Stima mensile dello spread di SPY, %&quot;)
+    fig.savefig(config.FIGURE / &quot;fig3_serie_mensile_spy.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>├── funzioni.py</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 103 - &quot;Stimare lo spread denaro-lettera dai prezzi&quot;.
+
+Tutti i parametri stanno qui; gli script numerati li leggono da questo file. Le ipotesi sono scritte prima di guardare i risultati.
+
+Lo spread denaro-lettera (la differenza tra il prezzo a cui si compra e quello a cui si vende) è il costo di operare più citato e meno osservato: nei dati
+giornalieri gratuiti non ci sono le quotazioni, ci sono solo apertura, massimo, minimo e chiusura. Si provano due stimatori che ricavano lo spread dai soli prezzi:
+quello di Corwin e Schultz (dal rapporto tra massimo e minimo su due giorni consecutivi: il massimo contiene lo spread, la varianza cresce con il tempo ma lo spread no)
+e quello di Roll (dalla covarianza tra variazioni consecutive della chiusura). Si applicano a sette ETF dal 2003 (prezzi NON corretti, perché i rapporti
+intragiornalieri non cambiano ma la chiusura grezza serve per il minimo imposto dal tick). Non abbiamo le quotazioni vere: l&#x27;unico riferimento esterno ai dati è il
+minimo teorico dello spread, un centesimo di dollaro diviso il prezzo (il tick minimo). Si usa la versione base dello stimatore, senza la correzione per i salti
+notturni, e si pongono a zero le stime negative (come fanno gli autori).
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+TICKERS = (&quot;SPY&quot;, &quot;QQQ&quot;, &quot;IWM&quot;, &quot;EFA&quot;, &quot;EEM&quot;, &quot;GLD&quot;, &quot;TLT&quot;)
+INIZIO_DOWNLOAD = &quot;2003-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+SENTINELLA = DATI / &quot;spy.csv&quot;
+DESCRIZIONE_DATI = &quot;le aperture, i massimi, i minimi e le chiusure giornaliere (non corrette) di sette ETF&quot;
+NOMI_ESENTI = (&quot;SPY&quot;, &quot;QQQ&quot;, &quot;IWM&quot;, &quot;EFA&quot;, &quot;EEM&quot;, &quot;GLD&quot;, &quot;TLT&quot;, &quot;ETF&quot;, &quot;Corwin&quot;, &quot;Schultz&quot;, &quot;Roll&quot;, &quot;S&amp;P 500&quot;, &quot;OHLC&quot;)
+
+def file_dati(t: str) -&gt; Path:
+    return DATI / f&quot;{t.lower()}.csv&quot;
+
+TICK = 0.01                          # dollari: il minimo scostamento di prezzo
+GIORNI_ANNO = 252
+MESE_CRISI = &quot;2020-03&quot;               # il mese del crollo del Covid
+SOGLIA_PRIMA_ANNO = &quot;2013-01-01&quot;     # per la stabilità: seconda metà del campione
+
+# --- Soglie delle ipotesi ---------------------------------------------------------------------------------------
+H1_MULTIPLO = 10.0                   # 1) stima media di SPY almeno 10 volte il minimo imposto dal tick
+H2_QUOTA_NEG = 0.20                  # 2) quota di coppie di giorni con stima grezza negativa, SPY: oltre il 20%
+H3_CORR = 0.50                       # 3) correlazione mensile tra stima e volatilità di SPY: sopra 0,5
+H5_MULTIPLO = 3.0                    # 5) marzo 2020: la stima di SPY almeno 3 volte la mediana dei mesi
+H6_QUOTA_ROLL = 0.50                 # 6) Roll non definito in oltre la metà dei mesi, SPY
+
+IPOTESI = (
+    &quot;1) La stima media di Corwin e Schultz per SPY è almeno 10 volte il minimo teorico imposto dal tick: lo stimatore sovrastima lo spread di un ETF liquidissimo. &quot;
+    &quot;2) Per SPY oltre il 20% delle stime su due giorni è negativo prima di porle a zero: il segnale è più piccolo del rumore. &quot;
+    &quot;3) La stima media mensile di SPY è correlata con la volatilità mensile (deviazione standard dei rendimenti giornalieri) con un coefficiente superiore a 0,5: lo stimatore misura in parte la volatilità. &quot;
+    &quot;4) Nell&#x27;intero periodo la stima media è più alta per EEM che per SPY e più alta per IWM che per SPY: l&#x27;ordine tra ETF più e meno liquidi è quello atteso. &quot;
+    &quot;5) Nel mese di marzo 2020 la stima media di SPY è almeno 3 volte la mediana dei mesi. &quot;
+    &quot;6) Lo stimatore di Roll non è definito (la covarianza è positiva) in oltre la metà dei mesi per SPY.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni di calcolo dell&#x27;articolo 103: stimatori dello spread dai prezzi.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+K = 3.0 - 2.0 * np.sqrt(2.0)
+
+
+def cs_grezzo(h: np.ndarray, l: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Stima di Corwin-Schultz per ogni coppia di giorni consecutivi (t-1, t), assegnata al giorno t. Il primo elemento è nan.
+    Può essere negativa. Spread in frazione del prezzo.&quot;&quot;&quot;
+    h, l = np.asarray(h, float), np.asarray(l, float)
+    b1 = np.log(h / l) ** 2
+    beta = b1[1:] + b1[:-1]
+    hh = np.maximum(h[1:], h[:-1])
+    ll = np.minimum(l[1:], l[:-1])
+    gamma = np.log(hh / ll) ** 2
+    alfa = (np.sqrt(2 * beta) - np.sqrt(beta)) / K - np.sqrt(gamma / K)
+    s = 2 * (np.exp(alfa) - 1) / (1 + np.exp(alfa))
+    return np.concatenate([[np.nan], s])
+
+
+def roll_mensile(close: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Stimatore di Roll per mese: 2*sqrt(-cov(dp_t, dp_t-1)) / prezzo medio; nan se la covarianza è &gt;= 0.&quot;&quot;&quot;
+    dp = close.diff()
+    out = {}
+    for mese, g in dp.groupby(close.index.to_period(&quot;M&quot;)):
+        d = g.dropna().to_numpy()
+        if len(d) &lt; 10:
+            continue
+        cov = np.mean((d[1:] - d.mean()) * (d[:-1] - d.mean()))
+        pm = close[close.index.to_period(&quot;M&quot;) == mese].mean()
+        out[mese] = 2 * np.sqrt(-cov) / pm if cov &lt; 0 else np.nan
+    return pd.Series(out)
+
+
+def media_mensile(serie: pd.Series) -&gt; pd.Series:
+    return serie.groupby(serie.index.to_period(&quot;M&quot;)).mean()
+
+
+def vol_mensile(close: pd.Series) -&gt; pd.Series:
+    r = np.log(close).diff()
+    return r.groupby(r.index.to_period(&quot;M&quot;)).std()
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di funzioni.py su dati inventati. Se uno fallisce, l&#x27;Action si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as f
+
+
+def ok(nome, cond):
+    assert cond, nome
+    print(f&quot;ok  {nome}&quot;)
+
+
+# 1. Corwin-Schultz: serie con spread vero noto. Prezzo efficiente = random walk; massimo = max(p)*(1+s/2), minimo = min(p)*(1-s/2).
+rng = np.random.default_rng(3)
+n, S = 4000, 0.004
+cl = 100 * np.exp(np.cumsum(rng.normal(0, 0.004, n)))
+amp = np.abs(rng.normal(0, 0.006, n)) + 0.0005
+h = cl * (1 + amp) * (1 + S / 2)
+l = cl * (1 - amp) * (1 - S / 2)
+est = np.nanmean(f.cs_grezzo(h, l))
+ok(&quot;spread noto 0,4%: la stima è dello stesso ordine&quot;, 0.001 &lt; est &lt; 0.012)
+# 2. prezzo fermo, massimo uguale al minimo: la stima è zero
+e0 = f.cs_grezzo(np.full(50, 100.0), np.full(50, 100.0))
+ok(&quot;prezzo fermo: stima zero&quot;, abs(np.nanmean(e0)) &lt; 1e-12)
+# 3. il primo elemento è nan e la lunghezza è conservata
+ok(&quot;lunghezza e primo elemento&quot;, len(est * np.ones(1)) == 1 and np.isnan(f.cs_grezzo(h, l)[0]) and len(f.cs_grezzo(h, l)) == n)
+# 4. Roll: serie con rimbalzo denaro-lettera: p = m + s/2 * q, q = ±1 casuale; la covarianza è -(s/2)^2, quindi lo spread vale s
+idx = pd.bdate_range(&quot;2020-01-01&quot;, periods=500)
+q = rng.choice([-1.0, 1.0], 500)
+m = np.full(500, 100.0)
+s = 0.5
+p = pd.Series(m + s / 2 * q, index=idx)
+r = f.roll_mensile(p).dropna()
+ok(&quot;Roll recupera lo spread del rimbalzo (0,5 su 100)&quot;, abs(r.mean() - 0.005) &lt; 0.0015)
+# 5. Roll su un trend: covarianza positiva -&gt; nan
+trend = pd.Series(np.cumsum(1 + 0.5 * np.sin(np.arange(300) / 8.0)) + 100, index=pd.bdate_range(&quot;2020-01-01&quot;, periods=300))
+ok(&quot;Roll con covarianza positiva è nan&quot;, f.roll_mensile(trend).isna().all())
+# 6. medie mensili
+ser = pd.Series(np.arange(40.0), index=pd.bdate_range(&quot;2020-01-01&quot;, periods=40))
+mm = f.media_mensile(ser)
+ok(&quot;media mensile&quot;, abs(mm.iloc[0] - ser[:23].mean()) &lt; 1e-9)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
