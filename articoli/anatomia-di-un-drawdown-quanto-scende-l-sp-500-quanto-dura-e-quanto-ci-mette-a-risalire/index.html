@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Anatomia di un drawdown: quanto scende l&#x27;S&amp;P 500, quanto dura e quanto ci mette a risalire? · il codice · TickerFight</title>
+<meta name="description" content="quanto scende l&#x27;S&amp;P 500 dai suoi massimi, quanto dura la discesa e quanto ci vuole per tornare al massimo? E i crolli veri sono più gravi di quelli che produrrebbe il solo caso?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Anatomia di un drawdown: quanto scende l&#x27;S&amp;P 500, quanto dura e quanto ci mette a risalire?</h1>
+<p class="domanda">Quanto scende l&#x27;S&amp;P 500 dai suoi massimi, quanto dura la discesa e quanto ci vuole per tornare al massimo? E i crolli veri sono più gravi di quelli che produrrebbe il solo caso?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="anatomia-di-un-drawdown-quanto-scende-l-sp-500-quanto-dura-e-quanto-ci-mette-a-risalire.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Drawdown:</strong> chiusura divisa per il massimo storico precedente, meno uno. Un episodio va dal massimo fino al giorno in cui la chiusura torna almeno a quel massimo; si contano gli episodi di almeno il 5%.</li>
+<li><strong>Tre durate:</strong> discesa (massimo → minimo), recupero (minimo → nuovo massimo), totale.</li>
+<li><strong>Il caso:</strong> 500 serie ottenute rimescolando a sorte i rendimenti giornalieri reali (stessa distribuzione, ordine casuale), con seme fisso.</li>
+<li><strong>Dati:</strong> indice di prezzo, senza dividendi; nessuna strategia, nessun costo.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>anatomia-di-un-drawdown-quanto-scende-l-sp-500-quanto-dura-e-quanto-ci-mette-a-risalire/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica l'S&amp;P 500 dal 1927
+    ├── 02_backtest_e_test.py  episodi, durate, confronto con serie rimescolate
+    ├── 03_grafici.py          i quattro grafici
+    ├── config.py              parametri, definizioni e ipotesi, scritti prima dei risultati
+    ├── motore_drawdown.py     serie dei drawdown ed episodi (massimo, minimo, recupero)
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd anatomia-di-un-drawdown-quanto-scende-l-sp-500-quanto-dura-e-quanto-ci-mette-a-risalire
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>episodi, durate, confronto con serie rimescolate</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Anatomia di un drawdown: episodi dell&#x27;S&amp;P 500 dal 1927 e confronto con serie rimescolate a caso.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json        ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  episodi.csv          tutti gli episodi con profondità &gt;= soglia minima (picco, minimo, recupero, durate)
+  drawdown_serie.csv   il drawdown a ogni seduta
+  rimescolate.csv      per ogni serie rimescolata: drawdown massimo, quota di sedute sott&#x27;acqua, numero di episodi
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import motore_drawdown as md
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con motore_drawdown.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def mesi(giorni):
+    return giorni / config.GIORNI_MESE
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close = df[&quot;Close&quot;].astype(float)
+    if (close &lt;= 0).any() or close.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    date = close.index
+    c = close.to_numpy()
+    n = len(c)
+    anni = (date[-1] - date[0]).days / 365.25
+
+    dd = md.serie_drawdown(c)
+    pd.DataFrame({&quot;Date&quot;: date, &quot;drawdown&quot;: dd}).to_csv(config.RISULTATI / &quot;drawdown_serie.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    # --- Dati ---------------------------------------------------------------------------------------------------
+    reg(&quot;prima_data&quot;, str(date[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta della serie&quot;, &quot;dati/gspc_giornaliero.csv&quot;)
+    reg(&quot;data_ultima&quot;, str(date[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta della serie&quot;, &quot;dati/gspc_giornaliero.csv&quot;)
+    reg(&quot;anno_inizio&quot;, str(date[0].date()), &quot;anno&quot;, &quot;Anno della prima seduta&quot;, &quot;dati/gspc_giornaliero.csv&quot;)
+    reg(&quot;n_sedute&quot;, n, &quot;int&quot;, &quot;Numero di sedute nella serie&quot;, &quot;dati/gspc_giornaliero.csv&quot;)
+    reg(&quot;n_anni&quot;, anni, &quot;num1&quot;, &quot;Anni coperti dalla serie (giorni di calendario / 365,25)&quot;, &quot;date prima e ultima seduta&quot;)
+
+    # --- Tempo passato sott&#x27;acqua -------------------------------------------------------------------------------
+    reg(&quot;quota_sotto&quot;, float((dd &lt; 0).mean()), &quot;pct1&quot;, &quot;Quota di sedute in cui la chiusura è sotto il massimo storico precedente&quot;, &quot;serie drawdown&quot;)
+    reg(&quot;quota_sul_massimo&quot;, float((dd == 0).mean()), &quot;pct1&quot;, &quot;Quota di sedute in cui la chiusura è un nuovo massimo storico (o lo eguaglia)&quot;, &quot;serie drawdown&quot;)
+    reg(&quot;n_massimi&quot;, int((dd == 0).sum()), &quot;int&quot;, &quot;Numero di sedute in cui la chiusura è un massimo storico&quot;, &quot;serie drawdown&quot;)
+    for s in (0.10, 0.20):
+        reg(f&quot;quota_sotto_{int(s*100)}&quot;, float((dd &lt;= -s).mean()), &quot;pct1&quot;, f&quot;Quota di sedute con drawdown di almeno il {int(s*100)}%&quot;, &quot;serie drawdown&quot;)
+    reg(&quot;dd_attuale&quot;, float(-dd[-1]), &quot;pct1&quot;, &quot;Profondità del drawdown all&#x27;ultima seduta (0 = sul massimo)&quot;, &quot;serie drawdown&quot;)
+
+    # --- Episodi ------------------------------------------------------------------------------------------------
+    ep = md.episodi(c, config.SOGLIA_MINIMA)
+    righe = []
+    for e in ep:
+        ip, im, ir = e[&quot;i_picco&quot;], e[&quot;i_minimo&quot;], e[&quot;i_recupero&quot;]
+        discesa = (date[im] - date[ip]).days
+        recupero = (date[ir] - date[im]).days if ir is not None else np.nan
+        righe.append({&quot;picco&quot;: date[ip].date(), &quot;minimo&quot;: date[im].date(), &quot;recupero&quot;: date[ir].date() if ir is not None else &quot;&quot;,
+                      &quot;profondita&quot;: e[&quot;profondita&quot;], &quot;giorni_discesa&quot;: discesa, &quot;giorni_recupero&quot;: recupero,
+                      &quot;giorni_totali&quot;: discesa + recupero if ir is not None else np.nan,
+                      &quot;sedute_discesa&quot;: im - ip, &quot;aperto&quot;: ir is None})
+    E = pd.DataFrame(righe)
+    E.to_csv(config.RISULTATI / &quot;episodi.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    for s in config.SOGLIE:
+        k = int(round(s * 100))
+        nk = int((E[&quot;profondita&quot;] &gt;= s).sum())
+        reg(f&quot;n_ep_{k:02d}&quot;, nk, &quot;int&quot;, f&quot;Numero di drawdown di almeno il {k}% (episodi, compreso l&#x27;eventuale aperto)&quot;, &quot;episodi.csv&quot;)
+    n10 = int((E[&quot;profondita&quot;] &gt;= 0.10).sum())
+    reg(&quot;ep10_per_anno&quot;, n10 / anni, &quot;num2&quot;, &quot;Drawdown di almeno il 10% per anno (episodi / anni della serie)&quot;, &quot;episodi.csv, anni della serie&quot;)
+    reg(&quot;anni_tra_ep10&quot;, anni / n10, &quot;num1&quot;, &quot;Anni in media tra l&#x27;inizio di un drawdown di almeno il 10% e il successivo (anni della serie / episodi)&quot;, &quot;episodi.csv, anni della serie&quot;)
+
+    ch = E[~E[&quot;aperto&quot;]]
+    ch10 = ch[ch[&quot;profondita&quot;] &gt;= config.SOGLIA_RECUPERO_ANALISI]
+    ch5 = ch
+    reg(&quot;n_ep10_chiusi&quot;, len(ch10), &quot;int&quot;, &quot;Drawdown di almeno il 10% già recuperati&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;n_ep05_chiusi&quot;, len(ch5), &quot;int&quot;, &quot;Drawdown di almeno il 5% già recuperati&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;mediana_discesa_mesi&quot;, mesi(ch10[&quot;giorni_discesa&quot;].median()), &quot;num1&quot;, &quot;Mediana dei mesi dal massimo al minimo, drawdown &gt;= 10% recuperati&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;mediana_recupero_mesi&quot;, mesi(ch10[&quot;giorni_recupero&quot;].median()), &quot;num1&quot;, &quot;Mediana dei mesi dal minimo al nuovo massimo, drawdown &gt;= 10% recuperati&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;mediana_totale_mesi&quot;, mesi(ch10[&quot;giorni_totali&quot;].median()), &quot;num1&quot;, &quot;Mediana dei mesi dal massimo al nuovo massimo, drawdown &gt;= 10% recuperati&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;media_totale_mesi&quot;, mesi(ch10[&quot;giorni_totali&quot;].mean()), &quot;num1&quot;, &quot;Media dei mesi dal massimo al nuovo massimo, drawdown &gt;= 10% recuperati&quot;, &quot;episodi.csv&quot;)
+    nrec = int((ch10[&quot;giorni_recupero&quot;] &gt; ch10[&quot;giorni_discesa&quot;]).sum())
+    reg(&quot;n_recupero_piu_lungo&quot;, nrec, &quot;int&quot;, &quot;Drawdown &gt;= 10% recuperati in cui il recupero dura più della discesa&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;quota_recupero_piu_lungo&quot;, nrec / len(ch10), &quot;pct0&quot;, &quot;Quota dei drawdown &gt;= 10% recuperati in cui il recupero dura più della discesa&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;mediana_prof_ep10&quot;, float(ch10[&quot;profondita&quot;].median()), &quot;pct1&quot;, &quot;Profondità mediana dei drawdown &gt;= 10% recuperati&quot;, &quot;episodi.csv&quot;)
+    ratio = (ch10[&quot;giorni_recupero&quot;] / ch10[&quot;giorni_discesa&quot;].clip(lower=1)).median()
+    reg(&quot;rapporto_mediano&quot;, float(ratio), &quot;num1&quot;, &quot;Mediana del rapporto durata del recupero / durata della discesa, drawdown &gt;= 10% recuperati&quot;, &quot;episodi.csv&quot;)
+    rho = md.rango_spearman(ch5[&quot;profondita&quot;].to_numpy(), ch5[&quot;giorni_totali&quot;].to_numpy())
+    reg(&quot;rho_prof_durata&quot;, rho, &quot;num2&quot;, &quot;Correlazione di rango (Spearman) tra profondità e durata totale, drawdown &gt;= 5% recuperati&quot;, &quot;episodi.csv&quot;)
+    # per fasce di profondità
+    for lo, hi, k in ((0.05, 0.10, &quot;05_10&quot;), (0.10, 0.20, &quot;10_20&quot;), (0.20, 1.01, &quot;20_piu&quot;)):
+        sub = ch5[(ch5[&quot;profondita&quot;] &gt;= lo) &amp; (ch5[&quot;profondita&quot;] &lt; hi)]
+        reg(f&quot;fascia_{k}_n&quot;, len(sub), &quot;int&quot;, f&quot;Drawdown recuperati con profondità tra {lo:.0%} e {min(hi,1):.0%}&quot;, &quot;episodi.csv&quot;)
+        reg(f&quot;fascia_{k}_mediana_mesi&quot;, mesi(sub[&quot;giorni_totali&quot;].median()), &quot;num1&quot;, f&quot;Mediana dei mesi totali (massimo -&gt; nuovo massimo) nella fascia {k}&quot;, &quot;episodi.csv&quot;)
+
+    # --- Il più profondo ----------------------------------------------------------------------------------------
+    pegg = E.sort_values(&quot;profondita&quot;, ascending=False).reset_index(drop=True)
+    p = pegg.iloc[0]
+    reg(&quot;dd_max&quot;, float(p[&quot;profondita&quot;]), &quot;pct1&quot;, &quot;Drawdown massimo della serie&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;dd_max_picco&quot;, str(p[&quot;picco&quot;]), &quot;data_lunga&quot;, &quot;Data del massimo prima del drawdown più profondo&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;dd_max_minimo&quot;, str(p[&quot;minimo&quot;]), &quot;data_lunga&quot;, &quot;Data del minimo del drawdown più profondo&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;dd_max_recupero&quot;, str(p[&quot;recupero&quot;]), &quot;data_lunga&quot;, &quot;Data del nuovo massimo dopo il drawdown più profondo&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;dd_max_discesa_mesi&quot;, mesi(p[&quot;giorni_discesa&quot;]), &quot;num1&quot;, &quot;Mesi dal massimo al minimo nel drawdown più profondo&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;dd_max_recupero_anni&quot;, p[&quot;giorni_recupero&quot;] / 365.25, &quot;num1&quot;, &quot;Anni dal minimo al nuovo massimo nel drawdown più profondo&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;dd_max_totale_anni&quot;, p[&quot;giorni_totali&quot;] / 365.25, &quot;num1&quot;, &quot;Anni dal massimo al nuovo massimo nel drawdown più profondo&quot;, &quot;episodi.csv&quot;)
+    # i cinque peggiori
+    for k in range(5):
+        r = pegg.iloc[k]
+        pre = f&quot;top{k+1}_&quot;
+        reg(pre + &quot;picco&quot;, str(r[&quot;picco&quot;]), &quot;data_lunga&quot;, f&quot;Data del massimo prima del {k+1}° drawdown più profondo&quot;, &quot;episodi.csv&quot;)
+        reg(pre + &quot;prof&quot;, float(r[&quot;profondita&quot;]), &quot;pct1&quot;, f&quot;Profondità del {k+1}° drawdown più profondo&quot;, &quot;episodi.csv&quot;)
+        reg(pre + &quot;discesa&quot;, mesi(r[&quot;giorni_discesa&quot;]), &quot;num1&quot;, f&quot;Mesi di discesa del {k+1}° drawdown più profondo&quot;, &quot;episodi.csv&quot;)
+        if r[&quot;aperto&quot;]:
+            reg(pre + &quot;recupero&quot;, &quot;ancora in corso&quot;, &quot;testo&quot;, f&quot;Recupero del {k+1}° drawdown più profondo (testo)&quot;, &quot;episodi.csv&quot;)
+        else:
+            reg(pre + &quot;recupero&quot;, f&quot;{mesi(r[&#x27;giorni_recupero&#x27;]):.1f}&quot;.replace(&quot;.&quot;, &quot;,&quot;) + &quot; mesi&quot;, &quot;testo&quot;, f&quot;Mesi di recupero del {k+1}° drawdown più profondo&quot;, &quot;episodi.csv&quot;)
+    # a -x% serve +y%
+    for s in (0.20, 0.50):
+        reg(f&quot;serve_{int(s*100)}&quot;, 1 / (1 - s) - 1, &quot;pct0&quot;, f&quot;Guadagno necessario per tornare al massimo dopo una perdita del {int(s*100)}%&quot;, &quot;formula 1/(1-perdita) - 1&quot;)
+        reg(f&quot;perdita_{int(s*100)}&quot;, s, &quot;pct0&quot;, f&quot;Perdita di esempio per il calcolo del guadagno necessario ({int(s*100)}%)&quot;, &quot;config / esempio&quot;)
+    # episodio in corso
+    ap = E[E[&quot;aperto&quot;]]
+    if len(ap):
+        a = ap.iloc[0]
+        reg(&quot;aperto_si&quot;, 1, &quot;int&quot;, &quot;1 se alla fine della serie c&#x27;è un episodio &gt;= 5% ancora aperto&quot;, &quot;episodi.csv&quot;)
+        reg(&quot;aperto_prof&quot;, float(a[&quot;profondita&quot;]), &quot;pct1&quot;, &quot;Profondità massima dell&#x27;episodio ancora aperto&quot;, &quot;episodi.csv&quot;)
+        reg(&quot;aperto_picco&quot;, str(a[&quot;picco&quot;]), &quot;data_lunga&quot;, &quot;Data del massimo dell&#x27;episodio ancora aperto&quot;, &quot;episodi.csv&quot;)
+    else:
+        reg(&quot;aperto_si&quot;, 0, &quot;int&quot;, &quot;1 se alla fine della serie c&#x27;è un episodio &gt;= 5% ancora aperto&quot;, &quot;episodi.csv&quot;)
+
+    # --- Confronto con il caso ----------------------------------------------------------------------------------
+    rend = c[1:] / c[:-1] - 1
+    rng = np.random.default_rng(config.SEME)
+    righe_r = []
+    for k in range(config.N_RIMESCOLAMENTI):
+        x = np.concatenate([[1.0], np.cumprod(1 + rng.permutation(rend))])
+        d = md.serie_drawdown(x)
+        e2 = md.episodi(x, 0.10)
+        righe_r.append({&quot;dd_max&quot;: float(-d.min()), &quot;quota_sotto&quot;: float((d &lt; 0).mean()),
+                        &quot;n_ep10&quot;: len(e2), &quot;n_ep20&quot;: sum(1 for z in e2 if z[&quot;profondita&quot;] &gt;= 0.20)})
+    R = pd.DataFrame(righe_r)
+    R.to_csv(config.RISULTATI / &quot;rimescolate.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    a = (1 - config.LIVELLO_CONFIDENZA) / 2
+    reg(&quot;n_rimesc&quot;, config.N_RIMESCOLAMENTI, &quot;int&quot;, &quot;Numero di serie rimescolate a caso&quot;, &quot;config.py&quot;)
+    reg(&quot;rim_dd_mediano&quot;, float(R[&quot;dd_max&quot;].median()), &quot;pct1&quot;, &quot;Drawdown massimo mediano delle serie rimescolate&quot;, &quot;rimescolate.csv&quot;)
+    q95 = float(R[&quot;dd_max&quot;].quantile(config.LIVELLO_CONFIDENZA))
+    reg(&quot;rim_dd_p95&quot;, q95, &quot;pct1&quot;, &quot;95° percentile del drawdown massimo delle serie rimescolate&quot;, &quot;rimescolate.csv&quot;)
+    reg(&quot;rim_dd_p05&quot;, float(R[&quot;dd_max&quot;].quantile(1 - config.LIVELLO_CONFIDENZA)), &quot;pct1&quot;, &quot;5° percentile del drawdown massimo delle serie rimescolate&quot;, &quot;rimescolate.csv&quot;)
+    reg(&quot;rim_quota_piu_profonde&quot;, float((R[&quot;dd_max&quot;] &gt;= p[&quot;profondita&quot;]).mean()), &quot;pct1&quot;, &quot;Quota di serie rimescolate con drawdown massimo almeno pari a quello reale&quot;, &quot;rimescolate.csv&quot;)
+    reg(&quot;rim_quota_sotto&quot;, float(R[&quot;quota_sotto&quot;].median()), &quot;pct1&quot;, &quot;Quota mediana di sedute sott&#x27;acqua nelle serie rimescolate&quot;, &quot;rimescolate.csv&quot;)
+    reg(&quot;rim_n_ep10&quot;, float(R[&quot;n_ep10&quot;].median()), &quot;num1&quot;, &quot;Numero mediano di drawdown &gt;= 10% nelle serie rimescolate&quot;, &quot;rimescolate.csv&quot;)
+    reg(&quot;rim_n_ep20&quot;, float(R[&quot;n_ep20&quot;].median()), &quot;num1&quot;, &quot;Numero mediano di drawdown &gt;= 20% nelle serie rimescolate&quot;, &quot;rimescolate.csv&quot;)
+    reg(&quot;n_ep_20_reale&quot;, int((E[&quot;profondita&quot;] &gt;= 0.20).sum()), &quot;int&quot;, &quot;Numero di drawdown &gt;= 20% nella serie reale&quot;, &quot;episodi.csv&quot;)
+    reg(&quot;n_ep_10_reale&quot;, n10, &quot;int&quot;, &quot;Numero di drawdown &gt;= 10% nella serie reale&quot;, &quot;episodi.csv&quot;)
+
+    # --- Costanti dichiarate in config.py, citate nel testo ------------------------------------------------------
+    for s in config.SOGLIE:
+        reg(f&quot;s{int(round(s*100)):02d}&quot;, s, &quot;pct0&quot;, f&quot;Soglia di profondità dichiarata in config.py ({s:.0%})&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;rho_soglia&quot;, 0.5, &quot;num1&quot;, &quot;Soglia di correlazione di rango dell&#x27;ipotesi 4&quot;, &quot;config.py, IPOTESI&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello dell&#x27;intervallo usato per il 95° percentile&quot;, &quot;config.py&quot;)
+    reg(&quot;anno_gz&quot;, 1993, &quot;annonum&quot;, &quot;Anno di pubblicazione di Grossman e Zhou&quot;, &quot;abstract letto su IDEAS/RePEc (Mathematical Finance)&quot;)
+    reg(&quot;anno_ma&quot;, 2004, &quot;annonum&quot;, &quot;Anno di pubblicazione di Magdon-Ismail e Atiya&quot;, &quot;pagina della rivista Risk (risk.net)&quot;)
+    reg(&quot;rif_gz&quot;, &quot;3(3), 241-276&quot;, &quot;testo&quot;, &quot;Volume, numero e pagine di Grossman e Zhou su Mathematical Finance&quot;, &quot;abstract letto su IDEAS/RePEc&quot;)
+    reg(&quot;sedute_anno&quot;, config.SEDUTE_ANNO, &quot;int&quot;, &quot;Sedute di borsa in un anno (convenzione)&quot;, &quot;config.py&quot;)
+
+    # --- Ipotesi: esito (calcolato) ---------------------------------------------------------------------------------
+    reg(&quot;ip1_ok&quot;, int((dd &lt; 0).mean() &gt; 2 / 3), &quot;int&quot;, &quot;Ipotesi 1 verificata (1 = sì)&quot;, &quot;confronto con la soglia di config.IPOTESI&quot;)
+    reg(&quot;ip2_ok&quot;, int(n10 / anni &gt;= 0.5), &quot;int&quot;, &quot;Ipotesi 2 verificata (1 = sì)&quot;, &quot;confronto con la soglia di config.IPOTESI&quot;)
+    reg(&quot;ip3_ok&quot;, int(nrec / len(ch10) &gt; 0.5), &quot;int&quot;, &quot;Ipotesi 3 verificata (1 = sì)&quot;, &quot;confronto con la soglia di config.IPOTESI&quot;)
+    reg(&quot;ip4_ok&quot;, int(rho &gt; 0.5), &quot;int&quot;, &quot;Ipotesi 4 verificata (1 = sì)&quot;, &quot;confronto con la soglia di config.IPOTESI&quot;)
+    reg(&quot;ip5_ok&quot;, int(p[&quot;profondita&quot;] &gt; q95), &quot;int&quot;, &quot;Ipotesi 5 verificata (1 = sì)&quot;, &quot;confronto con la soglia di config.IPOTESI&quot;)
+
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri; {len(E)} episodi &gt;= {config.SOGLIA_MINIMA:.0%}&quot;)
+    print({k: RIS[k][&quot;valore&quot;] for k in RIS if k.startswith(&quot;ip&quot;) and k.endswith(&quot;_ok&quot;)})
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i quattro grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_sott_acqua.png        il drawdown dell&#x27;S&amp;P 500 a ogni seduta dal 1927
+  fig2_profondita_durata.png ogni episodio: profondità e durata totale
+  fig3_discesa_recupero.png  discesa e recupero dei drawdown &gt;= 10%
+  fig4_contro_il_caso.png    drawdown massimo delle serie rimescolate e quello reale
+&quot;&quot;&quot;
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+pct = lambda x, _: f&quot;{x:.0f}%&quot;
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    S = pd.read_csv(R / &quot;drawdown_serie.csv&quot;, parse_dates=[&quot;Date&quot;])
+    E = pd.read_csv(R / &quot;episodi.csv&quot;, parse_dates=[&quot;picco&quot;, &quot;minimo&quot;, &quot;recupero&quot;])
+    Q = pd.read_csv(R / &quot;rimescolate.csv&quot;)
+
+    # Figura 1
+    fig, ax = plt.subplots(figsize=(11, 4.8))
+    ax.fill_between(S[&quot;Date&quot;], S[&quot;drawdown&quot;] * 100, 0, color=BLU, alpha=0.55, lw=0)
+    ax.plot(S[&quot;Date&quot;], S[&quot;drawdown&quot;] * 100, color=BLU, lw=0.6)
+    ax.axhline(-20, color=ARANCIO, lw=1.3, ls=&quot;--&quot;)
+    ax.text(S[&quot;Date&quot;].iloc[0], -18.5, &quot;−20%&quot;, color=ARANCIO, fontsize=10)
+    ax.yaxis.set_major_formatter(pct)
+    ax.set_ylabel(&quot;distanza dal massimo storico&quot;)
+    ax.set_xlabel(&quot;anno&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_sott_acqua.png&quot;)
+    plt.close(fig)
+
+    # Figura 2
+    C = E[~E[&quot;aperto&quot;]]
+    fig, ax = plt.subplots(figsize=(10, 5.4))
+    ax.scatter(C[&quot;giorni_totali&quot;] / 365.25, C[&quot;profondita&quot;] * 100, color=BLU, s=38, alpha=0.8, label=&quot;drawdown recuperati&quot;)
+    A = E[E[&quot;aperto&quot;]]
+    if len(A):
+        ax.scatter([(S[&quot;Date&quot;].iloc[-1] - A[&quot;picco&quot;].iloc[0]).days / 365.25], A[&quot;profondita&quot;] * 100, color=ARANCIO, s=70, marker=&quot;D&quot;, label=&quot;ancora in corso&quot;)
+    ax.set_xscale(&quot;log&quot;)
+    ax.set_xticks([0.25, 0.5, 1, 2, 5, 10, 25], [&quot;3 mesi&quot;, &quot;6 mesi&quot;, &quot;1 anno&quot;, &quot;2 anni&quot;, &quot;5 anni&quot;, &quot;10 anni&quot;, &quot;25 anni&quot;])
+    ax.set_xlabel(&quot;durata dal massimo al nuovo massimo (scala logaritmica)&quot;)
+    ax.set_ylabel(&quot;profondità del drawdown&quot;)
+    ax.yaxis.set_major_formatter(pct)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig2_profondita_durata.png&quot;)
+    plt.close(fig)
+
+    # Figura 3 (assi logaritmici: il 1929 è un caso a parte)
+    G = C[C[&quot;profondita&quot;] &gt;= config.SOGLIA_RECUPERO_ANALISI].copy()
+    x = G[&quot;giorni_discesa&quot;].clip(lower=1) / config.GIORNI_MESE
+    y = G[&quot;giorni_recupero&quot;].clip(lower=1) / config.GIORNI_MESE
+    fig, ax = plt.subplots(figsize=(7.4, 7.0))
+    sopra = y &gt; x
+    ax.scatter(x[sopra], y[sopra], color=ARANCIO, s=40, label=&quot;il recupero dura più della discesa&quot;)
+    ax.scatter(x[~sopra], y[~sopra], color=BLU, s=40, label=&quot;la discesa dura più del recupero&quot;)
+    lo = min(x.min(), y.min()) * 0.8
+    hi = max(x.max(), y.max()) * 1.25
+    ax.plot([lo, hi], [lo, hi], color=GRIGIO, lw=1.3, ls=&quot;--&quot;)
+    ax.set_xscale(&quot;log&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_xlim(lo, hi)
+    ax.set_ylim(lo, hi)
+    ax.set_xlabel(&quot;mesi di discesa (dal massimo al minimo), scala logaritmica&quot;)
+    ax.set_ylabel(&quot;mesi di recupero (dal minimo al nuovo massimo), scala logaritmica&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_discesa_recupero.png&quot;)
+    plt.close(fig)
+
+    # Figura 4
+    reale = E[&quot;profondita&quot;].max() * 100
+    fig, ax = plt.subplots(figsize=(10, 5.0))
+    ax.hist(Q[&quot;dd_max&quot;] * 100, bins=30, color=GRIGIO, alpha=0.75)
+    ax.axvline(reale, color=ARANCIO, lw=2.6)
+    ax.text(reale, ax.get_ylim()[1] * 0.92, &quot; serie vera&quot;, color=ARANCIO, ha=&quot;right&quot;, fontsize=11)
+    ax.xaxis.set_major_formatter(pct)
+    ax.set_xlabel(&quot;drawdown massimo&quot;)
+    ax.set_ylabel(&quot;numero di serie rimescolate&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig4_contro_il_caso.png&quot;)
+    plt.close(fig)
+    print(&quot;Grafici salvati in figure/&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri, definizioni e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 261 - &quot;Anatomia di un drawdown&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui. Gli script numerati li leggono da questo file, così ogni numero
+dell&#x27;articolo si può ricondurre a una scelta dichiarata e nessun valore è nascosto nel codice.
+
+Idea: sull&#x27;S&amp;P 500 dal 1927 si misura ogni drawdown (discesa dal massimo storico fino al nuovo massimo): quanto scende,
+quanto dura la discesa, quanto serve per recuperare. Poi si confronta la serie vera con serie &quot;del caso&quot; ottenute
+rimescolando a sorte gli stessi rendimenti giornalieri.
+
+Letteratura (abstract letti prima di scrivere le ipotesi):
+  - Grossman e Zhou (1993), &quot;Optimal Investment Strategies for Controlling Drawdowns&quot;, Mathematical Finance 3(3), 241-276:
+    studiano la politica d&#x27;investimento ottima per chi vuole tenere la ricchezza sopra una frazione fissa del proprio massimo storico.
+  - Magdon-Ismail e Atiya (2004), &quot;Maximum drawdown&quot;, Risk, ottobre 2004: legano il drawdown massimo al rendimento medio e al
+    rapporto di Sharpe e propongono leggi di scala con la durata della serie.
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati ---------------------------------------------------------------
+TICKER = &quot;^GSPC&quot;                  # S&amp;P 500, indice di prezzo (senza dividendi), dal 1927
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+NOTA_COLONNA = &quot;Si usano solo le chiusure; i dividendi non sono considerati&quot;
+
+# --- Definizione di drawdown -------------------------------------------------------------------------------------
+# Drawdown a una data = chiusura / massimo storico precedente - 1. Un &quot;episodio&quot; va dal massimo storico fino al giorno in cui
+# la chiusura torna almeno a quel massimo (recupero). Si contano solo gli episodi che scendono almeno della soglia minima.
+SOGLIA_MINIMA = 0.05
+SOGLIE = (0.05, 0.10, 0.20, 0.30)  # profondità per i conteggi
+SOGLIA_RECUPERO_ANALISI = 0.10     # episodi &quot;veri&quot; per i confronti discesa/recupero
+SEDUTE_ANNO = 252
+GIORNI_MESE = 30.4375
+
+# --- Confronto con il caso ----------------------------------------------------------------------------------------
+# Si rimescolano a sorte i rendimenti giornalieri reali (stessa distribuzione, ordine casuale): si distrugge il
+# raggruppamento delle giornate agitate. Per ogni serie rimescolata si misurano gli stessi indicatori.
+N_RIMESCOLAMENTI = 500
+SEME = 20261030
+LIVELLO_CONFIDENZA = 0.95
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) L&#x27;indice passa più di due sedute su tre sotto il massimo storico precedente: stare sul massimo è l&#x27;eccezione. &quot;
+    &quot;2) I drawdown di almeno il 10% sono frequenti: in media almeno uno ogni due anni dal 1927. &quot;
+    &quot;3) Il recupero (dal minimo al nuovo massimo) dura più della discesa (dal massimo al minimo) in più della metà &quot;
+    &quot;dei drawdown di almeno il 10%. &quot;
+    &quot;4) Più un drawdown è profondo, più dura: la correlazione di rango tra profondità e durata totale, sugli episodi &quot;
+    &quot;di almeno il 5%, è superiore a 0,5. &quot;
+    &quot;5) Il drawdown massimo reale è più profondo del 95° percentile delle serie rimescolate a caso: i crolli veri sono &quot;
+    &quot;più gravi di quelli che produrrebbe il solo caso con gli stessi rendimenti.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/motore_drawdown.py<small>serie dei drawdown ed episodi (massimo, minimo, recupero)</small></summary><pre><code class="language-python">&quot;&quot;&quot;Calcolo dei drawdown: serie sott&#x27;acqua ed episodi (dal massimo storico al recupero).&quot;&quot;&quot;
+import numpy as np
+
+
+def serie_drawdown(close: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Drawdown a ogni seduta: chiusura / massimo storico fino a quel giorno - 1 (&lt;= 0).&quot;&quot;&quot;
+    picco = np.maximum.accumulate(close)
+    return close / picco - 1.0
+
+
+def episodi(close: np.ndarray, soglia: float = 0.0) -&gt; list[dict]:
+    &quot;&quot;&quot;Elenco degli episodi con profondità &gt;= soglia.
+
+    Ogni episodio: i_picco (ultimo massimo prima della discesa), i_minimo, i_recupero (primo giorno con chiusura &gt;= picco,
+    None se l&#x27;episodio è ancora aperto), profondita (positiva). Gli indici sono posizioni nell&#x27;array.
+    &quot;&quot;&quot;
+    out = []
+    picco = close[0]
+    i_picco = 0
+    minimo = picco
+    i_minimo = 0
+    sotto = False
+    for i in range(1, len(close)):
+        c = close[i]
+        if c &gt;= picco:
+            if sotto:
+                prof = 1.0 - minimo / picco
+                if prof &gt;= soglia:
+                    out.append({&quot;i_picco&quot;: i_picco, &quot;i_minimo&quot;: i_minimo, &quot;i_recupero&quot;: i, &quot;profondita&quot;: prof})
+            picco, i_picco, minimo, i_minimo, sotto = c, i, c, i, False
+        else:
+            if not sotto:
+                sotto = True
+                minimo, i_minimo = c, i
+            elif c &lt; minimo:
+                minimo, i_minimo = c, i
+    if sotto:
+        prof = 1.0 - minimo / picco
+        if prof &gt;= soglia:
+            out.append({&quot;i_picco&quot;: i_picco, &quot;i_minimo&quot;: i_minimo, &quot;i_recupero&quot;: None, &quot;profondita&quot;: prof})
+    return out
+
+
+def rango_spearman(x: np.ndarray, y: np.ndarray) -&gt; float:
+    rx = np.argsort(np.argsort(x, kind=&quot;stable&quot;), kind=&quot;stable&quot;).astype(float)
+    ry = np.argsort(np.argsort(y, kind=&quot;stable&quot;), kind=&quot;stable&quot;).astype(float)
+    # gestione dei pari: media dei ranghi
+    def medi(v, r):
+        for val in np.unique(v):
+            m = v == val
+            if m.sum() &gt; 1:
+                r[m] = r[m].mean()
+        return r
+    rx, ry = medi(x, rx), medi(y, ry)
+    return float(np.corrcoef(rx, ry)[0, 1])
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli di motore_drawdown.py su dati inventati: se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+
+import motore_drawdown as md
+
+
+def ok(cond, msg):
+    if not cond:
+        raise SystemExit(f&quot;CONTROLLO FALLITO: {msg}&quot;)
+    print(&quot;ok:&quot;, msg)
+
+
+c = np.array([100, 110, 99, 90, 95, 110, 120, 108, 130, 100, 105], dtype=float)
+dd = md.serie_drawdown(c)
+ok(abs(dd[3] - (90 / 110 - 1)) &lt; 1e-12, &quot;drawdown alla seduta 3 = 90/110 - 1&quot;)
+ok(dd[1] == 0 and dd[5] == 0 and dd[6] == 0, &quot;sul massimo il drawdown è zero&quot;)
+e = md.episodi(c)
+ok(len(e) == 3, &quot;tre episodi (110-&gt;90, 120-&gt;108, 130-&gt;100 aperto)&quot;)
+ok(e[0][&quot;i_picco&quot;] == 1 and e[0][&quot;i_minimo&quot;] == 3 and e[0][&quot;i_recupero&quot;] == 5, &quot;primo episodio: picco 1, minimo 3, recupero 5&quot;)
+ok(abs(e[0][&quot;profondita&quot;] - (1 - 90 / 110)) &lt; 1e-12, &quot;profondità del primo episodio&quot;)
+ok(e[1][&quot;i_recupero&quot;] == 8, &quot;secondo episodio recuperato alla seduta 8 (130 &gt;= 120)&quot;)
+ok(e[2][&quot;i_recupero&quot;] is None and e[2][&quot;i_minimo&quot;] == 9, &quot;terzo episodio ancora aperto, minimo alla seduta 9&quot;)
+ok(len(md.episodi(c, 0.15)) == 2, &quot;con soglia 15% restano gli episodi da 18% e 23%&quot;)
+ok(len(md.episodi(np.array([1.0, 2.0, 3.0]))) == 0, &quot;serie sempre crescente: nessun episodio&quot;)
+# recupero uguale al picco conta come recupero
+ok(md.episodi(np.array([10.0, 8.0, 10.0]))[0][&quot;i_recupero&quot;] == 2, &quot;tornare esattamente al massimo è recupero&quot;)
+# a -50% serve +100%
+x = np.array([100.0, 50.0, 100.0])
+ok(abs(md.episodi(x)[0][&quot;profondita&quot;] - 0.5) &lt; 1e-12, &quot;-50% e poi +100% riporta al massimo&quot;)
+# correlazione di rango
+a = np.array([1, 2, 3, 4, 5.0])
+ok(abs(md.rango_spearman(a, a ** 2) - 1) &lt; 1e-12, &quot;Spearman = 1 per relazione monotòna&quot;)
+ok(abs(md.rango_spearman(a, -a) + 1) &lt; 1e-12, &quot;Spearman = -1 per relazione decrescente&quot;)
+print(&quot;Tutti i controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
