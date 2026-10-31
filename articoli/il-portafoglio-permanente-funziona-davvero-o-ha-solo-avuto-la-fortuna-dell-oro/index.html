@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Il Portafoglio Permanente funziona davvero, o ha solo avuto la fortuna dell&#x27;oro? · il codice · TickerFight</title>
+<meta name="description" content="il Portafoglio Permanente di Harry Browne (un quarto azioni, un quarto obbligazioni di Stato lunghe, un quarto oro, un quarto liquidità) funziona davvero, o ha solo avuto la fortuna del rialzo dell&#x27;oro? Lo seguiamo da settembre 2000 all&#x27;ultimo mese completo e lo confrontiamo con le sole azioni, con il 60/40, con due versioni amputate (senza oro, senza liquidità) e con 2000 portafogli a pesi casuali.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Il Portafoglio Permanente funziona davvero, o ha solo avuto la fortuna dell&#x27;oro?</h1>
+<p class="domanda">Il Portafoglio Permanente di Harry Browne (un quarto azioni, un quarto obbligazioni di Stato lunghe, un quarto oro, un quarto liquidità) funziona davvero, o ha solo avuto la fortuna del rialzo dell&#x27;oro? Lo seguiamo da settembre 2000 all&#x27;ultimo mese completo e lo confrontiamo con le sole azioni, con il 60/40, con due versioni amputate (senza oro, senza liquidità) e con 2000 portafogli a pesi casuali.</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="il-portafoglio-permanente-funziona-davvero-o-ha-solo-avuto-la-fortuna-dell-oro.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Dati (Yahoo Finance):</strong> <code>VFINX</code> (azioni), <code>VUSTX</code> (Treasury lunghi), <code>GC=F</code> (oro, future continuo), <code>GLD</code> (controllo dell'oro), <code>VBMFX</code> (obbligazioni aggregate, per il 60/40), <code>^IRX</code> (Bot a 13 settimane, liquidità).</li>
+<li><strong>Portafogli:</strong> pesi fissi, ribilanciati ogni gennaio, da settembre 2000 all'ultimo mese completo. Rendimenti nominali, in dollari, lordi di costi e tasse.</li>
+<li><strong>Incertezza e caso:</strong> bootstrap a blocchi di 12 mesi sulla differenza di Sharpe; 2000 portafogli con pesi casuali ripescati ogni gennaio.</li>
+<li><strong>Sotto-periodi:</strong> fino a dicembre 2011 e da gennaio 2012 (scelti a priori).</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>il-portafoglio-permanente-funziona-davvero-o-ha-solo-avuto-la-fortuna-dell-oro/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica fondi, oro e Bot da Yahoo Finance
+    ├── 02_backtest_e_test.py  serie mensili, anni solari, sotto-periodi, bootstrap, scimmie
+    ├── 03_grafici.py          i tre grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            portafoglio ribilanciato, statistiche, bootstrap
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd il-portafoglio-permanente-funziona-davvero-o-ha-solo-avuto-la-fortuna-dell-oro
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance le serie giornaliere (fondo azionario, fondo obbligazionario, tassi a 10 anni e a 13 settimane).
+
+Salva dati/&lt;ticker&gt;.csv (Date, Close) e dati/metadati.json con fonte, data del download, versione di yfinance e impronta SHA-256.
+Per i fondi Close è il prezzo corretto per dividendi (rendimento totale). Gli script successivi leggono SOLO i file salvati.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=True)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;serie&quot;: []}
+    for ticker, nome, ruolo in config.SERIE:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nome, &quot;ruolo&quot;: ruolo}
+        grezzo = scarica(ticker)
+        if grezzo.empty:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;serie&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Close&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Close&quot;])
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;serie&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    if sum(1 for r in meta[&quot;serie&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;) &lt; len(config.SERIE):
+        raise SystemExit(&quot;Non tutte le serie sono state scaricate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>serie mensili, anni solari, sotto-periodi, bootstrap, scimmie</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Il Portafoglio Permanente: serie mensili, statistiche, anni solari, sotto-periodi, bootstrap, scimmie.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json       ogni numero dell&#x27;articolo, con descrizione e origine
+  mensili.csv         rendimenti mensili di asset e portafogli
+  anni_solari.csv     rendimento di ogni anno solare
+  scimmie.csv         Sharpe e perdita massima dei portafogli a pesi casuali
+
+Nessun look-ahead: i pesi sono fissi e decisi in config.py; il ribilanciamento è a gennaio; la liquidità del mese usa il tasso di fine mese precedente.
+&quot;&quot;&quot;
+import json
+import platform
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as fx
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con funzioni.py&quot;
+NOMI = {&quot;pp&quot;: &quot;Portafoglio Permanente&quot;, &quot;az&quot;: &quot;100% azioni&quot;, &quot;m6040&quot;: &quot;60/40&quot;, &quot;ob&quot;: &quot;100% obbligazioni lunghe&quot;,
+        &quot;oro&quot;: &quot;100% oro&quot;, &quot;senza_oro&quot;: &quot;senza oro&quot;, &quot;senza_cassa&quot;: &quot;senza liquidità&quot;}
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer, np.bool_)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def leggi(ticker: str) -&gt; pd.Series:
+    return pd.read_csv(config.file_dati(ticker), index_col=0, parse_dates=True)[&quot;Close&quot;]
+
+
+def tasso_pct(s: pd.Series) -&gt; pd.Series:
+    m = fx.fine_mese(s)
+    return m / 10.0 if m.median() &gt; 25 else m
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    meta = json.loads(config.FILE_METADATI.read_text(encoding=&quot;utf-8&quot;))
+    rng = np.random.default_rng(config.SEME)
+    scarico = pd.Timestamp(meta[&quot;scaricato_il_utc&quot;][:10]).to_period(&quot;M&quot;)
+
+    az_m, ob_m, oro_m = (fx.fine_mese(leggi(t)) for t in (&quot;VFINX&quot;, &quot;VUSTX&quot;, &quot;GC=F&quot;))
+    agg_m, gld_m = fx.fine_mese(leggi(&quot;VBMFX&quot;)), fx.fine_mese(leggi(&quot;GLD&quot;))
+    irx = tasso_pct(leggi(&quot;^IRX&quot;))
+    ultimo = min(az_m.index[-1], ob_m.index[-1], oro_m.index[-1], irx.index[-1], scarico - 1)
+    mesi = pd.period_range(config.INIZIO_CAMPIONE, ultimo, freq=&quot;M&quot;)
+    A, O, G = (s.pct_change().reindex(mesi).values for s in (az_m, ob_m, oro_m))
+    AGG = agg_m.pct_change().reindex(mesi).values
+    C = (irx.shift(1) / 100 / 12).reindex(mesi).values
+    R = np.column_stack([A, O, G, C])
+    if np.isnan(R).any() or np.isnan(AGG).any():
+        raise SystemExit(&quot;Valori mancanti nelle serie mensili&quot;)
+    n = len(mesi)
+
+    P = {k: fx.portafoglio(R, mesi, w)[0] for k, w in config.PESI.items()}
+    m6040 = fx.portafoglio(np.column_stack([A, AGG]), mesi, [config.PESO_AZIONI_6040, 1 - config.PESO_AZIONI_6040])[0]
+    serie = {&quot;pp&quot;: P[&quot;pp&quot;], &quot;az&quot;: A, &quot;m6040&quot;: m6040, &quot;ob&quot;: O, &quot;oro&quot;: G,
+             &quot;senza_oro&quot;: P[&quot;senza_oro&quot;], &quot;senza_cassa&quot;: P[&quot;senza_cassa&quot;]}
+    pd.DataFrame({&quot;mese&quot;: mesi.astype(str), &quot;azioni&quot;: A, &quot;obbligazioni&quot;: O, &quot;oro&quot;: G, &quot;cassa&quot;: C, &quot;pp&quot;: P[&quot;pp&quot;], &quot;m6040&quot;: m6040,
+                  &quot;senza_oro&quot;: P[&quot;senza_oro&quot;], &quot;senza_cassa&quot;: P[&quot;senza_cassa&quot;]}).to_csv(config.RISULTATI / &quot;mensili.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+
+    reg(&quot;campione_inizio&quot;, mesi[0].year, &quot;annonum&quot;, &quot;Anno del primo mese del campione&quot;, &quot;config.py, INIZIO_CAMPIONE&quot;)
+    reg(&quot;campione_fine_mese&quot;, f&quot;{mesi[-1].year}-{mesi[-1].month:02d}-{mesi[-1].days_in_month:02d}&quot;, &quot;data_lunga&quot;, &quot;Ultimo mese completo del campione&quot;, &quot;dati/&quot;)
+    reg(&quot;n_mesi&quot;, n, &quot;int&quot;, &quot;Mesi del campione&quot;, &quot;numero di mesi&quot;)
+    reg(&quot;n_anni&quot;, n / 12, &quot;num1&quot;, &quot;Anni del campione&quot;, &quot;mesi / 12&quot;)
+    reg(&quot;peso_pp&quot;, config.PESI[&quot;pp&quot;][0], &quot;pct0&quot;, &quot;Peso di ciascuno dei quattro asset nel Portafoglio Permanente&quot;, &quot;config.py, PESI&quot;)
+    reg(&quot;peso_6040_az&quot;, config.PESO_AZIONI_6040, &quot;pct0&quot;, &quot;Peso delle azioni nel 60/40&quot;, &quot;config.py&quot;)
+    reg(&quot;peso_6040_ob&quot;, 1 - config.PESO_AZIONI_6040, &quot;pct0&quot;, &quot;Peso delle obbligazioni nel 60/40&quot;, &quot;config.py&quot;)
+    reg(&quot;peso_terzo&quot;, 1 / 3, &quot;pct0&quot;, &quot;Peso di ciascuno dei tre asset nelle versioni senza oro e senza liquidità&quot;, &quot;config.py, PESI&quot;)
+    reg(&quot;data_scarico&quot;, meta[&quot;scaricato_il_utc&quot;][:10], &quot;data&quot;, &quot;Data del download dei dati&quot;, &quot;dati/metadati.json&quot;)
+
+    # --- statistiche complessive ------------------------------------------------------------------------------------
+    for k, r in serie.items():
+        reg(f&quot;{k}_cagr&quot;, fx.cagr(r), &quot;pct1&quot;, f&quot;Rendimento annuo composto, {NOMI[k]}&quot;)
+        reg(f&quot;{k}_vol&quot;, fx.volatilita(r), &quot;pct1&quot;, f&quot;Volatilità annua, {NOMI[k]}&quot;)
+        reg(f&quot;{k}_sharpe&quot;, float(fx.sharpe(r, C)), &quot;num2&quot;, f&quot;Sharpe ratio annualizzato (eccesso sui Bot a 13 settimane), {NOMI[k]}&quot;)
+        reg(f&quot;{k}_dd&quot;, fx.perdita_massima(r), &quot;pct1&quot;, f&quot;Perdita massima dal picco (mensile), {NOMI[k]}&quot;)
+        reg(f&quot;{k}_valore&quot;, float(np.prod(1 + r)), &quot;num2&quot;, f&quot;Valore finale di 1 dollaro, {NOMI[k]}&quot;)
+    for k in (&quot;pp&quot;, &quot;az&quot;, &quot;m6040&quot;):
+        reg(f&quot;{k}_sott_acqua&quot;, fx.mesi_sott_acqua(serie[k]), &quot;int&quot;, f&quot;Periodo più lungo (mesi) sotto il massimo precedente, {NOMI[k]}&quot;)
+        reg(f&quot;{k}_sott_acqua_anni&quot;, fx.mesi_sott_acqua(serie[k]) / 12, &quot;num1&quot;, f&quot;Come sopra, in anni, {NOMI[k]}&quot;)
+    reg(&quot;cassa_cagr&quot;, fx.cagr(C), &quot;pct1&quot;, &quot;Rendimento annuo composto dei Bot a 13 settimane&quot;, &quot;dati/IRX.csv&quot;)
+
+    # --- anni solari ------------------------------------------------------------------------------------------------
+    ann = pd.DataFrame({k: fx.rendimenti_anno_solare(r, mesi) for k, r in serie.items()})
+    anni_pieni = [a for a in ann.index if sum(1 for m in mesi if m.year == a) == 12]
+    ann = ann.loc[anni_pieni]
+    ann.to_csv(config.RISULTATI / &quot;anni_solari.csv&quot;, index_label=&quot;anno&quot;, float_format=&quot;%.5f&quot;)
+    pa = int(ann[&quot;pp&quot;].idxmin())
+    reg(&quot;pp_peggior_anno&quot;, pa, &quot;annonum&quot;, &quot;Anno solare peggiore del Portafoglio Permanente&quot;, &quot;anni_solari.csv&quot;)
+    reg(&quot;pp_peggior_rend&quot;, float(ann[&quot;pp&quot;].min()), &quot;pct1&quot;, &quot;Rendimento dell&#x27;anno solare peggiore del PP&quot;, &quot;anni_solari.csv&quot;)
+    reg(&quot;anno_crisi&quot;, 2008, &quot;annonum&quot;, &quot;Anno della crisi finanziaria, scelto a priori nelle ipotesi&quot;, &quot;ipotesi 4&quot;)
+    reg(&quot;anno_rialzi&quot;, 2022, &quot;annonum&quot;, &quot;Anno dei rialzi dei tassi, scelto a priori nelle ipotesi&quot;, &quot;config.py, SOGLIE&quot;)
+    for a in (2008, 2022):
+        for k in (&quot;pp&quot;, &quot;az&quot;, &quot;m6040&quot;, &quot;ob&quot;, &quot;oro&quot;):
+            reg(f&quot;{k}_{a}&quot;, float(ann.loc[a, k]), &quot;pct1&quot;, f&quot;Rendimento {NOMI[k]} nel {a}&quot;, &quot;anni_solari.csv&quot;)
+    reg(&quot;pp_anni_neg&quot;, int((ann[&quot;pp&quot;] &lt; 0).sum()), &quot;int&quot;, &quot;Anni solari negativi del PP&quot;, &quot;anni_solari.csv&quot;)
+    reg(&quot;az_anni_neg&quot;, int((ann[&quot;az&quot;] &lt; 0).sum()), &quot;int&quot;, &quot;Anni solari negativi delle azioni&quot;, &quot;anni_solari.csv&quot;)
+    reg(&quot;m6040_anni_neg&quot;, int((ann[&quot;m6040&quot;] &lt; 0).sum()), &quot;int&quot;, &quot;Anni solari negativi del 60/40&quot;, &quot;anni_solari.csv&quot;)
+    reg(&quot;n_anni_pieni&quot;, len(ann), &quot;int&quot;, &quot;Anni solari completi nel campione&quot;, &quot;anni_solari.csv&quot;)
+    reg(&quot;pp_meglio_az_anni&quot;, int((ann[&quot;pp&quot;] &gt; ann[&quot;az&quot;]).sum()), &quot;int&quot;, &quot;Anni solari in cui il PP ha reso più delle azioni&quot;, &quot;anni_solari.csv&quot;)
+
+    # --- correlazioni tra gli asset -----------------------------------------------------------------------------------
+    for (a, b, na) in ((A, O, &quot;az_ob&quot;), (A, G, &quot;az_oro&quot;), (O, G, &quot;ob_oro&quot;)):
+        reg(f&quot;corr_{na}&quot;, float(np.corrcoef(a, b)[0, 1]), &quot;num2&quot;, f&quot;Correlazione mensile {na.replace(&#x27;_&#x27;, &#x27;/&#x27;)}&quot;)
+
+    # --- sotto-periodi -------------------------------------------------------------------------------------------------
+    sp = pd.Period(config.DIVISIONE_PERIODO, &quot;M&quot;)
+    i1 = np.array([m &lt; sp for m in mesi])
+    i2 = ~i1
+    reg(&quot;sp_divisione&quot;, sp.year, &quot;annonum&quot;, &quot;Anno d&#x27;inizio del secondo sotto-periodo&quot;, &quot;config.py, DIVISIONE_PERIODO&quot;)
+    reg(&quot;sp_fine1_anno&quot;, (sp - 1).year, &quot;annonum&quot;, &quot;Anno finale del primo sotto-periodo&quot;, &quot;config.py, DIVISIONE_PERIODO&quot;)
+    for nome, sel in ((&quot;p1&quot;, i1), (&quot;p2&quot;, i2)):
+        reg(f&quot;{nome}_mesi&quot;, int(sel.sum()), &quot;int&quot;, f&quot;Mesi del sotto-periodo {nome}&quot;)
+        for k in (&quot;pp&quot;, &quot;az&quot;, &quot;m6040&quot;, &quot;oro&quot;):
+            reg(f&quot;{nome}_{k}_cagr&quot;, fx.cagr(serie[k][sel]), &quot;pct1&quot;, f&quot;Rendimento annuo composto, {NOMI[k]}, sotto-periodo {nome}&quot;)
+        for k in (&quot;pp&quot;, &quot;az&quot;, &quot;m6040&quot;):
+            reg(f&quot;{nome}_{k}_sharpe&quot;, float(fx.sharpe(serie[k][sel], C[sel])), &quot;num2&quot;, f&quot;Sharpe, {NOMI[k]}, sotto-periodo {nome}&quot;)
+        reg(f&quot;{nome}_pp_dd&quot;, fx.perdita_massima(serie[&quot;pp&quot;][sel]), &quot;pct1&quot;, f&quot;Perdita massima del PP, sotto-periodo {nome}&quot;)
+        reg(f&quot;{nome}_az_dd&quot;, fx.perdita_massima(serie[&quot;az&quot;][sel]), &quot;pct1&quot;, f&quot;Perdita massima delle azioni, sotto-periodo {nome}&quot;)
+        reg(f&quot;{nome}_diff_6040&quot;, RIS[f&quot;{nome}_pp_sharpe&quot;][&quot;valore&quot;] - RIS[f&quot;{nome}_m6040_sharpe&quot;][&quot;valore&quot;], &quot;num2&quot;,
+            f&quot;Sharpe del PP meno Sharpe del 60/40, sotto-periodo {nome}&quot;)
+
+    # --- bootstrap della differenza di Sharpe ---------------------------------------------------------------------------
+    dif = []
+    for _ in range(config.N_BOOTSTRAP):
+        ix = fx.indici_blocchi(n, config.BLOCCO_MESI, rng)
+        dif.append(float(fx.sharpe(serie[&quot;pp&quot;][ix], C[ix]) - fx.sharpe(A[ix], C[ix])))
+    a = (1 - config.LIVELLO_CONFIDENZA) / 2
+    lo, hi = float(np.quantile(dif, a)), float(np.quantile(dif, 1 - a))
+    reg(&quot;boot_diff&quot;, RIS[&quot;pp_sharpe&quot;][&quot;valore&quot;] - RIS[&quot;az_sharpe&quot;][&quot;valore&quot;], &quot;num2&quot;, &quot;Sharpe del PP meno Sharpe delle azioni&quot;)
+    reg(&quot;boot_lo&quot;, lo, &quot;num2&quot;, &quot;Estremo inferiore dell&#x27;intervallo di confidenza della differenza di Sharpe&quot;)
+    reg(&quot;boot_hi&quot;, hi, &quot;num2&quot;, &quot;Estremo superiore dell&#x27;intervallo di confidenza della differenza di Sharpe&quot;)
+    reg(&quot;boot_zero_dentro&quot;, int(lo &lt;= 0 &lt;= hi), &quot;int&quot;, &quot;1 se l&#x27;intervallo comprende lo zero&quot;)
+    reg(&quot;n_bootstrap&quot;, config.N_BOOTSTRAP, &quot;int&quot;, &quot;Ricampionamenti bootstrap&quot;, &quot;config.py, N_BOOTSTRAP&quot;)
+    reg(&quot;blocco&quot;, config.BLOCCO_MESI, &quot;int&quot;, &quot;Lunghezza dei blocchi del bootstrap, mesi&quot;, &quot;config.py, BLOCCO_MESI&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello dell&#x27;intervallo di confidenza&quot;, &quot;config.py, LIVELLO_CONFIDENZA&quot;)
+
+    # --- scimmie: pesi casuali (Dirichlet uniforme) estratti di nuovo ogni gennaio ------------------------------------------
+    anni_u = list(dict.fromkeys(m.year for m in mesi))
+    Wc = rng.dirichlet(np.ones(4), size=(config.N_SCIMMIE, len(anni_u)))
+    PM = fx.portafoglio(R, mesi, Wc)
+    sh = np.asarray(fx.sharpe(PM, C[None, :], asse=1))
+    dd = np.array([fx.perdita_massima(x) for x in PM])
+    pd.DataFrame({&quot;sharpe&quot;: sh, &quot;perdita_massima&quot;: dd}).to_csv(config.RISULTATI / &quot;scimmie.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    reg(&quot;n_scimmie&quot;, config.N_SCIMMIE, &quot;int&quot;, &quot;Portafogli a pesi casuali&quot;, &quot;config.py, N_SCIMMIE&quot;)
+    reg(&quot;scim_perc_pp&quot;, float((sh &lt;= RIS[&quot;pp_sharpe&quot;][&quot;valore&quot;]).mean()), &quot;pct1&quot;, &quot;Quota di scimmie con Sharpe non superiore a quello del PP&quot;)
+    reg(&quot;scim_perc_az&quot;, float((sh &lt;= RIS[&quot;az_sharpe&quot;][&quot;valore&quot;]).mean()), &quot;pct1&quot;, &quot;Quota di scimmie con Sharpe non superiore a quello delle azioni&quot;)
+    reg(&quot;scim_dd_meglio&quot;, float((dd &gt; RIS[&quot;pp_dd&quot;][&quot;valore&quot;]).mean()), &quot;pct1&quot;, &quot;Quota di scimmie con perdita massima più piccola di quella del PP&quot;)
+    reg(&quot;scim_med&quot;, float(np.median(sh)), &quot;num2&quot;, &quot;Sharpe mediano delle scimmie&quot;)
+    reg(&quot;scim_p05&quot;, float(np.quantile(sh, 0.05)), &quot;num2&quot;, &quot;Sharpe del 5° percentile delle scimmie&quot;)
+    reg(&quot;scim_p95&quot;, float(np.quantile(sh, 0.95)), &quot;num2&quot;, &quot;Sharpe del 95° percentile delle scimmie&quot;)
+    reg(&quot;scim_dd_med&quot;, float(np.median(dd)), &quot;pct1&quot;, &quot;Perdita massima mediana delle scimmie&quot;)
+
+    # --- controllo: oro (future) contro GLD -------------------------------------------------------------------------------
+    rg = gld_m.pct_change()
+    comune = mesi.intersection(rg.dropna().index)
+    comune = comune[comune &gt;= pd.Period(config.INIZIO_CONTROLLO_ORO, &quot;M&quot;)]
+    x, z = pd.Series(G, index=mesi).reindex(comune).values, rg.reindex(comune).values
+    reg(&quot;proxy_n&quot;, len(comune), &quot;int&quot;, &quot;Mesi in comune tra oro (future) e GLD&quot;, &quot;dati/GLD.csv&quot;)
+    reg(&quot;proxy_corr&quot;, float(np.corrcoef(x, z)[0, 1]), &quot;num2&quot;, &quot;Correlazione mensile tra oro (future) e GLD&quot;, &quot;dati/GLD.csv&quot;)
+    reg(&quot;proxy_cagr_fut&quot;, fx.cagr(x), &quot;pct1&quot;, &quot;Rendimento annuo composto dell&#x27;oro (future) nel periodo in comune&quot;)
+    reg(&quot;proxy_cagr_gld&quot;, fx.cagr(z), &quot;pct1&quot;, &quot;Rendimento annuo composto del GLD nel periodo in comune&quot;, &quot;dati/GLD.csv&quot;)
+    reg(&quot;proxy_inizio&quot;, comune[0].year, &quot;annonum&quot;, &quot;Anno di inizio del confronto con GLD&quot;, &quot;config.py, INIZIO_CONTROLLO_ORO&quot;)
+
+    # --- verdetti (flag 1/0) ----------------------------------------------------------------------------------------------
+    S = config.SOGLIE
+    V = lambda k: RIS[k][&quot;valore&quot;]
+    reg(&quot;ip1_ok&quot;, int(abs(V(&quot;pp_dd&quot;)) &lt; abs(V(&quot;az_dd&quot;)) and abs(V(&quot;pp_dd&quot;)) &lt; abs(V(&quot;m6040_dd&quot;))), &quot;int&quot;, &quot;Ipotesi 1 verificata&quot;)
+    reg(&quot;ip2_ok&quot;, int(V(&quot;pp_sharpe&quot;) &gt; V(&quot;az_sharpe&quot;)), &quot;int&quot;, &quot;Ipotesi 2 verificata&quot;)
+    reg(&quot;ip3_ok&quot;, int(V(&quot;pp_cagr&quot;) &lt; V(&quot;az_cagr&quot;)), &quot;int&quot;, &quot;Ipotesi 3 verificata&quot;)
+    reg(&quot;ip4_ok&quot;, int(pa == S[&quot;ip3_anno&quot;]), &quot;int&quot;, &quot;Ipotesi 4 verificata&quot;)
+    reg(&quot;ip5_ok&quot;, int(V(&quot;pp_sharpe&quot;) &gt; V(&quot;senza_oro_sharpe&quot;)), &quot;int&quot;, &quot;Ipotesi 5 verificata&quot;)
+    reg(&quot;ip6_ok&quot;, int(abs(V(&quot;senza_cassa_dd&quot;)) &gt; abs(V(&quot;pp_dd&quot;))), &quot;int&quot;, &quot;Ipotesi 6 verificata&quot;)
+    reg(&quot;ip7_ok&quot;, V(&quot;boot_zero_dentro&quot;), &quot;int&quot;, &quot;Ipotesi 7 verificata (l&#x27;intervallo comprende lo zero)&quot;)
+    reg(&quot;ip8_ok&quot;, int(V(&quot;scim_perc_pp&quot;) &gt; S[&quot;ip7_perc&quot;]), &quot;int&quot;, &quot;Ipotesi 8 verificata&quot;)
+    reg(&quot;ip9_ok&quot;, int(V(&quot;p1_diff_6040&quot;) &gt; V(&quot;p2_diff_6040&quot;)), &quot;int&quot;, &quot;Ipotesi 9 verificata&quot;)
+    reg(&quot;ip10_ok&quot;, int(V(&quot;proxy_corr&quot;) &gt;= S[&quot;ip9_corr&quot;]), &quot;int&quot;, &quot;Ipotesi 10 verificata&quot;)
+    reg(&quot;s_ip4_anno&quot;, S[&quot;ip3_anno&quot;], &quot;annonum&quot;, &quot;Soglia ipotesi 4: anno&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip8_perc&quot;, S[&quot;ip7_perc&quot;], &quot;pct0&quot;, &quot;Soglia ipotesi 8: quota di scimmie battute&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;s_ip10_corr&quot;, S[&quot;ip9_corr&quot;], &quot;num2&quot;, &quot;Soglia ipotesi 10: correlazione minima&quot;, &quot;config.py, SOGLIE&quot;)
+    reg(&quot;cit_baur&quot;, 2010, &quot;annonum&quot;, &quot;Anno di Baur e Lucey (The Financial Review)&quot;, &quot;abstract letto su opus.lib.uts.edu.au&quot;)
+    reg(&quot;cit_erb&quot;, 2013, &quot;annonum&quot;, &quot;Anno di Erb e Harvey (Financial Analysts Journal)&quot;, &quot;abstract letto su ideas.repec.org&quot;)
+    reg(&quot;cit_demiguel&quot;, 2009, &quot;annonum&quot;, &quot;Anno di DeMiguel, Garlappi e Uppal (Review of Financial Studies)&quot;, &quot;abstract letto su ideas.repec.org&quot;)
+
+    reg(&quot;cit_dm_modelli&quot;, 14, &quot;int&quot;, &quot;Numero di modelli di ottimizzazione messi a confronto da DeMiguel, Garlappi e Uppal&quot;, &quot;abstract letto su ideas.repec.org&quot;)
+    reg(&quot;cit_dm_dataset&quot;, 7, &quot;int&quot;, &quot;Numero di insiemi di dati usati da DeMiguel, Garlappi e Uppal&quot;, &quot;abstract letto su ideas.repec.org&quot;)
+
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri su {n} mesi&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i tre grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_crescita.png     crescita di 1 dollaro: Portafoglio Permanente, azioni, 60/40 (scala logaritmica)
+  fig2_anni.png         rendimento di ogni anno solare: Portafoglio Permanente contro azioni
+  fig3_scimmie.png      Sharpe del PP e delle azioni contro la distribuzione delle scimmie
+&quot;&quot;&quot;
+import numpy as np
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    m = pd.read_csv(R / &quot;mensili.csv&quot;)
+    t = pd.PeriodIndex(m[&quot;mese&quot;], freq=&quot;M&quot;).to_timestamp(how=&quot;end&quot;)
+
+    fig, ax = plt.subplots(figsize=(8.4, 4.8))
+    for col, c, lab, lw in ((&quot;azioni&quot;, BLU, &quot;100% azioni&quot;, 2.2), (&quot;pp&quot;, ARANCIO, &quot;Portafoglio Permanente&quot;, 2.8), (&quot;m6040&quot;, GRIGIO, &quot;60/40&quot;, 2.0)):
+        ax.plot(t, (1 + m[col]).cumprod(), color=c, lw=lw, label=lab)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_yticks([0.6, 1, 2, 4, 6])
+    ax.set_yticklabels([&quot;0,6&quot;, &quot;1&quot;, &quot;2&quot;, &quot;4&quot;, &quot;6&quot;])
+    ax.minorticks_off()
+    ax.set_ylabel(&quot;Valore di 1 dollaro (scala logaritmica)&quot;)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.savefig(config.FIGURE / &quot;fig1_crescita.png&quot;)
+    plt.close(fig)
+
+    a = pd.read_csv(R / &quot;anni_solari.csv&quot;)
+    fig, ax = plt.subplots(figsize=(9.2, 4.8))
+    x = np.arange(len(a))
+    ax.bar(x - 0.2, a[&quot;az&quot;] * 100, 0.4, color=BLU, label=&quot;100% azioni&quot;)
+    ax.bar(x + 0.2, a[&quot;pp&quot;] * 100, 0.4, color=ARANCIO, label=&quot;Portafoglio Permanente&quot;)
+    ax.axhline(0, color=&quot;black&quot;, lw=1)
+    ax.set_xticks(x)
+    ax.set_xticklabels(a[&quot;anno&quot;].astype(str), rotation=90, fontsize=9)
+    ax.set_ylabel(&quot;Rendimento dell&#x27;anno solare (%)&quot;)
+    ax.set_ylim(-42, 42)
+    ax.legend(loc=&quot;upper center&quot;, ncol=2)
+    fig.savefig(config.FIGURE / &quot;fig2_anni.png&quot;)
+    plt.close(fig)
+
+    import json
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+    s = pd.read_csv(R / &quot;scimmie.csv&quot;)
+    fig, ax = plt.subplots(figsize=(8.4, 4.8))
+    ax.hist(s[&quot;sharpe&quot;], bins=40, color=GRIGIO, alpha=0.6, label=&quot;Scimmie (pesi casuali)&quot;)
+    ax.axvline(V[&quot;pp_sharpe&quot;][&quot;valore&quot;], color=ARANCIO, lw=3, ls=&quot;--&quot;, label=&quot;Portafoglio Permanente&quot;)
+    ax.axvline(V[&quot;az_sharpe&quot;][&quot;valore&quot;], color=BLU, lw=3, label=&quot;100% azioni&quot;)
+    ax.set_xlabel(&quot;Sharpe ratio&quot;)
+    ax.set_ylabel(&quot;Numero di portafogli&quot;)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.savefig(config.FIGURE / &quot;fig3_scimmie.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 182 - &quot;Il Portafoglio Permanente: funziona davvero, o ha solo avuto la fortuna dell&#x27;oro?&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui, scritti PRIMA di guardare i risultati. Gli script numerati li leggono da questo file.
+
+Il disegno: il Portafoglio Permanente di Harry Browne mette un quarto in azioni, un quarto in obbligazioni di Stato a lunga scadenza,
+un quarto in oro e un quarto in liquidità, ribilanciato ogni gennaio. Lo seguiamo dal settembre 2000 (primo mese con un prezzo dell&#x27;oro
+su Yahoo Finance) all&#x27;ultimo mese completo. Azioni: fondo Vanguard 500 Index (VFINX). Obbligazioni lunghe: fondo Vanguard Long-Term
+Treasury (VUSTX). Oro: future continuo sull&#x27;oro (GC=F); controllo con l&#x27;ETF GLD. Liquidità: Bot a 13 settimane (^IRX), reso mese per mese.
+Confronti: sole azioni, 60/40 (VFINX + VBMFX), il portafoglio senza oro, il portafoglio senza liquidità, e 2000 «scimmie» con pesi casuali.
+Rendimenti nominali, in dollari, lordi di costi e tasse.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati (ticker Yahoo Finance, nome, ruolo) ------------------------------------------------------------------
+SERIE = [
+    (&quot;VFINX&quot;, &quot;Vanguard 500 Index (azioni USA, dividendi reinvestiti)&quot;, &quot;azioni&quot;),
+    (&quot;VUSTX&quot;, &quot;Vanguard Long-Term Treasury (obbligazioni di Stato a lunga scadenza)&quot;, &quot;obbligazioni&quot;),
+    (&quot;GC=F&quot;, &quot;Future continuo sull&#x27;oro (dollari per oncia)&quot;, &quot;oro&quot;),
+    (&quot;GLD&quot;, &quot;SPDR Gold Shares (controllo dell&#x27;oro)&quot;, &quot;controllo&quot;),
+    (&quot;VBMFX&quot;, &quot;Vanguard Total Bond Market Index (per il 60/40)&quot;, &quot;obbl_aggregate&quot;),
+    (&quot;^IRX&quot;, &quot;Rendimento dei Bot a 13 settimane (in %)&quot;, &quot;cassa&quot;),
+]
+INIZIO_DOWNLOAD = &quot;1995-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le serie mensili di un fondo azionario S&amp;P 500, di un fondo di titoli di Stato a lunga scadenza, dell&#x27;oro e dei Bot americani&quot;
+NOMI_ESENTI = (&quot;S&amp;P&quot;, &quot;TickerFight&quot;, &quot;182&quot;, &quot;60/40&quot;, &quot;VFINX&quot;, &quot;VUSTX&quot;, &quot;VBMFX&quot;, &quot;GC=F&quot;, &quot;GLD&quot;, &quot;25/25/25/25&quot;, &quot;Treasury&quot;, &quot;1/N&quot;)
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;).replace(&quot;=&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+# --- I portafogli (pesi: azioni, obbligazioni lunghe, oro, liquidità) -----------------------------------------------------
+INIZIO_CAMPIONE = &quot;2000-09&quot;
+PESI = {
+    &quot;pp&quot;: (0.25, 0.25, 0.25, 0.25),         # Portafoglio Permanente
+    &quot;senza_oro&quot;: (1 / 3, 1 / 3, 0.0, 1 / 3),
+    &quot;senza_cassa&quot;: (1 / 3, 1 / 3, 1 / 3, 0.0),
+}
+PESO_AZIONI_6040 = 0.60                      # 60/40: VFINX + VBMFX
+# Ribilanciamento sempre al primo mese di ogni anno solare.
+DIVISIONE_PERIODO = &quot;2012-01&quot;                # primo mese del secondo sotto-periodo (scelto a priori)
+INIZIO_CONTROLLO_ORO = &quot;2004-12&quot;             # il GLD nasce a novembre 2004
+
+# --- Il caso e l&#x27;incertezza ------------------------------------------------------------------------------------------
+SEME = 20261031
+N_SCIMMIE = 2000                   # portafogli con pesi casuali (Dirichlet uniforme sui 4 asset), estratti di nuovo ogni gennaio
+N_BOOTSTRAP = 2000
+BLOCCO_MESI = 12
+LIVELLO_CONFIDENZA = 0.95
+
+SOGLIE = {&quot;ip3_anno&quot;: 2022, &quot;ip7_perc&quot;: 0.50, &quot;ip9_corr&quot;: 0.95}
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati ---------------------------------------------------------------
+IPOTESI = (
+    &quot;1) Il Portafoglio Permanente ha una perdita massima dal picco più piccola sia delle sole azioni sia del 60/40. &quot;
+    &quot;2) Il suo Sharpe ratio è più alto di quello delle sole azioni. &quot;
+    &quot;3) Il suo rendimento annuo composto è più basso di quello delle sole azioni: la protezione si paga in rendimento. &quot;
+    &quot;4) Il suo anno solare peggiore è il 2022, non il 2008: l&#x27;anno in cui le obbligazioni lunghe crollano. &quot;
+    &quot;5) L&#x27;oro conta: il Portafoglio Permanente ha uno Sharpe più alto della versione senza oro (un terzo azioni, un terzo obbligazioni lunghe, un terzo liquidità). &quot;
+    &quot;6) La liquidità serve a limitare le perdite: la versione senza liquidità (un terzo azioni, obbligazioni lunghe, oro) ha una perdita massima più grande. &quot;
+    &quot;7) Il vantaggio di Sharpe sulle sole azioni non è distinguibile dal caso: l&#x27;intervallo di confidenza al 95% (bootstrap a blocchi di 12 mesi) comprende lo zero. &quot;
+    &quot;8) Contro il caso: lo Sharpe del Portafoglio Permanente supera quello di più della metà di 2000 portafogli con pesi casuali. &quot;
+    &quot;9) Il vantaggio di Sharpe sul 60/40 è più grande nel periodo del grande rialzo dell&#x27;oro (fino a dicembre 2011) che dopo (da gennaio 2012). &quot;
+    &quot;10) Controllo del metodo: la serie dell&#x27;oro (future) ha una correlazione mensile di almeno 0,95 con l&#x27;ETF GLD dal dicembre 2004.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>portafoglio ribilanciato, statistiche, bootstrap</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;esperimento: serie mensili, portafoglio ribilanciato a pesi fissi, statistiche, bootstrap.
+
+Convenzioni: tutti i rendimenti sono mensili e semplici (0,01 = 1%).
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def fine_mese(serie: pd.Series) -&gt; pd.Series:
+    &quot;&quot;&quot;Ultimo valore di ogni mese (indice = periodo mensile).&quot;&quot;&quot;
+    s = serie.sort_index()
+    return s.groupby(s.index.to_period(&quot;M&quot;)).last()
+
+
+def portafoglio(R: np.ndarray, mesi: pd.PeriodIndex, W) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimenti mensili di un portafoglio ribilanciato a ogni gennaio (e al primo mese).
+
+    R: array (n_mesi, N) di rendimenti mensili degli N asset.
+    W: pesi. Array (N,) = un portafoglio; (S, N) = S portafogli; (S, Y, N) = S portafogli con pesi diversi per ognuno degli Y anni solari.
+    Restituisce un array (S, n_mesi).
+    &quot;&quot;&quot;
+    anni = np.array([m.year for m in mesi])
+    anni_u = list(dict.fromkeys(anni))
+    W = np.asarray(W, float)
+    if W.ndim == 1:
+        W = W[None, None, :]
+    elif W.ndim == 2:
+        W = W[:, None, :]
+    S = W.shape[0]
+    out = np.empty((S, len(mesi)))
+    v = None
+    for i, m in enumerate(mesi):
+        if i == 0 or m.month == 1:
+            w = W[:, 0, :] if W.shape[1] == 1 else W[:, anni_u.index(m.year), :]
+            v = w.copy()
+        tot = v.sum(axis=1)
+        v = v * (1.0 + R[i][None, :])
+        out[:, i] = v.sum(axis=1) / tot - 1.0
+    return out
+
+
+def mesi_sott_acqua(r: np.ndarray) -&gt; int:
+    &quot;&quot;&quot;Il periodo più lungo (in mesi) passato sotto il massimo precedente.&quot;&quot;&quot;
+    v = np.r_[1.0, np.cumprod(1.0 + r)]
+    picco = np.maximum.accumulate(v)
+    sotto = v &lt; picco - 1e-12
+    best = cur = 0
+    for s in sotto:
+        cur = cur + 1 if s else 0
+        best = max(best, cur)
+    return best
+
+
+def cagr(r: np.ndarray) -&gt; float:
+    return float(np.prod(1.0 + r) ** (12.0 / len(r)) - 1.0)
+
+
+def volatilita(r: np.ndarray) -&gt; float:
+    return float(np.std(r, ddof=1) * np.sqrt(12.0))
+
+
+def sharpe(r: np.ndarray, cassa: np.ndarray, asse: int = -1):
+    &quot;&quot;&quot;Sharpe annualizzato sugli eccessi mensili rispetto alla liquidità.&quot;&quot;&quot;
+    e = r - cassa
+    return e.mean(axis=asse) / e.std(axis=asse, ddof=1) * np.sqrt(12.0)
+
+
+def perdita_massima(r: np.ndarray) -&gt; float:
+    &quot;&quot;&quot;Massimo calo dal picco (numero negativo), sul valore cumulato dei rendimenti mensili.&quot;&quot;&quot;
+    v = np.cumprod(1.0 + np.r_[0.0, r][1:])
+    v = np.r_[1.0, v]
+    return float((v / np.maximum.accumulate(v) - 1.0).min())
+
+
+def rendimenti_anno_solare(r: np.ndarray, mesi: pd.PeriodIndex) -&gt; pd.Series:
+    anni = np.array([m.year for m in mesi])
+    return pd.Series(1.0 + r, index=anni).groupby(level=0).prod() - 1.0
+
+
+def indici_blocchi(n: int, blocco: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Indici di un campione bootstrap a blocchi circolari lungo n.&quot;&quot;&quot;
+    k = int(np.ceil(n / blocco))
+    inizi = rng.integers(0, n, k)
+    return ((inizi[:, None] + np.arange(blocco)[None, :]) % n).ravel()[:n]
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli delle funzioni su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import funzioni as fx
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+mesi = pd.period_range(&quot;2000-01&quot;, periods=36, freq=&quot;M&quot;)
+rng = np.random.default_rng(1)
+R = rng.normal(0.006, 0.03, (36, 4))
+
+controlla(&quot;peso 1 sul primo asset = quell&#x27;asset&quot;, np.allclose(fx.portafoglio(R, mesi, [1, 0, 0, 0])[0], R[:, 0]))
+controlla(&quot;pesi uguali su asset identici = l&#x27;asset&quot;, np.allclose(fx.portafoglio(np.repeat(R[:, :1], 4, axis=1), mesi, [.25] * 4)[0], R[:, 0]))
+Rc = np.zeros((36, 4)); Rc[:, 0] = 0.01
+p = fx.portafoglio(Rc, mesi, [.25] * 4)[0]
+atteso = 0.25 * 1.01 ** 12 + 0.75
+controlla(&quot;primo anno: 0,25 x crescita + 0,75&quot;, abs(np.prod(1 + p[:12]) - atteso) &lt; 1e-12)
+controlla(&quot;secondo anno dopo il ribilanciamento: stessa ripartenza&quot;, abs(np.prod(1 + p[12:24]) - atteso) &lt; 1e-12)
+P = fx.portafoglio(R, mesi, np.array([[1, 0, 0, 0], [0, 1, 0, 0]]))
+controlla(&quot;due portafogli insieme&quot;, np.allclose(P[0], R[:, 0]) and np.allclose(P[1], R[:, 1]))
+Wy = np.zeros((1, 3, 4)); Wy[0, 0, 0] = 1; Wy[0, 1, 1] = 1; Wy[0, 2, 2] = 1
+pw = fx.portafoglio(R, mesi, Wy)[0]
+controlla(&quot;un peso per anno&quot;, np.allclose(pw[:12], R[:12, 0]) and np.allclose(pw[12:24], R[12:24, 1]) and np.allclose(pw[24:], R[24:, 2]))
+controlla(&quot;perdita massima: +10% poi -50%&quot;, abs(fx.perdita_massima(np.array([0.1, -0.5])) - (-0.5)) &lt; 1e-12)
+controlla(&quot;perdita massima: solo rialzi = 0&quot;, fx.perdita_massima(np.full(10, 0.01)) == 0.0)
+controlla(&quot;mesi sott&#x27;acqua: -10% poi +1% x3 = 4&quot;, fx.mesi_sott_acqua(np.array([0.01, -0.10, 0.01, 0.01, 0.01])) == 4)
+controlla(&quot;mesi sott&#x27;acqua: solo rialzi = 0&quot;, fx.mesi_sott_acqua(np.full(5, 0.01)) == 0)
+e = np.array([0.01, -0.01] * 6)
+controlla(&quot;Sharpe zero se l&#x27;eccesso medio è zero&quot;, abs(fx.sharpe(e, np.zeros(12))) &lt; 1e-12)
+controlla(&quot;CAGR di 1% al mese&quot;, abs(fx.cagr(np.full(12, 0.01)) - (1.01 ** 12 - 1)) &lt; 1e-12)
+controlla(&quot;rendimento anno solare&quot;, abs(fx.rendimenti_anno_solare(np.full(24, 0.01), mesi[:24]).iloc[0] - (1.01 ** 12 - 1)) &lt; 1e-12)
+ix = fx.indici_blocchi(100, 12, np.random.default_rng(5))
+controlla(&quot;bootstrap a blocchi: lunghezza e intervallo&quot;, len(ix) == 100 and ix.min() &gt;= 0 and ix.max() &lt; 100)
+s = pd.Series([1.0, 2.0, 3.0], index=pd.to_datetime([&quot;2000-01-03&quot;, &quot;2000-01-31&quot;, &quot;2000-02-10&quot;]))
+controlla(&quot;fine mese: ultimo valore&quot;, list(fx.fine_mese(s).values) == [2.0, 3.0])
+print(f&quot;{n_ok} controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
