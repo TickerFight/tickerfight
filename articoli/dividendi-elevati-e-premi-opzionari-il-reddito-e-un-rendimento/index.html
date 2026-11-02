@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dividendi elevati e premi opzionari: il reddito è un rendimento? · il codice · TickerFight</title>
+<meta name="description" content="gli ETF che puntano su dividendi alti o su premi di opzioni distribuiti rendono di più dell&#x27;S&amp;P 500? E chi vive di rendita sta meglio con la distribuzione o vendendo quote di un ETF normale?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Dividendi elevati e premi opzionari: il reddito è un rendimento?</h1>
+<p class="domanda">Gli ETF che puntano su dividendi alti o su premi di opzioni distribuiti rendono di più dell&#x27;S&amp;P 500? E chi vive di rendita sta meglio con la distribuzione o vendendo quote di un ETF normale?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="dividendi-elevati-e-premi-opzionari-il-reddito-e-un-rendimento.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Dati:</strong> SPY, QQQ, quattro ETF a dividendo elevato (SCHD, VYM, HDV, SPYD) e due a premio opzionario (XYLD, QYLD), dal giorno in cui esistono tutti.</li>
+<li><strong>Reddito:</strong> differenza tra il rendimento con distribuzioni reinvestite (Adj Close) e quello del solo prezzo (Close).</li>
+<li><strong>Prelievo:</strong> 4% annuo del capitale iniziale, in rate mensili fisse; con e senza imposta del 26%.</li>
+<li><strong>Test:</strong> confronto con SPY e bootstrap a blocchi della differenza di Sharpe.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>dividendi-elevati-e-premi-opzionari-il-reddito-e-un-rendimento/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica da Yahoo Finance gli otto ETF (Close e Adj Close)
+    ├── 02_backtest_e_test.py  metriche, reddito, prelievo, bootstrap
+    ├── 03_grafici.py          i grafici
+    ├── config.py              parametri e ipotesi, scritti prima dei risultati
+    ├── funzioni.py            reddito e prezzo mensili, simulazione del prelievo con e senza tasse
+    ├── motore.py              rendimento, volatilità, Sharpe, perdita massima, bootstrap a blocchi
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd dividendi-elevati-e-premi-opzionari-il-reddito-e-un-rendimento
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera di otto ETF (SPY, QQQ, SCHD, VYM, HDV, SPYD, XYLD, QYLD).
+
+Salva, per ogni ETF, dati/&lt;ticker&gt;.csv (Date, Close, Adj Close, Volume) e dati/metadati.json con la fonte,
+la data del download, la versione di yfinance e l&#x27;impronta SHA-256 di ogni file. Gli script successivi leggono SOLO
+i file salvati: i risultati restano riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;Adj Close&quot; è il prezzo con i dividendi reinvestiti: è quello che si usa per i rendimenti.
+&quot;&quot;&quot;
+import hashlib
+import json
+import time
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def scarica(ticker: str) -&gt; pd.DataFrame:
+    for tentativo in range(3):
+        grezzo = yf.Ticker(ticker).history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+        if not grezzo.empty:
+            return grezzo
+        print(f&quot;{ticker}: nessun dato (tentativo {tentativo + 1})&quot;)
+        time.sleep(10)
+    return pd.DataFrame()
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    meta = {&quot;fonte&quot;: &quot;Yahoo Finance&quot;, &quot;url_fonte&quot;: config.URL_FONTE, &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+            &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;etf&quot;: []}
+    nomi = {t: (n, a) for t, n, a in config.ETF}
+    for ticker in [t for t, _, _ in config.ETF]:
+        riga = {&quot;ticker&quot;: ticker, &quot;nome&quot;: nomi[ticker][0], &quot;sigla&quot;: nomi[ticker][1]}
+        grezzo = scarica(ticker)
+        if grezzo.empty or &quot;Adj Close&quot; not in grezzo.columns:
+            riga[&quot;stato&quot;] = &quot;scartato: nessun dato restituito da Yahoo Finance&quot;
+            meta[&quot;etf&quot;].append(riga)
+            continue
+        df = grezzo[[&quot;Close&quot;, &quot;Adj Close&quot;, &quot;Volume&quot;]].copy()
+        df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+        df.index.name = &quot;Date&quot;
+        df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index().dropna(subset=[&quot;Adj Close&quot;])
+        df = df[df[&quot;Adj Close&quot;] &gt; 0]
+        # seduta ancora in corso: barra incompleta, da scartare
+        if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 18:
+            df = df.iloc[:-1]
+        file = config.file_dati(ticker)
+        df.to_csv(file, float_format=&quot;%.6f&quot;)
+        riga.update({&quot;stato&quot;: &quot;ok&quot;, &quot;file&quot;: file.name, &quot;righe&quot;: len(df), &quot;prima_data&quot;: str(df.index[0].date()),
+                     &quot;ultima_data&quot;: str(df.index[-1].date()), &quot;sha256&quot;: hashlib.sha256(file.read_bytes()).hexdigest()})
+        meta[&quot;etf&quot;].append(riga)
+        print(f&quot;{ticker}: {len(df)} righe, dal {riga[&#x27;prima_data&#x27;]} al {riga[&#x27;ultima_data&#x27;]}&quot;)
+    config.FILE_METADATI.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    principali = {t for t, _, _ in config.ETF}
+    ok = {r[&quot;ticker&quot;] for r in meta[&quot;etf&quot;] if r[&quot;stato&quot;] == &quot;ok&quot;}
+    if not principali &lt;= ok:
+        raise SystemExit(f&quot;Mancano ETF principali: {sorted(principali - ok)}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>metriche, reddito, prelievo, bootstrap</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Dividendi elevati e premi opzionari: reddito contro rendimento.
+
+Legge SOLO i file in dati/ e produce in risultati/:
+  metriche.json   ogni numero dell&#x27;articolo, con descrizione e origine
+  curve.csv       valore di 1 dollaro (distribuzioni reinvestite) negli otto ETF (una seduta su cinque)
+  tabella.csv     una riga per ETF: rendimento totale, del solo prezzo, reddito, volatilità, Sharpe, capitale finale con prelievo
+&quot;&quot;&quot;
+import json
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import funzioni as f
+import motore as m
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con motore.py e funzioni.py&quot;
+GA = config.GIORNI_ANNO
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def carica(ticker: str) -&gt; pd.DataFrame:
+    df = pd.read_csv(config.file_dati(ticker), parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)]
+    if df[[&quot;Close&quot;, &quot;Adj Close&quot;]].isna().any().any() or (df[[&quot;Close&quot;, &quot;Adj Close&quot;]] &lt;= 0).any().any():
+        raise SystemExit(f&quot;{ticker}: dati mancanti o non positivi.&quot;)
+    return df[[&quot;Close&quot;, &quot;Adj Close&quot;]].astype(float)
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    sigle = [s for _, _, s in config.ETF]
+    dati = {s: carica(t) for t, _, s in config.ETF}
+    close = pd.concat({s: d[&quot;Close&quot;] for s, d in dati.items()}, axis=1).dropna()
+    adj = pd.concat({s: d[&quot;Adj Close&quot;] for s, d in dati.items()}, axis=1).dropna()
+    anni = (adj.index[-1] - adj.index[0]).days / 365.25
+    if anni &lt; config.ANNI_MINIMI:
+        raise SystemExit(f&quot;Storia comune di {anni:.1f} anni: troppo corta.&quot;)
+    R = adj.pct_change().dropna()
+    # serie di fine mese (ultima seduta di ogni mese), per prezzo e per prezzo con distribuzioni
+    fm = close.groupby([close.index.year, close.index.month]).tail(1)
+    fm_idx = fm.index
+    close_m, adj_m = close.loc[fm_idx], adj.loc[fm_idx]
+    n_mesi = len(fm_idx) - 1
+    rng = np.random.default_rng(config.SEME)
+    a = (1 - config.LIVELLO_CONFIDENZA) / 2
+    rata = config.CAPITALE * config.PRELIEVO_ANNUO / config.MESI_ANNO
+
+    reg(&quot;data_inizio&quot;, str(adj.index[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta in comune degli otto ETF&quot;, &quot;dati/&quot;)
+    reg(&quot;data_ultima&quot;, str(adj.index[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta nei dati&quot;, &quot;dati/&quot;)
+    reg(&quot;anni&quot;, anni, &quot;num1&quot;, &quot;Anni di storia comune&quot;, &quot;dati/&quot;)
+    reg(&quot;n_sedute&quot;, len(R), &quot;int&quot;, &quot;Rendimenti giornalieri in comune&quot;, &quot;dati/&quot;)
+    reg(&quot;n_mesi&quot;, n_mesi, &quot;int&quot;, &quot;Mesi usati nella simulazione del prelievo&quot;, &quot;dati/&quot;)
+    reg(&quot;n_etf&quot;, len(sigle), &quot;int&quot;, &quot;ETF nell&#x27;analisi&quot;, &quot;config.py&quot;)
+    reg(&quot;n_reddito&quot;, len(config.REDDITO), &quot;int&quot;, &quot;ETF da reddito&quot;, &quot;config.py&quot;)
+    reg(&quot;capitale&quot;, config.CAPITALE, &quot;int&quot;, &quot;Capitale iniziale della simulazione del prelievo&quot;, &quot;config.py&quot;)
+    reg(&quot;prelievo_annuo&quot;, config.PRELIEVO_ANNUO, &quot;pct0&quot;, &quot;Prelievo annuo fisso, in quota del capitale iniziale&quot;, &quot;config.py&quot;)
+    reg(&quot;rata&quot;, rata, &quot;num2&quot;, &quot;Rata mensile prelevata&quot;, &quot;config.py&quot;)
+    reg(&quot;aliquota&quot;, config.ALIQUOTA, &quot;pct0&quot;, &quot;Aliquota sul reddito e sulle plusvalenze&quot;, &quot;config.py&quot;)
+    reg(&quot;n_bootstrap&quot;, config.N_BOOTSTRAP, &quot;int&quot;, &quot;Ricampionamenti del bootstrap&quot;, &quot;config.py&quot;)
+    reg(&quot;blocco&quot;, config.BLOCCO_BOOTSTRAP, &quot;int&quot;, &quot;Giorni per blocco del bootstrap&quot;, &quot;config.py&quot;)
+    reg(&quot;livello_ic&quot;, config.LIVELLO_CONFIDENZA, &quot;pct0&quot;, &quot;Livello degli intervalli di confidenza&quot;, &quot;config.py&quot;)
+
+    stat, righe = {}, []
+    for s in sigle:
+        k = s.lower()
+        r = R[s].to_numpy()
+        p, i = f.componenti_mensili(close_m[s].to_numpy(), adj_m[s].to_numpy())
+        cagr_tot = m.cagr(r, GA)
+        cagr_prezzo = float(np.prod(1 + p) ** (config.MESI_ANNO / len(p)) - 1)
+        reddito = float(np.prod(1 + i) ** (config.MESI_ANNO / len(i)) - 1)
+        senza, con = f.prelievo(p, i, config.CAPITALE, rata, 0.0), f.prelievo(p, i, config.CAPITALE, rata, config.ALIQUOTA)
+        stat[s] = dict(cagr=cagr_tot, prezzo=cagr_prezzo, reddito=reddito, vol=m.vol(r, GA), sharpe=m.sharpe(r, GA),
+                       dd=-m.max_dd(r), f0=senza[&quot;finale&quot;], f1=con[&quot;finale&quot;])
+        reg(f&quot;{k}_cagr&quot;, cagr_tot, &quot;pct1&quot;, f&quot;Rendimento annuo composto di {s} con le distribuzioni reinvestite&quot;, &quot;motore.cagr&quot;)
+        reg(f&quot;{k}_prezzo&quot;, cagr_prezzo, &quot;pct1&quot;, f&quot;Rendimento annuo composto del solo prezzo di {s} (senza distribuzioni)&quot;, &quot;funzioni.componenti_mensili&quot;)
+        reg(f&quot;{k}_reddito&quot;, reddito, &quot;pct1&quot;, f&quot;Quota media annua di {s} distribuita come reddito (composta sui mesi)&quot;, &quot;funzioni.componenti_mensili&quot;)
+        reg(f&quot;{k}_vol&quot;, stat[s][&quot;vol&quot;], &quot;pct1&quot;, f&quot;Volatilità annua di {s}&quot;, &quot;motore.vol&quot;)
+        reg(f&quot;{k}_sharpe&quot;, stat[s][&quot;sharpe&quot;], &quot;num2&quot;, f&quot;Rapporto di Sharpe di {s} (tasso privo di rischio zero)&quot;, &quot;motore.sharpe&quot;)
+        reg(f&quot;{k}_dd&quot;, stat[s][&quot;dd&quot;], &quot;pct0&quot;, f&quot;Perdita massima dal picco di {s}&quot;, &quot;motore.max_dd&quot;)
+        reg(f&quot;{k}_f0&quot;, senza[&quot;finale&quot;], &quot;int&quot;, f&quot;Capitale finale con prelievo fisso, senza tasse, in {s}&quot;, &quot;funzioni.prelievo&quot;)
+        reg(f&quot;{k}_f1&quot;, con[&quot;finale&quot;], &quot;int&quot;, f&quot;Capitale netto finale con prelievo fisso e tasse, in {s}&quot;, &quot;funzioni.prelievo&quot;)
+        reg(f&quot;{k}_esaurito&quot;, int(con[&quot;esaurito&quot;]), &quot;int&quot;, f&quot;Mese di esaurimento del capitale con tasse in {s} (0 se non si esaurisce)&quot;, &quot;funzioni.prelievo&quot;)
+        righe.append(dict(etf=s, cagr=cagr_tot, prezzo=cagr_prezzo, reddito=reddito, vol=stat[s][&quot;vol&quot;], sharpe=stat[s][&quot;sharpe&quot;],
+                          dd=stat[s][&quot;dd&quot;], finale_senza_tasse=senza[&quot;finale&quot;], finale_con_tasse=con[&quot;finale&quot;]))
+    reg(&quot;prelevato&quot;, f.prelievo(*f.componenti_mensili(close_m[&quot;SPY&quot;].to_numpy(), adj_m[&quot;SPY&quot;].to_numpy()), config.CAPITALE, rata, 0.0)[&quot;prelevato&quot;],
+        &quot;int&quot;, &quot;Totale prelevato nel periodo (uguale per tutti se il capitale non si esaurisce)&quot;, &quot;funzioni.prelievo&quot;)
+
+    ix = config.INDICE
+    esiti = {i: [] for i in range(1, 7)}
+    boots = {}
+    for s in config.REDDITO:
+        k = s.lower()
+        reg(f&quot;{k}_diff_cagr&quot;, stat[s][&quot;cagr&quot;] - stat[ix][&quot;cagr&quot;], &quot;pp1&quot;, f&quot;Rendimento annuo di {s} meno quello di {ix}, in punti percentuali&quot;, &quot;motore.cagr&quot;)
+        reg(f&quot;{k}_diff_reddito&quot;, stat[s][&quot;reddito&quot;] - stat[ix][&quot;reddito&quot;], &quot;pp1&quot;, f&quot;Reddito annuo di {s} meno quello di {ix}, in punti percentuali&quot;, &quot;funzioni.componenti_mensili&quot;)
+        reg(f&quot;{k}_diff_f1&quot;, stat[s][&quot;f1&quot;] - stat[ix][&quot;f1&quot;], &quot;int&quot;, f&quot;Capitale netto finale di {s} meno quello di {ix}&quot;, &quot;funzioni.prelievo&quot;)
+        esiti[1].append(stat[s][&quot;reddito&quot;] &gt; stat[ix][&quot;reddito&quot;])
+        esiti[2].append(stat[s][&quot;cagr&quot;] &lt;= stat[ix][&quot;cagr&quot;])
+        if s in config.PREMIO:
+            esiti[3].append(stat[s][&quot;prezzo&quot;] &lt;= config.H3_PREZZO_MAX)
+        esiti[4].append(stat[s][&quot;f0&quot;] &lt;= stat[ix][&quot;f0&quot;])
+        esiti[5].append(stat[s][&quot;f1&quot;] &lt;= stat[ix][&quot;f1&quot;])
+        if s in config.DIVIDENDO:
+            boot = m.bootstrap_diff_sharpe(R[s].to_numpy(), R[ix].to_numpy(), config.N_BOOTSTRAP, config.BLOCCO_BOOTSTRAP, GA, rng)
+            lo, hi = [float(x) for x in np.quantile(boot, [a, 1 - a])]
+            boots[s] = boot
+            reg(f&quot;{k}_sh_diff&quot;, stat[s][&quot;sharpe&quot;] - stat[ix][&quot;sharpe&quot;], &quot;num2&quot;, f&quot;Sharpe di {s} meno Sharpe di {ix}&quot;, &quot;motore.sharpe&quot;)
+            reg(f&quot;{k}_sh_lo&quot;, lo, &quot;num2&quot;, f&quot;Estremo inferiore dell&#x27;intervallo bootstrap della differenza di Sharpe ({s} meno {ix})&quot;, &quot;motore.bootstrap_diff_sharpe&quot;)
+            reg(f&quot;{k}_sh_hi&quot;, hi, &quot;num2&quot;, f&quot;Estremo superiore dell&#x27;intervallo bootstrap della differenza di Sharpe ({s} meno {ix})&quot;, &quot;motore.bootstrap_diff_sharpe&quot;)
+            esiti[6].append(lo &lt;= 0 &lt;= hi)
+    n_att = {1: len(config.REDDITO), 2: len(config.REDDITO), 3: len(config.PREMIO), 4: len(config.REDDITO), 5: len(config.REDDITO), 6: len(config.DIVIDENDO)}
+    for i in range(1, 7):
+        reg(f&quot;h{i}_esito&quot;, int(all(esiti[i])), &quot;int&quot;, f&quot;Ipotesi {i}: 1 se confermata per tutti gli ETF interessati, 0 se smentita&quot;, &quot;confronto con config.py&quot;)
+        reg(f&quot;h{i}_n&quot;, int(sum(esiti[i])), &quot;int&quot;, f&quot;ETF in cui l&#x27;ipotesi {i} è confermata&quot;, &quot;confronto con config.py&quot;)
+        reg(f&quot;h{i}_tot&quot;, n_att[i], &quot;int&quot;, f&quot;ETF a cui si applica l&#x27;ipotesi {i}&quot;, &quot;config.py&quot;)
+    reg(&quot;n_conf&quot;, int(sum(all(esiti[i]) for i in range(1, 7))), &quot;int&quot;, &quot;Ipotesi confermate (su sei)&quot;, &quot;confronto con config.py&quot;)
+    n_meglio = int(sum(stat[s][&quot;f1&quot;] &gt; stat[ix][&quot;f1&quot;] for s in config.REDDITO))
+    reg(&quot;n_meglio_f1&quot;, n_meglio, &quot;int&quot;, &quot;ETF da reddito con capitale netto finale più alto di SPY&quot;, &quot;funzioni.prelievo&quot;)
+    reg(&quot;run_utc&quot;, datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;testo&quot;, &quot;Data di esecuzione dell&#x27;analisi&quot;)
+    json.dump({&quot;valori&quot;: RIS}, open(config.RISULTATI / &quot;metriche.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;), indent=1, ensure_ascii=False)
+
+    cum = np.cumprod(1.0 + R.to_numpy(), axis=0)
+    camp = np.arange(0, len(R), 5)
+    pd.DataFrame({&quot;data&quot;: R.index[camp].strftime(&quot;%Y-%m-%d&quot;), **{s.lower(): cum[camp, j] for j, s in enumerate(sigle)}}).to_csv(
+        config.RISULTATI / &quot;curve.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    pd.DataFrame(righe).to_csv(config.RISULTATI / &quot;tabella.csv&quot;, index=False, float_format=&quot;%.5f&quot;)
+    print(f&quot;Scritti {len(RIS)} numeri in metriche.json&quot;)
+    for i in range(1, 7):
+        print(f&quot;H{i}: {esiti[i]}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO risultati/ e salva i PNG in figure/.
+
+  fig1_valore.png     valore di un dollaro (distribuzioni reinvestite): SPY contro i sei ETF da reddito
+  fig2_reddito.png    per ogni ETF, rendimento annuo diviso tra reddito distribuito e variazione del prezzo
+  fig3_prelievo.png   capitale netto finale con prelievo del 4% e tasse
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    c = pd.read_csv(R / &quot;curve.csv&quot;, parse_dates=[&quot;data&quot;])
+    t = pd.read_csv(R / &quot;tabella.csv&quot;).set_index(&quot;etf&quot;)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    for j, s in enumerate(config.DIVIDENDO):
+        ax.plot(c[&quot;data&quot;], c[s.lower()], color=GRIGIO, lw=1.3, label=&quot;ETF a dividendo elevato&quot; if j == 0 else None)
+    for j, s in enumerate(config.PREMIO):
+        ax.plot(c[&quot;data&quot;], c[s.lower()], color=ARANCIO, lw=1.8, ls=&quot;--&quot;, label=&quot;ETF a premio opzionario&quot; if j == 0 else None)
+    ax.plot(c[&quot;data&quot;], c[&quot;spy&quot;], color=BLU, lw=2.4, label=&quot;SPY (S&amp;P 500)&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.set_ylabel(&quot;Valore di 1 dollaro (scala logaritmica)&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig1_valore.png&quot;)
+    plt.close(fig)
+
+    ordine = [&quot;SPY&quot;] + config.DIVIDENDO + config.PREMIO
+    x = np.arange(len(ordine))
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(x, t.loc[ordine, &quot;prezzo&quot;] * 100, color=[BLU if s == &quot;SPY&quot; else GRIGIO if s in config.DIVIDENDO else ARANCIO for s in ordine],
+           label=&quot;Variazione del prezzo&quot;)
+    ax.bar(x, t.loc[ordine, &quot;reddito&quot;] * 100, bottom=np.where(t.loc[ordine, &quot;prezzo&quot;] &gt; 0, t.loc[ordine, &quot;prezzo&quot;] * 100, 0),
+           color=&quot;white&quot;, edgecolor=&quot;black&quot;, hatch=&quot;//&quot;, label=&quot;Reddito distribuito&quot;)
+    ax.axhline(0, color=&quot;black&quot;, lw=0.8)
+    ax.set_xticks(x)
+    ax.set_xticklabels(ordine)
+    ax.set_ylabel(&quot;% annua composta&quot;)
+    ax.set_ylim(top=t.loc[ordine, [&quot;prezzo&quot;, &quot;reddito&quot;]].clip(lower=0).sum(axis=1).max() * 100 * 1.25)
+    ax.legend(loc=&quot;upper right&quot;, fontsize=10)
+    fig.savefig(config.FIGURE / &quot;fig2_reddito.png&quot;)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    v = t.loc[ordine, &quot;finale_con_tasse&quot;]
+    ax.bar(x, v, color=[BLU if s == &quot;SPY&quot; else GRIGIO if s in config.DIVIDENDO else ARANCIO for s in ordine])
+    ax.axhline(config.CAPITALE, color=&quot;black&quot;, ls=&quot;--&quot;, lw=1)
+    ax.axhline(v[&quot;SPY&quot;], color=BLU, ls=&quot;--&quot;, lw=1)
+    ax.set_xticks(x)
+    ax.set_xticklabels(ordine)
+    ax.set_ylabel(&quot;Capitale netto finale (dollari)&quot;)
+    fig.savefig(config.FIGURE / &quot;fig3_prelievo.png&quot;)
+    plt.close(fig)
+    print(&quot;Figure salvate.&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 484 - &quot;Dividendi elevati e premi opzionari: reddito non significa rendimento&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui, scritti prima di guardare i risultati.
+
+Sei ETF «da reddito» quotati negli Stati Uniti, confrontati con SPY (l&#x27;S&amp;P 500) e QQQ (Nasdaq-100):
+  - quattro a dividendo elevato: SCHD, VYM, HDV, SPYD (azioni che pagano dividendi alti);
+  - due che vendono opzioni call e distribuiscono il premio: XYLD (S&amp;P 500) e QYLD (Nasdaq-100).
+Prezzi: «Close» (solo prezzo) e «Adj Close» (con le distribuzioni reinvestite) di Yahoo Finance. Periodo: da quando esistono tutti.
+Il «reddito» di un ETF è la parte del rendimento che arriva come distribuzione, cioè la differenza tra Adj Close e Close.
+Simulazione del prelievo: chi vive di rendita ritira ogni mese una somma fissa. Con il tasso di prelievo uguale per tutti,
+gli ETF a reddito (che pagano da sé) si confrontano con SPY, da cui si vendono quote per coprire la differenza.
+&quot;&quot;&quot;
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati: (ticker Yahoo Finance, nome, sigla) ---------------------------------------------------------------------
+ETF = [
+    (&quot;SPY&quot;, &quot;SPDR S&amp;P 500&quot;, &quot;SPY&quot;),
+    (&quot;QQQ&quot;, &quot;Invesco QQQ Trust (Nasdaq-100)&quot;, &quot;QQQ&quot;),
+    (&quot;SCHD&quot;, &quot;Schwab US Dividend Equity&quot;, &quot;SCHD&quot;),
+    (&quot;VYM&quot;, &quot;Vanguard High Dividend Yield&quot;, &quot;VYM&quot;),
+    (&quot;HDV&quot;, &quot;iShares Core High Dividend&quot;, &quot;HDV&quot;),
+    (&quot;SPYD&quot;, &quot;SPDR Portfolio S&amp;P 500 High Dividend&quot;, &quot;SPYD&quot;),
+    (&quot;XYLD&quot;, &quot;Global X S&amp;P 500 Covered Call&quot;, &quot;XYLD&quot;),
+    (&quot;QYLD&quot;, &quot;Global X Nasdaq 100 Covered Call&quot;, &quot;QYLD&quot;),
+]
+TICKER_LIQUIDITA = None           # nessuna liquidità in questo articolo
+INIZIO_DOWNLOAD = &quot;2013-01-01&quot;
+NOMI_ESENTI = (&quot;S&amp;P 500&quot;, &quot;Nasdaq-100&quot;, &quot;Nasdaq 100&quot;, &quot;QQQ&quot;, &quot;SPY&quot;, &quot;XYLD&quot;, &quot;QYLD&quot;, &quot;SCHD&quot;, &quot;VYM&quot;, &quot;HDV&quot;, &quot;SPYD&quot;)
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_METADATI = DATI / &quot;metadati.json&quot;
+DESCRIZIONE_DATI = &quot;prezzi giornalieri, con e senza le distribuzioni, di otto ETF quotati negli Stati Uniti&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/&quot;
+ANNI_MINIMI = 8
+
+
+def file_dati(ticker: str) -&gt; Path:
+    return DATI / (ticker.replace(&quot;^&quot;, &quot;&quot;).replace(&quot;.&quot;, &quot;_&quot;) + &quot;.csv&quot;)
+
+
+# --- Parametri dell&#x27;analisi ----------------------------------------------------------------------------------------
+GIORNI_ANNO = 252
+MESI_ANNO = 12
+REDDITO = [&quot;SCHD&quot;, &quot;VYM&quot;, &quot;HDV&quot;, &quot;SPYD&quot;, &quot;XYLD&quot;, &quot;QYLD&quot;]       # gli ETF «da reddito»
+DIVIDENDO = [&quot;SCHD&quot;, &quot;VYM&quot;, &quot;HDV&quot;, &quot;SPYD&quot;]
+PREMIO = [&quot;XYLD&quot;, &quot;QYLD&quot;]
+INDICE = &quot;SPY&quot;
+CAPITALE = 10000.0              # euro iniziali nella simulazione del prelievo (importi in dollari, ma letti come unità di conto)
+PRELIEVO_ANNUO = 0.04           # prelievo fisso: 4% del capitale iniziale all&#x27;anno, in rate mensili uguali
+ALIQUOTA = 0.26                 # imposta sostitutiva italiana su dividendi e plusvalenze
+H3_PREZZO_MAX = 0.0             # ipotesi 3: il solo prezzo dei due ETF a premio non cresce (rendimento annuo composto &lt;= 0)
+
+# --- Test statistici -----------------------------------------------------------------------------------------------
+SEME = 20261102
+N_BOOTSTRAP = 2000
+BLOCCO_BOOTSTRAP = 21
+LIVELLO_CONFIDENZA = 0.95
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati ------------------------------------------------------------------
+IPOTESI = (
+    &quot;1) Tutti e sei gli ETF da reddito distribuiscono ogni anno una quota del loro valore più alta di quella di SPY. &quot;
+    &quot;2) Nessuno dei sei ha un rendimento annuo composto totale (distribuzioni reinvestite) più alto di quello di SPY nel periodo comune. &quot;
+    &quot;3) Per i due ETF a premio opzionario, XYLD e QYLD, il solo prezzo (senza distribuzioni) non cresce: il rendimento annuo composto del prezzo è zero o negativo. &quot;
+    &quot;4) In una simulazione di prelievo fisso del 4% annuo del capitale iniziale, senza tasse, nessun ETF da reddito finisce con più capitale di SPY. &quot;
+    &quot;5) Con la stessa simulazione dopo la tassa del 26% (sui dividendi quando incassati, sulle plusvalenze quando si vendono quote, e sul guadagno residuo alla fine), nessun ETF da reddito finisce con più capitale netto di SPY. &quot;
+    &quot;6) La differenza di Sharpe tra ciascuno dei quattro ETF a dividendo elevato e SPY non si distingue dallo zero: l&#x27;intervallo di confidenza al 95% la contiene.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/funzioni.py<small>reddito e prezzo mensili, simulazione del prelievo con e senza tasse</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni dell&#x27;articolo 484: reddito dalle distribuzioni e simulazione del prelievo, con e senza tasse.&quot;&quot;&quot;
+import numpy as np
+
+
+def componenti_mensili(prezzo_close: np.ndarray, prezzo_adj: np.ndarray) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Rendimento mensile del solo prezzo (p) e quota di reddito (i), con (1+totale) = (1+p)(1+i). Serie a fine mese, lunghezza T+1.&quot;&quot;&quot;
+    c, a = np.asarray(prezzo_close, float), np.asarray(prezzo_adj, float)
+    p = c[1:] / c[:-1] - 1.0
+    tot = a[1:] / a[:-1] - 1.0
+    i = (1.0 + tot) / (1.0 + p) - 1.0
+    return p, np.clip(i, 0.0, None)
+
+
+def prelievo(p: np.ndarray, i: np.ndarray, capitale: float, rata: float, aliquota: float = 0.0) -&gt; dict:
+    &quot;&quot;&quot;Simula un prelievo mensile fisso `rata`. Ogni mese: il prezzo si muove di p, arriva il reddito i (sul valore a fine mese).
+    L&#x27;imposta sul reddito è pagata subito. Il reddito netto copre la rata; l&#x27;eccesso si reinveste, la mancanza si copre vendendo quote
+    (con imposta sulla plusvalenza, base di costo medio). Alla fine il guadagno residuo è tassato. Restituisce capitale netto finale
+    (0 se il capitale si esaurisce), totale prelevato ed eventuale mese di esaurimento.&quot;&quot;&quot;
+    P, quote, base = 1.0, capitale, capitale          # prezzo, numero di quote, costo totale
+    prelevato = 0.0
+    for m in range(len(p)):
+        P *= 1.0 + p[m]
+        reddito_netto = quote * P * i[m] * (1.0 - aliquota)
+        if reddito_netto &gt;= rata:
+            extra = reddito_netto - rata
+            quote += extra / P
+            base += extra
+        else:
+            manca = rata - reddito_netto
+            val = quote * P
+            g = max(0.0, 1.0 - base / val) if val &gt; 0 else 0.0
+            lordo = manca / (1.0 - aliquota * g)
+            if lordo &gt;= val:
+                return dict(finale=0.0, prelevato=prelevato + reddito_netto + val * (1 - aliquota * g), esaurito=m + 1)
+            frazione = lordo / val
+            quote *= 1.0 - frazione
+            base *= 1.0 - frazione
+        prelevato += rata
+    val = quote * P
+    tasse_fin = aliquota * max(0.0, val - base)
+    return dict(finale=val - tasse_fin, prelevato=prelevato, esaurito=0)
+</code></pre></details>
+<details><summary>flusso/motore.py<small>rendimento, volatilità, Sharpe, perdita massima, bootstrap a blocchi</small></summary><pre><code class="language-python">&quot;&quot;&quot;Funzioni di calcolo dell&#x27;articolo 202: metriche, finestre mobili, persistenza, bootstrap, scimmie.
+
+Nessuna strategia di trading: sono confronti tra buy &amp; hold. Le funzioni sono pure, così verifica_motore.py
+le controlla su dati inventati con risultati calcolabili a mano.
+&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def equity(r) -&gt; np.ndarray:
+    return np.cumprod(1.0 + np.asarray(r, dtype=float))
+
+
+def cagr(r, ga: int) -&gt; float:
+    r = np.asarray(r, dtype=float)
+    return float(np.prod(1.0 + r) ** (ga / len(r)) - 1.0)
+
+
+def vol(r, ga: int) -&gt; float:
+    return float(np.std(np.asarray(r, dtype=float), ddof=1) * np.sqrt(ga))
+
+
+def sharpe(r, ga: int) -&gt; float:
+    r = np.asarray(r, dtype=float)
+    return float(np.mean(r) / np.std(r, ddof=1) * np.sqrt(ga))
+
+
+def max_dd(r) -&gt; float:
+    e = equity(r)
+    picco = np.maximum.accumulate(np.concatenate([[1.0], e]))[1:]
+    return float(np.min(e / picco - 1.0))
+
+
+def fine_mese(indice: pd.DatetimeIndex) -&gt; np.ndarray:
+    &quot;&quot;&quot;Posizioni dell&#x27;ultima seduta di ogni mese (escluso l&#x27;ultimo mese se incompleto non è controllato: si usa quanto c&#x27;è).&quot;&quot;&quot;
+    s = pd.Series(np.arange(len(indice)), index=indice)
+    return s.groupby([indice.year, indice.month]).last().to_numpy()
+
+
+def rendimento_finestre(cum: np.ndarray, fini: np.ndarray, lung: int) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Rendimento totale delle ultime `lung` sedute alla fine di ogni mese utile. cum: (T, k). Restituisce (posizioni, matrice).&quot;&quot;&quot;
+    ok = fini[fini &gt;= lung]
+    base = np.concatenate([np.ones((1, cum.shape[1])), cum], axis=0)   # base[i] = valore prima della seduta i
+    return ok, cum[ok] / base[ok - lung + 1] - 1.0
+
+
+def quote_vincitrici(rend: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Quota di finestre in cui ciascuna colonna ha il rendimento più alto.&quot;&quot;&quot;
+    v = np.argmax(rend, axis=1)
+    return np.bincount(v, minlength=rend.shape[1]) / len(v)
+
+
+def persistenza(cum: np.ndarray, fini: np.ndarray, lung: int) -&gt; tuple[np.ndarray, np.ndarray]:
+    &quot;&quot;&quot;Per ogni mese t con `lung` sedute prima e dopo: area vincitrice nel passato (usa solo dati fino a t) e nel futuro.&quot;&quot;&quot;
+    base = np.concatenate([np.ones((1, cum.shape[1])), cum], axis=0)
+    passato, futuro = [], []
+    for e in fini:
+        if e - lung + 1 &lt; 0 or e + lung &gt;= len(cum):
+            continue
+        passato.append(int(np.argmax(cum[e] / base[e - lung + 1])))
+        futuro.append(int(np.argmax(cum[e + lung] / cum[e])))
+    return np.array(passato), np.array(futuro)
+
+
+def p_permutazione(passato: np.ndarray, futuro: np.ndarray, n: int, rng) -&gt; tuple[float, float]:
+    &quot;&quot;&quot;Quota di coincidenze osservata e p-value: frazione di permutazioni del futuro con almeno altrettante coincidenze.&quot;&quot;&quot;
+    oss = float(np.mean(passato == futuro))
+    sup = 0
+    for _ in range(n):
+        if np.mean(passato == rng.permutation(futuro)) &gt;= oss - 1e-12:
+            sup += 1
+    return oss, (sup + 1) / (n + 1)
+
+
+def volatilita_mobile(r: pd.Series, finestra: int, ga: int) -&gt; pd.Series:
+    return r.rolling(finestra).std(ddof=1) * np.sqrt(ga)
+
+
+def correlazione_mobile(a: pd.Series, b: pd.Series, finestra: int) -&gt; pd.Series:
+    return a.rolling(finestra).corr(b)
+
+
+def bootstrap_diff_sharpe(ra, rb, n: int, blocco: int, ga: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Differenza di Sharpe (a - b) ricampionando a blocchi le stesse date per entrambe le serie.&quot;&quot;&quot;
+    ra, rb = np.asarray(ra, dtype=float), np.asarray(rb, dtype=float)
+    T = len(ra)
+    nb = int(np.ceil(T / blocco))
+    out = np.empty(n)
+    for i in range(n):
+        inizi = rng.integers(0, T - blocco + 1, size=nb)
+        idx = (inizi[:, None] + np.arange(blocco)[None, :]).ravel()[:T]
+        out[i] = sharpe(ra[idx], ga) - sharpe(rb[idx], ga)
+    return out
+
+
+def rendimenti_mensili(r: np.ndarray, fini: np.ndarray) -&gt; np.ndarray:
+    &quot;&quot;&quot;Rendimenti composti per mese: r (T, k); i mesi sono i tratti che finiscono nelle posizioni `fini`.&quot;&quot;&quot;
+    e = np.vstack([np.ones((1, r.shape[1])), np.cumprod(1.0 + r, axis=0)])
+    estremi = np.concatenate([[0], fini + 1])
+    if estremi[-1] != len(r):            # coda: ultimo mese incompleto, si include
+        estremi = np.concatenate([estremi, [len(r)]])
+    return e[estremi[1:]] / e[estremi[:-1]] - 1.0
+
+
+def scimmie_valore_finale(mensili: np.ndarray, n: int, rng) -&gt; np.ndarray:
+    &quot;&quot;&quot;Valore finale di 1 per n scimmie che scelgono a caso l&#x27;area (colonna) ogni mese.&quot;&quot;&quot;
+    M, k = mensili.shape
+    scelta = rng.integers(0, k, size=(n, M))
+    return np.prod(1.0 + mensili[np.arange(M)[None, :], scelta], axis=1)
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli su dati inventati: se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+
+import funzioni as f
+import motore as m
+
+# 1) rendimento costante 1% al giorno per 252 giorni
+r = np.full(252, 0.01)
+assert abs(m.cagr(r, 252) - (1.01 ** 252 - 1)) &lt; 1e-9
+# 2) componenti: reddito pari al 1% ogni mese, prezzo fermo
+close = np.ones(13)
+adj = 1.01 ** np.arange(13)
+p, i = f.componenti_mensili(close, adj)
+assert np.allclose(p, 0) and np.allclose(i, 0.01)
+# 3) prezzo fermo, nessun reddito, nessuna tassa: dopo 12 mesi di rata 10 restano 1000 - 120
+p0, i0 = np.zeros(12), np.zeros(12)
+ris = f.prelievo(p0, i0, 1000.0, 10.0, 0.0)
+assert abs(ris[&quot;finale&quot;] - 880.0) &lt; 1e-9 and abs(ris[&quot;prelevato&quot;] - 120.0) &lt; 1e-9
+# 4) reddito 1% al mese, rata 10 su 1000: la rata è coperta dal reddito, nessuna vendita; il capitale non cala
+ris = f.prelievo(p0, np.full(12, 0.01), 1000.0, 10.0, 0.0)
+assert ris[&quot;finale&quot;] &gt;= 1000.0 - 1e-9
+# 5) con tassa 26% sul reddito 1%: reddito netto 7,4 &lt; rata 10, si vendono quote (senza plusvalenza)
+ris = f.prelievo(np.zeros(1), np.full(1, 0.01), 1000.0, 10.0, 0.26)
+assert abs(ris[&quot;finale&quot;] - 997.4) &lt; 1e-9
+# 6) esaurimento
+ris = f.prelievo(np.full(12, -0.5), np.zeros(12), 100.0, 50.0, 0.0)
+assert ris[&quot;esaurito&quot;] &gt; 0 and ris[&quot;finale&quot;] == 0.0
+# 7) con tassa: guadagno finale tassato (prezzo raddoppia in un mese, nessun prelievo possibile: rata 0)
+ris = f.prelievo(np.array([1.0]), np.zeros(1), 100.0, 0.0, 0.26)
+assert abs(ris[&quot;finale&quot;] - (200.0 - 0.26 * 100.0)) &lt; 1e-9
+print(&quot;verifica_motore: tutti i controlli superati&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
