@@ -2,7 +2,7 @@
 
 Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato. Clicca sul titolo per aprire il codice dell'articolo. **Pubblicato**: è sul blog. **In revisione**: i conti sono fatti e il codice è già qui, il testo uscirà sul blog più avanti.
 
-36 pubblicati, 39 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
+36 pubblicati, 40 in revisione. La tabella si aggiorna da sola ogni 3 ore leggendo il blog.
 
 | Articolo | Stato | Uscito il | Sul blog |
 |---|---|---|---|
@@ -80,4 +80,5 @@ Gli articoli di [TickerFight](https://ticker-fight.blogspot.com) e il loro stato
 | [Se avessi sbagliato ogni anno il settore peggiore, quanto avresti perso?](https://tickerfight.github.io/tickerfight/articoli/se-avessi-sbagliato-ogni-anno-il-settore-peggiore-quanto-avresti-perso/) | In revisione | — | — |
 | [Trailing stop contro uscita a tempo: con 1.000 euro, quale delle due regole d'uscita regge meglio?](https://tickerfight.github.io/tickerfight/articoli/trailing-stop-contro-uscita-a-tempo-con-1-000-euro-quale-delle-due-regole-d-uscita-regge-meglio/) | In revisione | — | — |
 | [Take profit al 10%: vendere appena si guadagna conviene davvero, con 1.000 euro?](https://tickerfight.github.io/tickerfight/articoli/take-profit-al-10-vendere-appena-si-guadagna-conviene-davvero-con-1-000-euro/) | In revisione | — | — |
+| [Commissione a zero, a un euro o a tre: la media mobile a 200 sedute cambia verdetto con mille euro?](https://tickerfight.github.io/tickerfight/articoli/commissione-a-zero-a-un-euro-o-a-tre-la-media-mobile-a-200-sedute-cambia-verdetto-con-mille-euro/) | In revisione | — | — |
 | [Momentum con filtro del VIX: evita i crolli, ma con 1.000 euro ne vale il prezzo?](https://tickerfight.github.io/tickerfight/articoli/momentum-con-filtro-del-vix-evita-i-crolli-ma-con-1-000-euro-ne-vale-il-prezzo/) | In revisione | — | — |
