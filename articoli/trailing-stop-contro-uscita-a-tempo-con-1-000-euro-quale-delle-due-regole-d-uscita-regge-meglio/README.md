@@ -2,7 +2,7 @@
 
 **Domanda:** dopo un ingresso sul trend (chiusura sopra la media a 200 sedute), conviene uscire con un trailing stop del 10% (si vende quando il prezzo scende del 10% dal massimo raggiunto dopo l'acquisto) o semplicemente dopo 60 sedute? Condizioni di chi parte con 1.000 €: commissione per ordine in tre scenari, tassa del 26% con minusvalenze riportate, azioni frazionate.
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Trailing stop contro uscita a tempo: con 1.000 euro, quale delle due regole d'uscita regge meglio?](https://ticker-fight.blogspot.com/2026/11/trailing-stop-contro-uscita-tempo-con.html).
 
 ## Il disegno
 

@@ -1,6 +1,6 @@
 # ARIMA sui rendimenti: il modello classico prevede il mercato?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [ARIMA sui rendimenti: il modello classico prevede il mercato?](https://ticker-fight.blogspot.com/2026/11/arima-sui-rendimenti-il-modello.html).
 
 ## Cosa c'è in questa cartella
 

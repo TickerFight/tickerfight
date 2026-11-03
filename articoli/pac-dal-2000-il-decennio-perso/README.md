@@ -2,7 +2,7 @@
 
 **Domanda:** un piano di accumulo mensile partito nel 2000 sull'S&P 500 ha davvero battuto il versamento unico, e quanto dipende dalla data di partenza?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [PAC dal 2000: il decennio perso](https://ticker-fight.blogspot.com/2026/11/pac-dal-2000-il-decennio-perso.html).
 
 ## Il disegno
 

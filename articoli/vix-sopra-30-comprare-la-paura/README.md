@@ -2,7 +2,7 @@
 
 **Domanda:** dopo che il VIX chiude sopra 30, l'S&P 500 rende di più del solito nei mesi successivi? Si può comprare la paura?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [VIX sopra 30: comprare la paura?](https://ticker-fight.blogspot.com/2026/11/vix-sopra-30-comprare-la-paura.html).
 
 ## Il disegno
 

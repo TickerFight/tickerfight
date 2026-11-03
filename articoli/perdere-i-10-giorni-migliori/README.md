@@ -1,6 +1,6 @@
 # Perdere i 10 giorni migliori
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Perdere i 10 giorni migliori](https://ticker-fight.blogspot.com/2026/11/perdere-i-10-giorni-migliori.html).
 
 ## Cosa c'è in questa cartella
 

@@ -2,7 +2,7 @@
 
 **Domanda:** il settore tecnologico (XLK) batte davvero tutti gli altri otto settori messi insieme, e a quale prezzo in perdite?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Tech contro il resto: la tecnologia batte tutti gli altri settori?](https://ticker-fight.blogspot.com/2026/11/tech-contro-il-resto-la-tecnologia.html).
 
 ## Il disegno
 

@@ -2,7 +2,7 @@
 
 **Domanda:** dal 1999 conviene l'S&P 500 (SPY) o il Nasdaq 100 (QQQ), una volta contati rischio, perdite e crisi?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [SPY contro QQQ: l'S&P 500 o il Nasdaq-100?](https://ticker-fight.blogspot.com/2026/11/spy-contro-qqq-ls-500-o-il-nasdaq-100.html).
 
 ## Il disegno
 

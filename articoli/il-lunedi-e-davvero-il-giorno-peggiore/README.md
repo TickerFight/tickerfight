@@ -1,6 +1,6 @@
 # Il lunedì è davvero il giorno peggiore?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Il lunedì è davvero il giorno peggiore?](https://ticker-fight.blogspot.com/2026/11/il-lunedi-e-davvero-il-giorno-peggiore.html).
 
 ## Cosa c'è in questa cartella
 

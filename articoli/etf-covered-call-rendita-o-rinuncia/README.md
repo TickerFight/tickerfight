@@ -2,7 +2,7 @@
 
 **Domanda:** gli ETF che vendono ogni mese opzioni call sull'indice e distribuiscono il premio (XYLD sull'S&P 500, QYLD sul Nasdaq-100) rendono di più, di meno o con meno rischio dell'indice? E uno stesso rischio si può ottenere più semplicemente con indice e liquidità?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [ETF covered call: rendita o rinuncia?](https://ticker-fight.blogspot.com/2026/11/etf-covered-call-rendita-o-rinuncia.html).
 
 ## Il disegno
 

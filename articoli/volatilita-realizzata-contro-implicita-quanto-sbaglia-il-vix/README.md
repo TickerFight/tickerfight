@@ -1,6 +1,6 @@
 # Volatilità realizzata contro implicita: quanto sbaglia il VIX?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Volatilità realizzata contro implicita: quanto sbaglia il VIX?](https://ticker-fight.blogspot.com/2026/11/volatilita-realizzata-contro-implicita.html).
 
 ## Cosa c'è in questa cartella
 

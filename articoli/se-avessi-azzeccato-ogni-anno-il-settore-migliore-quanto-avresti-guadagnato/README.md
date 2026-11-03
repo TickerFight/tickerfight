@@ -2,7 +2,7 @@
 
 **Domanda:** se all'inizio di ogni anno avessi saputo quale dei nove settori azionari americani sarebbe stato il migliore, quanto avresti guadagnato rispetto all'S&P 500? E quanto di quel vantaggio sopravvive quando non si può sapere in anticipo?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Se avessi azzeccato ogni anno il settore migliore, quanto avresti guadagnato?](https://ticker-fight.blogspot.com/2026/11/se-avessi-azzeccato-ogni-anno-il.html).
 
 ## Il disegno
 
