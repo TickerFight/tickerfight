@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Un motore di backtest in poche righe di pandas: è corretto, è veloce, e quanto pesano i costi? · il codice · TickerFight</title>
+<meta name="description" content="un motore di backtest scritto in poche righe di pandas è corretto, e quanto è più veloce di un ciclo giorno per giorno? E quanto pesano i costi di transazione su tre regole semplici del S&amp;P 500?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;600&amp;family=Fraunces:opsz,wght@9..144,800&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<style>
+:root{--bg:#f4f6fb;--s:#fff;--s2:#eef2f9;--t:#1b2433;--m:#64708a;--b:#e1e6f0;--a:#0f9d78;--a2:#0b7a5c;--hero:#e9f6f0;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;--serif:'Fraunces',Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#070c17;--s:#0f172a;--s2:#16213a;--t:#e6ebf5;--m:#8d9ab5;--b:#1f2c47;--a:#34d399;--a2:#6ee7b7;--hero:#0b1a1a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:400 16px/1.7 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--a2)}
+.top{background:linear-gradient(180deg,var(--hero),var(--bg));padding:18px 0 70px}
+.wrap{max-width:900px;margin:0 auto;padding:0 16px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{font:800 28px/1 var(--serif);color:var(--t);text-decoration:none;letter-spacing:-.02em}
+.logo:after{content:"";display:inline-block;width:.2em;height:.2em;border-radius:50%;background:#10b981;margin-left:.1em}
+.menu{display:flex;gap:4px;flex-wrap:wrap}
+.menu a{color:var(--t);text-decoration:none;font:600 14px var(--font);padding:7px 12px;border-radius:12px}
+.menu a:hover{background:rgba(16,185,129,.12);color:var(--a2)}
+.card{background:var(--s);border:1px solid var(--b);border-radius:18px;box-shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px rgba(15,23,42,.06);
+  padding:32px 34px;margin:-50px 0 24px}
+.k{font:700 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--a2)}
+h1{font:800 clamp(26px,4.4vw,38px)/1.2 var(--serif);margin:8px 0 12px;letter-spacing:-.01em}
+h2{font:800 22px/1.3 var(--serif);margin:1.6em 0 .5em}
+.domanda{font-size:18px;color:var(--m);margin:0 0 20px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 4px}
+.btn{display:inline-block;border-radius:999px;padding:11px 20px;font:700 14px var(--font);text-decoration:none;border:1px solid var(--b);color:var(--t);background:var(--s2)}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+.btn:hover{filter:brightness(1.06)}
+.btn.off{opacity:.6;cursor:default}
+code,pre{font-family:var(--mono)}
+:not(pre)>code{font-size:.9em;background:var(--s2);padding:2px 6px;border-radius:6px}
+pre{background:#0b1220;color:#d6e2ff;padding:16px 18px;border-radius:12px;overflow:auto;font-size:13.5px;line-height:1.6}
+pre code.hljs{background:none;padding:0}
+details{border:1px solid var(--b);border-radius:12px;margin:10px 0;background:var(--s2)}
+details summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:before{content:"▸ ";color:var(--a2)}
+details[open] summary:before{content:"▾ "}
+details summary small{font-weight:400;color:var(--m);margin-left:8px}
+details pre{margin:0;border-radius:0 0 12px 12px}
+.lista a{display:block;padding:14px 0;border-top:1px solid var(--b);font-weight:700;color:var(--t);text-decoration:none}
+.lista a:hover{color:var(--a2)}
+.lista a small{display:block;font-weight:400;color:var(--m)}
+footer{color:var(--m);font-size:13px;text-align:center;padding:10px 16px 40px}
+@media (max-width:640px){.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap nav">
+<a class="logo" href="https://ticker-fight.blogspot.com">TickerFight</a>
+<nav class="menu"><a href="https://ticker-fight.blogspot.com">Blog</a><a href="https://ticker-fight.blogspot.com/p/gioco-sopravvivi-al-mercato.html">Gioco</a></nav>
+</div></div>
+<main class="wrap"><div class="card"><div class="k">Il codice dell'articolo</div><h1>Un motore di backtest in poche righe di pandas: è corretto, è veloce, e quanto pesano i costi?</h1>
+<p class="domanda">Un motore di backtest scritto in poche righe di pandas è corretto, e quanto è più veloce di un ciclo giorno per giorno? E quanto pesano i costi di transazione su tre regole semplici del S&amp;P 500?</p>
+<div class="btns"><span class="btn off">L'articolo esce a breve sul blog</span><a class="btn" href="un-motore-di-backtest-in-poche-righe-di-pandas-e-corretto-e-veloce-e-quanto-pesano-i-costi.zip" download>⬇ Scarica il codice (.zip)</a></div>
+<h2>Il disegno</h2>
+<ul>
+<li><strong>Convenzioni:</strong> il segnale della chiusura di ieri decide la posizione di oggi (<code>shift(1)</code>); a ogni cambio di posizione si paga un costo in percentuale del capitale.</li>
+<li><strong>Tre regole, non ottimizzate:</strong> chiusura sopra quella di ieri; chiusura sopra la media a 20 giorni; media a 50 giorni sopra quella a 200.</li>
+<li><strong>Prova del nove:</strong> lo stesso calcolo con un ciclo seduta per seduta; le due curve devono coincidere.</li>
+<li><strong>Tempi:</strong> il più veloce di sette esecuzioni, per ciascun motore.</li>
+</ul>
+<h2>Cosa c'è in questa cartella</h2>
+<pre><code>un-motore-di-backtest-in-poche-righe-di-pandas-e-corretto-e-veloce-e-quanto-pesano-i-costi/
+├── requirements.txt   librerie Python, versioni fissate
+└── flusso/
+    ├── 01_scarica_dati.py     scarica l'S&amp;P 500 dal 1927
+    ├── 02_backtest_e_test.py  righe, differenza tra i motori, tempi, costi
+    ├── 03_grafici.py          i tre grafici
+    ├── config.py              parametri, soglie e ipotesi, scritti prima dei risultati
+    ├── motore_50_righe.py     il motore vettoriale: segnali, shift di un giorno, costi, valore, CAGR, perdita massima
+    ├── motore_ciclo.py        lo stesso motore con un ciclo, per la prova del nove e i tempi
+    └── verifica_motore.py     controlli su dati inventati
+</code></pre>
+<h2>Come si rifà</h2>
+<pre><code class="language-bash">cd un-motore-di-backtest-in-poche-righe-di-pandas-e-corretto-e-veloce-e-quanto-pesano-i-costi
+python -m venv .venv
+source .venv/bin/activate          # su Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python flusso/verifica_motore.py
+python flusso/01_scarica_dati.py
+python flusso/02_backtest_e_test.py
+python flusso/03_grafici.py
+</code></pre>
+<p>Il primo passo controlla il motore di simulazione su dati inventati (se c'è); poi si scaricano i prezzi da Yahoo Finance in <code>dati/</code>, si calcolano i risultati in <code>risultati/</code> e i grafici in <code>figure/</code>. Parametri, ipotesi e seme dei sorteggi sono in <code>flusso/config.py</code>. Yahoo a volte corregge i prezzi storici: con dati scaricati in un altro giorno i numeri possono differire di poco da quelli dell'articolo.</p>
+<h2>I file</h2><p>Clicca su un file per leggerlo. Sono gli stessi dello zip.</p>
+<details><summary>requirements.txt<small>librerie Python, versioni fissate</small></summary><pre><code class="language-plaintext">yfinance==1.7.0
+pandas==3.0.5
+numpy==2.5.3
+matplotlib==3.11.2
+</code></pre></details>
+<details><summary>flusso/01_scarica_dati.py<small></small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 1 - Scarica da Yahoo Finance la serie giornaliera dell&#x27;S&amp;P 500.
+
+Salva:
+  dati/gspc_giornaliero.csv   la serie (Date, Open, High, Low, Close, Volume)
+  dati/gspc_metadati.json     da dove arrivano i dati, quando, con quale
+                              versione di yfinance, e l&#x27;impronta SHA-256 del file
+
+Gli script successivi leggono SOLO il file salvato: i risultati sono quindi
+riproducibili anche se Yahoo corregge i dati in futuro.
+&quot;&quot;&quot;
+import hashlib
+import json
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+import config
+
+
+def main() -&gt; None:
+    config.DATI.mkdir(parents=True, exist_ok=True)
+
+    ticker = yf.Ticker(config.TICKER)
+    grezzo = ticker.history(start=config.INIZIO_DOWNLOAD, auto_adjust=False)
+    if grezzo.empty:
+        raise SystemExit(&quot;Yahoo Finance non ha restituito dati.&quot;)
+
+    df = grezzo[[&quot;Open&quot;, &quot;High&quot;, &quot;Low&quot;, &quot;Close&quot;, &quot;Volume&quot;]].copy()
+    df.index = pd.to_datetime(df.index).tz_localize(None).normalize()
+    df.index.name = &quot;Date&quot;
+    righe_scaricate = len(df)
+
+    # Controlli di qualità di base
+    df = df[~df.index.duplicated(keep=&quot;last&quot;)].sort_index()
+    df = df.dropna(subset=[&quot;Close&quot;])
+    if (df[&quot;Close&quot;] &lt;= 0).any():
+        raise SystemExit(&quot;Trovati prezzi di chiusura non positivi.&quot;)
+
+    # Se lo script gira durante la seduta, l&#x27;ultima barra è incompleta: la scartiamo.
+    ora_borsa = datetime.now(ZoneInfo(config.FUSO_BORSA))
+    barra_scartata = None
+    if df.index[-1].date() == ora_borsa.date() and ora_borsa.hour &lt; 16:
+        barra_scartata = str(df.index[-1].date())
+        df = df.iloc[:-1]
+
+    df.to_csv(config.FILE_DATI, float_format=&quot;%.6f&quot;)
+
+    sha = hashlib.sha256(config.FILE_DATI.read_bytes()).hexdigest()
+    metadati = {
+        &quot;ticker&quot;: config.TICKER,
+        &quot;descrizione&quot;: &quot;S&amp;P 500, indice di prezzo (esclude i dividendi)&quot;,
+        &quot;fonte&quot;: &quot;Yahoo Finance&quot;,
+        &quot;url_fonte&quot;: &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;,
+        &quot;libreria&quot;: f&quot;yfinance {yf.__version__}&quot;,
+        &quot;scaricato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;),
+        &quot;righe_scaricate&quot;: righe_scaricate,
+        &quot;righe_salvate&quot;: len(df),
+        &quot;prima_data&quot;: str(df.index[0].date()),
+        &quot;ultima_data&quot;: str(df.index[-1].date()),
+        &quot;barra_incompleta_scartata&quot;: barra_scartata,
+        &quot;colonna_usata&quot;: &quot;Close (chiusura dell&#x27;indice, non corretta: l&#x27;indice non ha dividendi)&quot;,
+        &quot;sha256_file&quot;: sha,
+    }
+    config.FILE_METADATI.write_text(
+        json.dumps(metadati, indent=2, ensure_ascii=False), encoding=&quot;utf-8&quot;
+    )
+    print(json.dumps(metadati, indent=2, ensure_ascii=False))
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/02_backtest_e_test.py<small>righe, differenza tra i motori, tempi, costi</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 2 - Il motore vettoriale alla prova: righe, correttezza, velocità, costi.
+
+Legge SOLO dati/gspc_giornaliero.csv e produce in risultati/:
+  metriche.json   ogni numero dell&#x27;articolo, con descrizione e origine di calcolo
+  curve.csv       valore (una seduta su cinque) di 50/200 senza costi, 50/200 con costi, buy &amp; hold
+  costi.csv       rendimento annuo di ogni regola per ogni livello di costo
+  tempi.csv       tempo del motore vettoriale e del ciclo, per regola
+&quot;&quot;&quot;
+import ast
+import json
+import platform
+import time
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+
+import config
+import motore_50_righe as m
+from motore_ciclo import backtest_ciclo
+
+RIS: dict = {}
+SORGENTE = &quot;02_backtest_e_test.py con motore_50_righe.py&quot;
+
+
+def reg(chiave, valore, formato, descrizione, origine=SORGENTE):
+    if isinstance(valore, (np.floating, np.integer)):
+        valore = valore.item()
+    if isinstance(valore, float) and not np.isfinite(valore):
+        raise SystemExit(f&quot;Numero non finito per {chiave}&quot;)
+    RIS[chiave] = {&quot;valore&quot;: valore, &quot;formato&quot;: formato, &quot;descrizione&quot;: descrizione, &quot;origine&quot;: origine}
+
+
+def importo(x: float) -&gt; str:
+    return f&quot;{x:,.0f}&quot;.replace(&quot;,&quot;, &quot;.&quot;) + &quot; euro&quot; if x &lt; 1e9 else f&quot;un numero con {int(np.floor(np.log10(x))) + 1} cifre&quot;
+
+
+def righe_di_codice(percorso) -&gt; int:
+    &quot;&quot;&quot;Righe del file escluse quelle vuote, i commenti a riga intera e le docstring.&quot;&quot;&quot;
+    testo = percorso.read_text(encoding=&quot;utf-8&quot;)
+    albero = ast.parse(testo)
+    doc = set()
+    for nodo in ast.walk(albero):
+        if isinstance(nodo, (ast.Module, ast.FunctionDef)) and ast.get_docstring(nodo, clean=False) is not None:
+            primo = nodo.body[0]
+            doc.update(range(primo.lineno, primo.end_lineno + 1))
+    return sum(1 for n, r in enumerate(testo.splitlines(), 1) if r.strip() and not r.strip().startswith(&quot;#&quot;) and n not in doc)
+
+
+def tempo_migliore(f, ripetizioni: int) -&gt; float:
+    migliore = float(&quot;inf&quot;)
+    for _ in range(ripetizioni):
+        t0 = time.perf_counter()
+        f()
+        migliore = min(migliore, time.perf_counter() - t0)
+    return migliore
+
+
+def main() -&gt; None:
+    config.RISULTATI.mkdir(parents=True, exist_ok=True)
+    df = pd.read_csv(config.FILE_DATI, parse_dates=[&quot;Date&quot;], index_col=&quot;Date&quot;).sort_index()
+    close_pieno = df[&quot;Close&quot;].astype(float)
+    if (close_pieno &lt;= 0).any() or close_pieno.isna().any():
+        raise SystemExit(&quot;Chiusure mancanti o non positive.&quot;)
+    sig_pieno = {&quot;un_giorno&quot;: m.segnale_un_giorno(close_pieno), &quot;media_20&quot;: m.segnale_sopra_media(close_pieno, config.SMA_BREVE),
+                 &quot;medie_50_200&quot;: m.segnale_medie(close_pieno, config.SMA_VELOCE, config.SMA_LENTA)}
+    i0 = config.INIZIO_TEST_SEDUTE
+    close = close_pieno.iloc[i0 - 1:]          # una seduta in più: il rendimento del primo giorno del test ha il suo giorno prima
+    date = close.index
+    anni = (date[-1] - date[0]).days / 365.25
+    sig = {k: v.iloc[i0 - 1:] for k, v in sig_pieno.items()}
+
+    reg(&quot;prima_data&quot;, str(close_pieno.index[0].date()), &quot;data_lunga&quot;, &quot;Prima seduta dei dati scaricati&quot;, &quot;dati/gspc_giornaliero.csv&quot;)
+    reg(&quot;data_inizio&quot;, str(date[1].date()), &quot;data_lunga&quot;, &quot;Prima seduta del test (le precedenti servono per le medie)&quot;, &quot;dati/ e config.py, INIZIO_TEST_SEDUTE&quot;)
+    reg(&quot;data_fine&quot;, str(date[-1].date()), &quot;data_lunga&quot;, &quot;Ultima seduta del test&quot;, &quot;dati/gspc_giornaliero.csv&quot;)
+    reg(&quot;sedute_avvio&quot;, i0, &quot;int&quot;, &quot;Sedute iniziali usate solo per calcolare le medie&quot;, &quot;config.py, INIZIO_TEST_SEDUTE&quot;)
+    reg(&quot;n_sedute&quot;, len(close) - 1, &quot;int&quot;, &quot;Sedute nel periodo del test&quot;, &quot;dati/&quot;)
+    reg(&quot;anni_test&quot;, anni, &quot;num1&quot;, &quot;Anni del test&quot;)
+    reg(&quot;capitale&quot;, config.CAPITALE, &quot;int&quot;, &quot;Capitale iniziale, solo per dare un&#x27;idea&quot;, &quot;config.py, CAPITALE&quot;)
+    reg(&quot;sma_breve&quot;, config.SMA_BREVE, &quot;annonum&quot;, &quot;Giorni della media breve&quot;, &quot;config.py&quot;)
+    reg(&quot;sma_veloce&quot;, config.SMA_VELOCE, &quot;annonum&quot;, &quot;Giorni della media veloce&quot;, &quot;config.py&quot;)
+    reg(&quot;sma_lenta&quot;, config.SMA_LENTA, &quot;annonum&quot;, &quot;Giorni della media lenta&quot;, &quot;config.py&quot;)
+    reg(&quot;n_regole&quot;, len(config.REGOLE), &quot;int&quot;, &quot;Regole confrontate&quot;, &quot;config.py, REGOLE&quot;)
+    reg(&quot;costo_base&quot;, config.COSTO_BASE, &quot;pct1&quot;, &quot;Costo per ogni cambio di posizione, in percentuale del capitale&quot;, &quot;config.py, COSTO_BASE&quot;)
+
+    # Anni citati nel testo (letteratura), registrati con la loro fonte
+    reg(&quot;anno_bailey&quot;, 2014, &quot;annonum&quot;, &quot;Anno di Bailey, Borwein, López de Prado e Zhu, Notices of the AMS&quot;, &quot;pagina dello studio su scholarworks.wmich.edu&quot;)
+    reg(&quot;anno_brock&quot;, 1992, &quot;annonum&quot;, &quot;Anno di Brock, Lakonishok e LeBaron, Journal of Finance&quot;, &quot;pagina dello studio su ideas.repec.org&quot;)
+    reg(&quot;brock_rivista&quot;, &quot;47(5), 1731–1764&quot;, &quot;testo&quot;, &quot;Volume, numero e pagine di Brock, Lakonishok e LeBaron nel Journal of Finance&quot;, &quot;pagina dello studio su ideas.repec.org&quot;)
+    reg(&quot;bailey_rivista&quot;, &quot;61(5), 458&quot;, &quot;testo&quot;, &quot;Volume, numero e pagina di Bailey e altri nelle Notices of the AMS&quot;, &quot;pagina dello studio su scholarworks.wmich.edu&quot;)
+    reg(&quot;brock_inizio&quot;, 1897, &quot;annonum&quot;, &quot;Primo anno dei dati Dow Jones usati da Brock, Lakonishok e LeBaron&quot;, &quot;abstract dello studio, ideas.repec.org&quot;)
+    reg(&quot;brock_fine&quot;, 1986, &quot;annonum&quot;, &quot;Ultimo anno dei dati Dow Jones usati da Brock, Lakonishok e LeBaron&quot;, &quot;abstract dello studio, ideas.repec.org&quot;)
+
+    # --- Ipotesi 1: righe di codice -----------------------------------------------------------------------------
+    righe = righe_di_codice(config.BASE / &quot;flusso&quot; / &quot;motore_50_righe.py&quot;)
+    righe_ciclo = righe_di_codice(config.BASE / &quot;flusso&quot; / &quot;motore_ciclo.py&quot;)
+    reg(&quot;righe_motore&quot;, righe, &quot;int&quot;, &quot;Righe di codice del motore vettoriale (escluse vuote, commenti e docstring), compresi segnali e metriche&quot;, &quot;motore_50_righe.py&quot;)
+    reg(&quot;righe_ciclo&quot;, righe_ciclo, &quot;int&quot;, &quot;Righe di codice del motore a ciclo (escluse vuote, commenti e docstring)&quot;, &quot;motore_ciclo.py&quot;)
+    reg(&quot;soglia_righe&quot;, config.SOGLIA_RIGHE, &quot;int&quot;, &quot;Soglia di righe fissata nell&#x27;ipotesi&quot;, &quot;config.py, SOGLIA_RIGHE&quot;)
+    reg(&quot;h1_ok&quot;, int(righe &lt;= config.SOGLIA_RIGHE), &quot;int&quot;, &quot;1 se il motore sta nella soglia di righe&quot;, &quot;calcolo sopra&quot;)
+
+    # --- Buy &amp; hold -------------------------------------------------------------------------------------------
+    bh = m.backtest(close, pd.Series(True, index=close.index)).iloc[1:]
+    bh_val = bh[&quot;valore&quot;]
+    reg(&quot;cagr_bh&quot;, m.cagr(bh_val, anni), &quot;pct1&quot;, &quot;Rendimento annuo composto del buy &amp; hold, senza costi né tasse&quot;)
+    reg(&quot;dd_bh&quot;, -m.perdita_massima(bh_val), &quot;pct0&quot;, &quot;Perdita massima dal picco del buy &amp; hold&quot;)
+    reg(&quot;finale_bh&quot;, importo(config.CAPITALE * bh_val.iloc[-1]), &quot;testo&quot;, &quot;Valore finale del buy &amp; hold&quot;)
+
+    righe_costi, righe_tempi, curva = [], [], None
+    diff_max_tutte = 0.0
+    n_h3 = 0
+    chiusure_l = close.tolist()
+    for rid, _ in config.REGOLE:
+        s = sig[rid]
+        s_l = s.tolist()
+        # Ipotesi 2: vettoriale = ciclo, per ogni costo della griglia
+        diff = 0.0
+        for costo in config.COSTI:
+            a = m.backtest(close, s, costo)[&quot;valore&quot;].to_numpy()
+            b = np.array(backtest_ciclo(chiusure_l, s_l, costo))
+            diff = max(diff, float(np.max(np.abs(a / b - 1.0))))
+        diff_max_tutte = max(diff_max_tutte, diff)
+        reg(f&quot;{rid}_diff&quot;, diff, &quot;sci&quot;, f&quot;Differenza relativa massima, su tutte le sedute e su tutti i costi della griglia, tra motore vettoriale e ciclo, regola «{rid}»&quot;)
+        # Ipotesi 3: tempi
+        tv = tempo_migliore(lambda: m.backtest(close, s, config.COSTO_BASE), config.RIPETIZIONI_TEMPO)
+        tc = tempo_migliore(lambda: backtest_ciclo(chiusure_l, s_l, config.COSTO_BASE), config.RIPETIZIONI_TEMPO)
+        righe_tempi.append({&quot;regola&quot;: rid, &quot;vettoriale_ms&quot;: tv * 1000, &quot;ciclo_ms&quot;: tc * 1000})
+        reg(f&quot;{rid}_ms_vett&quot;, tv * 1000, &quot;num1&quot;, f&quot;Millisecondi del motore vettoriale (il più veloce di più esecuzioni), regola «{rid}»&quot;)
+        reg(f&quot;{rid}_ms_ciclo&quot;, tc * 1000, &quot;num1&quot;, f&quot;Millisecondi del ciclo (il più veloce di più esecuzioni), regola «{rid}»&quot;)
+        reg(f&quot;{rid}_rapporto&quot;, tc / tv, &quot;num1&quot;, f&quot;Quante volte il ciclo è più lento del motore vettoriale, regola «{rid}»&quot;)
+        n_h3 += int(tc / tv &gt;= config.SOGLIA_VELOCITA)
+        # Costi
+        base = m.backtest(close, s, 0.0).iloc[1:]
+        cagr_costi = []
+        for costo in config.COSTI:
+            bt = m.backtest(close, s, costo).iloc[1:]
+            cagr_costi.append(m.cagr(bt[&quot;valore&quot;], anni))
+            righe_costi.append({&quot;regola&quot;: rid, &quot;costo&quot;: costo, &quot;cagr&quot;: cagr_costi[-1]})
+        k_base = config.COSTI.index(config.COSTO_BASE)
+        bt_base = m.backtest(close, s, config.COSTO_BASE).iloc[1:]
+        n_cambi = int(base[&quot;pos&quot;].diff().abs().fillna(base[&quot;pos&quot;].abs()).sum())
+        reg(f&quot;{rid}_cagr_lordo&quot;, cagr_costi[0], &quot;pct1&quot;, f&quot;Rendimento annuo senza costi, regola «{rid}»&quot;)
+        reg(f&quot;{rid}_cagr_netto&quot;, cagr_costi[k_base], &quot;pct1&quot;, f&quot;Rendimento annuo con il costo base per cambio, regola «{rid}»&quot;)
+        reg(f&quot;{rid}_perdita_costi&quot;, cagr_costi[0] - cagr_costi[k_base], &quot;pp2&quot;, f&quot;Punti di rendimento annuo persi per i costi, regola «{rid}»&quot;)
+        reg(f&quot;{rid}_cagr_costo_max&quot;, cagr_costi[-1], &quot;pct1&quot;, f&quot;Rendimento annuo con il costo più alto della griglia, regola «{rid}»&quot;)
+        reg(f&quot;{rid}_finale_netto&quot;, importo(config.CAPITALE * bt_base[&quot;valore&quot;].iloc[-1]), &quot;testo&quot;, f&quot;Valore finale con il costo base, regola «{rid}»&quot;)
+        reg(f&quot;{rid}_dd_lordo&quot;, -m.perdita_massima(base[&quot;valore&quot;]), &quot;pct0&quot;, f&quot;Perdita massima senza costi, regola «{rid}»&quot;)
+        reg(f&quot;{rid}_dd_netto&quot;, -m.perdita_massima(bt_base[&quot;valore&quot;]), &quot;pct0&quot;, f&quot;Perdita massima con il costo base, regola «{rid}»&quot;)
+        reg(f&quot;{rid}_cambi_anno&quot;, n_cambi / anni, &quot;int&quot;, f&quot;Cambi di posizione all&#x27;anno, regola «{rid}»&quot;)
+        reg(f&quot;{rid}_quota_investito&quot;, float(base[&quot;pos&quot;].mean()), &quot;pct0&quot;, f&quot;Quota di sedute investite, regola «{rid}»&quot;)
+        if rid == &quot;medie_50_200&quot;:
+            camp = np.r_[np.arange(0, len(base), 5), len(base) - 1]
+            curva = pd.DataFrame({&quot;data&quot;: base.index[camp], &quot;valore_bh&quot;: bh_val.iloc[camp].to_numpy(),
+                                  &quot;valore_lordo&quot;: base[&quot;valore&quot;].iloc[camp].to_numpy(), &quot;valore_netto&quot;: bt_base[&quot;valore&quot;].iloc[camp].to_numpy()})
+
+    reg(&quot;diff_max&quot;, diff_max_tutte, &quot;sci&quot;, &quot;Differenza relativa massima tra motore vettoriale e ciclo su tutte le regole, sedute e costi&quot;, &quot;calcolo sopra&quot;)
+    reg(&quot;soglia_diff&quot;, config.SOGLIA_DIFFERENZA, &quot;sci&quot;, &quot;Soglia di differenza fissata nell&#x27;ipotesi&quot;, &quot;config.py, SOGLIA_DIFFERENZA&quot;)
+    reg(&quot;h2_ok&quot;, int(diff_max_tutte &lt; config.SOGLIA_DIFFERENZA), &quot;int&quot;, &quot;1 se i due motori coincidono entro la soglia&quot;, &quot;calcolo sopra&quot;)
+    reg(&quot;soglia_velocita&quot;, config.SOGLIA_VELOCITA, &quot;int&quot;, &quot;Soglia di velocità fissata nell&#x27;ipotesi, volte&quot;, &quot;config.py, SOGLIA_VELOCITA&quot;)
+    reg(&quot;n_h3&quot;, n_h3, &quot;int&quot;, &quot;Regole per cui il motore vettoriale è almeno SOGLIA_VELOCITA volte più veloce&quot;, &quot;calcolo sopra&quot;)
+    reg(&quot;h3_ok&quot;, int(n_h3 == len(config.REGOLE)), &quot;int&quot;, &quot;1 se la soglia di velocità vale per tutte le regole&quot;, &quot;calcolo sopra&quot;)
+
+    pl, pv = RIS[&quot;medie_50_200_perdita_costi&quot;][&quot;valore&quot;], RIS[&quot;un_giorno_perdita_costi&quot;][&quot;valore&quot;]
+    reg(&quot;soglia_costo_lenta&quot;, config.SOGLIA_COSTO_LENTA, &quot;pp1&quot;, &quot;Perdita massima per i costi ammessa per le medie 50/200 nell&#x27;ipotesi, punti percentuali&quot;, &quot;config.py&quot;)
+    reg(&quot;soglia_costo_veloce&quot;, config.SOGLIA_COSTO_VELOCE, &quot;pp1&quot;, &quot;Perdita minima per i costi attesa per la regola di un giorno, punti percentuali&quot;, &quot;config.py&quot;)
+    reg(&quot;h4_ok&quot;, int(pl &lt; config.SOGLIA_COSTO_LENTA and pv &gt; config.SOGLIA_COSTO_VELOCE), &quot;int&quot;, &quot;1 se vale l&#x27;ipotesi sui costi&quot;, &quot;calcolo sopra&quot;)
+    h5 = int(RIS[&quot;medie_50_200_cagr_lordo&quot;][&quot;valore&quot;] &lt; RIS[&quot;cagr_bh&quot;][&quot;valore&quot;] and RIS[&quot;medie_50_200_dd_lordo&quot;][&quot;valore&quot;] &lt; RIS[&quot;dd_bh&quot;][&quot;valore&quot;])
+    reg(&quot;h5_rendimento_sotto&quot;, int(RIS[&quot;medie_50_200_cagr_lordo&quot;][&quot;valore&quot;] &lt; RIS[&quot;cagr_bh&quot;][&quot;valore&quot;]), &quot;int&quot;, &quot;1 se le medie 50/200 rendono meno del buy &amp; hold&quot;, &quot;calcolo sopra&quot;)
+    reg(&quot;h5_dd_sotto&quot;, int(RIS[&quot;medie_50_200_dd_lordo&quot;][&quot;valore&quot;] &lt; RIS[&quot;dd_bh&quot;][&quot;valore&quot;]), &quot;int&quot;, &quot;1 se le medie 50/200 hanno una perdita massima più bassa del buy &amp; hold&quot;, &quot;calcolo sopra&quot;)
+    reg(&quot;h5_ok&quot;, h5, &quot;int&quot;, &quot;1 se valgono entrambe le parti dell&#x27;ipotesi 5&quot;, &quot;calcolo sopra&quot;)
+
+    pd.DataFrame(righe_costi).to_csv(config.RISULTATI / &quot;costi.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    pd.DataFrame(righe_tempi).to_csv(config.RISULTATI / &quot;tempi.csv&quot;, index=False, float_format=&quot;%.4f&quot;)
+    curva.to_csv(config.RISULTATI / &quot;curve.csv&quot;, index=False, float_format=&quot;%.6f&quot;)
+    out = {&quot;generato_il_utc&quot;: datetime.now(timezone.utc).isoformat(timespec=&quot;seconds&quot;), &quot;python&quot;: platform.python_version(),
+           &quot;pandas&quot;: pd.__version__, &quot;numpy&quot;: np.__version__, &quot;valori&quot;: RIS}
+    (config.RISULTATI / &quot;metriche.json&quot;).write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding=&quot;utf-8&quot;)
+    print(f&quot;Registrati {len(RIS)} numeri; righe motore {righe}; differenza massima {diff_max_tutte:.2e}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/03_grafici.py<small>i tre grafici</small></summary><pre><code class="language-python">&quot;&quot;&quot;Passo 3 - Grafici dell&#x27;articolo. Legge SOLO i file in risultati/ e salva i PNG in figure/.
+
+  fig1_tempi.png          tempo del motore vettoriale e del ciclo 
+  fig2_curve_50_200.png   le medie 50/200: valore di 500 euro senza costi, con costi, buy &amp; hold
+  fig3_costi.png          rendimento annuo di ogni regola contro il costo per cambio di posizione
+&quot;&quot;&quot;
+import json
+
+import matplotlib
+
+matplotlib.use(&quot;Agg&quot;)
+import matplotlib.pyplot as plt  # noqa: E402
+import pandas as pd  # noqa: E402
+
+import config  # noqa: E402
+
+BLU, ARANCIO, GRIGIO = &quot;#1f5fa8&quot;, &quot;#c9610a&quot;, &quot;#8a8a8a&quot;
+plt.rcParams.update({&quot;font.size&quot;: 12, &quot;axes.spines.top&quot;: False, &quot;axes.spines.right&quot;: False,
+                     &quot;axes.grid&quot;: True, &quot;grid.alpha&quot;: 0.25, &quot;figure.dpi&quot;: 120, &quot;savefig.bbox&quot;: &quot;tight&quot;,
+                     &quot;savefig.facecolor&quot;: &quot;white&quot;, &quot;legend.frameon&quot;: False})
+R = config.RISULTATI
+TITOLI = {&quot;un_giorno&quot;: &quot;un giorno&quot;, &quot;media_20&quot;: &quot;media a 20 giorni&quot;, &quot;medie_50_200&quot;: &quot;medie 50/200&quot;}
+
+
+def main() -&gt; None:
+    config.FIGURE.mkdir(parents=True, exist_ok=True)
+    V = json.loads((R / &quot;metriche.json&quot;).read_text(encoding=&quot;utf-8&quot;))[&quot;valori&quot;]
+
+    t = pd.read_csv(R / &quot;tempi.csv&quot;)
+    fig, ax = plt.subplots(figsize=(10, 5))
+    x = range(len(t))
+    ax.bar([i - 0.2 for i in x], t[&quot;vettoriale_ms&quot;], width=0.38, color=BLU, label=&quot;motore vettoriale&quot;)
+    ax.bar([i + 0.2 for i in x], t[&quot;ciclo_ms&quot;], width=0.38, color=ARANCIO, label=&quot;ciclo giorno per giorno&quot;)
+    for i, (a, b) in enumerate(zip(t[&quot;vettoriale_ms&quot;], t[&quot;ciclo_ms&quot;])):
+        ax.text(i - 0.2, a * 1.08, f&quot;{a:.1f}&quot;.replace(&quot;.&quot;, &quot;,&quot;), ha=&quot;center&quot;, fontsize=11)
+        ax.text(i + 0.2, b * 1.08, f&quot;{b:.1f}&quot;.replace(&quot;.&quot;, &quot;,&quot;), ha=&quot;center&quot;, fontsize=11)
+    ax.set_ylim(0, max(t[&quot;ciclo_ms&quot;]) * 1.15)
+    ax.set_xticks(list(x), [TITOLI[r] for r in t[&quot;regola&quot;]])
+    ax.set_ylabel(&quot;millisecondi per un backtest completo&quot;)
+    ax.grid(axis=&quot;x&quot;, visible=False)
+    ax.legend(loc=&quot;upper left&quot;)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig1_tempi.png&quot;)
+    plt.close(fig)
+
+    c = pd.read_csv(R / &quot;curve.csv&quot;, parse_dates=[&quot;data&quot;])
+    fig, ax = plt.subplots(figsize=(11, 5.6))
+    ax.plot(c[&quot;data&quot;], config.CAPITALE * c[&quot;valore_lordo&quot;], color=BLU, lw=1.8, label=&quot;medie 50/200, senza costi&quot;)
+    ax.plot(c[&quot;data&quot;], config.CAPITALE * c[&quot;valore_netto&quot;], color=BLU, lw=1.8, ls=&quot;:&quot;, label=&quot;medie 50/200, con costi&quot;)
+    ax.plot(c[&quot;data&quot;], config.CAPITALE * c[&quot;valore_bh&quot;], color=GRIGIO, lw=1.6, ls=&quot;--&quot;, label=&quot;buy &amp; hold&quot;)
+    ax.set_yscale(&quot;log&quot;)
+    ax.yaxis.set_major_formatter(lambda x, _: f&quot;{x:,.0f}&quot;.replace(&quot;,&quot;, &quot;.&quot;))
+    ax.set_ylabel(&quot;valore di 500 euro, scala logaritmica&quot;)
+    ax.legend(loc=&quot;upper left&quot;, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig2_curve_50_200.png&quot;)
+    plt.close(fig)
+
+    k = pd.read_csv(R / &quot;costi.csv&quot;)
+    fig, ax = plt.subplots(figsize=(10, 5.4))
+    colori = {&quot;un_giorno&quot;: ARANCIO, &quot;media_20&quot;: GRIGIO, &quot;medie_50_200&quot;: BLU}
+    for rid, d in k.groupby(&quot;regola&quot;, sort=False):
+        ax.plot(d[&quot;costo&quot;] * 100, d[&quot;cagr&quot;] * 100, marker=&quot;o&quot;, lw=2.2, color=colori[rid], label=TITOLI[rid])
+    ax.axhline(V[&quot;cagr_bh&quot;][&quot;valore&quot;] * 100, color=GRIGIO, lw=1.6, ls=&quot;--&quot;, label=&quot;buy &amp; hold (senza costi)&quot;)
+    ax.set_xlabel(&quot;costo per ogni cambio di posizione, % del capitale&quot;)
+    ax.set_ylabel(&quot;rendimento annuo composto&quot;)
+    ax.yaxis.set_major_formatter(lambda y, _: f&quot;{y:.0f}%&quot;)
+    ax.legend(loc=&quot;best&quot;, fontsize=10)
+    fig.tight_layout()
+    fig.savefig(config.FIGURE / &quot;fig3_costi.png&quot;)
+    plt.close(fig)
+    print(&quot;Grafici salvati in figure/&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></details>
+<details><summary>flusso/config.py<small>parametri, soglie e ipotesi, scritti prima dei risultati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Parametri dell&#x27;articolo n. 6 - &quot;Un motore di backtest vettoriale da zero&quot;.
+
+Tutti i parametri dell&#x27;analisi stanno qui, scritti prima di guardare i risultati.
+
+Idea: un motore di backtest serio si scrive in poche righe di pandas. Qui ne scriviamo uno (segnale, shift di un giorno,
+costi, curva del capitale) e lo mettiamo alla prova: dà gli stessi numeri di un ciclo scritto giorno per giorno?
+Quanto è più veloce? Quanto costa, sul S&amp;P 500, aggiungere i costi di transazione a tre regole semplici?
+&quot;&quot;&quot;
+from pathlib import Path
+
+# --- Percorsi -----------------------------------------------------------
+BASE = Path(__file__).resolve().parent.parent
+DATI = BASE / &quot;dati&quot;
+RISULTATI = BASE / &quot;risultati&quot;
+FIGURE = BASE / &quot;figure&quot;
+
+# --- Dati ---------------------------------------------------------------
+TICKER = &quot;^GSPC&quot;                  # S&amp;P 500, indice di prezzo (senza dividendi), dal 1927
+INIZIO_DOWNLOAD = &quot;1927-01-01&quot;
+FUSO_BORSA = &quot;America/New_York&quot;
+FILE_DATI = DATI / &quot;gspc_giornaliero.csv&quot;
+FILE_METADATI = DATI / &quot;gspc_metadati.json&quot;
+DESCRIZIONE_DATI = &quot;le chiusure giornaliere dell&#x27;indice S&amp;P 500&quot;
+URL_FONTE = &quot;https://finance.yahoo.com/quote/%5EGSPC/history/&quot;
+
+# --- Le regole (scelte a priori, non ottimizzate) --------------------------------------------
+REGOLE = [
+    (&quot;un_giorno&quot;, &quot;un giorno: la chiusura di oggi è sopra quella di ieri&quot;),
+    (&quot;media_20&quot;, &quot;media a 20 giorni: la chiusura è sopra la media a 20 giorni&quot;),
+    (&quot;medie_50_200&quot;, &quot;medie 50/200: la media a 50 giorni è sopra quella a 200&quot;),
+]
+SMA_BREVE = 20
+SMA_VELOCE = 50
+SMA_LENTA = 200
+
+# --- Convenzioni di calcolo ---------------------------------------------
+INIZIO_TEST_SEDUTE = 300         # le prime sedute servono per le medie; tutte le regole partono dallo stesso giorno
+COSTO_BASE = 0.001               # costo per ogni cambio di posizione: 0,1% del capitale (spread e commissioni)
+COSTI = [0.0, 0.0005, 0.001, 0.0025, 0.005]   # griglia dei costi per cambio di posizione
+RIPETIZIONI_TEMPO = 7            # si misura il tempo più veloce su questo numero di esecuzioni
+SOGLIA_RIGHE = 50                # il motore vettoriale deve stare in 50 righe di codice
+SOGLIA_VELOCITA = 5              # il motore vettoriale deve essere almeno 5 volte più veloce del ciclo
+SOGLIA_DIFFERENZA = 1e-9         # differenza relativa massima accettata tra i due motori
+SOGLIA_COSTO_LENTA = 0.002       # le medie 50/200 devono perdere meno di 0,2 punti l&#x27;anno con il costo base
+SOGLIA_COSTO_VELOCE = 0.05       # la regola di un giorno deve perdere più di 5 punti l&#x27;anno con il costo base
+CAPITALE = 500.0                 # solo per dare un&#x27;idea
+
+# --- Ipotesi, scritte PRIMA di guardare i risultati --------------------------------------------
+IPOTESI = (
+    &quot;1) Il motore vettoriale sta in 50 righe di codice o meno. &quot;
+    &quot;2) Il motore vettoriale e il ciclo giorno per giorno danno lo stesso valore finale, con una differenza relativa sotto un miliardesimo, &quot;
+    &quot;per tutte e tre le regole e con costi di transazione. &quot;
+    &quot;3) Il motore vettoriale è almeno 5 volte più veloce del ciclo. &quot;
+    &quot;4) Con un costo dello 0,1% per ogni cambio di posizione, le medie 50/200 perdono meno di 0,2 punti di rendimento annuo, &quot;
+    &quot;mentre la regola di un giorno ne perde più di 5. &quot;
+    &quot;5) Il motore, anche corretto, non rende una regola vincente: le medie 50/200 restano sotto il buy &amp; hold in rendimento annuo, &quot;
+    &quot;ma con una perdita massima più bassa.&quot;
+)
+</code></pre></details>
+<details><summary>flusso/motore_50_righe.py<small>il motore vettoriale: segnali, shift di un giorno, costi, valore, CAGR, perdita massima</small></summary><pre><code class="language-python">&quot;&quot;&quot;Il motore vettoriale dell&#x27;articolo n. 6. Conta le righe di codice (esclusi vuote, commenti e docstring): sono meno di 50.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+
+def segnale_sopra_media(close: pd.Series, n: int) -&gt; pd.Series:
+    media = close.rolling(n).mean()
+    return (close &gt; media) &amp; media.notna()          # vero = voglio essere investito
+
+
+def segnale_medie(close: pd.Series, veloce: int, lenta: int) -&gt; pd.Series:
+    lenta_ = close.rolling(lenta).mean()
+    return (close.rolling(veloce).mean() &gt; lenta_) &amp; lenta_.notna()
+
+
+def segnale_un_giorno(close: pd.Series) -&gt; pd.Series:
+    return close &gt; close.shift(1)
+
+
+def backtest(close: pd.Series, segnale: pd.Series, costo: float = 0.0) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Restituisce posizione, rendimento netto e valore di 1 investito, seduta per seduta.&quot;&quot;&quot;
+    rend = close.pct_change().fillna(0.0)                       # rendimento di ogni seduta
+    pos = segnale.shift(1, fill_value=False).astype(float)      # il segnale di ieri decide la posizione di oggi
+    cambi = pos.diff().abs().fillna(0.0)                        # 1 quando si compra o si vende
+    netto = pos * rend - costo * cambi                          # rendimento della seduta, al netto dei costi
+    return pd.DataFrame({&quot;pos&quot;: pos, &quot;netto&quot;: netto, &quot;valore&quot;: (1.0 + netto).cumprod()})
+
+
+def cagr(valore: pd.Series, anni: float) -&gt; float:
+    return float(valore.iloc[-1] ** (1.0 / anni) - 1.0)
+
+
+def perdita_massima(valore: pd.Series) -&gt; float:
+    return float((valore / valore.cummax() - 1.0).min())
+</code></pre></details>
+<details><summary>flusso/motore_ciclo.py<small>lo stesso motore con un ciclo, per la prova del nove e i tempi</small></summary><pre><code class="language-python">&quot;&quot;&quot;Lo stesso motore scritto alla vecchia maniera: un ciclo, una seduta alla volta. Serve da prova del nove e da termine di paragone.
+
+Le stesse convenzioni del motore vettoriale: il segnale di ieri decide la posizione di oggi, il costo si paga a ogni cambio.
+&quot;&quot;&quot;
+
+
+def backtest_ciclo(chiusure: list[float], segnale: list[bool], costo: float = 0.0) -&gt; list[float]:
+    valore, v, prec_pos, prec_close = [], 1.0, 0.0, None
+    for t, c in enumerate(chiusure):
+        rend = 0.0 if prec_close is None else c / prec_close - 1.0
+        pos = float(segnale[t - 1]) if t &gt; 0 else 0.0
+        v *= 1.0 + pos * rend - costo * abs(pos - prec_pos)
+        valore.append(v)
+        prec_pos, prec_close = pos, c
+    return valore
+</code></pre></details>
+<details><summary>flusso/verifica_motore.py<small>controlli su dati inventati</small></summary><pre><code class="language-python">&quot;&quot;&quot;Controlli dei due motori su dati inventati. Se uno fallisce, il flusso si ferma.&quot;&quot;&quot;
+import numpy as np
+import pandas as pd
+
+import motore_50_righe as m
+from motore_ciclo import backtest_ciclo
+
+n_ok = 0
+
+
+def controlla(nome: str, condizione: bool) -&gt; None:
+    global n_ok
+    print((&quot;OK   &quot; if condizione else &quot;FAIL &quot;) + nome)
+    if not condizione:
+        raise SystemExit(f&quot;Controllo fallito: {nome}&quot;)
+    n_ok += 1
+
+
+def serie(valori) -&gt; pd.Series:
+    return pd.Series(np.asarray(valori, float), index=pd.bdate_range(&quot;2020-01-01&quot;, periods=len(valori)))
+
+
+# 1. Crescita costante dell&#x27;1% al giorno, sempre investiti dal secondo giorno
+c = serie(100 * 1.01 ** np.arange(11))
+tutto_vero = pd.Series(True, index=c.index)
+bt = m.backtest(c, tutto_vero)
+controlla(&quot;il primo giorno non si è mai investiti (il segnale è di ieri)&quot;, bt[&quot;pos&quot;].iloc[0] == 0.0)
+controlla(&quot;dal secondo giorno si è investiti e il valore cresce dell&#x27;1% al giorno&quot;, abs(bt[&quot;valore&quot;].iloc[-1] - 1.01 ** 10) &lt; 1e-12)
+
+# 2. In cassa il valore resta 1
+controlla(&quot;in cassa il valore resta 1&quot;, (m.backtest(c, ~tutto_vero)[&quot;valore&quot;] == 1.0).all())
+
+# 3. Il costo si paga a ogni cambio di posizione
+s = pd.Series([True, False, True, False, False, True, False, False, False, False, False], index=c.index)
+bt0, bt1 = m.backtest(c, s), m.backtest(c, s, costo=0.01)
+n_cambi = int(bt1[&quot;pos&quot;].diff().abs().sum())
+controlla(&quot;il numero di cambi è quello atteso (6)&quot;, n_cambi == 6)
+controlla(&quot;il costo riduce il rendimento di giornata solo nei giorni di cambio&quot;,
+          bool(((bt0[&quot;netto&quot;] - bt1[&quot;netto&quot;]).round(12) == (0.01 * bt1[&quot;pos&quot;].diff().abs().fillna(0.0)).round(12)).all()))
+
+# 4. Nessun look-ahead: tagliare il futuro non cambia le posizioni passate
+rng = np.random.default_rng(6)
+close = serie(100 * np.exp(np.cumsum(rng.normal(0.0003, 0.01, 800))))
+sig = m.segnale_medie(close, 10, 40)
+pieno = m.backtest(close, sig, 0.001)
+ok = True
+for taglio in (100, 300, 500, 700):
+    t = m.backtest(close.iloc[:taglio], m.segnale_medie(close.iloc[:taglio], 10, 40), 0.001)
+    ok &amp;= bool(np.allclose(t[&quot;valore&quot;].values, pieno[&quot;valore&quot;].iloc[:taglio].values, rtol=0, atol=1e-12))
+controlla(&quot;il valore fino a un giorno non cambia se si taglia il futuro&quot;, ok)
+
+# 5. Il motore vettoriale e il ciclo danno lo stesso risultato su tre regole e tre costi
+segnali = {&quot;un_giorno&quot;: m.segnale_un_giorno(close), &quot;media_20&quot;: m.segnale_sopra_media(close, 20), &quot;medie&quot;: sig}
+for nome, sg in segnali.items():
+    for costo in (0.0, 0.001, 0.01):
+        a = m.backtest(close, sg, costo)[&quot;valore&quot;].to_numpy()
+        b = np.array(backtest_ciclo(close.tolist(), sg.tolist(), costo))
+        controlla(f&quot;vettoriale e ciclo coincidono: {nome}, costo {costo}&quot;, float(np.max(np.abs(a / b - 1.0))) &lt; 1e-9)
+
+# 6. Perdita massima e CAGR
+v2 = pd.Series([1.0, 1.2, 0.9, 1.5])
+controlla(&quot;perdita massima = 0,9/1,2 - 1&quot;, abs(m.perdita_massima(v2) - (0.9 / 1.2 - 1)) &lt; 1e-12)
+controlla(&quot;CAGR su due anni di un raddoppio&quot;, abs(m.cagr(pd.Series([1.0, 2.0]), 2.0) - (2 ** 0.5 - 1)) &lt; 1e-12)
+
+# 7. Il segnale medie 50/200 non esiste prima di avere duecento chiusure
+s200 = m.segnale_medie(serie(100 + np.arange(300.0)), 50, 200)
+controlla(&quot;nessun segnale prima di avere la media lenta&quot;, not s200.iloc[:199].any())
+
+print(f&quot;\nVerifica del motore: {n_ok} controlli superati.&quot;)
+</code></pre></details>
+</div></main>
+<footer>Codice con licenza MIT · Simulazioni su dati passati a scopo didattico, non consigli di investimento ·
+<a href="https://ticker-fight.blogspot.com">ticker-fight.blogspot.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>document.querySelectorAll('pre code[class*="language-"]').forEach(function (c) { hljs.highlightElement(c); });</script>
+</body>
+</html>
