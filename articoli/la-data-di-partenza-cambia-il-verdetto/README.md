@@ -2,7 +2,7 @@
 
 **Domanda:** il verdetto su una regola di trading, qui un filtro di tendenza a 200 sedute sull'S&P 500 contro il buy & hold, dipende dalla data in cui si comincia a guardarla?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [La data di partenza cambia il verdetto](https://ticker-fight.blogspot.com/2026/11/la-data-di-partenza-cambia-il-verdetto.html).
 
 ## Il disegno
 

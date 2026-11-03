@@ -1,6 +1,6 @@
 # L'intervallo di confidenza del CAGR: quanto è incerto il rendimento di una storia
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [L'intervallo di confidenza del CAGR: quanto è incerto il rendimento di una storia](https://ticker-fight.blogspot.com/2026/11/lintervallo-di-confidenza-del-cagr.html).
 
 ## Cosa c'è in questa cartella
 

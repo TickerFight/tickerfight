@@ -1,6 +1,6 @@
 # Esecuzione a chiusura, apertura o prezzo medio: quanto conta il prezzo a cui si compra
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Esecuzione a chiusura, apertura o prezzo medio: quanto conta il prezzo a cui si compra](https://ticker-fight.blogspot.com/2026/11/esecuzione-chiusura-apertura-o-prezzo.html).
 
 ## Cosa c'è in questa cartella
 

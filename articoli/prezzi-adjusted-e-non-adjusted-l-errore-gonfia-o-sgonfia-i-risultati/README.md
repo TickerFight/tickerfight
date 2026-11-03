@@ -2,7 +2,7 @@
 
 **Domanda:** quanto sbaglia chi valuta un backtest sulla colonna «Close» di Yahoo Finance invece che su «Adj Close», e che cosa succede se si usano prezzi non corretti per gli split?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Prezzi adjusted e non adjusted: l'errore gonfia o sgonfia i risultati?](https://ticker-fight.blogspot.com/2026/11/prezzi-adjusted-e-non-adjusted-lerrore.html).
 
 ## Il disegno
 

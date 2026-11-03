@@ -2,7 +2,7 @@
 
 **Domanda:** quanto è stabile il rapporto di Sharpe misurato su pochi anni di dati? Quanti anni servono perché un backtest dica qualcosa di affidabile?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Quanti anni di dati servono per fidarsi?](https://ticker-fight.blogspot.com/2026/11/quanti-anni-di-dati-servono-per-fidarsi.html).
 
 ## Il disegno
 

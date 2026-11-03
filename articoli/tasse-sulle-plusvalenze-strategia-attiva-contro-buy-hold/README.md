@@ -1,6 +1,6 @@
 # Tasse sulle plusvalenze: strategia attiva contro buy & hold
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Tasse sulle plusvalenze: strategia attiva contro buy & hold](https://ticker-fight.blogspot.com/2026/11/tasse-sulle-plusvalenze-strategia.html).
 
 ## Cosa c'è in questa cartella
 

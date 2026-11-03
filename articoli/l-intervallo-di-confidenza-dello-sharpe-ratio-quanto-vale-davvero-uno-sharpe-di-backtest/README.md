@@ -1,6 +1,6 @@
 # L'intervallo di confidenza dello Sharpe ratio: quanto vale davvero uno Sharpe di backtest
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [L'intervallo di confidenza dello Sharpe ratio: quanto vale davvero uno Sharpe di backtest](https://ticker-fight.blogspot.com/2026/11/lintervallo-di-confidenza-dello-sharpe.html).
 
 ## Cosa c'è in questa cartella
 

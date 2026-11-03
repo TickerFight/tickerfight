@@ -1,6 +1,6 @@
 # Equal weight contro market cap: RSP o SPY?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Equal weight contro market cap: RSP o SPY?](https://ticker-fight.blogspot.com/2026/11/equal-weight-contro-market-cap-rsp-o-spy.html).
 
 ## Cosa c'è in questa cartella
 

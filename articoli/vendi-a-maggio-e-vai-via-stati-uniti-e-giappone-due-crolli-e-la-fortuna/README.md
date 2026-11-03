@@ -2,7 +2,7 @@
 
 **Domanda:** tenere le azioni solo da novembre ad aprile batte il tenerle sempre, su quattro indici, e il risultato regge se si tolgono gli anni dei grandi crolli?
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [«Vendi a maggio e vai via»: Stati Uniti e Giappone, due crolli e la fortuna](https://ticker-fight.blogspot.com/2026/11/vendi-maggio-e-vai-via-stati-uniti-e.html).
 
 ## Il disegno
 

@@ -1,6 +1,6 @@
 # Il p-value in finanza: quando provare tante regole inganna
 
-L'articolo, con risultati e grafici, uscirà a breve sul blog [TickerFight](https://ticker-fight.blogspot.com).
+L'articolo completo, con risultati e grafici, è sul blog: [Il p-value in finanza: quando provare tante regole inganna](https://ticker-fight.blogspot.com/2026/11/il-p-value-in-finanza-quando-provare.html).
 
 ## Cosa c'è in questa cartella
 
